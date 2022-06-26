@@ -2,17 +2,21 @@ package com.kongjak.koreatechcse.activity
 
 import android.os.Bundle
 import android.text.Html
+import android.text.util.Linkify
+import android.text.util.Linkify.TransformFilter
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
-import com.kongjak.koreatechcse.data.GlideImageGetter
 import com.kongjak.koreatechcse.R
 import com.kongjak.koreatechcse.connection.RetrofitBuilder
 import com.kongjak.koreatechcse.data.Article
+import com.kongjak.koreatechcse.data.Files
+import com.kongjak.koreatechcse.data.GlideImageGetter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.regex.Pattern
 
 class ArticleActivity : AppCompatActivity() {
 
@@ -28,11 +32,18 @@ class ArticleActivity : AppCompatActivity() {
         getApi()
     }
 
-    private fun initView(title: String, writer: String, text: String, date: String) {
+    private fun initView(
+        title: String,
+        writer: String,
+        text: String,
+        date: String,
+        files: ArrayList<Files>
+    ) {
         val titleTextView: TextView = findViewById(R.id.title_text_view)
         val writerTextView: TextView = findViewById(R.id.writer_text_view)
         val textTextView: TextView = findViewById(R.id.text_text_view)
         val dateTextView: TextView = findViewById(R.id.date_text_view)
+        val fileTextView: TextView = findViewById(R.id.file_text_view)
 
         titleTextView.text = title
         writerTextView.text = writer
@@ -46,6 +57,19 @@ class ArticleActivity : AppCompatActivity() {
         )
 
         textTextView.text = htmlText
+
+        for (file in files) {
+            fileTextView.append(file.fileName)
+            if (files.iterator().hasNext())
+                fileTextView.append("\n")
+        }
+
+        val transform = TransformFilter { _, _ -> "" }
+
+        for (file in files) {
+            val pattern = Pattern.compile(file.fileName.replace("(", "\\(").replace(")", "\\)"))
+            Linkify.addLinks(fileTextView, pattern, file.fileUri, null, transform)
+        }
     }
 
     private fun getApi() {
@@ -56,7 +80,13 @@ class ArticleActivity : AppCompatActivity() {
                     response: Response<ArrayList<Article>>
                 ) {
                     val list = response.body()
-                    initView(list!![0].title, list[0].writer, list[0].text, list[0].date)
+                    initView(
+                        list!![0].title,
+                        list[0].writer,
+                        list[0].text,
+                        list[0].date,
+                        list[0].files
+                    )
                 }
 
                 override fun onFailure(call: Call<ArrayList<Article>>, t: Throwable) {
