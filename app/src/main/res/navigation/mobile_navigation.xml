@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_notice">
+
+    <fragment
+        android:id="@+id/navigation_notice"
+        android:name="com.kongjak.koreatechcse.fragment.NoticeFragment"
+        tools:layout="@layout/fragment_notice" />
+
+    <fragment
+        android:id="@+id/navigation_free_board"
+        android:name="com.kongjak.koreatechcse.fragment.FreeBoardFragment"
+        tools:layout="@layout/fragment_free_board" />
+
+    <fragment
+        android:id="@+id/navigation_job_board"
+        android:name="com.kongjak.koreatechcse.fragment.JobBoardFragment"
+        tools:layout="@layout/fragment_job_board" />
+
+</navigation>
