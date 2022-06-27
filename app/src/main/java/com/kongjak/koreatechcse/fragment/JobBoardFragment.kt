@@ -118,6 +118,7 @@ class JobBoardFragment : Fragment() {
                 dataList.clear()
                 dataList.addAll(list!!)
                 boardAdapter.notifyDataSetChanged()
+                swipeRefresh.isRefreshing = false
                 reloadFab()
             }
 
