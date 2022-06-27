@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongjak.koreatechcse.R
 import com.kongjak.koreatechcse.activity.ArticleActivity
@@ -27,6 +28,7 @@ class JobBoardFragment : Fragment() {
     private var page = 1
     private lateinit var prevFab: FloatingActionButton
     private lateinit var nextFab: FloatingActionButton
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,8 @@ class JobBoardFragment : Fragment() {
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
         prevFab = rootView.findViewById(R.id.prev_fab)
         nextFab = rootView.findViewById(R.id.next_fab)
+        swipeRefresh = rootView.findViewById(R.id.swipe_refresh)
+
         val dividerItemDecoration = DividerItemDecoration(
             recyclerView.context,
             LinearLayoutManager(rootView.context).orientation
@@ -88,6 +92,10 @@ class JobBoardFragment : Fragment() {
 
         nextFab.setOnClickListener {
             page++
+            getApi()
+        }
+
+        swipeRefresh.setOnRefreshListener {
             getApi()
         }
         return rootView
