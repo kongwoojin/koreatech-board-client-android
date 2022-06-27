@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +30,7 @@ class FreeBoardFragment : Fragment() {
     private lateinit var prevFab: FloatingActionButton
     private lateinit var nextFab: FloatingActionButton
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +42,7 @@ class FreeBoardFragment : Fragment() {
         prevFab = rootView.findViewById(R.id.prev_fab)
         nextFab = rootView.findViewById(R.id.next_fab)
         swipeRefresh = rootView.findViewById(R.id.swipe_refresh)
+        progressBar = rootView.findViewById(R.id.progress_bar)
 
         val dividerItemDecoration = DividerItemDecoration(
             recyclerView.context,
@@ -119,6 +122,7 @@ class FreeBoardFragment : Fragment() {
                 dataList.addAll(list!!)
                 boardAdapter.notifyDataSetChanged()
                 reloadFab()
+                progressBar.visibility = View.GONE
                 swipeRefresh.isRefreshing = false
             }
 
