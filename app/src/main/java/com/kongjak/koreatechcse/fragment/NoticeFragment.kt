@@ -22,6 +22,7 @@ import com.kongjak.koreatechcse.data.Board
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 
 class NoticeFragment : Fragment() {
@@ -60,7 +61,13 @@ class NoticeFragment : Fragment() {
             addItemDecoration(dividerItemDecoration)
         }
 
-        loadPage()
+        if (savedInstanceState != null) {
+            val restoredData = savedInstanceState.getSerializable("data") as ArrayList<Board>
+            dataList.addAll(restoredData)
+            page = savedInstanceState.getInt("page")
+        } else {
+            loadPage()
+        }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -138,5 +145,11 @@ class NoticeFragment : Fragment() {
                 Log.d("error", t.message.toString())
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable("data", dataList as Serializable)
+        outState.putInt("page", page)
     }
 }

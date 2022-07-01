@@ -2,6 +2,7 @@ package com.kongjak.koreatechcse
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechcse.databinding.ActivityMainBinding
 import com.kongjak.koreatechcse.fragment.FreeBoardFragment
@@ -11,6 +12,8 @@ import com.kongjak.koreatechcse.fragment.NoticeFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    lateinit var fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,40 +27,46 @@ class MainActivity : AppCompatActivity() {
         val freeBoardFragment = FreeBoardFragment()
         val jobBoardFragment = JobBoardFragment()
 
-        supportFragmentManager
-            .beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.main_frame_layout, noticeFragment)
-            .commit()
+        fragment = if (savedInstanceState == null) {
+            noticeFragment
+        } else {
+            supportFragmentManager.getFragment(savedInstanceState, "fragment")!!
+        }
+        loadFragment()
 
         navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_notice -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_frame_layout, noticeFragment)
-                        .commit()
+                    fragment = noticeFragment
+                    loadFragment()
                     true
                 }
                 R.id.navigation_free_board -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_frame_layout, freeBoardFragment)
-                        .commit()
+                    fragment = freeBoardFragment
+                    loadFragment()
                     true
                 }
                 R.id.navigation_job_board -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.main_frame_layout, jobBoardFragment)
-                        .commit()
+                    fragment = jobBoardFragment
+                    loadFragment()
                     true
                 }
                 else -> false
             }
+
         }
+    }
+
+    private fun loadFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.main_frame_layout, fragment)
+            .commit()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        supportFragmentManager.putFragment(outState, "fragment", fragment)
     }
 }
