@@ -66,7 +66,8 @@ class NoticeFragment : Fragment() {
             dataList.addAll(restoredData)
             page = savedInstanceState.getInt("page")
         } else {
-            loadPage()
+            if (dataList.isEmpty())
+                loadPage()
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
