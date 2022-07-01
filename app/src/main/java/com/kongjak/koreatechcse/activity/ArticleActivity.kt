@@ -5,6 +5,8 @@ import android.text.Html
 import android.text.util.Linkify
 import android.text.util.Linkify.TransformFilter
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -22,6 +24,8 @@ class ArticleActivity : AppCompatActivity() {
 
     var board: String = ""
     var articleNum: Int = 0
+
+    private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
@@ -29,6 +33,9 @@ class ArticleActivity : AppCompatActivity() {
         board = intent.getStringExtra("board")!!
         articleNum = intent.getIntExtra("article_num", 0)
 
+        progressBar = findViewById(R.id.progress_bar)
+
+        progressBar.visibility = View.VISIBLE
         getApi()
     }
 
@@ -87,6 +94,7 @@ class ArticleActivity : AppCompatActivity() {
                         list[0].date,
                         list[0].files
                     )
+                    progressBar.visibility = View.GONE
                 }
 
                 override fun onFailure(call: Call<ArrayList<Article>>, t: Throwable) {
