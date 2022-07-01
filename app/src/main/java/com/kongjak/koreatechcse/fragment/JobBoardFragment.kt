@@ -31,6 +31,7 @@ class JobBoardFragment : Fragment() {
     private lateinit var nextFab: FloatingActionButton
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,7 @@ class JobBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val rootView: View = inflater.inflate(R.layout.fragment_job_board, container, false)
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
+        recyclerView = rootView.findViewById(R.id.recycler_view)
         prevFab = rootView.findViewById(R.id.prev_fab)
         nextFab = rootView.findViewById(R.id.next_fab)
         swipeRefresh = rootView.findViewById(R.id.swipe_refresh)
@@ -49,8 +50,6 @@ class JobBoardFragment : Fragment() {
             LinearLayoutManager(rootView.context).orientation
         )
 
-        getApi()
-
         boardAdapter.dataList = dataList
         recyclerView.apply {
             setHasFixedSize(true)
@@ -58,6 +57,8 @@ class JobBoardFragment : Fragment() {
             adapter = boardAdapter
             addItemDecoration(dividerItemDecoration)
         }
+
+        loadPage()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -90,12 +91,12 @@ class JobBoardFragment : Fragment() {
 
         prevFab.setOnClickListener {
             page--
-            getApi()
+            loadPage()
         }
 
         nextFab.setOnClickListener {
             page++
-            getApi()
+            loadPage()
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -104,11 +105,16 @@ class JobBoardFragment : Fragment() {
         return rootView
     }
 
-     fun reloadFab() {
+    fun reloadFab() {
         if (page == 1)
             prevFab.hide()
         else
             prevFab.show()
+    }
+
+    private fun loadPage() {
+        progressBar.visibility = View.VISIBLE
+        getApi()
     }
 
     private fun getApi() {

@@ -31,6 +31,7 @@ class FreeBoardFragment : Fragment() {
     private lateinit var nextFab: FloatingActionButton
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,7 @@ class FreeBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val rootView: View = inflater.inflate(R.layout.fragment_free_board, container, false)
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recycler_view)
+        recyclerView = rootView.findViewById(R.id.recycler_view)
         prevFab = rootView.findViewById(R.id.prev_fab)
         nextFab = rootView.findViewById(R.id.next_fab)
         swipeRefresh = rootView.findViewById(R.id.swipe_refresh)
@@ -49,8 +50,6 @@ class FreeBoardFragment : Fragment() {
             LinearLayoutManager(rootView.context).orientation
         )
 
-        getApi()
-
         boardAdapter.dataList = dataList
         recyclerView.apply {
             setHasFixedSize(true)
@@ -58,6 +57,8 @@ class FreeBoardFragment : Fragment() {
             adapter = boardAdapter
             addItemDecoration(dividerItemDecoration)
         }
+
+        loadPage()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -90,12 +91,12 @@ class FreeBoardFragment : Fragment() {
 
         prevFab.setOnClickListener {
             page--
-            getApi()
+            loadPage()
         }
 
         nextFab.setOnClickListener {
             page++
-            getApi()
+            loadPage()
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -109,6 +110,11 @@ class FreeBoardFragment : Fragment() {
             prevFab.hide()
         else
             prevFab.show()
+    }
+
+    private fun loadPage() {
+        progressBar.visibility = View.VISIBLE
+        getApi()
     }
 
     private fun getApi() {

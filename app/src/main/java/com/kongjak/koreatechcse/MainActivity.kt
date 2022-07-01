@@ -1,13 +1,12 @@
 package com.kongjak.koreatechcse
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechcse.databinding.ActivityMainBinding
+import com.kongjak.koreatechcse.fragment.FreeBoardFragment
+import com.kongjak.koreatechcse.fragment.JobBoardFragment
+import com.kongjak.koreatechcse.fragment.NoticeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,13 +20,44 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_notice, R.id.navigation_free_board, R.id.navigation_job_board
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        val noticeFragment = NoticeFragment()
+        val freeBoardFragment = FreeBoardFragment()
+        val jobBoardFragment = JobBoardFragment()
+
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.main_frame_layout, noticeFragment)
+            .commit()
+
+        navView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_notice -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_frame_layout, noticeFragment)
+                        .commit()
+                    true
+                }
+                R.id.navigation_free_board -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_frame_layout, freeBoardFragment)
+                        .commit()
+                    true
+                }
+                R.id.navigation_job_board -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.main_frame_layout, jobBoardFragment)
+                        .commit()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
