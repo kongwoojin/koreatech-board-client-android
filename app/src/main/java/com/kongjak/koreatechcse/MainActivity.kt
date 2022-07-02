@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment() {
         supportFragmentManager
             .beginTransaction()
-            .addToBackStack(null)
             .replace(R.id.main_frame_layout, fragment)
             .commit()
     }
