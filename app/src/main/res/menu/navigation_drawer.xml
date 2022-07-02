@@ -10,6 +10,6 @@
             android:title="@string/drawer_item_cse" />
         <item
             android:id="@+id/nav_drawer_dorm"
-            android:title="Dorm" />
+            android:title="@string/drawer_item_dorm" />
     </group>
 </menu>
