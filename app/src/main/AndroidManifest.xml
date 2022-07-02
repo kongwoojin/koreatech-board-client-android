@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kongjak.koreatechcse">
+    package="com.kongjak.koreatechboard" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,13 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KoreatechCSE"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".activity.ArticleActivity"
+            android:name="com.kongjak.koreatechboard.activity.SchoolArticleActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name="com.kongjak.koreatechboard.activity.CseArticleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.kongjak.koreatechboard.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.KoreatechCSE.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

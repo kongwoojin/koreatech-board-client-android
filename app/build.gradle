@@ -9,7 +9,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.kongjak.koreatechcse"
+        applicationId "com.kongjak.koreatechboard"
         minSdk 21
         targetSdk 32
         versionCode 1

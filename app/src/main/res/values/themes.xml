@@ -14,6 +14,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.KoreatechCSE.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.KoreatechCSE.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.KoreatechCSE.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Article.Title" parent="Theme.KoreatechCSE">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>

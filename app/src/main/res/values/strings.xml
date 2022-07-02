@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">Koreatech CSE</string>
+    <string name="app_name">Koreatech Board</string>
     <string name="item_notice">Notice</string>
     <string name="item_free_board">Free Board</string>
     <string name="item_job_board">Job Board</string>
+    <string name="item_scholar_board">Scholar Notice</string>
+    <string name="item_bachelor_board">Bachelor Notice</string>
+    <string name="item_covid19_board">Covid-19 Notice</string>
+
+    <string name="drawer_item_school">School</string>
+    <string name="drawer_item_cse">CSE</string>
 </resources>
