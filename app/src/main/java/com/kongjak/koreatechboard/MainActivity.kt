@@ -38,7 +38,11 @@ class MainActivity : AppCompatActivity() {
         val cseFragment = CseFragment()
         val dormFragment = DormFragment()
 
-        fragment = schoolFragment
+        fragment = if (savedInstanceState == null) {
+            schoolFragment
+        } else {
+            supportFragmentManager.getFragment(savedInstanceState, "fragment")!!
+        }
         loadFragment()
 
         navView.setNavigationItemSelectedListener { menuItem ->
@@ -73,5 +77,10 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        supportFragmentManager.putFragment(outState, "fragment", fragment)
     }
 }
