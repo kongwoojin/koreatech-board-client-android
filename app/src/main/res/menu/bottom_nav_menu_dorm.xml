@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_dorm_notice"
+        android:icon="@drawable/ic_bottom_navigation_notice"
+        android:title="@string/item_notice" />
+
+    <item
+        android:id="@+id/navigation_dorm_free_board"
+        android:icon="@drawable/ic_bottom_navigation_freeboard"
+        android:title="@string/item_free_board" />
+</menu>

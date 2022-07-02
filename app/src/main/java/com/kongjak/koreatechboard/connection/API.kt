@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.connection
 
 import com.kongjak.koreatechboard.data.Article
 import com.kongjak.koreatechboard.data.CseBoard
+import com.kongjak.koreatechboard.data.DormBoard
 import com.kongjak.koreatechboard.data.SchoolBoard
 import retrofit2.Call
 import retrofit2.http.GET
@@ -29,6 +30,17 @@ interface API {
 
     @GET("school/article/")
     fun getSchoolArticle(
+        @Query("url") url: String
+    ): Call<ArrayList<Article>>
+
+    @GET("dorm/{board}/")
+    fun getDormBoard(
+        @Path("board") board: String,
+        @Query("page") page: Int
+    ): Call<ArrayList<DormBoard>>
+
+    @GET("dorm/article/")
+    fun getDormArticle(
         @Query("url") url: String
     ): Call<ArrayList<Article>>
 }

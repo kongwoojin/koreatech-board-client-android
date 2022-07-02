@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.kongjak.koreatechboard.fragment.CseFragment
+import com.kongjak.koreatechboard.fragment.DormFragment
 import com.kongjak.koreatechboard.fragment.SchoolFragment
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         }
         val schoolFragment = SchoolFragment()
         val cseFragment = CseFragment()
+        val dormFragment = DormFragment()
 
         fragment = schoolFragment
         loadFragment()
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_drawer_cse -> {
                     fragment = cseFragment
+                }
+                R.id.nav_drawer_dorm -> {
+                    fragment = dormFragment
                 }
             }
             loadFragment()
