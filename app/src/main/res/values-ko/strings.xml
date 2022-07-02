@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Koreatech 게시판</string>
+    <string name="item_notice">공지사항</string>
+    <string name="item_free_board">자유 게시판</string>
+    <string name="item_job_board">취업 게시판</string>
+    <string name="item_scholar_board">장학공지</string>
+    <string name="item_bachelor_board">학사공지</string>
+    <string name="item_covid19_board">코로나19 공지</string>
+
+    <string name="drawer_item_school">학교</string>
+    <string name="drawer_item_cse">컴퓨터 공학부</string>
+    <string name="drawer_item_dorm">생활관</string>
+</resources>
