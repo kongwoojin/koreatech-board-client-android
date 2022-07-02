@@ -50,7 +50,6 @@ class SchoolBoardFragment : Fragment() {
         progressBar = rootView.findViewById(R.id.progress_bar)
 
         board = requireArguments().getString("board")!!
-        Log.d("Test", board)
 
         val dividerItemDecoration = DividerItemDecoration(
             recyclerView.context,
