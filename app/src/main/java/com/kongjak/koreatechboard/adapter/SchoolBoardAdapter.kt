@@ -22,8 +22,13 @@ class SchoolBoardAdapter : RecyclerView.Adapter<SchoolBoardAdapter.ViewHolder>()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             val title = dataList[position].title
+            val noticeType = dataList[position].notice_type
             if (title != null) {
-                titleTextView.text = title
+                titleTextView.text = if (noticeType != null) {
+                    "[$noticeType] $title"
+                } else {
+                    title
+                }
                 writerTextView.text = dataList[position].writer
             } else {
                 Log.d("Test", "END")
