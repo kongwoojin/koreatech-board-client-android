@@ -6,11 +6,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.Html.ImageGetter
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.target.SizeReadyCallback
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import com.kongjak.koreatechboard.connection.GlideApp
 import java.lang.ref.WeakReference
 
 class GlideImageGetter(
@@ -38,7 +38,7 @@ class GlideImageGetter(
         // Load Image to the Drawable
         container.get()?.apply {
             post {
-                GlideApp.with(context)
+                Glide.with(context)
                     .asBitmap()
                     .load(source)
                     .into(drawable)
