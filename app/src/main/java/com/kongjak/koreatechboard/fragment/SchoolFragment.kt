@@ -79,7 +79,7 @@ class SchoolFragment : Fragment() {
     private fun loadFragment() {
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.school_notice_frame_layout, fragment)
+            .replace(R.id.notice_frame_layout, fragment)
             .commit()
     }
 

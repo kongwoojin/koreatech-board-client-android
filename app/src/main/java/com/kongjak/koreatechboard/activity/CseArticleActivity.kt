@@ -86,9 +86,9 @@ class CseArticleActivity : AppCompatActivity() {
                     call: Call<ArrayList<Article>>,
                     response: Response<ArrayList<Article>>
                 ) {
-                    val list = response.body()
+                    val list = response.body()!!
                     initView(
-                        list!![0].title,
+                        list[0].title,
                         list[0].writer,
                         list[0].text,
                         list[0].date,

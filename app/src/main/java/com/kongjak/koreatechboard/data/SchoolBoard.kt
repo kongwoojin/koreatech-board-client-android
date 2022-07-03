@@ -10,5 +10,4 @@ data class SchoolBoard(
     val write_date: String?,
     val read: Int,
     val article_url: String
-) :
-    Serializable
+) : Serializable
