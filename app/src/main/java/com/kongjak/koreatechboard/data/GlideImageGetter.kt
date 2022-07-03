@@ -30,7 +30,7 @@ class GlideImageGetter(
         }
     }
 
-    override fun getDrawable(source: String): Drawable {
+    override fun getDrawable(source: String?): Drawable {
         imagesHandler?.addImage(source)
 
         val drawable = BitmapDrawablePlaceholder()
