@@ -17,13 +17,7 @@
         android:theme="@style/Theme.KoreatechBoard"
         tools:targetApi="31">
         <activity
-            android:name=".activity.DormArticleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.SchoolArticleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.CseArticleActivity"
+            android:name=".activity.ArticleActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

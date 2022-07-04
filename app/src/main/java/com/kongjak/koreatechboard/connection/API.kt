@@ -42,4 +42,10 @@ interface API {
     fun getDormArticle(
         @Query("url") url: String
     ): Call<ArrayList<Article>>
+
+    @GET("{site}/article/")
+    fun getArticle(
+        @Path("site") site: String,
+        @Query("url") url: String
+    ): Call<ArrayList<Article>>
 }

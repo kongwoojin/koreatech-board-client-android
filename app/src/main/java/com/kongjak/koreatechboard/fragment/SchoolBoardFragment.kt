@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.activity.SchoolArticleActivity
+import com.kongjak.koreatechboard.activity.ArticleActivity
 import com.kongjak.koreatechboard.adapter.SchoolBoardAdapter
 import com.kongjak.koreatechboard.connection.RetrofitBuilder
 import com.kongjak.koreatechboard.data.SchoolBoard
@@ -96,7 +96,8 @@ class SchoolBoardFragment : Fragment() {
         reloadFab()
 
         schoolBoardAdapter.setOnClickListener { url ->
-            val intent = Intent(context, SchoolArticleActivity::class.java)
+            val intent = Intent(context, ArticleActivity::class.java)
+            intent.putExtra("site", "school")
             intent.putExtra("url", url)
             startActivity(intent)
         }

@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.activity.CseArticleActivity
-import com.kongjak.koreatechboard.activity.DormArticleActivity
-import com.kongjak.koreatechboard.activity.SchoolArticleActivity
+import com.kongjak.koreatechboard.activity.ArticleActivity
 import com.kongjak.koreatechboard.adapter.DormBoardAdapter
 import com.kongjak.koreatechboard.connection.RetrofitBuilder
 import com.kongjak.koreatechboard.data.DormBoard
@@ -97,7 +95,8 @@ class DormBoardFragment : Fragment() {
         reloadFab()
 
         dormBoardAdapter.setOnClickListener { url ->
-            val intent = Intent(context, DormArticleActivity::class.java)
+            val intent = Intent(context, ArticleActivity::class.java)
+            intent.putExtra("site", "dorm")
             intent.putExtra("url", url)
             startActivity(intent)
         }

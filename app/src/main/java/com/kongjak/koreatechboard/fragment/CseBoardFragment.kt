@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.activity.CseArticleActivity
+import com.kongjak.koreatechboard.activity.ArticleActivity
 import com.kongjak.koreatechboard.adapter.CseBoardAdapter
 import com.kongjak.koreatechboard.connection.RetrofitBuilder
 import com.kongjak.koreatechboard.data.CseBoard
@@ -96,7 +96,8 @@ class CseBoardFragment : Fragment() {
         reloadFab()
 
         cseBoardAdapter.setOnClickListener { url ->
-            val intent = Intent(context, CseArticleActivity::class.java)
+            val intent = Intent(context, ArticleActivity::class.java)
+            intent.putExtra("site", "cse")
             intent.putExtra("url", url)
             startActivity(intent)
         }

@@ -20,15 +20,17 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.regex.Pattern
 
-class CseArticleActivity : AppCompatActivity() {
+class ArticleActivity : AppCompatActivity() {
 
+    var site: String = ""
     var url: String = ""
 
     private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cse_article)
+        setContentView(R.layout.activity_article)
 
+        site = intent.getStringExtra("site")!!
         url = intent.getStringExtra("url")!!
 
         progressBar = findViewById(R.id.progress_bar)
@@ -78,7 +80,7 @@ class CseArticleActivity : AppCompatActivity() {
     }
 
     private fun getApi() {
-        RetrofitBuilder.api.getCseArticle(url)
+        RetrofitBuilder.api.getArticle(site, url)
             .enqueue(object : Callback<ArrayList<Article>> {
                 override fun onResponse(
                     call: Call<ArrayList<Article>>,
