@@ -96,10 +96,28 @@ class SchoolBoardFragment : Fragment() {
         reloadFab()
 
         schoolBoardAdapter.setOnClickListener { url ->
-            val intent = Intent(context, ArticleActivity::class.java)
-            intent.putExtra("site", "school")
-            intent.putExtra("url", url)
-            startActivity(intent)
+            when (resources.getBoolean(R.bool.is_tablet)) {
+                true -> {
+                    val articleFragment = ArticleFragment()
+                    val articleBundle = Bundle()
+                    articleBundle.putString("site", "school")
+                    articleBundle.putString("url", url)
+                    articleFragment.arguments = articleBundle
+
+                    parentFragmentManager
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.article_frame_layout, articleFragment)
+                        .commit()
+                }
+                false -> {
+                    val intent = Intent(context, ArticleActivity::class.java)
+                    intent.putExtra("site", "school")
+                    intent.putExtra("url", url)
+                    startActivity(intent)
+                }
+            }
+
         }
 
         prevFab.setOnClickListener {
