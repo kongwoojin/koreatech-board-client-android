@@ -17,7 +17,7 @@ class CseFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_cse, container, false)
 
-        val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view_cse)
+        val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view)
 
         val cseNotice = BoardFragment()
         val cseNoticeBundle = Bundle()

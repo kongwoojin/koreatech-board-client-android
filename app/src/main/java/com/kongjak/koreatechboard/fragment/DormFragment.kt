@@ -17,7 +17,7 @@ class DormFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_dorm, container, false)
 
-        val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view_dorm)
+        val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view)
 
         val dormNotice = BoardFragment()
         val dormNoticeBundle = Bundle()
