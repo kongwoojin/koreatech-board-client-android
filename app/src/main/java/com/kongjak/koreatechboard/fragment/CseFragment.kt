@@ -1,10 +1,10 @@
 package com.kongjak.koreatechboard.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
@@ -19,19 +19,22 @@ class CseFragment : Fragment() {
 
         val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view_cse)
 
-        val cseNotice = CseBoardFragment()
+        val cseNotice = BoardFragment()
         val cseNoticeBundle = Bundle()
         cseNoticeBundle.putString("board", "notice")
+        cseNoticeBundle.putString("site", "cse")
         cseNotice.arguments = cseNoticeBundle
 
-        val cseFreeBoard = CseBoardFragment()
+        val cseFreeBoard = BoardFragment()
         val cseFreeBoardBundle = Bundle()
         cseFreeBoardBundle.putString("board", "free")
+        cseFreeBoardBundle.putString("site", "cse")
         cseFreeBoard.arguments = cseFreeBoardBundle
 
-        val cseJobBoard = CseBoardFragment()
+        val cseJobBoard = BoardFragment()
         val cseJobBoardBundle = Bundle()
         cseJobBoardBundle.putString("board", "job")
+        cseJobBoardBundle.putString("site", "cse")
         cseJobBoard.arguments = cseJobBoardBundle
 
         fragment = if (savedInstanceState == null) {

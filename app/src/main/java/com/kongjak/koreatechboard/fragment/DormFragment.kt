@@ -1,10 +1,10 @@
 package com.kongjak.koreatechboard.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
@@ -19,14 +19,16 @@ class DormFragment : Fragment() {
 
         val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view_dorm)
 
-        val dormNotice = DormBoardFragment()
+        val dormNotice = BoardFragment()
         val dormNoticeBundle = Bundle()
         dormNoticeBundle.putString("board", "notice")
+        dormNoticeBundle.putString("site", "dorm")
         dormNotice.arguments = dormNoticeBundle
 
-        val dormFreeBoard = DormBoardFragment()
+        val dormFreeBoard = BoardFragment()
         val dormFreeBoardBundle = Bundle()
         dormFreeBoardBundle.putString("board", "free")
+        dormFreeBoardBundle.putString("site", "dorm")
         dormFreeBoard.arguments = dormFreeBoardBundle
 
         fragment = if (savedInstanceState == null) {

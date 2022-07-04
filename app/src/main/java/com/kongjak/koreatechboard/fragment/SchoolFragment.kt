@@ -1,10 +1,10 @@
 package com.kongjak.koreatechboard.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
@@ -19,24 +19,28 @@ class SchoolFragment : Fragment() {
 
         val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view_school)
 
-        val schoolNotice = SchoolBoardFragment()
+        val schoolNotice = BoardFragment()
         val schoolNoticeBundle = Bundle()
         schoolNoticeBundle.putString("board", "notice")
+        schoolNoticeBundle.putString("site", "school")
         schoolNotice.arguments = schoolNoticeBundle
 
-        val schoolScholar = SchoolBoardFragment()
+        val schoolScholar = BoardFragment()
         val schoolScholarBundle = Bundle()
         schoolScholarBundle.putString("board", "scholar")
+        schoolScholarBundle.putString("site", "school")
         schoolScholar.arguments = schoolScholarBundle
 
-        val schoolBachelor = SchoolBoardFragment()
+        val schoolBachelor = BoardFragment()
         val schoolBachelorBundle = Bundle()
         schoolBachelorBundle.putString("board", "bachelor")
+        schoolBachelorBundle.putString("site", "school")
         schoolBachelor.arguments = schoolBachelorBundle
 
-        val schoolCovid19 = SchoolBoardFragment()
+        val schoolCovid19 = BoardFragment()
         val schoolCovid19Bundle = Bundle()
         schoolCovid19Bundle.putString("board", "covid19")
+        schoolCovid19Bundle.putString("site", "school")
         schoolCovid19.arguments = schoolCovid19Bundle
 
         fragment = if (savedInstanceState == null) {

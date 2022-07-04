@@ -2,8 +2,9 @@ package com.kongjak.koreatechboard.data
 
 import java.io.Serializable
 
-data class CseBoard(
+data class Board(
     val title: String?,
+    val notice_type: String?,
     val num: String?,
     val writer: String?,
     val write_date: String?,

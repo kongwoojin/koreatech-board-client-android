@@ -15,18 +15,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.activity.ArticleActivity
-import com.kongjak.koreatechboard.adapter.DormBoardAdapter
+import com.kongjak.koreatechboard.adapter.BoardAdapter
 import com.kongjak.koreatechboard.connection.RetrofitBuilder
-import com.kongjak.koreatechboard.data.DormBoard
+import com.kongjak.koreatechboard.data.Board
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.Serializable
 
-class DormBoardFragment : Fragment() {
+class BoardFragment : Fragment() {
 
-    private val dataList = mutableListOf<DormBoard>()
-    private val dormBoardAdapter = DormBoardAdapter()
+    private val dataList = mutableListOf<Board>()
+    private val boardAdapter = BoardAdapter()
     private var page = 1
     private lateinit var prevFab: FloatingActionButton
     private lateinit var nextFab: FloatingActionButton
@@ -35,13 +35,14 @@ class DormBoardFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var board: String
+    private lateinit var site: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView: View = inflater.inflate(R.layout.fragment_dorm_board, container, false)
+        val rootView: View = inflater.inflate(R.layout.fragment_board, container, false)
         recyclerView = rootView.findViewById(R.id.recycler_view)
         prevFab = rootView.findViewById(R.id.prev_fab)
         nextFab = rootView.findViewById(R.id.next_fab)
@@ -49,22 +50,23 @@ class DormBoardFragment : Fragment() {
         progressBar = rootView.findViewById(R.id.progress_bar)
 
         board = requireArguments().getString("board")!!
+        site = requireArguments().getString("site")!!
 
         val dividerItemDecoration = DividerItemDecoration(
             recyclerView.context,
             LinearLayoutManager(rootView.context).orientation
         )
 
-        dormBoardAdapter.dataList = dataList
+        boardAdapter.dataList = dataList
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = dormBoardAdapter
+            adapter = boardAdapter
             addItemDecoration(dividerItemDecoration)
         }
 
         if (savedInstanceState != null) {
-            val restoredData = savedInstanceState.getSerializable("data") as ArrayList<DormBoard>
+            val restoredData = savedInstanceState.getSerializable("data") as ArrayList<Board>
             dataList.addAll(restoredData)
             page = savedInstanceState.getInt("page")
         } else {
@@ -94,12 +96,12 @@ class DormBoardFragment : Fragment() {
 
         reloadFab()
 
-        dormBoardAdapter.setOnClickListener { url ->
+        boardAdapter.setOnClickListener { url ->
             when (resources.getBoolean(R.bool.is_tablet)) {
                 true -> {
                     val articleFragment = ArticleFragment()
                     val articleBundle = Bundle()
-                    articleBundle.putString("site", "dorm")
+                    articleBundle.putString("site", site)
                     articleBundle.putString("url", url)
                     articleFragment.arguments = articleBundle
 
@@ -111,7 +113,7 @@ class DormBoardFragment : Fragment() {
                 }
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
-                    intent.putExtra("site", "dorm")
+                    intent.putExtra("site", site)
                     intent.putExtra("url", url)
                     startActivity(intent)
                 }
@@ -148,22 +150,22 @@ class DormBoardFragment : Fragment() {
     }
 
     private fun getApi() {
-        RetrofitBuilder.api.getDormBoard(board, page)
-            .enqueue(object : Callback<ArrayList<DormBoard>> {
+        RetrofitBuilder.api.getBoard(site, board, page)
+            .enqueue(object : Callback<ArrayList<Board>> {
                 override fun onResponse(
-                    call: Call<ArrayList<DormBoard>>,
-                    response: Response<ArrayList<DormBoard>>
+                    call: Call<ArrayList<Board>>,
+                    response: Response<ArrayList<Board>>
                 ) {
                     val list = response.body()
                     dataList.clear()
                     dataList.addAll(list!!)
-                    dormBoardAdapter.notifyDataSetChanged()
+                    boardAdapter.notifyDataSetChanged()
                     progressBar.visibility = View.GONE
                     swipeRefresh.isRefreshing = false
                     reloadFab()
                 }
 
-                override fun onFailure(call: Call<ArrayList<DormBoard>>, t: Throwable) {
+                override fun onFailure(call: Call<ArrayList<Board>>, t: Throwable) {
                     Log.d("error", t.message.toString())
                 }
             })

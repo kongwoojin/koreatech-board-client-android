@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.data.CseBoard
+import com.kongjak.koreatechboard.data.Board
 
-class CseBoardAdapter : RecyclerView.Adapter<CseBoardAdapter.ViewHolder>() {
+class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
-    var dataList = mutableListOf<CseBoard>()
+    var dataList = mutableListOf<Board>()
     lateinit var onClickListener: OnClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -21,11 +21,14 @@ class CseBoardAdapter : RecyclerView.Adapter<CseBoardAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            var title = dataList[position].title
+            val title = dataList[position].title
+            val noticeType = dataList[position].notice_type
             if (title != null) {
-                if (dataList[position].num == "공지")
-                    title = "[공지] $title"
-                titleTextView.text = title
+                titleTextView.text = if (noticeType != null) {
+                    "[$noticeType] $title"
+                } else {
+                    title
+                }
                 writerTextView.text = dataList[position].writer
             } else {
                 Log.d("Test", "END")
