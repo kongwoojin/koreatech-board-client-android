@@ -16,33 +16,18 @@ interface API {
         @Query("page") page: Int
     ): Call<ArrayList<CseBoard>>
 
-    @GET("cse/article/")
-    fun getCseArticle(
-        @Query("url") url: String
-    ): Call<ArrayList<Article>>
-
     @GET("school/{board}/")
     fun getSchoolBoard(
         @Path("board") board: String,
         @Query("page") page: Int
     ): Call<ArrayList<SchoolBoard>>
 
-    @GET("school/article/")
-    fun getSchoolArticle(
-        @Query("url") url: String
-    ): Call<ArrayList<Article>>
-
     @GET("dorm/{board}/")
     fun getDormBoard(
         @Path("board") board: String,
         @Query("page") page: Int
     ): Call<ArrayList<DormBoard>>
-
-    @GET("dorm/article/")
-    fun getDormArticle(
-        @Query("url") url: String
-    ): Call<ArrayList<Article>>
-
+    
     @GET("{site}/article/")
     fun getArticle(
         @Path("site") site: String,
