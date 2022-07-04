@@ -22,16 +22,14 @@ import java.util.regex.Pattern
 
 class CseArticleActivity : AppCompatActivity() {
 
-    var board: String = ""
-    var articleNum: Int = 0
+    var url: String = ""
 
     private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cse_article)
 
-        board = intent.getStringExtra("board")!!
-        articleNum = intent.getIntExtra("article_num", 0)
+        url = intent.getStringExtra("url")!!
 
         progressBar = findViewById(R.id.progress_bar)
 
@@ -80,7 +78,7 @@ class CseArticleActivity : AppCompatActivity() {
     }
 
     private fun getApi() {
-        RetrofitBuilder.api.getCseArticle(board, articleNum)
+        RetrofitBuilder.api.getCseArticle(url)
             .enqueue(object : Callback<ArrayList<Article>> {
                 override fun onResponse(
                     call: Call<ArrayList<Article>>,

@@ -95,10 +95,9 @@ class CseBoardFragment : Fragment() {
 
         reloadFab()
 
-        cseBoardAdapter.setOnClickListener {
+        cseBoardAdapter.setOnClickListener { url ->
             val intent = Intent(context, CseArticleActivity::class.java)
-            intent.putExtra("board", board)
-            intent.putExtra("article_num", it.toInt())
+            intent.putExtra("url", url)
             startActivity(intent)
         }
 
@@ -131,24 +130,25 @@ class CseBoardFragment : Fragment() {
     }
 
     private fun getApi() {
-        RetrofitBuilder.api.getCseBoard(board, page).enqueue(object : Callback<ArrayList<CseBoard>> {
-            override fun onResponse(
-                call: Call<ArrayList<CseBoard>>,
-                response: Response<ArrayList<CseBoard>>
-            ) {
-                val list = response.body()
-                dataList.clear()
-                dataList.addAll(list!!)
-                cseBoardAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
-                swipeRefresh.isRefreshing = false
-                reloadFab()
-            }
+        RetrofitBuilder.api.getCseBoard(board, page)
+            .enqueue(object : Callback<ArrayList<CseBoard>> {
+                override fun onResponse(
+                    call: Call<ArrayList<CseBoard>>,
+                    response: Response<ArrayList<CseBoard>>
+                ) {
+                    val list = response.body()
+                    dataList.clear()
+                    dataList.addAll(list!!)
+                    cseBoardAdapter.notifyDataSetChanged()
+                    progressBar.visibility = View.GONE
+                    swipeRefresh.isRefreshing = false
+                    reloadFab()
+                }
 
-            override fun onFailure(call: Call<ArrayList<CseBoard>>, t: Throwable) {
-                Log.d("error", t.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<ArrayList<CseBoard>>, t: Throwable) {
+                    Log.d("error", t.message.toString())
+                }
+            })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

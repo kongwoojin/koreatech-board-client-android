@@ -22,7 +22,6 @@ class CseBoardAdapter : RecyclerView.Adapter<CseBoardAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             var title = dataList[position].title
-            val articleNum = dataList[position].article_num
             if (title != null) {
                 if (dataList[position].num == "공지")
                     title = "[공지] $title"
@@ -32,7 +31,7 @@ class CseBoardAdapter : RecyclerView.Adapter<CseBoardAdapter.ViewHolder>() {
                 Log.d("Test", "END")
             }
             itemView.setOnClickListener {
-                onClickListener.onClick(articleNum)
+                onClickListener.onClick(dataList[position].article_url)
             }
         }
     }

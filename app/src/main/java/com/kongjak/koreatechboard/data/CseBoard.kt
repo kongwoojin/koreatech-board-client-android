@@ -8,5 +8,5 @@ data class CseBoard(
     val writer: String?,
     val write_date: String?,
     val read: Int,
-    val article_num: String
+    val article_url: String
 ) : Serializable

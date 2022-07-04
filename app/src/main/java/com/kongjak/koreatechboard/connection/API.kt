@@ -18,8 +18,7 @@ interface API {
 
     @GET("cse/article/")
     fun getCseArticle(
-        @Query("board") board: String,
-        @Query("article") articleNum: Int
+        @Query("url") url: String
     ): Call<ArrayList<Article>>
 
     @GET("school/{board}/")
