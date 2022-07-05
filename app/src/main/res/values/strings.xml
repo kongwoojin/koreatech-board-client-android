@@ -12,4 +12,5 @@
     <string name="drawer_item_dorm">Dorm</string>
     
     <string name="notice">Notice</string>
+    <string name="no_more_article">No more article!</string>
 </resources>

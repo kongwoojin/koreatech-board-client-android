@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +26,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
             var itemTitle = title
             val noticeString = itemView.resources.getString(R.string.notice)
+            val noMoreArticle = itemView.resources.getString(R.string.no_more_article)
 
             if (title != null) {
                 if (noticeType != null) {
@@ -42,7 +42,8 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 titleTextView.text = itemTitle
                 writerTextView.text = dataList[position].writer
             } else {
-                Log.d("Test", "END")
+                titleTextView.text = noMoreArticle
+                writerTextView.text = ""
             }
             itemView.setOnClickListener {
                 onClickListener.onClick(dataList[position].article_url)

@@ -12,4 +12,5 @@
     <string name="drawer_item_dorm">생활관</string>
 
     <string name="notice">공지</string>
+    <string name="no_more_article">게시글이 더 없습니다!</string>
 </resources>
