@@ -10,7 +10,7 @@ import com.kongjak.koreatechboard.data.Board
 
 class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
 
-    var dataList = mutableListOf<Board>()
+    private var dataList = mutableListOf<Board>()
     lateinit var onClickListener: OnClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -68,6 +68,15 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 item(position)
             }
         }
+    }
+
+    fun updateList(list: MutableList<Board>) {
+        dataList.clear()
+        dataList.addAll(list)
+    }
+
+    fun getList(): MutableList<Board> {
+        return dataList
     }
 
     private fun String.isNumber(): Boolean {

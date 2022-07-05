@@ -25,7 +25,6 @@ import java.io.Serializable
 
 class BoardFragment : Fragment() {
 
-    private val dataList = mutableListOf<Board>()
     private val boardAdapter = BoardAdapter()
     private var page = 1
     private lateinit var prevFab: FloatingActionButton
@@ -57,7 +56,6 @@ class BoardFragment : Fragment() {
             LinearLayoutManager(rootView.context).orientation
         )
 
-        boardAdapter.dataList = dataList
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
@@ -67,10 +65,10 @@ class BoardFragment : Fragment() {
 
         if (savedInstanceState != null) {
             val restoredData = savedInstanceState.getSerializable("data") as ArrayList<Board>
-            dataList.addAll(restoredData)
+            boardAdapter.updateList(restoredData)
             page = savedInstanceState.getInt("page")
         } else {
-            if (dataList.isEmpty())
+            if (boardAdapter.itemCount == 0)
                 loadPage()
         }
 
@@ -157,9 +155,10 @@ class BoardFragment : Fragment() {
                     response: Response<ArrayList<Board>>
                 ) {
                     val list = response.body()
-                    dataList.clear()
-                    dataList.addAll(list!!)
-                    boardAdapter.notifyDataSetChanged()
+                    boardAdapter.apply {
+                        updateList(list!!)
+                        notifyDataSetChanged()
+                    }
                     progressBar.visibility = View.GONE
                     swipeRefresh.isRefreshing = false
                     reloadFab()
@@ -173,7 +172,7 @@ class BoardFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable("data", dataList as Serializable)
+        outState.putSerializable("data", boardAdapter.getList() as Serializable)
         outState.putInt("page", page)
     }
 }
