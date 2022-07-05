@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.fragment.ArticleFragment
 
@@ -13,6 +14,9 @@ class ArticleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         site = intent.getStringExtra("site")!!
         url = intent.getStringExtra("url")!!
