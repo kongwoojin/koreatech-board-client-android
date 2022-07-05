@@ -23,12 +23,23 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
         with(holder) {
             val title = dataList[position].title
             val noticeType = dataList[position].notice_type
+            val num = dataList[position].num
+
+            var itemTitle = title
+            val noticeString = itemView.resources.getString(R.string.notice)
+
             if (title != null) {
-                titleTextView.text = if (noticeType != null) {
-                    "[$noticeType] $title"
-                } else {
-                    title
+                if (noticeType != null) {
+                    itemTitle = "[$noticeType] $itemTitle"
                 }
+
+                itemTitle = if (num!!.isNumber()) {
+                    "$num | $itemTitle"
+                } else {
+                    "$noticeString | $itemTitle"
+                }
+
+                titleTextView.text = itemTitle
                 writerTextView.text = dataList[position].writer
             } else {
                 Log.d("Test", "END")
@@ -56,5 +67,9 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 item(position)
             }
         }
+    }
+
+    private fun String.isNumber(): Boolean {
+        return this.toIntOrNull() != null
     }
 }

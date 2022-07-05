@@ -10,4 +10,6 @@
     <string name="drawer_item_school">학교</string>
     <string name="drawer_item_cse">컴퓨터 공학부</string>
     <string name="drawer_item_dorm">생활관</string>
+
+    <string name="notice">공지</string>
 </resources>
