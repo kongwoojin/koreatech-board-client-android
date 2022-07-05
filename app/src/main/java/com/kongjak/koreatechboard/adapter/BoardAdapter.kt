@@ -21,7 +21,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             val title = dataList[position].title
-            val noticeType = dataList[position].notice_type
+            val noticeType = dataList[position].noticeType
             val num = dataList[position].num
 
             var itemTitle = title
@@ -46,7 +46,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 writerTextView.text = ""
             }
             itemView.setOnClickListener {
-                onClickListener.onClick(dataList[position].article_url)
+                onClickListener.onClick(dataList[position].articleUrl)
             }
         }
     }
