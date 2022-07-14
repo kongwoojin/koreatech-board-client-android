@@ -42,6 +42,27 @@ class MainActivity : AppCompatActivity() {
         val dormFragment = DormFragment()
         val settingsFragment = SettingsFragment()
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        when (prefs.getString("default_board", "school")) {
+            "school" -> {
+                defaultFragment = schoolFragment
+                navView.setCheckedItem(R.id.nav_drawer_school)
+            }
+            "cse" -> {
+                defaultFragment = cseFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "dorm" -> {
+                defaultFragment = dormFragment
+                navView.setCheckedItem(R.id.nav_drawer_dorm)
+            }
+            else -> {
+                defaultFragment = schoolFragment
+                navView.setCheckedItem(R.id.nav_drawer_school)
+            }
+        }
+
         fragment = if (savedInstanceState == null) {
             defaultFragment
         } else {
