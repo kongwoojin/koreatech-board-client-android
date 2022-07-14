@@ -23,6 +23,10 @@
             app:key="license"
             app:title="@string/license_title" />
 
+        <Preference
+            app:key="source_code"
+            app:title="@string/source_code_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
