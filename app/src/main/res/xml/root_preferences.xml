@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/app_settings_header">
+
+        <ListPreference
+            app:defaultValue="school"
+            app:entries="@array/board_entries"
+            app:entryValues="@array/board_values"
+            app:key="default_board"
+            app:title="@string/default_board_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <Preference
+        app:key=""
+        app:summary=""
+        app:title="Developer" />
+
+</PreferenceScreen>

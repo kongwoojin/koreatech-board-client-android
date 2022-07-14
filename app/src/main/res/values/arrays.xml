@@ -1,0 +1,13 @@
+<resources>
+    <string-array name="board_entries">
+        <item>@string/arrays_board_school</item>
+        <item>@string/arrays_board_cse</item>
+        <item>@string/arrays_board_dorm</item>
+    </string-array>
+
+    <string-array name="board_values">
+        <item>school</item>
+        <item>cse</item>
+        <item>dorm</item>
+    </string-array>
+</resources>

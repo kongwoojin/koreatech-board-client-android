@@ -7,10 +7,19 @@
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
 
+    <string name="drawer_title_board">Board</string>
     <string name="drawer_item_school">School</string>
     <string name="drawer_item_cse">CSE</string>
     <string name="drawer_item_dorm">Dorm</string>
-    
+    <string name="drawer_item_settings">Settings</string>
+
     <string name="notice">Notice</string>
     <string name="no_more_article">No more article!</string>
+
+    <string name="app_settings_header">App settings</string>
+    <string name="default_board_title">Default board</string>
+
+    <string name="arrays_board_school">School</string>
+    <string name="arrays_board_dorm">Dorm</string>
+    <string name="arrays_board_cse">CSE</string>
 </resources>

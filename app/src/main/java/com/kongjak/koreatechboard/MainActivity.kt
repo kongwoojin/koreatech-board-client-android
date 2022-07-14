@@ -6,13 +6,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
 import com.kongjak.koreatechboard.fragment.CseFragment
 import com.kongjak.koreatechboard.fragment.DormFragment
 import com.kongjak.koreatechboard.fragment.SchoolFragment
+import com.kongjak.koreatechboard.fragment.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var defaultFragment: Fragment
     lateinit var fragment: Fragment
     lateinit var drawerLayout: DrawerLayout
 
@@ -37,9 +40,10 @@ class MainActivity : AppCompatActivity() {
         val schoolFragment = SchoolFragment()
         val cseFragment = CseFragment()
         val dormFragment = DormFragment()
+        val settingsFragment = SettingsFragment()
 
         fragment = if (savedInstanceState == null) {
-            schoolFragment
+            defaultFragment
         } else {
             supportFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
@@ -57,6 +61,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_drawer_dorm -> {
                     fragment = dormFragment
+                }
+                R.id.nav_drawer_settings -> {
+                    fragment = settingsFragment
                 }
             }
             loadFragment()
