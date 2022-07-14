@@ -7,7 +7,8 @@
     <string name="item_bachelor_board">학사공지</string>
     <string name="item_covid19_board">코로나19 공지</string>
 
-    <string name="drawer_title_board">게시판</string>
+    <string name="drawer_title_settings">설정</string>
+
     <string name="drawer_item_school">학교</string>
     <string name="drawer_item_cse">컴퓨터 공학부</string>
     <string name="drawer_item_dorm">생활관</string>

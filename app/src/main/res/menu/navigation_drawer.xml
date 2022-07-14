@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/drawer_title_board">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_drawer_school"
+            android:title="@string/drawer_item_school" />
+        <item
+            android:id="@+id/nav_drawer_cse"
+            android:title="@string/drawer_item_cse" />
+        <item
+            android:id="@+id/nav_drawer_dorm"
+            android:title="@string/drawer_item_dorm" />
+    </group>
+
+
+    <item android:title="@string/drawer_title_settings">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_drawer_school"
-                    android:title="@string/drawer_item_school" />
-                <item
-                    android:id="@+id/nav_drawer_cse"
-                    android:title="@string/drawer_item_cse" />
-                <item
-                    android:id="@+id/nav_drawer_dorm"
-                    android:title="@string/drawer_item_dorm" />
+                    android:id="@+id/nav_drawer_settings"
+                    android:title="@string/drawer_item_settings" />
             </group>
         </menu>
     </item>
 
-    <item
-        android:id="@+id/nav_drawer_settings"
-        android:title="@string/drawer_item_settings" />
 </menu>
