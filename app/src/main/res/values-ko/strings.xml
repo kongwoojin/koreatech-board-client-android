@@ -17,7 +17,13 @@
     <string name="no_more_article">게시글이 더 없습니다!</string>
 
     <string name="app_settings_header">앱 설정</string>
+    <string name="info_settings_header">안내</string>
+
     <string name="default_board_title">기본 게시판</string>
+
+    <string name="developer_title">개발자</string>
+    <string name="developer_summary">공우진</string>
+    <string name="license_title">라이선스</string>
 
     <string name="arrays_board_school">학교</string>
     <string name="arrays_board_dorm">생활관</string>

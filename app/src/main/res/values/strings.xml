@@ -17,7 +17,13 @@
     <string name="no_more_article">No more article!</string>
 
     <string name="app_settings_header">App settings</string>
+    <string name="info_settings_header">Info</string>
+
     <string name="default_board_title">Default board</string>
+
+    <string name="developer_title">Developer</string>
+    <string name="developer_summary">WooJin Kong</string>
+    <string name="license_title">License</string>
 
     <string name="arrays_board_school">School</string>
     <string name="arrays_board_dorm">Dorm</string>
