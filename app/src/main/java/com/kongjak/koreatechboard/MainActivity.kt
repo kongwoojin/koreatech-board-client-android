@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -8,10 +9,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
+import com.kongjak.koreatechboard.activity.SettingsActivity
 import com.kongjak.koreatechboard.fragment.CseFragment
 import com.kongjak.koreatechboard.fragment.DormFragment
 import com.kongjak.koreatechboard.fragment.SchoolFragment
-import com.kongjak.koreatechboard.fragment.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         val schoolFragment = SchoolFragment()
         val cseFragment = CseFragment()
         val dormFragment = DormFragment()
-        val settingsFragment = SettingsFragment()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
@@ -76,18 +76,21 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_drawer_school -> {
                     fragment = schoolFragment
+                    loadFragment()
                 }
                 R.id.nav_drawer_cse -> {
                     fragment = cseFragment
+                    loadFragment()
                 }
                 R.id.nav_drawer_dorm -> {
                     fragment = dormFragment
+                    loadFragment()
                 }
                 R.id.nav_drawer_settings -> {
-                    fragment = settingsFragment
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
                 }
             }
-            loadFragment()
             true
         }
     }
