@@ -15,11 +15,6 @@
     <PreferenceCategory app:title="@string/info_settings_header">
 
         <Preference
-            app:key="developer"
-            app:summary="@string/developer_summary"
-            app:title="@string/developer_title" />
-
-        <Preference
             app:key="license"
             app:title="@string/license_title" />
 

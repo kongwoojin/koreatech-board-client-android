@@ -22,8 +22,6 @@
 
     <string name="default_board_title">Default board</string>
 
-    <string name="developer_title">Developer</string>
-    <string name="developer_summary">WooJin Kong</string>
     <string name="license_title">Opensource License</string>
     <string name="source_code_title">Source code</string>
 

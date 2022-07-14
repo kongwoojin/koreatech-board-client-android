@@ -22,8 +22,6 @@
 
     <string name="default_board_title">기본 게시판</string>
 
-    <string name="developer_title">개발자</string>
-    <string name="developer_summary">공우진</string>
     <string name="license_title">오픈소스 라이선스</string>
     <string name="source_code_title">소스코드</string>
 
