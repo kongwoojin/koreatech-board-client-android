@@ -24,7 +24,7 @@
 
     <string name="developer_title">개발자</string>
     <string name="developer_summary">공우진</string>
-    <string name="license_title">라이선스</string>
+    <string name="license_title">오픈소스 라이선스</string>
 
     <string name="arrays_board_school">학교</string>
     <string name="arrays_board_dorm">생활관</string>
