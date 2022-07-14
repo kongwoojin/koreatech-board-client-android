@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.kongjak.koreatechboard.R
@@ -31,5 +32,16 @@ class ArticleActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.article_frame_layout, articleFragment)
             .commit()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
