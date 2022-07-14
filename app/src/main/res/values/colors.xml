@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="koreatech_main_1">#FF7F00</color>
+    <color name="koreatech_main_2">#183072</color>
+
+    <color name="koreatech_sub_1">#22449C</color>
+    <color name="koreatech_sub_2">#B3B3AA</color>
+    <color name="koreatech_sub_3">#4C4C4C</color>
 </resources>
