@@ -11,6 +11,7 @@
     <string name="drawer_title_settings">설정</string>
 
     <string name="drawer_item_school">학교</string>
+    <string name="drawer_item_dorm">생활관</string>
     <string name="drawer_item_cse">컴퓨터공학부</string>
     <string name="drawer_item_mechanical">기계공학부</string>
     <string name="drawer_item_mechatronics">메카트로닉스공학부</string>
@@ -19,7 +20,6 @@
     <string name="drawer_item_arch">디자인·건축공학부 (건축)</string>
     <string name="drawer_item_emc">에너지신소재화학공학부</string>
     <string name="drawer_item_sim">산업경영학부</string>
-    <string name="drawer_item_dorm">생활관</string>
     <string name="drawer_item_settings">설정</string>
 
     <string name="notice">공지</string>

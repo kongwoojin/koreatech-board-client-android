@@ -1,6 +1,7 @@
 <resources>
     <string-array name="board_entries">
         <item>@string/arrays_board_school</item>
+        <item>@string/arrays_board_dorm</item>
         <item>@string/arrays_board_cse</item>
         <item>@string/drawer_item_mechanical</item>
         <item>@string/drawer_item_mechatronics</item>
@@ -9,11 +10,11 @@
         <item>@string/arrays_board_arch</item>
         <item>@string/arrays_board_emc</item>
         <item>@string/arrays_board_sim</item>
-        <item>@string/arrays_board_dorm</item>
     </string-array>
 
     <string-array name="board_values">
         <item>school</item>
+        <item>dorm</item>
         <item>cse</item>
         <item>mechanical</item>
         <item>mechatronics</item>
@@ -22,6 +23,5 @@
         <item>arch</item>
         <item>emc</item>
         <item>sim</item>
-        <item>dorm</item>
     </string-array>
 </resources>

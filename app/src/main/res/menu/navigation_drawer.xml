@@ -6,6 +6,9 @@
             android:id="@+id/nav_drawer_school"
             android:title="@string/drawer_item_school" />
         <item
+            android:id="@+id/nav_drawer_dorm"
+            android:title="@string/drawer_item_dorm" />
+        <item
             android:id="@+id/nav_drawer_cse"
             android:title="@string/drawer_item_cse" />
         <item
@@ -29,9 +32,6 @@
         <item
             android:id="@+id/nav_drawer_sim"
             android:title="@string/drawer_item_sim" />
-        <item
-            android:id="@+id/nav_drawer_dorm"
-            android:title="@string/drawer_item_dorm" />
     </group>
 
 

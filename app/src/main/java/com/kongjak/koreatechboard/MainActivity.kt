@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity() {
                 defaultFragment = cseFragment
                 navView.setCheckedItem(R.id.nav_drawer_cse)
             }
+            "dorm" -> {
+                defaultFragment = dormFragment
+                navView.setCheckedItem(R.id.nav_drawer_dorm)
+            }
             "mechanical" -> {
                 defaultFragment = mechanicalFragment
                 navView.setCheckedItem(R.id.nav_drawer_cse)
@@ -86,10 +90,6 @@ class MainActivity : AppCompatActivity() {
                 defaultFragment = simFragment
                 navView.setCheckedItem(R.id.nav_drawer_cse)
             }
-            "dorm" -> {
-                defaultFragment = dormFragment
-                navView.setCheckedItem(R.id.nav_drawer_dorm)
-            }
             else -> {
                 defaultFragment = schoolFragment
                 navView.setCheckedItem(R.id.nav_drawer_school)
@@ -109,6 +109,10 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_drawer_school -> {
                     fragment = schoolFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_dorm -> {
+                    fragment = dormFragment
                     loadFragment()
                 }
                 R.id.nav_drawer_cse -> {
@@ -141,10 +145,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_drawer_sim -> {
                     fragment = simFragment
-                    loadFragment()
-                }
-                R.id.nav_drawer_dorm -> {
-                    fragment = dormFragment
                     loadFragment()
                 }
                 R.id.nav_drawer_settings -> {
