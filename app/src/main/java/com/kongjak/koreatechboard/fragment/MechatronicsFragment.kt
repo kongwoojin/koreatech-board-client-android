@@ -49,10 +49,12 @@ class MechatronicsFragment : Fragment() {
         mechatronicsFreeBoardBundle.putString("site", "mechatronics")
         mechatronicsFreeBoard.arguments = mechatronicsFreeBoardBundle
 
-        fragment = if (savedInstanceState == null) {
-            mechatronicsNotice
+        if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = mechatronicsNotice
+            }
         } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

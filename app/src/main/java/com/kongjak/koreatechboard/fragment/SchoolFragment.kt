@@ -43,10 +43,12 @@ class SchoolFragment : Fragment() {
         schoolCovid19Bundle.putString("site", "school")
         schoolCovid19.arguments = schoolCovid19Bundle
 
-        fragment = if (savedInstanceState == null) {
-            schoolNotice
+        if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = schoolNotice
+            }
         } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

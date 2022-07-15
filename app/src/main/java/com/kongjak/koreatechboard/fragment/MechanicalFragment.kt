@@ -1,10 +1,10 @@
 package com.kongjak.koreatechboard.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
@@ -37,10 +37,12 @@ class MechanicalFragment : Fragment() {
         mechanicalFreeBoardBundle.putString("site", "mechanical")
         mechanicalFreeBoard.arguments = mechanicalFreeBoardBundle
 
-        fragment = if (savedInstanceState == null) {
-            mechanicalNotice
+        if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = mechanicalNotice
+            }
         } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

@@ -37,10 +37,12 @@ class CseFragment : Fragment() {
         cseJobBoardBundle.putString("site", "cse")
         cseJobBoard.arguments = cseJobBoardBundle
 
-        fragment = if (savedInstanceState == null) {
-            cseNotice
+        if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = cseNotice
+            }
         } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

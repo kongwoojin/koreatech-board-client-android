@@ -23,10 +23,12 @@ class IteFragment : Fragment() {
         iteNoticeBundle.putString("site", "ite")
         iteNotice.arguments = iteNoticeBundle
 
-        fragment = if (savedInstanceState == null) {
-            iteNotice
-        } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+         if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = iteNotice
+            }
+         } else {
+             fragment =parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

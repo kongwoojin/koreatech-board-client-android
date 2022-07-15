@@ -1,10 +1,10 @@
 package com.kongjak.koreatechboard.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
 
 class SimFragment : Fragment() {
@@ -22,10 +22,12 @@ class SimFragment : Fragment() {
         simNoticeBundle.putString("site", "sim")
         simNotice.arguments = simNoticeBundle
 
-        fragment = if (savedInstanceState == null) {
-            simNotice
+        if (savedInstanceState == null) {
+            if (!this::fragment.isInitialized) {
+                fragment = simNotice
+            }
         } else {
-            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 
