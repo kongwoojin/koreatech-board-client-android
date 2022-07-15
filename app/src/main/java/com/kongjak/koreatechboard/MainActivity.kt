@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.navigation.NavigationView
 import com.kongjak.koreatechboard.activity.SettingsActivity
-import com.kongjak.koreatechboard.fragment.CseFragment
-import com.kongjak.koreatechboard.fragment.DormFragment
-import com.kongjak.koreatechboard.fragment.SchoolFragment
+import com.kongjak.koreatechboard.fragment.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +38,13 @@ class MainActivity : AppCompatActivity() {
         }
         val schoolFragment = SchoolFragment()
         val cseFragment = CseFragment()
+        val mechanicalFragment = MechanicalFragment()
+        val mechatronicsFragment = MechatronicsFragment()
+        val iteFragment = IteFragment()
+        val ideFragment = IdeFragment()
+        val archFragment = ArchFragment()
+        val emcFragment = EmcFragment()
+        val simFragment = SimFragment()
         val dormFragment = DormFragment()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -51,6 +56,34 @@ class MainActivity : AppCompatActivity() {
             }
             "cse" -> {
                 defaultFragment = cseFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "mechanical" -> {
+                defaultFragment = mechanicalFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "mechatronics" -> {
+                defaultFragment = mechatronicsFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "ite" -> {
+                defaultFragment = iteFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "ide" -> {
+                defaultFragment = ideFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "arch" -> {
+                defaultFragment = archFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "emc" -> {
+                defaultFragment = emcFragment
+                navView.setCheckedItem(R.id.nav_drawer_cse)
+            }
+            "sim" -> {
+                defaultFragment = simFragment
                 navView.setCheckedItem(R.id.nav_drawer_cse)
             }
             "dorm" -> {
@@ -80,6 +113,34 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_drawer_cse -> {
                     fragment = cseFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_mechanical -> {
+                    fragment = mechanicalFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_mechatronics -> {
+                    fragment = mechatronicsFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_ite -> {
+                    fragment = iteFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_ide -> {
+                    fragment = ideFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_arch -> {
+                    fragment = archFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_emc -> {
+                    fragment = emcFragment
+                    loadFragment()
+                }
+                R.id.nav_drawer_sim -> {
+                    fragment = simFragment
                     loadFragment()
                 }
                 R.id.nav_drawer_dorm -> {

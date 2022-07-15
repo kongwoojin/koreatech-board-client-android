@@ -3,6 +3,7 @@
     <string name="item_notice">공지사항</string>
     <string name="item_free_board">자유 게시판</string>
     <string name="item_job_board">취업 게시판</string>
+    <string name="item_lecture_notice">강의 공지</string>
     <string name="item_scholar_board">장학공지</string>
     <string name="item_bachelor_board">학사공지</string>
     <string name="item_covid19_board">코로나19 공지</string>
@@ -10,7 +11,14 @@
     <string name="drawer_title_settings">설정</string>
 
     <string name="drawer_item_school">학교</string>
-    <string name="drawer_item_cse">컴퓨터 공학부</string>
+    <string name="drawer_item_cse">컴퓨터공학부</string>
+    <string name="drawer_item_mechanical">기계공학부</string>
+    <string name="drawer_item_mechatronics">메카트로닉스공학부</string>
+    <string name="drawer_item_ite">전기전자통신공학부</string>
+    <string name="drawer_item_ide">디자인·건축공학부 (디자인)</string>
+    <string name="drawer_item_arch">디자인·건축공학부 (건축)</string>
+    <string name="drawer_item_emc">에너지신소재화학공학부</string>
+    <string name="drawer_item_sim">산업경영학부</string>
     <string name="drawer_item_dorm">생활관</string>
     <string name="drawer_item_settings">설정</string>
 
@@ -27,5 +35,12 @@
 
     <string name="arrays_board_school">학교</string>
     <string name="arrays_board_dorm">생활관</string>
-    <string name="arrays_board_cse">컴퓨터 공학부</string>
+    <string name="arrays_board_cse">컴퓨터공학부</string>
+    <string name="arrays_board_mechanical">기계공학부</string>
+    <string name="arrays_board_mechatronics">메카트로닉스공학부</string>
+    <string name="arrays_board_ite">전기전자통신공학부</string>
+    <string name="arrays_board_ide">디자인·건축공학부 (디자인)</string>
+    <string name="arrays_board_arch">디자인·건축공학부 (건축)</string>
+    <string name="arrays_board_emc">에너지신소재화학공학부</string>
+    <string name="arrays_board_sim">산업경영학부</string>
 </resources>

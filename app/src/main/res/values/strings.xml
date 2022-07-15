@@ -3,6 +3,7 @@
     <string name="item_notice">Notice</string>
     <string name="item_free_board">Free Board</string>
     <string name="item_job_board">Job Board</string>
+    <string name="item_lecture_notice">Lecture notice</string>
     <string name="item_scholar_board">Scholar Notice</string>
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
@@ -11,6 +12,13 @@
 
     <string name="drawer_item_school">School</string>
     <string name="drawer_item_cse">CSE</string>
+    <string name="drawer_item_mechanical">Mechanical</string>
+    <string name="drawer_item_mechatronics">Mechatronics</string>
+    <string name="drawer_item_ite">Ite</string>
+    <string name="drawer_item_ide">Ide</string>
+    <string name="drawer_item_arch">Arch</string>
+    <string name="drawer_item_emc">Emc</string>
+    <string name="drawer_item_sim">Sim</string>
     <string name="drawer_item_dorm">Dorm</string>
     <string name="drawer_item_settings">Settings</string>
 
@@ -28,4 +36,11 @@
     <string name="arrays_board_school">School</string>
     <string name="arrays_board_dorm">Dorm</string>
     <string name="arrays_board_cse">CSE</string>
+    <string name="arrays_board_mechanical">Mechanical</string>
+    <string name="arrays_board_mechatronics">Mechatronics</string>
+    <string name="arrays_board_ite">Ite</string>
+    <string name="arrays_board_ide">Ide</string>
+    <string name="arrays_board_arch">Arch</string>
+    <string name="arrays_board_emc">Emc</string>
+    <string name="arrays_board_sim">Sim</string>
 </resources>
