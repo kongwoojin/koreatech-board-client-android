@@ -64,31 +64,31 @@ class MainActivity : AppCompatActivity() {
             }
             "mechanical" -> {
                 defaultFragment = mechanicalFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_mechanical)
             }
             "mechatronics" -> {
                 defaultFragment = mechatronicsFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_mechatronics)
             }
             "ite" -> {
                 defaultFragment = iteFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_ite)
             }
             "ide" -> {
                 defaultFragment = ideFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_ide)
             }
             "arch" -> {
                 defaultFragment = archFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_arch)
             }
             "emc" -> {
                 defaultFragment = emcFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_emc)
             }
             "sim" -> {
                 defaultFragment = simFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                navView.setCheckedItem(R.id.nav_drawer_sim)
             }
             else -> {
                 defaultFragment = schoolFragment
