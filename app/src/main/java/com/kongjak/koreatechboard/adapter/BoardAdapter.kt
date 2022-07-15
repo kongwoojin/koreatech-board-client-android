@@ -45,6 +45,9 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 titleTextView.text = noMoreArticle
                 writerTextView.text = ""
             }
+            
+            writeDateTextView.text = dataList[position].writeDate
+
             itemView.setOnClickListener {
                 onClickListener.onClick(dataList[position].articleUrl)
             }
@@ -56,6 +59,7 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.item_title)
         val writerTextView: TextView = itemView.findViewById(R.id.item_writer)
+        val writeDateTextView: TextView = itemView.findViewById(R.id.item_write_date)
     }
 
     interface OnClickListener {
