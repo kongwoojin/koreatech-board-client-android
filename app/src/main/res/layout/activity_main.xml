@@ -42,6 +42,7 @@
         android:layout_gravity="start"
         app:itemTextColor="?attr/colorDrawerItem"
         android:fitsSystemWindows="true"
+        app:itemMaxLines="3"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_drawer" />
 
