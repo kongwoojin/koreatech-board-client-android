@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Koreatech 게시판</string>
+    <string name="app_name">KOREATECH 게시판</string>
     <string name="item_notice">공지사항</string>
     <string name="item_free_board">자유 게시판</string>
     <string name="item_job_board">취업 게시판</string>
