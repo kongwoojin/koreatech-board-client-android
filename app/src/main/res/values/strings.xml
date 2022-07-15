@@ -10,16 +10,16 @@
 
     <string name="drawer_title_settings">Settings</string>
 
-    <string name="drawer_item_school">School</string>
-    <string name="drawer_item_dorm">Dorm</string>
-    <string name="drawer_item_cse">CSE</string>
-    <string name="drawer_item_mechanical">Mechanical</string>
-    <string name="drawer_item_mechatronics">Mechatronics</string>
-    <string name="drawer_item_ite">Ite</string>
-    <string name="drawer_item_ide">Ide</string>
-    <string name="drawer_item_arch">Arch</string>
-    <string name="drawer_item_emc">Emc</string>
-    <string name="drawer_item_sim">Sim</string>
+    <string name="drawer_item_school">KOREATECH</string>
+    <string name="drawer_item_dorm">KOREATECH Dorm</string>
+    <string name="drawer_item_cse">School of Computer Science and Engineering</string>
+    <string name="drawer_item_mechanical">School Of Mechanical Engineering</string>
+    <string name="drawer_item_mechatronics">School of Mechatronics Engineering</string>
+    <string name="drawer_item_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
+    <string name="drawer_item_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
+    <string name="drawer_item_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
+    <string name="drawer_item_emc">School of Energy Materials and Chemical Engineering</string>
+    <string name="drawer_item_sim">School of Industrial Management</string>
     <string name="drawer_item_settings">Settings</string>
 
     <string name="notice">Notice</string>
@@ -33,14 +33,14 @@
     <string name="license_title">Opensource License</string>
     <string name="source_code_title">Source code</string>
 
-    <string name="arrays_board_school">School</string>
-    <string name="arrays_board_dorm">Dorm</string>
-    <string name="arrays_board_cse">CSE</string>
-    <string name="arrays_board_mechanical">Mechanical</string>
-    <string name="arrays_board_mechatronics">Mechatronics</string>
-    <string name="arrays_board_ite">Ite</string>
-    <string name="arrays_board_ide">Ide</string>
-    <string name="arrays_board_arch">Arch</string>
-    <string name="arrays_board_emc">Emc</string>
-    <string name="arrays_board_sim">Sim</string>
+    <string name="arrays_board_school">KOREATECH</string>
+    <string name="arrays_board_dorm">KOREATECH Dorm</string>
+    <string name="arrays_board_cse">School of Computer Science and Engineering</string>
+    <string name="arrays_board_mechanical">School Of Mechanical Engineering</string>
+    <string name="arrays_board_mechatronics">School of Mechatronics Engineering</string>
+    <string name="arrays_board_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
+    <string name="arrays_board_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
+    <string name="arrays_board_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
+    <string name="arrays_board_emc">School of Energy Materials and Chemical Engineering</string>
+    <string name="arrays_board_sim">School of Industrial Management</string>
 </resources>

@@ -10,8 +10,8 @@
 
     <string name="drawer_title_settings">설정</string>
 
-    <string name="drawer_item_school">학교</string>
-    <string name="drawer_item_dorm">생활관</string>
+    <string name="drawer_item_school">KOREATECH</string>
+    <string name="drawer_item_dorm">KOREATECH 생활관</string>
     <string name="drawer_item_cse">컴퓨터공학부</string>
     <string name="drawer_item_mechanical">기계공학부</string>
     <string name="drawer_item_mechatronics">메카트로닉스공학부</string>
@@ -33,8 +33,8 @@
     <string name="license_title">오픈소스 라이선스</string>
     <string name="source_code_title">소스코드</string>
 
-    <string name="arrays_board_school">학교</string>
-    <string name="arrays_board_dorm">생활관</string>
+    <string name="arrays_board_school">KOREATECH</string>
+    <string name="arrays_board_dorm">KOREATECH 생활관</string>
     <string name="arrays_board_cse">컴퓨터공학부</string>
     <string name="arrays_board_mechanical">기계공학부</string>
     <string name="arrays_board_mechatronics">메카트로닉스공학부</string>
