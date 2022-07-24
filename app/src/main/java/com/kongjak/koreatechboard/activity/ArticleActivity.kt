@@ -9,9 +9,6 @@ import com.kongjak.koreatechboard.fragment.ArticleFragment
 
 class ArticleActivity : AppCompatActivity() {
 
-    var site: String = ""
-    var url: String = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article)
@@ -19,13 +16,10 @@ class ArticleActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        site = intent.getStringExtra("site")!!
-        url = intent.getStringExtra("url")!!
-
         val articleFragment = ArticleFragment()
         val articleBundle = Bundle()
-        articleBundle.putString("site", site)
-        articleBundle.putString("url", url)
+        articleBundle.putString("site", intent.getStringExtra("site")!!)
+        articleBundle.putString("url", intent.getStringExtra("url")!!)
         articleFragment.arguments = articleBundle
 
         supportFragmentManager

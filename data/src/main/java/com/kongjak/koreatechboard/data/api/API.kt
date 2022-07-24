@@ -1,23 +1,22 @@
-package com.kongjak.koreatechboard.connection
+package com.kongjak.koreatechboard.data.api
 
-import com.kongjak.koreatechboard.data.Article
-import com.kongjak.koreatechboard.data.Board
-import retrofit2.Call
+import com.kongjak.koreatechboard.data.model.ArticleResponse
+import com.kongjak.koreatechboard.data.model.BoardResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface API {
     @GET("{site}/{board}/")
-    fun getBoard(
+    suspend fun getBoard(
         @Path("site") site: String,
         @Path("board") board: String,
         @Query("page") page: Int
-    ): Call<ArrayList<Board>>
+    ): ArrayList<BoardResponse>
 
     @GET("{site}/article/")
-    fun getArticle(
+    suspend fun getArticle(
         @Path("site") site: String,
         @Query("url") url: String
-    ): Call<ArrayList<Article>>
+    ): ArrayList<ArticleResponse>
 }

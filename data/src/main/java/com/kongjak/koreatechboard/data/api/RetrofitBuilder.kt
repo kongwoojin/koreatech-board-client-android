@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.connection
+package com.kongjak.koreatechboard.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

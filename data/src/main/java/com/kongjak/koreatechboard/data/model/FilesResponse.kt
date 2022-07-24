@@ -1,8 +1,8 @@
-package com.kongjak.koreatechboard.data
+package com.kongjak.koreatechboard.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Files(
+data class FilesResponse(
     @SerializedName("file_name")
     val fileName: String,
     @SerializedName("file_uri")

@@ -1,65 +1,40 @@
 package com.kongjak.koreatechboard.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.data.Board
+import com.kongjak.koreatechboard.databinding.ItemArticleBinding
+import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.util.BoardDiffUtil
 
-class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
+class BoardAdapter : ListAdapter<Board, BoardAdapter.ViewHolder>(BoardDiffUtil) {
 
-    private var dataList = mutableListOf<Board>()
     lateinit var onClickListener: OnClickListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
-        )
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder) {
-            val title = dataList[position].title
-            val noticeType = dataList[position].noticeType
-            val num = dataList[position].num
-
-            var itemTitle = title
-            val noticeString = itemView.resources.getString(R.string.notice)
-            val noMoreArticle = itemView.resources.getString(R.string.no_more_article)
-
-            if (title != null) {
-                if (noticeType != null) {
-                    itemTitle = "[$noticeType] $itemTitle"
-                }
-
-                itemTitle = if (num!!.isNumber()) {
-                    "$num | $itemTitle"
-                } else {
-                    "$noticeString | $itemTitle"
-                }
-
-                titleTextView.text = itemTitle
-                writerTextView.text = dataList[position].writer
-            } else {
-                titleTextView.text = noMoreArticle
-                writerTextView.text = ""
-            }
-            
-            writeDateTextView.text = dataList[position].writeDate
-
-            itemView.setOnClickListener {
-                onClickListener.onClick(dataList[position].articleUrl)
-            }
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = dataList.size
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(currentList[position], onClickListener)
+    }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleTextView: TextView = itemView.findViewById(R.id.item_title)
-        val writerTextView: TextView = itemView.findViewById(R.id.item_writer)
-        val writeDateTextView: TextView = itemView.findViewById(R.id.item_write_date)
+    override fun getItemCount(): Int = currentList.size
+
+    class ViewHolder(private val binding: ItemArticleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            board: Board,
+            onClickListener: OnClickListener,
+        ) {
+            binding.board = board
+
+            binding.item.setOnClickListener {
+                onClickListener.onClick(board.articleUrl)
+            }
+        }
     }
 
     interface OnClickListener {
@@ -72,18 +47,5 @@ class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
                 item(position)
             }
         }
-    }
-
-    fun updateList(list: MutableList<Board>) {
-        dataList.clear()
-        dataList.addAll(list)
-    }
-
-    fun getList(): MutableList<Board> {
-        return dataList
-    }
-
-    private fun String.isNumber(): Boolean {
-        return this.toIntOrNull() != null
     }
 }

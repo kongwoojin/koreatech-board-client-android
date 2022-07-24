@@ -3,38 +3,36 @@ package com.kongjak.koreatechboard
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.google.android.material.navigation.NavigationView
 import com.kongjak.koreatechboard.activity.SettingsActivity
+import com.kongjak.koreatechboard.databinding.ActivityMainBinding
 import com.kongjak.koreatechboard.fragment.*
+import com.kongjak.koreatechboard.viewmodel.BoardViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     lateinit var defaultFragment: Fragment
     lateinit var fragment: Fragment
-    lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        drawerLayout = findViewById(R.id.drawer_layout)
-
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         supportActionBar!!.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_nav_menu)
         }
 
-        toolbar.setNavigationOnClickListener {
-            drawerLayout.open()
+        binding.toolbar.setNavigationOnClickListener {
+            binding.drawerLayout.open()
         }
         val schoolFragment = SchoolFragment()
         val cseFragment = CseFragment()
@@ -52,47 +50,47 @@ class MainActivity : AppCompatActivity() {
         when (prefs.getString("default_board", "school")) {
             "school" -> {
                 defaultFragment = schoolFragment
-                navView.setCheckedItem(R.id.nav_drawer_school)
+                binding.navView.setCheckedItem(R.id.nav_drawer_school)
             }
             "cse" -> {
                 defaultFragment = cseFragment
-                navView.setCheckedItem(R.id.nav_drawer_cse)
+                binding.navView.setCheckedItem(R.id.nav_drawer_cse)
             }
             "dorm" -> {
                 defaultFragment = dormFragment
-                navView.setCheckedItem(R.id.nav_drawer_dorm)
+                binding.navView.setCheckedItem(R.id.nav_drawer_dorm)
             }
             "mechanical" -> {
                 defaultFragment = mechanicalFragment
-                navView.setCheckedItem(R.id.nav_drawer_mechanical)
+                binding.navView.setCheckedItem(R.id.nav_drawer_mechanical)
             }
             "mechatronics" -> {
                 defaultFragment = mechatronicsFragment
-                navView.setCheckedItem(R.id.nav_drawer_mechatronics)
+                binding.navView.setCheckedItem(R.id.nav_drawer_mechatronics)
             }
             "ite" -> {
                 defaultFragment = iteFragment
-                navView.setCheckedItem(R.id.nav_drawer_ite)
+                binding.navView.setCheckedItem(R.id.nav_drawer_ite)
             }
             "ide" -> {
                 defaultFragment = ideFragment
-                navView.setCheckedItem(R.id.nav_drawer_ide)
+                binding.navView.setCheckedItem(R.id.nav_drawer_ide)
             }
             "arch" -> {
                 defaultFragment = archFragment
-                navView.setCheckedItem(R.id.nav_drawer_arch)
+                binding.navView.setCheckedItem(R.id.nav_drawer_arch)
             }
             "emc" -> {
                 defaultFragment = emcFragment
-                navView.setCheckedItem(R.id.nav_drawer_emc)
+                binding.navView.setCheckedItem(R.id.nav_drawer_emc)
             }
             "sim" -> {
                 defaultFragment = simFragment
-                navView.setCheckedItem(R.id.nav_drawer_sim)
+                binding.navView.setCheckedItem(R.id.nav_drawer_sim)
             }
             else -> {
                 defaultFragment = schoolFragment
-                navView.setCheckedItem(R.id.nav_drawer_school)
+                binding.navView.setCheckedItem(R.id.nav_drawer_school)
             }
         }
 
@@ -103,9 +101,9 @@ class MainActivity : AppCompatActivity() {
         }
         loadFragment()
 
-        navView.setNavigationItemSelectedListener { menuItem ->
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
-            drawerLayout.close()
+            binding.drawerLayout.close()
             when (menuItem.itemId) {
                 R.id.nav_drawer_school -> {
                     fragment = schoolFragment
@@ -154,6 +152,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        binding.lifecycleOwner = this
     }
 
     private fun loadFragment() {
@@ -164,8 +163,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }

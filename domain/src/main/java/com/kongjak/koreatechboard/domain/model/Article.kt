@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.data
+package com.kongjak.koreatechboard.domain.model
 
 data class Article(
     val title: String,
