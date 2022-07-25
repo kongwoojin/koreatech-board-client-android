@@ -21,7 +21,8 @@ object BindingAdapter {
 
         val boardAdapter = recyclerView.adapter as BoardAdapter
 
-        boardAdapter.submitList(items)
+        if (items != null)
+            boardAdapter.submitList(items)
     }
 
     @BindingAdapter("html_text")
