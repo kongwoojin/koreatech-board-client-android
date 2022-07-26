@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kongjak.koreatechboard.adapter.BoardAdapter
-import com.kongjak.koreatechboard.data.GlideImageGetter
+import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
+import com.kongjak.koreatechboard.util.GlideImageGetter
 import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.Files
 import java.util.regex.Pattern

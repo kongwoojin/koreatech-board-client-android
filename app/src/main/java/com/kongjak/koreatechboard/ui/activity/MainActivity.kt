@@ -1,18 +1,15 @@
-package com.kongjak.koreatechboard
+package com.kongjak.koreatechboard.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.kongjak.koreatechboard.activity.SettingsActivity
+import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.ActivityMainBinding
-import com.kongjak.koreatechboard.fragment.*
-import com.kongjak.koreatechboard.viewmodel.BoardViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.kongjak.koreatechboard.ui.fragment.*
 
 class MainActivity : AppCompatActivity() {
 

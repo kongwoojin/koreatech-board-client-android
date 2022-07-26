@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.viewmodel
+package com.kongjak.koreatechboard.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

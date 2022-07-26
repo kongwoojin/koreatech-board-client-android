@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.data
+package com.kongjak.koreatechboard.util
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

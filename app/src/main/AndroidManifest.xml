@@ -18,13 +18,13 @@
         android:theme="@style/Theme.KoreatechBoard.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name="com.kongjak.koreatechboard.ui.activity.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ArticleActivity"
+            android:name="com.kongjak.koreatechboard.ui.activity.ArticleActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.kongjak.koreatechboard.ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

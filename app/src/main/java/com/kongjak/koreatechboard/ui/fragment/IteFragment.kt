@@ -1,33 +1,33 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
 
-class SimFragment : Fragment() {
+class IteFragment : Fragment() {
     lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_sim, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_ite, container, false)
 
-        val simNotice = BoardFragment()
-        val simNoticeBundle = Bundle()
-        simNoticeBundle.putString("board", "notice")
-        simNoticeBundle.putString("site", "sim")
-        simNotice.arguments = simNoticeBundle
+        val iteNotice = BoardFragment()
+        val iteNoticeBundle = Bundle()
+        iteNoticeBundle.putString("board", "notice")
+        iteNoticeBundle.putString("site", "ite")
+        iteNotice.arguments = iteNoticeBundle
 
-        if (savedInstanceState == null) {
+         if (savedInstanceState == null) {
             if (!this::fragment.isInitialized) {
-                fragment = simNotice
+                fragment = iteNotice
             }
-        } else {
-            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+         } else {
+             fragment =parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

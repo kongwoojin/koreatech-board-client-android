@@ -1,11 +1,10 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
 class DormFragment : Fragment() {

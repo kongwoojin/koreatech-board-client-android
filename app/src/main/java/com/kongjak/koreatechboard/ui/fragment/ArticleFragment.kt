@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentArticleBinding
-import com.kongjak.koreatechboard.viewmodel.ArticleViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ArticleFragment : Fragment() {

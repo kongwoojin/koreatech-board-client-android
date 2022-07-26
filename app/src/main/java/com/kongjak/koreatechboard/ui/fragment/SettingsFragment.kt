@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.content.Intent
 import android.net.Uri

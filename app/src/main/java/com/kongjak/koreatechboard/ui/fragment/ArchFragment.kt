@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,32 +8,32 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 
-class IdeFragment : Fragment() {
+class ArchFragment : Fragment() {
     lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_ide, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_arch, container, false)
 
         val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view)
 
-        val ideNotice = BoardFragment()
-        val ideNoticeBundle = Bundle()
-        ideNoticeBundle.putString("board", "notice")
-        ideNoticeBundle.putString("site", "ide")
-        ideNotice.arguments = ideNoticeBundle
+        val archNotice = BoardFragment()
+        val archNoticeBundle = Bundle()
+        archNoticeBundle.putString("board", "notice")
+        archNoticeBundle.putString("site", "arch")
+        archNotice.arguments = archNoticeBundle
 
-        val ideFreeBoard = BoardFragment()
-        val ideFreeBoardBundle = Bundle()
-        ideFreeBoardBundle.putString("board", "free")
-        ideFreeBoardBundle.putString("site", "ide")
-        ideFreeBoard.arguments = ideFreeBoardBundle
+        val archFreeBoard = BoardFragment()
+        val archFreeBoardBundle = Bundle()
+        archFreeBoardBundle.putString("board", "free")
+        archFreeBoardBundle.putString("site", "arch")
+        archFreeBoard.arguments = archFreeBoardBundle
 
         if (savedInstanceState == null) {
             if (!this::fragment.isInitialized) {
-                fragment = ideNotice
+                fragment = archNotice
             }
         } else {
             fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
@@ -43,12 +43,12 @@ class IdeFragment : Fragment() {
         bottomNavView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_arch_ide_notice -> {
-                    fragment = ideNotice
+                    fragment = archNotice
                     loadFragment()
                     true
                 }
                 R.id.navigation_arch_ide_free_board -> {
-                    fragment = ideFreeBoard
+                    fragment = archFreeBoard
                     loadFragment()
                     true
                 }

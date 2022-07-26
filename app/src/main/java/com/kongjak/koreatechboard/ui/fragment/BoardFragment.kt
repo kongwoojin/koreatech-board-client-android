@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.activity.ArticleActivity
-import com.kongjak.koreatechboard.adapter.BoardAdapter
+import com.kongjak.koreatechboard.ui.activity.ArticleActivity
+import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
 import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
-import com.kongjak.koreatechboard.viewmodel.BoardViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardFragment : Fragment() {

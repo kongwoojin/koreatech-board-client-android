@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.kongjak.koreatechboard.fragment.ArticleFragment">
+        tools:context=".ui.fragment.ArticleFragment">
 
         <ProgressBar
             android:id="@+id/progress_bar"

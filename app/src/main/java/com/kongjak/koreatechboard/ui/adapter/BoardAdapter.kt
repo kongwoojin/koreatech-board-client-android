@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.adapter
+package com.kongjak.koreatechboard.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,34 +1,31 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
 
-class IteFragment : Fragment() {
+class EmcFragment : Fragment() {
     lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_ite, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_emc, container, false)
 
-        val iteNotice = BoardFragment()
-        val iteNoticeBundle = Bundle()
-        iteNoticeBundle.putString("board", "notice")
-        iteNoticeBundle.putString("site", "ite")
-        iteNotice.arguments = iteNoticeBundle
+        val emcNotice = BoardFragment()
+        val emcNoticeBundle = Bundle()
+        emcNoticeBundle.putString("board", "notice")
+        emcNoticeBundle.putString("site", "emc")
+        emcNotice.arguments = emcNoticeBundle
 
-         if (savedInstanceState == null) {
-            if (!this::fragment.isInitialized) {
-                fragment = iteNotice
-            }
-         } else {
-             fragment =parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+        fragment = if (savedInstanceState == null) {
+            emcNotice
+        } else {
+            parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

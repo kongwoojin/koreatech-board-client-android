@@ -10,8 +10,8 @@ import com.kongjak.koreatechboard.domain.repository.ArticleRepository
 import com.kongjak.koreatechboard.domain.repository.BoardRepository
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
-import com.kongjak.koreatechboard.viewmodel.ArticleViewModel
-import com.kongjak.koreatechboard.viewmodel.BoardViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

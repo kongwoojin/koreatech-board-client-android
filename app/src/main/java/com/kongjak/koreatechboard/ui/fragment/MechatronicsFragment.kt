@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.fragment
+package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

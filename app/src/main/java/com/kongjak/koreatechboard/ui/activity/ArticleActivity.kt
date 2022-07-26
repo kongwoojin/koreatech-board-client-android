@@ -1,11 +1,11 @@
-package com.kongjak.koreatechboard.activity
+package com.kongjak.koreatechboard.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.fragment.ArticleFragment
+import com.kongjak.koreatechboard.ui.fragment.ArticleFragment
 
 class ArticleActivity : AppCompatActivity() {
 
