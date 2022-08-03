@@ -11,16 +11,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
-import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BoardFragment : Fragment() {
 
     private val boardAdapter = BoardAdapter()
-    private lateinit var binding: FragmentBoardBinding
+    private var _binding: FragmentBoardBinding? = null
+    private val binding get() = _binding!!
     private val boardViewModel: BoardViewModel by viewModel()
 
     override fun onCreateView(
@@ -28,7 +29,7 @@ class BoardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_board, container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_board, container, false)
         val rootView: View = binding.root
 
         binding.lifecycleOwner = viewLifecycleOwner
@@ -105,5 +106,10 @@ class BoardFragment : Fragment() {
 
         boardViewModel.initData()
         return rootView
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

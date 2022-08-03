@@ -13,14 +13,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ArticleFragment : Fragment() {
 
-    private lateinit var binding: FragmentArticleBinding
+    private var _binding: FragmentArticleBinding? = null
+    private val binding get() = _binding!!
     private val articleViewModel: ArticleViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
+        _binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_article, container, false)
         val rootView = binding.root
 
@@ -32,5 +33,10 @@ class ArticleFragment : Fragment() {
         articleViewModel.getArticleData()
 
         return rootView
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
