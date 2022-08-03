@@ -32,10 +32,7 @@ class ArticleViewModel(private val getArticleUseCase: GetArticleUseCase) : ViewM
 
     fun getArticleData() {
         CoroutineScope(Dispatchers.IO).launch {
-            getArticleUseCase.execute(site.value!!, url.value!!)
-                .collect { articleData ->
-                    _article.postValue(articleData)
-                }
+            _article.postValue(getArticleUseCase.execute(site.value!!, url.value!!))
         }
     }
 }

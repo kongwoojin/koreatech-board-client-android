@@ -61,10 +61,7 @@ class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel()
     private fun getApi() {
         CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
-            getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
-                .collect { boardData ->
-                    _boardList.postValue(boardData)
-                }
+            _boardList.postValue(getBoardUseCase.execute(site.value!!, board.value!!, page.value!!))
             _isLoading.postValue(false)
         }
     }

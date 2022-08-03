@@ -4,5 +4,5 @@ import com.kongjak.koreatechboard.data.model.BoardResponse
 import kotlinx.coroutines.flow.Flow
 
 interface BoardRemoteDataSource {
-    fun getBoard(site: String, board: String, page: Int): Flow<ArrayList<BoardResponse>>
+    suspend fun getBoard(site: String, board: String, page: Int): ArrayList<BoardResponse>
 }

@@ -5,7 +5,7 @@ import com.kongjak.koreatechboard.domain.repository.BoardRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetBoardUseCase(private val boardRepository: BoardRepository) {
-    suspend fun execute(site: String, board: String, page: Int): Flow<ArrayList<Board>> {
+    suspend fun execute(site: String, board: String, page: Int): ArrayList<Board> {
         return boardRepository.getBoard(site, board, page)
     }
 }

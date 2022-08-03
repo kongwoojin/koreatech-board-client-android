@@ -5,7 +5,7 @@ import com.kongjak.koreatechboard.domain.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetArticleUseCase(private val articleRepository: ArticleRepository) {
-    suspend fun execute(site: String, url: String): Flow<Article> {
+    suspend fun execute(site: String, url: String): Article {
         return articleRepository.getArticle(site, url)
     }
 }
