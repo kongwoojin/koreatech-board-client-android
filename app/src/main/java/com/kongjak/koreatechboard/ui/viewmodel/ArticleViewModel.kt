@@ -7,6 +7,7 @@ import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ArticleViewModel(private val getArticleUseCase: GetArticleUseCase) : ViewModel() {
@@ -22,6 +23,8 @@ class ArticleViewModel(private val getArticleUseCase: GetArticleUseCase) : ViewM
     val site: LiveData<String>
         get() = _site
 
+    private lateinit var job: Job
+
     fun setUrlData(url: String) {
         _url.value = url
     }
@@ -31,8 +34,13 @@ class ArticleViewModel(private val getArticleUseCase: GetArticleUseCase) : ViewM
     }
 
     fun getArticleData() {
-        CoroutineScope(Dispatchers.IO).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             _article.postValue(getArticleUseCase.execute(site.value!!, url.value!!))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
 }

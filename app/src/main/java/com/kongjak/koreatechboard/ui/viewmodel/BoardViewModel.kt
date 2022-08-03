@@ -7,6 +7,7 @@ import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel() {
@@ -30,6 +31,8 @@ class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel()
     val site: LiveData<String>
         get() = _site
 
+    private lateinit var job: Job
+
     init {
         _boardList.value = ArrayList()
     }
@@ -45,7 +48,7 @@ class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel()
     }
 
     fun initData() {
-        if (boardList.value?.size == 0) {
+        if (isLoading.value == false && boardList.value?.size == 0) {
             getApi()
         }
     }
@@ -59,10 +62,16 @@ class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel()
     }
 
     private fun getApi() {
-        CoroutineScope(Dispatchers.IO).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
             _boardList.postValue(getBoardUseCase.execute(site.value!!, board.value!!, page.value!!))
             _isLoading.postValue(false)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        _isLoading.value = false
+        job.cancel()
     }
 }
