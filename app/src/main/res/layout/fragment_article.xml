@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.kongjak.koreatechboard.viewmodel.ArticleViewModel" />
+            type="com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel" />
 
         <import type="android.view.View" />
 
