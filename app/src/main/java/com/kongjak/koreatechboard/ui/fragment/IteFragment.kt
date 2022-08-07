@@ -1,12 +1,14 @@
 package com.kongjak.koreatechboard.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IteFragment : Fragment() {
     lateinit var fragment: Fragment
 
@@ -22,12 +24,12 @@ class IteFragment : Fragment() {
         iteNoticeBundle.putString("site", "ite")
         iteNotice.arguments = iteNoticeBundle
 
-         if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             if (!this::fragment.isInitialized) {
                 fragment = iteNotice
             }
-         } else {
-             fragment =parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
+        } else {
+            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
         }
         loadFragment()
 

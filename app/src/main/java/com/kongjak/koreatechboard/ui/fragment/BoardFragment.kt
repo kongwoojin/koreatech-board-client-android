@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,21 +16,24 @@ import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BoardFragment : Fragment() {
 
     private val boardAdapter = BoardAdapter()
     private var _binding: FragmentBoardBinding? = null
     private val binding get() = _binding!!
-    private val boardViewModel: BoardViewModel by viewModel()
+
+    private val boardViewModel: BoardViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_board, container, false)
+        _binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_board, container, false)
         val rootView: View = binding.root
 
         binding.lifecycleOwner = viewLifecycleOwner
