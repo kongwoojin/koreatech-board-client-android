@@ -64,7 +64,7 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
         _site.value = site
     }
 
-    private fun getApi() {
+    fun getApi() {
         job = CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
             _boardList.postValue(getBoardUseCase.execute(site.value!!, board.value!!, page.value!!))

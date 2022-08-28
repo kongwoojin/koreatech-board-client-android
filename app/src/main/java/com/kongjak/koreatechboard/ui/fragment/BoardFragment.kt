@@ -105,7 +105,13 @@ class BoardFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
+            boardViewModel.getApi()
+        }
 
+        boardViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it == false) {
+                binding.swipeRefresh.isRefreshing = false
+            }
         }
 
         boardViewModel.initData()
