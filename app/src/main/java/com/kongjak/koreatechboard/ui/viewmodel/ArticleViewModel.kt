@@ -5,12 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ArticleViewModel(private val getArticleUseCase: GetArticleUseCase) : ViewModel() {
+@HiltViewModel
+class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArticleUseCase) : ViewModel() {
     private val _article = MutableLiveData<Article>()
     val article: LiveData<Article>
         get() = _article

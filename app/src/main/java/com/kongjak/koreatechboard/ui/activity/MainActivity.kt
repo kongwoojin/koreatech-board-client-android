@@ -10,7 +10,9 @@ import androidx.preference.PreferenceManager
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.ActivityMainBinding
 import com.kongjak.koreatechboard.ui.fragment.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

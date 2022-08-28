@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MechanicalFragment : Fragment() {
     lateinit var fragment: Fragment
 

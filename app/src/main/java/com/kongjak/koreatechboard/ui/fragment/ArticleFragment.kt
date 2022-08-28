@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentArticleBinding
 import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArticleFragment : Fragment() {
 
     private var _binding: FragmentArticleBinding? = null
     private val binding get() = _binding!!
-    private val articleViewModel: ArticleViewModel by viewModel()
+
+    private val articleViewModel: ArticleViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kongjak.koreatechboard.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DormFragment : Fragment() {
     lateinit var fragment: Fragment
 

@@ -5,12 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BoardViewModel(private val getBoardUseCase: GetBoardUseCase) : ViewModel() {
+@HiltViewModel
+class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) : ViewModel() {
     private val _boardList = MutableLiveData<ArrayList<Board>>()
     val boardList: LiveData<ArrayList<Board>>
         get() = _boardList
