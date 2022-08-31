@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_bottom_navigation_jobboard"
         android:title="@string/item_job_board" />
 
+    <item
+        android:id="@+id/navigation_cse_pds"
+        android:icon="@drawable/ic_bottom_navigation_pds"
+        android:title="@string/item_pds_board" />
+
 </menu>

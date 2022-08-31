@@ -39,6 +39,12 @@ class CseFragment : Fragment() {
         cseJobBoardBundle.putString("site", "cse")
         cseJobBoard.arguments = cseJobBoardBundle
 
+        val csePdsBoard = BoardFragment()
+        val csePdsBoardBundle = Bundle()
+        csePdsBoardBundle.putString("board", "pds")
+        csePdsBoardBundle.putString("site", "cse")
+        csePdsBoard.arguments = csePdsBoardBundle
+
         if (savedInstanceState == null) {
             if (!this::fragment.isInitialized) {
                 fragment = cseNotice
@@ -62,6 +68,11 @@ class CseFragment : Fragment() {
                 }
                 R.id.navigation_cse_job_board -> {
                     fragment = cseJobBoard
+                    loadFragment()
+                    true
+                }
+                R.id.navigation_cse_pds -> {
+                    fragment = csePdsBoard
                     loadFragment()
                     true
                 }

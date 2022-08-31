@@ -7,6 +7,7 @@
     <string name="item_scholar_board">장학공지</string>
     <string name="item_bachelor_board">학사공지</string>
     <string name="item_covid19_board">코로나19 공지</string>
+    <string name="item_pds_board">자료실</string>
 
     <string name="drawer_title_settings">설정</string>
 
