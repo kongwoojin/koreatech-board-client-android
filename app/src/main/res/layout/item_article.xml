@@ -18,11 +18,11 @@
 
         <TextView
             android:id="@+id/item_title"
+            cjk_text="@{board.title}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{board.title}"
             android:textAppearance="?android:attr/textAppearanceMedium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/writer_and_date_layout"
