@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/item_title"
-            cjk_text="@{board.title}"
+            cjk_text="@{@string/article_title(board.num, board.title)}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"

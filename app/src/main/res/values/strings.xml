@@ -44,4 +44,6 @@
     <string name="arrays_board_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
     <string name="arrays_board_emc">School of Energy Materials and Chemical Engineering</string>
     <string name="arrays_board_sim">School of Industrial Management</string>
+
+    <string name="article_title" translatable="false">%s | %s</string>
 </resources>
