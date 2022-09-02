@@ -7,6 +7,7 @@
     <string name="item_scholar_board">Scholar Notice</string>
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
+    <string name="item_pds_board">PDS</string>
 
     <string name="drawer_title_settings">Settings</string>
 
