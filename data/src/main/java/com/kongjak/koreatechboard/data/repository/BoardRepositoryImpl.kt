@@ -1,9 +1,8 @@
 package com.kongjak.koreatechboard.data.repository
 
+import com.kongjak.koreatechboard.data.datasource.remote.BoardRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.BoardMapper
-import com.kongjak.koreatechboard.data.repository.remote.BoardRemoteDataSource
 import com.kongjak.koreatechboard.domain.model.Board
-import com.kongjak.koreatechboard.domain.repository.ArticleRepository
 import com.kongjak.koreatechboard.domain.repository.BoardRepository
 import dagger.Binds
 import dagger.Module

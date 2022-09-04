@@ -1,7 +1,7 @@
 package com.kongjak.koreatechboard.data.repository
 
+import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.ArticleMapper
-import com.kongjak.koreatechboard.data.repository.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.repository.ArticleRepository
 import dagger.Binds
