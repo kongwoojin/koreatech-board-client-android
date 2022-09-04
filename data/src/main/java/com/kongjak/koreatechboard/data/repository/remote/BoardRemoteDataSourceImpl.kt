@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 class BoardRemoteDataSourceImpl @Inject constructor(private val api: API) : BoardRemoteDataSource {
-    override suspend fun getBoard(site: String, board: String, page: Int): ArrayList<BoardResponse> {
+    override suspend fun getBoard(site: String, board: String, page: Int): BoardResponse {
         return api.getBoard(site, board, page)
     }
 }

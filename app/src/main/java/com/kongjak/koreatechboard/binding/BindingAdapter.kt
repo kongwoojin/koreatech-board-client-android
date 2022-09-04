@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
 import com.kongjak.koreatechboard.util.GlideImageGetter
 import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.model.Files
 import java.util.regex.Pattern
 
 object BindingAdapter {
     @BindingAdapter("items")
     @JvmStatic
-    fun setItems(recyclerView: RecyclerView, items: ArrayList<Board>?) {
+    fun setItems(recyclerView: RecyclerView, items: List<BoardData>?) {
         if (recyclerView.adapter == null)
             recyclerView.adapter = BoardAdapter()
 

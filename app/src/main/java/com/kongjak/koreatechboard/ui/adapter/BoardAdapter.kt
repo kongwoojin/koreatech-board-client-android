@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.databinding.ItemArticleBinding
-import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.util.BoardDiffUtil
 
-class BoardAdapter : ListAdapter<Board, BoardAdapter.ViewHolder>(BoardDiffUtil) {
+class BoardAdapter : ListAdapter<BoardData, BoardAdapter.ViewHolder>(BoardDiffUtil) {
 
     lateinit var onClickListener: OnClickListener
 
@@ -26,13 +26,13 @@ class BoardAdapter : ListAdapter<Board, BoardAdapter.ViewHolder>(BoardDiffUtil) 
     class ViewHolder(private val binding: ItemArticleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            board: Board,
+            boardData: BoardData,
             onClickListener: OnClickListener,
         ) {
-            binding.board = board
+            binding.boardData = boardData
 
             binding.item.setOnClickListener {
-                onClickListener.onClick(board.articleUrl)
+                onClickListener.onClick(boardData.articleUrl)
             }
         }
     }

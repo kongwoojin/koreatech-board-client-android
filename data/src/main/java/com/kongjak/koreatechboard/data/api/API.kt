@@ -12,11 +12,11 @@ interface API {
         @Path("site") site: String,
         @Path("board") board: String,
         @Query("page") page: Int
-    ): ArrayList<BoardResponse>
+    ): BoardResponse
 
     @GET("{site}/article/")
     suspend fun getArticle(
         @Path("site") site: String,
         @Query("url") url: String
-    ): ArrayList<ArticleResponse>
+    ): ArticleResponse
 }

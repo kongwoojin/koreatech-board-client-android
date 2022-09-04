@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class ArticleRemoteDataSourceImpl @Inject constructor(private val api: API) : ArticleRemoteDataSource {
     override suspend fun getArticle(site: String, url: String): ArticleResponse {
-        return api.getArticle(site, url)[0]
+        return api.getArticle(site, url)
     }
 }
 

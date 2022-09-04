@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="board"
-            type="com.kongjak.koreatechboard.domain.model.Board" />
+            name="boardData"
+            type="com.kongjak.koreatechboard.domain.model.BoardData" />
 
     </data>
 
@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@+id/item_title"
-            cjk_text="@{@string/article_title(board.num, board.title)}"
+            cjk_text="@{@string/article_title(boardData.num, boardData.title)}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -43,13 +43,13 @@
 
             <TextView
                 android:id="@+id/item_writer"
-                android:text="@{board.writer}"
+                android:text="@{boardData.writer}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/item_write_date"
-                android:text="@{board.writeDate}"
+                android:text="@{boardData.writeDate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

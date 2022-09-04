@@ -3,6 +3,13 @@ package com.kongjak.koreatechboard.data.model
 import com.google.gson.annotations.SerializedName
 
 data class BoardResponse(
+    @SerializedName("last_page")
+    val lastPage: Int,
+    @SerializedName("posts")
+    val boardData: List<BoardResponseData>
+)
+
+data class BoardResponseData(
     @SerializedName("title")
     val title: String?,
     @SerializedName("notice_type")
