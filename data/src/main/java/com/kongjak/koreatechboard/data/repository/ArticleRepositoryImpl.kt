@@ -4,10 +4,6 @@ import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.ArticleMapper
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.repository.ArticleRepository
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(private val articleRemoteDataSource: ArticleRemoteDataSource) :
