@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mechatronics_navigation"
+    app:startDestination="@id/navigation_mechatronics_notice">
+
+    <fragment
+        android:id="@+id/navigation_mechatronics_notice"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_notice">
+
+        <argument
+            android:name="site"
+            android:defaultValue="mechatronics"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="notice"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mechatronics_lecture"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_free_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="mechatronics"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="lecture"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mechatronics_bachelor"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_free_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="mechatronics"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="bachelor"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mechatronics_job_board"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_free_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="mechatronics"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="job"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_mechatronics_free_board"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_free_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="mechatronics"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="free"
+            app:argType="string" />
+    </fragment>
+</navigation>

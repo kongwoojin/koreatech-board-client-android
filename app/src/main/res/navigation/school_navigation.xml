@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/school_navigation"
+    app:startDestination="@id/navigation_school_notice">
+
+    <fragment
+        android:id="@+id/navigation_school_notice"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_notice">
+
+        <argument
+            android:name="site"
+            android:defaultValue="school"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="notice"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_school_scholar"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_scholar_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="school"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="scholar"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_school_bachelor"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_bachelor_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="school"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="bachelor"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_school_covid19"
+        android:name="com.kongjak.koreatechboard.ui.fragment.BoardFragment"
+        android:label="@string/item_covid19_board">
+
+        <argument
+            android:name="site"
+            android:defaultValue="school"
+            app:argType="string" />
+
+        <argument
+            android:name="board"
+            android:defaultValue="covid19"
+            app:argType="string" />
+    </fragment>
+</navigation>

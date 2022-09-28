@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kongjak.koreatechboard.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SchoolFragment : Fragment() {
-    lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,79 +21,11 @@ class SchoolFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_school, container, false)
 
-        val bottomNavView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view)
+        val navView: BottomNavigationView = rootView.findViewById(R.id.bottom_nav_view)
 
-        val schoolNotice = BoardFragment()
-        val schoolNoticeBundle = Bundle()
-        schoolNoticeBundle.putString("board", "notice")
-        schoolNoticeBundle.putString("site", "school")
-        schoolNotice.arguments = schoolNoticeBundle
-
-        val schoolScholar = BoardFragment()
-        val schoolScholarBundle = Bundle()
-        schoolScholarBundle.putString("board", "scholar")
-        schoolScholarBundle.putString("site", "school")
-        schoolScholar.arguments = schoolScholarBundle
-
-        val schoolBachelor = BoardFragment()
-        val schoolBachelorBundle = Bundle()
-        schoolBachelorBundle.putString("board", "bachelor")
-        schoolBachelorBundle.putString("site", "school")
-        schoolBachelor.arguments = schoolBachelorBundle
-
-        val schoolCovid19 = BoardFragment()
-        val schoolCovid19Bundle = Bundle()
-        schoolCovid19Bundle.putString("board", "covid19")
-        schoolCovid19Bundle.putString("site", "school")
-        schoolCovid19.arguments = schoolCovid19Bundle
-
-        if (savedInstanceState == null) {
-            if (!this::fragment.isInitialized) {
-                fragment = schoolNotice
-            }
-        } else {
-            fragment = parentFragmentManager.getFragment(savedInstanceState, "fragment")!!
-        }
-        loadFragment()
-
-        bottomNavView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_school_notice -> {
-                    fragment = schoolNotice
-                    loadFragment()
-                    true
-                }
-                R.id.navigation_school_scholar -> {
-                    fragment = schoolScholar
-                    loadFragment()
-                    true
-                }
-                R.id.navigation_school_bachelor -> {
-                    fragment = schoolBachelor
-                    loadFragment()
-                    true
-                }
-                R.id.navigation_school_covid19 -> {
-                    fragment = schoolCovid19
-                    loadFragment()
-                    true
-                }
-                else -> false
-            }
-        }
+        val navController = childFragmentManager.findFragmentById(R.id.board_fragment_container_view)?.findNavController()
+        navView.setupWithNavController(navController!!)
 
         return rootView
-    }
-
-    private fun loadFragment() {
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.notice_frame_layout, fragment)
-            .commit()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        parentFragmentManager.putFragment(outState, "fragment", fragment)
     }
 }
