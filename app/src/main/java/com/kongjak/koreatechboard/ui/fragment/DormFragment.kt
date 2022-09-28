@@ -13,7 +13,8 @@ class DormFragment : Fragment() {
     lateinit var fragment: Fragment
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_dorm, container, false)

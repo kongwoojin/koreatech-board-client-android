@@ -5,4 +5,5 @@ data class Article(
     val writer: String,
     val text: String,
     val date: String,
-    val files: ArrayList<Files>)
+    val files: ArrayList<Files>
+)

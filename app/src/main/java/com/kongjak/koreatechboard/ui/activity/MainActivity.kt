@@ -9,7 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.ActivityMainBinding
-import com.kongjak.koreatechboard.ui.fragment.*
+import com.kongjak.koreatechboard.ui.fragment.ArchFragment
+import com.kongjak.koreatechboard.ui.fragment.CseFragment
+import com.kongjak.koreatechboard.ui.fragment.DormFragment
+import com.kongjak.koreatechboard.ui.fragment.EmcFragment
+import com.kongjak.koreatechboard.ui.fragment.IdeFragment
+import com.kongjak.koreatechboard.ui.fragment.IteFragment
+import com.kongjak.koreatechboard.ui.fragment.MechanicalFragment
+import com.kongjak.koreatechboard.ui.fragment.MechatronicsFragment
+import com.kongjak.koreatechboard.ui.fragment.SchoolFragment
+import com.kongjak.koreatechboard.ui.fragment.SimFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

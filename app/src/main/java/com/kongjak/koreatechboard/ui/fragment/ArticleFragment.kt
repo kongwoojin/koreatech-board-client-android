@@ -11,7 +11,6 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentArticleBinding
 import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ArticleFragment : Fragment() {
@@ -22,7 +21,8 @@ class ArticleFragment : Fragment() {
     private val articleViewModel: ArticleViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding =
