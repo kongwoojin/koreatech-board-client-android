@@ -3,17 +3,16 @@ package com.kongjak.koreatechboard.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) : ViewModel() {
+class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) :
+    ViewModel() {
     private val _boardList = MutableLiveData<List<BoardData>>()
     val boardList: LiveData<List<BoardData>>
         get() = _boardList
@@ -37,8 +36,6 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     private val _site = MutableLiveData<String>()
     val site: LiveData<String>
         get() = _site
-
-    private lateinit var job: Job
 
     init {
         _boardList.value = ArrayList()
@@ -73,18 +70,17 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     }
 
     fun getApi() {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            _isLoading.postValue(true)
+        viewModelScope.launch {
+            _isLoading.value = true
             val data = getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
-            _lastPage.postValue(data.lastPage)
-            _boardList.postValue(data.boardData)
-            _isLoading.postValue(false)
+            _lastPage.value = data.lastPage
+            _boardList.value = data.boardData
+            _isLoading.value = false
         }
     }
 
     override fun onCleared() {
         super.onCleared()
         _isLoading.value = false
-        job.cancel()
     }
 }
