@@ -14,7 +14,6 @@ class ArticleRepositoryImpl @Inject constructor(private val articleRemoteDataSou
     ArticleRepository {
     override suspend fun getArticle(site: String, url: String): Article {
         return ArticleMapper.mapToArticle(articleRemoteDataSource.getArticle(site, url))
-
     }
 }
 

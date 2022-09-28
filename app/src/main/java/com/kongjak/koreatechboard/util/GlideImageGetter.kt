@@ -48,10 +48,12 @@ class GlideImageGetter(
         return drawable
     }
 
-    private inner class BitmapDrawablePlaceholder : BitmapDrawable(
-        container.get()?.resources,
-        Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-    ), Target<Bitmap> {
+    private inner class BitmapDrawablePlaceholder :
+        BitmapDrawable(
+            container.get()?.resources,
+            Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        ),
+        Target<Bitmap> {
         private var drawable: Drawable? = null
             set(value) {
                 field = value

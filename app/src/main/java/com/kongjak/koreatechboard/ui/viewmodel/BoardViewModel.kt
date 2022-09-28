@@ -3,7 +3,6 @@ package com.kongjak.koreatechboard.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,7 +52,7 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     }
 
     fun prevPage() {
-        if (_page.value!! > 1){
+        if (_page.value!! > 1) {
             _page.value = _page.value?.minus(1)
             getApi()
         }
