@@ -67,7 +67,9 @@ class BoardFragment : Fragment() {
                 if (dy > 0 && binding.nextFab.visibility == View.VISIBLE) {
                     binding.nextFab.hide()
                 } else if (dy < 0 && binding.nextFab.visibility != View.VISIBLE) {
-                    binding.nextFab.show()
+                    if (boardViewModel.lastPage.value!! > boardViewModel.page.value!!) {
+                        binding.nextFab.show()
+                    }
                 }
             }
         })

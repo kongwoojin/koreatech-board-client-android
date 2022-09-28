@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetBoardUseCase @Inject constructor(private val boardRepository: BoardRepository) {
-    suspend fun execute(site: String, board: String, page: Int): ArrayList<Board> {
+    suspend fun execute(site: String, board: String, page: Int): Board {
         return boardRepository.getBoard(site, board, page)
     }
 }

@@ -1,6 +1,11 @@
 package com.kongjak.koreatechboard.domain.model
 
 data class Board(
+    val lastPage: Int,
+    val boardData: List<BoardData>
+)
+
+data class BoardData(
     val title: String?,
     val noticeType: String?,
     val num: String?,

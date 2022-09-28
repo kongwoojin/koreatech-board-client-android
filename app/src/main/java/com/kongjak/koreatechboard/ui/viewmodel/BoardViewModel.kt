@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -14,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) : ViewModel() {
-    private val _boardList = MutableLiveData<ArrayList<Board>>()
-    val boardList: LiveData<ArrayList<Board>>
+    private val _boardList = MutableLiveData<List<BoardData>>()
+    val boardList: LiveData<List<BoardData>>
         get() = _boardList
 
     private val _isLoading = MutableLiveData(false)
@@ -25,6 +26,10 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     private val _page = MutableLiveData(1)
     val page: LiveData<Int>
         get() = _page
+
+    private val _lastPage = MutableLiveData(1)
+    val lastPage: LiveData<Int>
+        get() = _lastPage
 
     private val _board = MutableLiveData<String>()
     val board: LiveData<String>
@@ -41,13 +46,17 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     }
 
     fun nextPage() {
-        _page.value = _page.value?.plus(1)
-        getApi()
+        if (_page.value!! < _lastPage.value!!) {
+            _page.value = _page.value?.plus(1)
+            getApi()
+        }
     }
 
     fun prevPage() {
-        _page.value = _page.value?.minus(1)
-        getApi()
+        if (_page.value!! > 1){
+            _page.value = _page.value?.minus(1)
+            getApi()
+        }
     }
 
     fun initData() {
@@ -67,7 +76,9 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     fun getApi() {
         job = CoroutineScope(Dispatchers.IO).launch {
             _isLoading.postValue(true)
-            _boardList.postValue(getBoardUseCase.execute(site.value!!, board.value!!, page.value!!))
+            val data = getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
+            _lastPage.postValue(data.lastPage)
+            _boardList.postValue(data.boardData)
             _isLoading.postValue(false)
         }
     }

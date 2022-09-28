@@ -30,7 +30,7 @@ object RetrofitBuilder {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://api.kongjak.com/")
+            .baseUrl("https://dev.api.kongjak.com/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
