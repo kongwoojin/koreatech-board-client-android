@@ -16,13 +16,3 @@ class ArticleRepositoryImpl @Inject constructor(private val articleRemoteDataSou
         return ArticleMapper.mapToArticle(articleRemoteDataSource.getArticle(site, url))
     }
 }
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ArticleModule {
-
-    @Binds
-    abstract fun bindArticleRepository(
-        articleRepositoryImpl: ArticleRepositoryImpl
-    ): ArticleRepository
-}
