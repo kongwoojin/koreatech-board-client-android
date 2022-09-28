@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.data.api
 
+import com.kongjak.koreatechboard.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitBuilder {
+
+    private const val API_PRODUCTION = "https://api.kongjak.com/v2/"
+    private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v2/"
+
+    private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
+        API_PRODUCTION
+    } else {
+        API_DEVELOPMENT
+    }
 
     @Singleton
     @Provides
@@ -30,7 +40,7 @@ object RetrofitBuilder {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://dev.api.kongjak.com/v2/")
+            .baseUrl(apiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
