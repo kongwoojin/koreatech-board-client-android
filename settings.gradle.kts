@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Koreatech Board"
-include ':app'
-include ':domain'
-include ':data'
+include(":app")
+include(":domain")
+include(":data")
