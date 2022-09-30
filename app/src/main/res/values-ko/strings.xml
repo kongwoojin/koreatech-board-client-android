@@ -28,6 +28,8 @@
 
     <string name="app_settings_header">앱 설정</string>
     <string name="info_settings_header">안내</string>
+    <string name="enquiry_settings_header">문의하기</string>
+    <string name="enquiry_mail_title">메일 보내기</string>
 
     <string name="default_board_title">기본 게시판</string>
 
@@ -44,4 +46,8 @@
     <string name="arrays_board_arch">디자인·건축공학부 (건축)</string>
     <string name="arrays_board_emc">에너지신소재화학공학부</string>
     <string name="arrays_board_sim">산업경영학부</string>
+
+    <string name="mail_subject">Koreatech Board 문의</string>
+    <string name="mail_text">기기: %1$s\nAPI: %2$d\n문의 종류 (오류, 기능, 기타): \n문의 내용:</string>
+    <string name="mail_app_not_found">메일 앱을 찾을 수 없습니다!</string>
 </resources>

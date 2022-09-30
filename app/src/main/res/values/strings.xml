@@ -28,11 +28,13 @@
 
     <string name="app_settings_header">App Settings</string>
     <string name="info_settings_header">Info</string>
+    <string name="enquiry_settings_header">Enquiry</string>
 
     <string name="default_board_title">Default Board</string>
 
     <string name="license_title">Opensource License</string>
     <string name="source_code_title">Source Code</string>
+    <string name="enquiry_mail_title">Send email</string>
 
     <string name="arrays_board_school">KOREATECH</string>
     <string name="arrays_board_dorm">KOREATECH Dormitory</string>
@@ -46,4 +48,9 @@
     <string name="arrays_board_sim">School of Industrial Management</string>
 
     <string name="article_title" translatable="false">%s | %s</string>
+
+    <string name="mail_address" translatable="false">kongjak@kongjak.com</string>
+    <string name="mail_subject">Koreatech Board Enquiry</string>
+    <string name="mail_text">Device: %1$s\nOS: %2$d\nEnquiry type (Bug, Feature request, ETC): \nEnquiry:</string>
+    <string name="mail_app_not_found">Cannot find mail application!</string>
 </resources>
