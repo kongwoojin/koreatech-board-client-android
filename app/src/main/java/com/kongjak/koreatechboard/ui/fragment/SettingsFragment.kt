@@ -35,7 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             "mail" -> {
                 val intent = Intent(Intent.ACTION_SENDTO)
                 intent.data = Uri.parse("mailto:")
-                intent.putExtra(Intent.EXTRA_EMAIL, getString(R.string.mail_address))
+                intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.mail_address)))
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.mail_subject))
                 intent.putExtra(
                     Intent.EXTRA_TEXT,
