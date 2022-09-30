@@ -24,4 +24,12 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/enquiry_settings_header">
+
+        <Preference
+            app:key="mail"
+            app:title="@string/enquiry_mail_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
