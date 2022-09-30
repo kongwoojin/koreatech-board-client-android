@@ -85,8 +85,7 @@ class BoardFragment : Fragment() {
 
                     parentFragmentManager
                         .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.article_frame_layout, articleFragment)
+                        .replace(R.id.article_fragment_container_view, articleFragment)
                         .commit()
                 }
                 false -> {
