@@ -1,3 +1,10 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
+val localStoreFile: String = gradleLocalProperties(rootDir).getProperty("localStoreFile")
+val localStorePassword: String = gradleLocalProperties(rootDir).getProperty("localStorePassword")
+val localKeyAlias: String = gradleLocalProperties(rootDir).getProperty("localKeyAlias")
+val localKeyPassword: String = gradleLocalProperties(rootDir).getProperty("localKeyPassword")
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -21,9 +28,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(localStoreFile)
+            storePassword = localStorePassword
+            keyAlias = localKeyAlias
+            keyPassword = localKeyPassword
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
