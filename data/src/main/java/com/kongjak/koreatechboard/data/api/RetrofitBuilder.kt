@@ -27,12 +27,17 @@ object RetrofitBuilder {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        return if (BuildConfig.BUILD_TYPE == "release") {
+            OkHttpClient.Builder()
+                .build()
+        } else {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+            OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+        }
     }
 
     @Singleton
