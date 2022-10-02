@@ -25,6 +25,8 @@
 
     <string name="notice">공지</string>
     <string name="no_more_article">게시글이 더 없습니다!</string>
+    <string name="server_down">서버가 %d 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
+    <string name="no_data">데이터가 없습니다!</string>
 
     <string name="app_settings_header">앱 설정</string>
     <string name="info_settings_header">안내</string>

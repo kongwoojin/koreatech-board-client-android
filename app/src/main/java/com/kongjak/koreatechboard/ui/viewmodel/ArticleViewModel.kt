@@ -25,6 +25,10 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val site: LiveData<String>
         get() = _site
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+
     fun setUrlData(url: String) {
         _url.value = url
     }
@@ -35,7 +39,9 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
 
     fun getArticleData() {
         viewModelScope.launch {
+            _isLoading.value = true
             _article.value = getArticleUseCase.execute(site.value!!, url.value!!)
+            _isLoading.value = false
         }
     }
 }

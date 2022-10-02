@@ -3,6 +3,8 @@ package com.kongjak.koreatechboard.data.model
 import com.google.gson.annotations.SerializedName
 
 data class ArticleResponse(
+    @SerializedName("status_code")
+    val statusCode: Int,
     @SerializedName("title")
     val title: String,
     @SerializedName("writer")

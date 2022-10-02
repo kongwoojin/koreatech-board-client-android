@@ -25,6 +25,8 @@
 
     <string name="notice">Notice</string>
     <string name="no_more_article">No more article!</string>
+    <string name="server_down">Server returns %d error!\nPlease contact to server admin.</string>
+    <string name="no_data">No data!</string>
 
     <string name="app_settings_header">App Settings</string>
     <string name="info_settings_header">Info</string>

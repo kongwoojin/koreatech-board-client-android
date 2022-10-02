@@ -13,8 +13,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) :
     ViewModel() {
-    private val _boardList = MutableLiveData<List<BoardData>>()
-    val boardList: LiveData<List<BoardData>>
+    private val _boardList = MutableLiveData<List<BoardData>?>()
+    val boardList: LiveData<List<BoardData>?>
         get() = _boardList
 
     private val _isLoading = MutableLiveData(false)
@@ -36,6 +36,10 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     private val _site = MutableLiveData<String>()
     val site: LiveData<String>
         get() = _site
+
+    private val _statusCode = MutableLiveData(200)
+    val statusCode: LiveData<Int>
+        get() = _statusCode
 
     init {
         _boardList.value = ArrayList()
@@ -74,6 +78,7 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
             _isLoading.value = true
             val data = getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
             _lastPage.value = data.lastPage
+            _statusCode.value = data.statusCode
             _boardList.value = data.boardData
             _isLoading.value = false
         }

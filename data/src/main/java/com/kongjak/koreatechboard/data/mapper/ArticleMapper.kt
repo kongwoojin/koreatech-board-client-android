@@ -18,6 +18,7 @@ object ArticleMapper {
         }
 
         return Article(
+            statusCode = articleResponse.statusCode,
             title = articleResponse.title,
             writer = articleResponse.writer,
             text = articleResponse.text,
