@@ -52,4 +52,7 @@
     <string name="mail_subject">Koreatech Board 문의</string>
     <string name="mail_text">기기: %1$s\nAPI: %2$d\n문의 종류 (오류, 기능, 기타): \n문의 내용:</string>
     <string name="mail_app_not_found">메일 앱을 찾을 수 없습니다!</string>
+
+    <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
+    <string name="finish">종료</string>
 </resources>

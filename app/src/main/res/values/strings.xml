@@ -55,4 +55,7 @@
     <string name="mail_subject">Koreatech Board Enquiry</string>
     <string name="mail_text">Device: %1$s\nOS: %2$d\nEnquiry type (Bug, Feature request, ETC): \nEnquiry:</string>
     <string name="mail_app_not_found">Cannot find mail application!</string>
+
+    <string name="network_unavailable">Can\'t connect network!</string>
+    <string name="finish">Finish</string>
 </resources>
