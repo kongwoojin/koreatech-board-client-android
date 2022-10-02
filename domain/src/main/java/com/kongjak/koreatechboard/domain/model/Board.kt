@@ -2,7 +2,8 @@ package com.kongjak.koreatechboard.domain.model
 
 data class Board(
     val lastPage: Int,
-    val boardData: List<BoardData>
+    val statusCode: Int,
+    val boardData: List<BoardData>?
 )
 
 data class BoardData(

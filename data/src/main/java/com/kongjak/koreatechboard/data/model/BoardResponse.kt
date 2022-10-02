@@ -5,8 +5,10 @@ import com.google.gson.annotations.SerializedName
 data class BoardResponse(
     @SerializedName("last_page")
     val lastPage: Int,
+    @SerializedName("status_code")
+    val statusCode: Int,
     @SerializedName("posts")
-    val boardData: List<BoardResponseData>
+    val boardData: List<BoardResponseData>?
 )
 
 data class BoardResponseData(

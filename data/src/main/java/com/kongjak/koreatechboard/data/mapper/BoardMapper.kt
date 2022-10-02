@@ -8,22 +8,25 @@ object BoardMapper {
     fun mapToBoard(boardResponse: BoardResponse): Board {
         val mappedList = ArrayList<BoardData>()
 
-        for (board in boardResponse.boardData) {
-            mappedList.add(
-                BoardData(
-                    title = board.title,
-                    noticeType = board.noticeType,
-                    num = board.num,
-                    writer = board.writer,
-                    writeDate = board.writeDate,
-                    read = board.read,
-                    articleUrl = board.articleUrl
+        if (boardResponse.boardData != null) {
+            for (board in boardResponse.boardData) {
+                mappedList.add(
+                    BoardData(
+                        title = board.title,
+                        noticeType = board.noticeType,
+                        num = board.num,
+                        writer = board.writer,
+                        writeDate = board.writeDate,
+                        read = board.read,
+                        articleUrl = board.articleUrl
+                    )
                 )
-            )
+            }
         }
 
         return Board(
             lastPage = boardResponse.lastPage,
+            statusCode = boardResponse.statusCode,
             boardData = mappedList
         )
     }
