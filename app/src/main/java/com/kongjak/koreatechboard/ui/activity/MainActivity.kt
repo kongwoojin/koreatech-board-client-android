@@ -4,9 +4,14 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,6 +28,7 @@ import com.kongjak.koreatechboard.ui.fragment.MechanicalFragment
 import com.kongjak.koreatechboard.ui.fragment.MechatronicsFragment
 import com.kongjak.koreatechboard.ui.fragment.SchoolFragment
 import com.kongjak.koreatechboard.ui.fragment.SimFragment
+import com.kongjak.koreatechboard.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var defaultFragment: Fragment
     lateinit var fragment: Fragment
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
@@ -180,6 +188,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.lifecycleOwner = this
+
+        mainViewModel.isMenuNeeded.observe(this) {
+            invalidateOptionsMenu()
+        }
     }
 
     private fun isNetworkConnected(): Boolean {
@@ -235,5 +247,23 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         supportFragmentManager.putFragment(outState, "fragment", fragment)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        if (mainViewModel.isMenuNeeded.value == true) {
+            menuInflater.inflate(R.menu.toolbar_menu, menu)
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.toolbar_menu_open_in_browser -> {
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(this, Uri.parse(mainViewModel.urlToOpenInBrowser.value))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

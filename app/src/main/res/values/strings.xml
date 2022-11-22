@@ -58,4 +58,6 @@
 
     <string name="network_unavailable">Can\'t connect network!</string>
     <string name="finish">Finish</string>
+
+    <string name="open_in_browser">Open in browser</string>
 </resources>
