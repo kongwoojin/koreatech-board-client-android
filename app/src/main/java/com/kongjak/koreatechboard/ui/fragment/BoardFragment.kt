@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +28,7 @@ class BoardFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val boardViewModel: BoardViewModel by viewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,6 +90,9 @@ class BoardFragment : Fragment() {
                         .beginTransaction()
                         .replace(R.id.article_fragment_container_view, articleFragment)
                         .commit()
+
+                    mainViewModel.updateUrl(url)
+                    mainViewModel.updateMenuNeeded(true)
                 }
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
@@ -116,6 +122,9 @@ class BoardFragment : Fragment() {
         }
 
         boardViewModel.initData()
+        if (resources.getBoolean(R.bool.is_tablet)) {
+            mainViewModel.updateMenuNeeded(false)
+        }
         return rootView
     }
 

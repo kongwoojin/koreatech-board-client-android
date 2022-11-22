@@ -55,4 +55,6 @@
 
     <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
     <string name="finish">종료</string>
+
+    <string name="open_in_browser">브라우저에서 열기</string>
 </resources>

@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation ("androidx.browser:browser:1.4.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.github.bumptech.glide:glide:4.13.0")
