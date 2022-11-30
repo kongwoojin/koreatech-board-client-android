@@ -58,6 +58,7 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    namespace = "com.kongjak.koreatechboard"
 }
 
 dependencies {
