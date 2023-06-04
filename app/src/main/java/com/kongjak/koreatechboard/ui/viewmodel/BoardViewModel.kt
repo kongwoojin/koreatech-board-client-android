@@ -78,7 +78,6 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
             _isLoading.value = true
             val data = getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
             _lastPage.value = data.lastPage
-            _statusCode.value = data.statusCode
             _boardList.value = data.boardData
             _isLoading.value = false
         }
