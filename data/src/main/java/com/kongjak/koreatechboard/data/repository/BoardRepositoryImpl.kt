@@ -9,6 +9,7 @@ import javax.inject.Inject
 class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource: BoardRemoteDataSource) :
     BoardRepository {
     override suspend fun getBoard(site: String, board: String, page: Int): Board {
-        return BoardMapper.mapToBoard(boardRemoteDataSource.getBoard(site, board, page))
+        val response = boardRemoteDataSource.getBoard(site, board, page)
+        return BoardMapper.mapToBoard(response.body()!!, response.code())
     }
 }
