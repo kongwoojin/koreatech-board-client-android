@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
         _urlToOpenInBrowser.value = url
     }
 
-    fun updateMenuNeeded(isMenuNeeded: Boolean){
+    fun updateMenuNeeded(isMenuNeeded: Boolean) {
         _isMenuNeeded.value = isMenuNeeded
     }
 }

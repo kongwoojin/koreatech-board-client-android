@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentArticleBinding
 import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.UUID
 
 @AndroidEntryPoint
 class ArticleFragment : Fragment() {
