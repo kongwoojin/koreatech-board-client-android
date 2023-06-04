@@ -14,11 +14,11 @@ interface API {
         @Path("site") site: String,
         @Path("board") board: String,
         @Query("page") page: Int
-    ): BoardResponse
+    ): Response<BoardResponse>
 
     @GET("{site}/article/")
     suspend fun getArticle(
         @Path("site") site: String,
         @Query("uuid") uuid: UUID
-    ): ArticleResponse
+    ): Response<ArticleResponse>
 }
