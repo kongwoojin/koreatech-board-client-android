@@ -4,17 +4,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.fragment.ArticleFragment
+import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ArticleActivity : AppCompatActivity() {
 
-    private lateinit var url: String
+    private lateinit var uuid: String
+
+    private val articleViewModel: ArticleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,12 +27,12 @@ class ArticleActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        url = intent.getStringExtra("url")!!
+        uuid = intent.getStringExtra("uuid")!!
 
         val articleFragment = ArticleFragment()
         val articleBundle = Bundle()
         articleBundle.putString("site", intent.getStringExtra("site")!!)
-        articleBundle.putString("url", url)
+        articleBundle.putString("uuid", uuid)
         articleFragment.arguments = articleBundle
 
         supportFragmentManager
@@ -48,7 +52,7 @@ class ArticleActivity : AppCompatActivity() {
             R.id.toolbar_menu_open_in_browser -> {
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
-                customTabsIntent.launchUrl(this, Uri.parse(url))
+                customTabsIntent.launchUrl(this, Uri.parse(articleViewModel.article.value?.articleUrl))
             }
         }
         return super.onOptionsItemSelected(item)

@@ -8,6 +8,7 @@ import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,9 +18,9 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val article: LiveData<Article>
         get() = _article
 
-    private val _url = MutableLiveData<String>()
-    val url: LiveData<String>
-        get() = _url
+    private val _uuid = MutableLiveData<UUID>()
+    val uuid: LiveData<UUID>
+        get() = _uuid
 
     private val _site = MutableLiveData<String>()
     val site: LiveData<String>
@@ -29,8 +30,8 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    fun setUrlData(url: String) {
-        _url.value = url
+    fun setUUIDData(uuid: UUID) {
+        _uuid.value = uuid
     }
 
     fun setSiteData(site: String) {
@@ -40,7 +41,7 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     fun getArticleData() {
         viewModelScope.launch {
             _isLoading.value = true
-            _article.value = getArticleUseCase.execute(site.value!!, url.value!!)
+            _article.value = getArticleUseCase.execute(site.value!!, uuid.value!!)
             _isLoading.value = false
         }
     }

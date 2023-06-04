@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.databinding.ItemArticleBinding
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.util.BoardDiffUtil
+import java.util.UUID
 
 class BoardAdapter : ListAdapter<BoardData, BoardAdapter.ViewHolder>(BoardDiffUtil) {
 
@@ -32,18 +33,18 @@ class BoardAdapter : ListAdapter<BoardData, BoardAdapter.ViewHolder>(BoardDiffUt
             binding.boardData = boardData
 
             binding.item.setOnClickListener {
-                onClickListener.onClick(boardData.articleUrl)
+                onClickListener.onClick(boardData.uuid)
             }
         }
     }
 
     interface OnClickListener {
-        fun onClick(position: String)
+        fun onClick(position: UUID)
     }
 
-    inline fun setOnClickListener(crossinline item: (String) -> Unit) {
+    inline fun setOnClickListener(crossinline item: (UUID) -> Unit) {
         this.onClickListener = object : OnClickListener {
-            override fun onClick(position: String) {
+            override fun onClick(position: UUID) {
                 item(position)
             }
         }
