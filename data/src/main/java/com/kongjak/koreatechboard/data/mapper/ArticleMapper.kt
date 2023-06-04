@@ -5,24 +5,25 @@ import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.model.Files
 
 object ArticleMapper {
-    fun mapToArticle(articleResponse: ArticleResponse): Article {
+    fun mapToArticle(articleResponse: ArticleResponse, code: Int): Article {
         val mappedFileList = ArrayList<Files>()
 
         for (files in articleResponse.files) {
             mappedFileList.add(
                 Files(
                     fileName = files.fileName,
-                    fileUri = files.fileUri
+                    fileUrl = files.fileUrl
                 )
             )
         }
 
         return Article(
-            statusCode = articleResponse.statusCode,
+            statusCode = code,
             title = articleResponse.title,
             writer = articleResponse.writer,
-            text = articleResponse.text,
+            content = articleResponse.content,
             date = articleResponse.date,
+            articleUrl = articleResponse.articleUrl,
             files = mappedFileList
         )
     }

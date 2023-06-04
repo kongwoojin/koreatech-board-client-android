@@ -5,20 +5,18 @@ import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.BoardData
 
 object BoardMapper {
-    fun mapToBoard(boardResponse: BoardResponse): Board {
+    fun mapToBoard(boardResponse: BoardResponse, code: Int): Board {
         val mappedList = ArrayList<BoardData>()
 
         if (boardResponse.boardData != null) {
             for (board in boardResponse.boardData) {
                 mappedList.add(
                     BoardData(
+                        uuid = board.uuid,
                         title = board.title,
-                        noticeType = board.noticeType,
                         num = board.num,
                         writer = board.writer,
                         writeDate = board.writeDate,
-                        read = board.read,
-                        articleUrl = board.articleUrl
                     )
                 )
             }
@@ -26,7 +24,7 @@ object BoardMapper {
 
         return Board(
             lastPage = boardResponse.lastPage,
-            statusCode = boardResponse.statusCode,
+            statusCode = code,
             boardData = mappedList
         )
     }
