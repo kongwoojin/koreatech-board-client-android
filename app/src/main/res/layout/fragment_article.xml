@@ -69,7 +69,7 @@
                 <TextView
                     android:id="@+id/text_text_view"
                     style="@style/Article.Text"
-                    html_text="@{vm.article.text}"
+                    html_text="@{vm.article.content}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="all"
