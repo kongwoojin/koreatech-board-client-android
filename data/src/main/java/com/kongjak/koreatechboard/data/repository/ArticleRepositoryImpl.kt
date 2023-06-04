@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(private val articleRemoteDataSource: ArticleRemoteDataSource) :
     ArticleRepository {
-    override suspend fun getArticle(site: String, url: String): Article {
-        val response = articleRemoteDataSource.getArticle(site, url)
+    override suspend fun getArticle(site: String, uuid: UUID): Article {
+        val response = articleRemoteDataSource.getArticle(site, uuid)
         return ArticleMapper.mapToArticle(response.body()!!, response.code())
     }
 }
