@@ -39,9 +39,10 @@ class ArticleFragment : Fragment() {
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         articleViewModel.getArticleData()
-        
+
         articleViewModel.article.observe(viewLifecycleOwner) {
             mainViewModel.updateUrl(it.articleUrl)
+            mainViewModel.updateMenuNeeded(true)
         }
 
         return rootView

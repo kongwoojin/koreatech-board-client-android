@@ -90,8 +90,6 @@ class BoardFragment : Fragment() {
                         .beginTransaction()
                         .replace(R.id.article_fragment_container_view, articleFragment)
                         .commit()
-
-                    mainViewModel.updateMenuNeeded(true)
                 }
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
