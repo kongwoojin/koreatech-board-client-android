@@ -9,7 +9,7 @@ import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,7 +60,6 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
                     }
                 }
             }.onFailure {
-
             }
 
             _isLoading.value = false

@@ -91,7 +91,6 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
                     }
                 }
             }.onFailure {
-
             }
 
             _isLoading.value = false
