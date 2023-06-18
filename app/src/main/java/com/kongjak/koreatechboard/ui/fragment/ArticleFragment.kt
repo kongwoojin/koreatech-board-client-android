@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentArticleBinding
 import com.kongjak.koreatechboard.ui.viewmodel.ArticleViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 
@@ -20,6 +21,7 @@ class ArticleFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val articleViewModel: ArticleViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,10 @@ class ArticleFragment : Fragment() {
         binding.vm = articleViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         articleViewModel.getArticleData()
+        
+        articleViewModel.article.observe(viewLifecycleOwner) {
+            mainViewModel.updateUrl(it.articleUrl)
+        }
 
         return rootView
     }
