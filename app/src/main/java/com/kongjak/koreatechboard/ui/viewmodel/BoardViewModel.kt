@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -76,9 +77,23 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     fun getApi() {
         viewModelScope.launch {
             _isLoading.value = true
-            val data = getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
-            _lastPage.value = data.lastPage
-            _boardList.value = data.boardData
+            runCatching {
+                getBoardUseCase.execute(site.value!!, board.value!!, page.value!!)
+            }.onSuccess {
+                when (it) {
+                    is ResponseResult.Success -> {
+                        _lastPage.value = it.data.lastPage
+                        _boardList.value = it.data.boardData
+                        _statusCode.value = it.data.statusCode
+                    }
+                    is ResponseResult.Error -> {
+                        _statusCode.value = it.errorType.statusCode
+                    }
+                }
+            }.onFailure {
+
+            }
+
             _isLoading.value = false
         }
     }

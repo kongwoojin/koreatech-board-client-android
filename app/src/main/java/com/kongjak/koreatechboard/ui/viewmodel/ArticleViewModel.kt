@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +31,10 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+    private val _statusCode = MutableLiveData(200)
+    val statusCode: LiveData<Int>
+        get() = _statusCode
+
     fun setUUIDData(uuid: UUID) {
         _uuid.value = uuid
     }
@@ -41,7 +46,23 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     fun getArticleData() {
         viewModelScope.launch {
             _isLoading.value = true
-            _article.value = getArticleUseCase.execute(site.value!!, uuid.value!!)
+
+            runCatching {
+                getArticleUseCase.execute(site.value!!, uuid.value!!)
+            }.onSuccess {
+                when (it) {
+                    is ResponseResult.Success -> {
+                        _article.value = it.data!!
+                        _statusCode.value = it.data.statusCode
+                    }
+                    is ResponseResult.Error -> {
+                        _statusCode.value = it.errorType.statusCode
+                    }
+                }
+            }.onFailure {
+
+            }
+
             _isLoading.value = false
         }
     }
