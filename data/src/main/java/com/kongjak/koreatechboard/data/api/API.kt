@@ -9,14 +9,14 @@ import retrofit2.http.Query
 import java.util.UUID
 
 interface API {
-    @GET("{site}/{board}/")
+    @GET("{site}/{board}")
     suspend fun getBoard(
         @Path("site") site: String,
         @Path("board") board: String,
         @Query("page") page: Int
     ): Response<BoardResponse>
 
-    @GET("{site}/article/")
+    @GET("article/{site}")
     suspend fun getArticle(
         @Path("site") site: String,
         @Query("uuid") uuid: UUID
