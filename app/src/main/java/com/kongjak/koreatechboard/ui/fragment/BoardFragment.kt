@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
+import com.kongjak.koreatechboard.ui.activity.ArticleScreen
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import com.kongjak.koreatechboard.ui.viewmodel.MainViewModel
@@ -80,16 +81,11 @@ class BoardFragment : Fragment() {
         boardAdapter.setOnClickListener { uuid ->
             when (resources.getBoolean(R.bool.is_tablet)) {
                 true -> {
-                    val articleFragment = ArticleFragment()
-                    val articleBundle = Bundle()
-                    articleBundle.putString("site", boardViewModel.site.value)
-                    articleBundle.putString("uuid", uuid.toString())
-                    articleFragment.arguments = articleBundle
-
-                    parentFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.article_fragment_container_view, articleFragment)
-                        .commit()
+                    binding.articleComposeView?.apply {
+                        setContent {
+                            ArticleScreen(site = boardViewModel.site.value!!, uuid = uuid)
+                        }
+                    }
                 }
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
