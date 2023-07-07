@@ -57,6 +57,10 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
     namespace = "com.kongjak.koreatechboard"
 }
@@ -85,7 +89,16 @@ dependencies {
     implementation("androidx.preference:preference:1.2.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
     kapt("com.github.bumptech.glide:compiler:4.13.0")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.animation:animation:1.4.3")
+    implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
+    implementation("androidx.compose.ui:ui-tooling:1.4.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("com.google.accompanist:accompanist-appcompat-theme:0.16.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.3")
 }
