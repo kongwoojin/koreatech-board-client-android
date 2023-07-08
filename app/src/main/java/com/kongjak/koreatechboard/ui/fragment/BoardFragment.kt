@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.databinding.FragmentBoardBinding
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
-import com.kongjak.koreatechboard.ui.activity.ArticleScreen
 import com.kongjak.koreatechboard.ui.adapter.BoardAdapter
+import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import com.kongjak.koreatechboard.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,6 +87,7 @@ class BoardFragment : Fragment() {
                         }
                     }
                 }
+
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
                     intent.putExtra("site", boardViewModel.site.value)
