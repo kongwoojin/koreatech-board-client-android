@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.article
 
-import android.util.Log
 import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
