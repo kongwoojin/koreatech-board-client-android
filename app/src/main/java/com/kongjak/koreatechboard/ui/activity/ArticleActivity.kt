@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
+import com.kongjak.koreatechboard.util.findActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 
@@ -39,11 +42,12 @@ class ArticleActivity : ComponentActivity() {
 
 @Composable
 fun ArticleMain(site: String, uuid: UUID) {
-    Toolbar(site = site, uuid = uuid)
+    val context = LocalContext.current
+    Toolbar(context = context, site = site, uuid = uuid)
 }
 
 @Composable
-fun Toolbar(site: String, uuid: UUID) {
+fun Toolbar(context: Context, site: String, uuid: UUID) {
     KoreatechBoardTheme {
         Scaffold(
             topBar = {
@@ -54,7 +58,7 @@ fun Toolbar(site: String, uuid: UUID) {
                     navigationIcon =
                     {
                         IconButton(onClick = {
-                            // TODO //
+                            context.findActivity().finish()
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
