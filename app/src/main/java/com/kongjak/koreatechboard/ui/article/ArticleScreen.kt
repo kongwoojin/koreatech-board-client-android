@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.article
 
+import android.util.Log
 import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -102,10 +103,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = viewModel(), site: String
                             top.linkTo(date.bottom)
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                        }
-                ) { textView ->
-                    textView.htmlText = it.content
-                }
+                        },
+                    update = {
+                        it.htmlText = data?.content
+                    }
+                )
                 AndroidView(
                     factory = { filesTextView },
                     modifier = Modifier
@@ -114,10 +116,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = viewModel(), site: String
                             bottom.linkTo(parent.bottom)
                             start.linkTo(parent.start)
                             top.linkTo(content.bottom)
-                        }
-                ) { textView ->
-                    textView.fileText = it.files
-                }
+                        },
+                    update = {
+                        it.fileText = data?.files
+                    }
+                )
             }
         }
 
