@@ -99,6 +99,7 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = viewModel(), site: String
                     factory = { contentTextView },
                     modifier = Modifier
                         .padding(16.dp)
+                        .fillMaxSize()
                         .constrainAs(content) {
                             top.linkTo(date.bottom)
                             start.linkTo(parent.start)
