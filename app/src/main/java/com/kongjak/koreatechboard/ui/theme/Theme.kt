@@ -15,11 +15,13 @@ import androidx.core.view.WindowCompat
 private val DarkColors = darkColors(
     primary = KoreatechSub1,
     secondary = KoreatechSub3,
+    background = darkBackground,
 )
 
 private val LightColors = lightColors(
     primary = KoreatechMain1,
     secondary = KoreatechMain1,
+    background = whiteBackground
 )
 
 @Composable
@@ -48,6 +50,6 @@ fun KoreatechBoardTheme(
 
     MaterialTheme(
         colors = color,
-        content = content
+        content = content,
     )
 }

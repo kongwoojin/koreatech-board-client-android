@@ -3,7 +3,7 @@
     <string name="item_notice">Notice</string>
     <string name="item_free_board">Free Board</string>
     <string name="item_job_board">Job Board</string>
-    <string name="item_lecture_notice">Lecture notice</string>
+    <string name="item_lecture_board">Lecture notice</string>
     <string name="item_scholar_board">Scholar Notice</string>
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
@@ -25,7 +25,7 @@
 
     <string name="notice">Notice</string>
     <string name="no_more_article">No more article!</string>
-    <string name="server_down">Server returns %d error!\nPlease contact to server admin.</string>
+    <string name="server_down">Server returns %s error!\nPlease contact to server admin.</string>
     <string name="no_data">No data!</string>
 
     <string name="app_settings_header">App Settings</string>

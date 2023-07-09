@@ -16,3 +16,6 @@ val KoreatechMain2 = Color(0xFF183072)
 val KoreatechSub1 = Color(0xFF22449C)
 val KoreatechSub2 = Color(0xFFB3B3AA)
 val KoreatechSub3 = Color(0xFF4C4C4C)
+
+val whiteBackground = Color(0xFFFFFFFF)
+val darkBackground = Color(0xFF444444)

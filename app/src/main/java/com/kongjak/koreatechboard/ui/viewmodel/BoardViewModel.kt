@@ -1,7 +1,5 @@
 package com.kongjak.koreatechboard.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -18,5 +16,4 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
 
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
         getBoardUseCase.execute(site, board).cachedIn(viewModelScope)
-
 }
