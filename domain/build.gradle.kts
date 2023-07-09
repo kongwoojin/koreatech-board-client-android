@@ -43,6 +43,7 @@ dependencies {
     implementation("com.google.android.material:material:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3")
     implementation("com.google.dagger:hilt-android:2.43.2")
+    implementation("androidx.paging:paging-common:3.1.1")
     kapt("com.google.dagger:hilt-android-compiler:2.43.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
