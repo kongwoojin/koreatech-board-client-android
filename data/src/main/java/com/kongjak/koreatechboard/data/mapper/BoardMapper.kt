@@ -1,39 +1,29 @@
 package com.kongjak.koreatechboard.data.mapper
 
 import com.kongjak.koreatechboard.data.model.BoardResponse
-import com.kongjak.koreatechboard.domain.base.ErrorType
-import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.BoardData
 
-object BoardMapper {
-    fun mapToBoard(boardResponse: BoardResponse?, code: Int): ResponseResult<Board> {
-        val mappedList = ArrayList<BoardData>()
+fun BoardResponse.toBoard(code: Int): Board {
+    val mappedList = ArrayList<BoardData>()
 
-        if (boardResponse?.boardData != null) {
-            for (board in boardResponse.boardData) {
-                mappedList.add(
-                    BoardData(
-                        uuid = board.uuid,
-                        title = board.title,
-                        num = board.num,
-                        writer = board.writer,
-                        writeDate = board.writeDate,
-                    )
-                )
-            }
-        }
-
-        return if (code == 200) {
-            ResponseResult.Success(
-                Board(
-                    lastPage = boardResponse!!.lastPage,
-                    statusCode = code,
-                    boardData = mappedList
+    if (this.boardData != null) {
+        for (board in this.boardData) {
+            mappedList.add(
+                BoardData(
+                    uuid = board.uuid,
+                    title = board.title,
+                    num = board.num,
+                    writer = board.writer,
+                    writeDate = board.writeDate,
                 )
             )
-        } else {
-            ResponseResult.Error(ErrorType(code))
         }
     }
+
+    return Board(
+        lastPage = this.lastPage,
+        statusCode = code,
+        boardData = mappedList
+    )
 }
