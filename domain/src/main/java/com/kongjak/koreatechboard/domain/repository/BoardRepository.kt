@@ -1,8 +1,9 @@
 package com.kongjak.koreatechboard.domain.repository
 
-import com.kongjak.koreatechboard.domain.base.ResponseResult
-import com.kongjak.koreatechboard.domain.model.Board
+import androidx.paging.PagingData
+import com.kongjak.koreatechboard.domain.model.BoardData
+import kotlinx.coroutines.flow.Flow
 
 interface BoardRepository {
-    suspend fun getBoard(site: String, board: String, page: Int): ResponseResult<Board>
+    fun getBoard(site: String, board: String): Flow<PagingData<BoardData>>
 }
