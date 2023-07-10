@@ -106,6 +106,7 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = viewModel(), site: String
                         },
                     update = {
                         it.htmlText = data?.content
+                        it.textSize = 16F
                     }
                 )
                 AndroidView(

@@ -49,7 +49,7 @@ fun Drawer(
 
         deptList.forEach { item ->
             val backgroundColor =
-                if (item == selectedMenu.value) MaterialTheme.colors.primary else MaterialTheme.colors.background
+                if (item == selectedMenu.value) MaterialTheme.colors.primary.copy(alpha = 0.1f) else Color.Transparent
             Box(
                 modifier = Modifier
                     .selectable(
@@ -63,7 +63,7 @@ fun Drawer(
                     )
                     .fillMaxWidth()
                     .padding(horizontal = 14.dp, vertical = 4.dp)
-                    .background(backgroundColor.copy(alpha = 0.1f))
+                    .background(backgroundColor)
 
             ) {
                 Text(

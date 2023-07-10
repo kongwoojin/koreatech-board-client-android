@@ -7,21 +7,48 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+@Immutable
+data class NavigationColors(
+    val bottomNavigationBackground: Color
+)
+
+val LocalNavigationColors = staticCompositionLocalOf {
+    NavigationColors(
+        bottomNavigationBackground = Color.Unspecified
+    )
+}
+
 private val DarkColors = darkColors(
     primary = KoreatechSub1,
+    onPrimary = Color.White,
     secondary = KoreatechSub3,
+    onSecondary = Color.White,
     background = darkBackground,
+    onBackground = Color.White
 )
 
 private val LightColors = lightColors(
     primary = KoreatechMain1,
     secondary = KoreatechMain1,
-    background = whiteBackground
+    background = whiteBackground,
+    onBackground = Color.Black
+)
+
+private val DarkNavigationColors = NavigationColors(
+    bottomNavigationBackground = darkBackground
+)
+
+private val WhiteNavigationColors = NavigationColors(
+    bottomNavigationBackground = whiteBackground
 )
 
 @Composable
@@ -48,8 +75,18 @@ fun KoreatechBoardTheme(
         }
     }
 
-    MaterialTheme(
-        colors = color,
-        content = content,
-    )
+    val navigationColors = if (darkTheme) DarkNavigationColors else WhiteNavigationColors
+
+    CompositionLocalProvider(LocalNavigationColors provides navigationColors) {
+        MaterialTheme(
+            colors = color,
+            content = content
+        )
+    }
+}
+
+object NavigationTheme {
+    val colors: NavigationColors
+        @Composable
+        get() = LocalNavigationColors.current
 }

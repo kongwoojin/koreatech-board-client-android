@@ -46,6 +46,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.TopBar
+import com.kongjak.koreatechboard.ui.theme.NavigationTheme
 import com.kongjak.koreatechboard.ui.viewmodel.BoardViewModel
 import com.kongjak.koreatechboard.util.enums.DeptEnums
 
@@ -95,7 +96,7 @@ fun BottomNavigation(navController: NavHostController, site: DeptEnums) {
                         restoreState = true
                     }
                 },
-                modifier = Modifier.background(MaterialTheme.colors.background)
+                modifier = Modifier.background(NavigationTheme.colors.bottomNavigationBackground)
             )
         }
     }

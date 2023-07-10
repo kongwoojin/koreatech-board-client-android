@@ -43,28 +43,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Composable
-    fun TopBar(onButtonClicked: () -> Unit) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = R.string.app_name)
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = { onButtonClicked() }) {
-                    Icon(Icons.Default.Menu, contentDescription = "")
-                }
-            },
-            backgroundColor = MaterialTheme.colors.primary
-        )
-    }
-
     @Preview
     @Composable
     fun AppMainScreen() {
         val navController = rememberNavController()
-        Surface(color = MaterialTheme.colors.background) {
+        Surface() {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             val scope = rememberCoroutineScope()
             val openDrawer = {
@@ -106,4 +89,22 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun TopBar(onButtonClicked: () -> Unit) {
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(id = R.string.app_name)
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = { onButtonClicked() }) {
+                Icon(Icons.Default.Menu, contentDescription = "")
+            }
+        },
+        backgroundColor = MaterialTheme.colors.primary,
+        contentColor = MaterialTheme.colors.onPrimary
+    )
 }
