@@ -36,8 +36,7 @@ val ideBoards = listOf(
 )
 
 val mechanicalBoards = listOf(
-    BoardItem.Notice,
-    BoardItem.Free
+    BoardItem.Notice
 )
 
 val mechatronicsBoards = listOf(
