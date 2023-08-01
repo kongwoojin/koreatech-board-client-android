@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.ui.article
 import android.widget.TextView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -69,11 +70,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = viewModel(), site: String
                     text = it.title,
                     fontSize = 18.sp,
                     modifier = Modifier
+                        .fillMaxWidth()
                         .padding(16.dp)
                         .constrainAs(title) {
                             top.linkTo(parent.top)
                             start.linkTo(parent.start)
-                            end.linkTo(parent.end)
                         }
                 )
                 Text(
