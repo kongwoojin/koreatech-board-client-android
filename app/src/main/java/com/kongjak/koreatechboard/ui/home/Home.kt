@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.home
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,11 +25,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.util.routes.Department
 
 @Composable
@@ -47,6 +50,8 @@ fun HomeScreen() {
 
 @Composable
 fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewModel(key = department.name)) {
+    val context = LocalContext.current
+
     var key by remember {
         mutableStateOf(department.boards[0].board)
     }
@@ -102,7 +107,10 @@ fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewM
                             modifier = Modifier
                                 .padding(vertical = 8.dp)
                                 .clickable {
-                                    TODO("Implement article screen")
+                                    val intent = Intent(context, ArticleActivity::class.java)
+                                    intent.putExtra("site", department.name)
+                                    intent.putExtra("uuid", data.uuid.toString())
+                                    context.startActivity(intent)
                                 }
                         ) {
                             Text(text = data.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
