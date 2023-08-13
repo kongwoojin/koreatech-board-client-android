@@ -108,6 +108,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
+    implementation("androidx.paging:paging-compose:3.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")
     implementation("androidx.preference:preference:1.2.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
