@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.viewmodel
+package com.kongjak.koreatechboard.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) : ViewModel() {
     private val _isLoaded = MutableLiveData(false)
     val isLoaded: LiveData<Boolean>
         get() = _isLoaded
