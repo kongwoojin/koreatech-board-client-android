@@ -201,7 +201,7 @@ fun BottomSheetScaffold(boardViewModel: BoardViewModel = hiltViewModel()) {
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 128.dp,
+        sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
                 items(deptList) {
