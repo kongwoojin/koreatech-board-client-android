@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -66,11 +67,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = hiltViewModel(), site: St
                     ) {
                         Text(
                             text = it.writer,
-                            modifier = Modifier
+                            fontSize = MaterialTheme.typography.titleSmall.fontSize
                         )
                         Text(
                             text = it.date,
-                            modifier = Modifier
+                            fontSize = MaterialTheme.typography.titleSmall.fontSize
                         )
                     }
                 }
