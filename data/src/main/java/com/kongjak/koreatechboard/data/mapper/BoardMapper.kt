@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.data.mapper
 
 import com.kongjak.koreatechboard.data.model.BoardResponse
+import com.kongjak.koreatechboard.data.model.BoardResponseData
 import com.kongjak.koreatechboard.domain.base.ErrorType
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Board
@@ -8,28 +9,12 @@ import com.kongjak.koreatechboard.domain.model.BoardData
 
 object BoardMapper {
     fun mapToBoard(boardResponse: BoardResponse?, code: Int): ResponseResult<Board> {
-        val mappedList = ArrayList<BoardData>()
-
-        if (boardResponse?.boardData != null) {
-            for (board in boardResponse.boardData) {
-                mappedList.add(
-                    BoardData(
-                        uuid = board.uuid,
-                        title = board.title,
-                        num = board.num,
-                        writer = board.writer,
-                        writeDate = board.writeDate,
-                    )
-                )
-            }
-        }
-
         return if (code == 200) {
             ResponseResult.Success(
-                Board(
+                BoardResponse(
                     lastPage = boardResponse!!.lastPage,
                     statusCode = code,
-                    boardData = mappedList
+                    boardData = boardResponse.boardData
                 )
             )
         } else {
