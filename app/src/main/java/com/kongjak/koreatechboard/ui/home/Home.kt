@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -76,7 +77,7 @@ fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewM
                 Text(text = stringResource(id = department.stringResource), fontSize = 16.sp)
             }
 
-            TabRow(selectedTabIndex = tabIndex, containerColor = Color.Transparent) {
+            ScrollableTabRow(selectedTabIndex = tabIndex, containerColor = Color.Transparent, edgePadding = 0.dp) {
                 department.boards.forEachIndexed { index, board ->
                     Tab(
                         text = { Text(text = stringResource(id = board.stringResource)) },
