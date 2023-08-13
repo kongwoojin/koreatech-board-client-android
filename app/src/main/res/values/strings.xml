@@ -3,7 +3,7 @@
     <string name="item_notice">Notice</string>
     <string name="item_free_board">Free Board</string>
     <string name="item_job_board">Job Board</string>
-    <string name="item_lecture_notice">Lecture notice</string>
+    <string name="item_lecture_board">Lecture notice</string>
     <string name="item_scholar_board">Scholar Notice</string>
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
@@ -60,4 +60,8 @@
     <string name="finish">Finish</string>
 
     <string name="open_in_browser">Open in browser</string>
+
+    <string name="bottom_nav_bar_home">Home</string>
+    <string name="bottom_nav_bar_board">Board</string>
+    <string name="bottom_nav_bar_settings">Settings</string>
 </resources>

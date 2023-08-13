@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_mechatronics_lecture"
         android:icon="@drawable/ic_bottom_navigation_lecture"
-        android:title="@string/item_lecture_notice" />
+        android:title="@string/item_lecture_board" />
 
     <item
         android:id="@+id/navigation_mechatronics_bachelor"
