@@ -12,7 +12,7 @@ data class BoardResponse(
     override val statusCode: Int,
     @SerializedName("posts")
     override val boardData: List<BoardResponseData>?
-): Board
+) : Board
 
 data class BoardResponseData(
     @SerializedName("id")
@@ -27,4 +27,4 @@ data class BoardResponseData(
     override val writeDate: String,
     @SerializedName("read_count")
     override val read: Int,
-): BoardData
+) : BoardData

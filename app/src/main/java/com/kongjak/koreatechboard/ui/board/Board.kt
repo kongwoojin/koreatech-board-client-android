@@ -209,21 +209,23 @@ fun BottomSheetScaffold(boardViewModel: BoardViewModel = hiltViewModel()) {
             LazyColumn {
                 items(deptList) {
                     Box {
-                        Text(text = stringResource(id = it.stringResource), modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                            .clickable {
-                                boardViewModel.changeDept(it)
-                                scope.launch { scaffoldState.bottomSheetState.partialExpand() }
-                            })
+                        Text(
+                            text = stringResource(id = it.stringResource),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                                .clickable {
+                                    boardViewModel.changeDept(it)
+                                    scope.launch { scaffoldState.bottomSheetState.partialExpand() }
+                                }
+                        )
                     }
                 }
-
             }
-        }) { innerPadding ->
+        }
+    ) { innerPadding ->
         Box(Modifier.padding(innerPadding)) {
             Board(boardViewModel = boardViewModel)
         }
     }
 }
-
