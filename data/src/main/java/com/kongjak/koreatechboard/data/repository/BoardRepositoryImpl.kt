@@ -13,4 +13,9 @@ class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource:
         val response = boardRemoteDataSource.getBoard(site, board, page)
         return BoardMapper.mapToBoard(response.body(), response.code())
     }
+
+    override suspend fun getBoardMinimum(site: String, board: String): ResponseResult<Board> {
+        val response = boardRemoteDataSource.getBoardMinimum(site, board)
+        return BoardMapper.mapToBoard(response.body(), response.code())
+    }
 }

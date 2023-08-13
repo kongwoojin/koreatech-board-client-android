@@ -16,6 +16,14 @@ interface API {
         @Query("page") page: Int
     ): Response<BoardResponse>
 
+    @GET("{site}/{board}")
+    suspend fun getBoardMinimum(
+        @Path("site") site: String,
+        @Path("board") board: String,
+        @Query("page") page: Int = 1,
+        @Query("num_of_items") numOfItems: Int = 5
+    ): Response<BoardResponse>
+
     @GET("article/{site}")
     suspend fun getArticle(
         @Path("site") site: String,

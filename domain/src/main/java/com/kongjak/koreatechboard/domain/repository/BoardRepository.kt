@@ -5,4 +5,5 @@ import com.kongjak.koreatechboard.domain.model.Board
 
 interface BoardRepository {
     suspend fun getBoard(site: String, board: String, page: Int): ResponseResult<Board>
+    suspend fun getBoardMinimum(site: String, board: String): ResponseResult<Board>
 }
