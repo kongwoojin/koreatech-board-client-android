@@ -27,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
+import com.kongjak.koreatechboard.ui.board.BoardScreen
 import com.kongjak.koreatechboard.ui.home.HomeScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,11 +66,6 @@ fun MainScreen() {
             }
         }
     )
-}
-
-@Composable
-fun BoardScreen() {
-    TODO("Implement board list screen")
 }
 
 @Composable

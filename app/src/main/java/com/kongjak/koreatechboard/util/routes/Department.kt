@@ -14,3 +14,16 @@ sealed class Department(val name: String, val stringResource: Int, val boards: L
     object Emc : Department("emc", R.string.drawer_item_emc, emcBoards)
     object Sim : Department("sim", R.string.drawer_item_sim, simBoards)
 }
+
+val deptList = listOf(
+    Department.School,
+    Department.Dorm,
+    Department.Cse,
+    Department.Mechanical,
+    Department.Mechatronics,
+    Department.Ite,
+    Department.Ide,
+    Department.Arch,
+    Department.Emc,
+    Department.Sim
+)
