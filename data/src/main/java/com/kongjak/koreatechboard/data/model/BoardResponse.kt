@@ -16,15 +16,15 @@ data class BoardResponseData(
     @SerializedName("id")
     val uuid: UUID,
     @SerializedName("title")
-    val title: String?,
+    val title: String,
     @SerializedName("notice_type")
-    val noticeType: String?,
+    val noticeType: String,
     @SerializedName("num")
-    val num: String?,
+    val num: String,
     @SerializedName("writer")
-    val writer: String?,
+    val writer: String,
     @SerializedName("write_date")
-    val writeDate: String?,
+    val writeDate: String,
     @SerializedName("read_count")
     val read: Int,
     @SerializedName("article_url")

@@ -10,8 +10,8 @@ data class Board(
 
 data class BoardData(
     val uuid: UUID,
-    val title: String?,
-    val num: String?,
-    val writer: String?,
-    val writeDate: String?,
+    val title: String,
+    val num: String,
+    val writer: String,
+    val writeDate: String,
 )
