@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.di
 
+import com.kongjak.koreatechboard.data.api.API
 import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.datasource.remote.BoardRemoteDataSource
 import com.kongjak.koreatechboard.data.repository.ArticleRepositoryImpl
@@ -26,8 +27,9 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideBoardRepository(
-        boardRemoteDataSource: BoardRemoteDataSource
+        boardRemoteDataSource: BoardRemoteDataSource,
+        api: API
     ): BoardRepository {
-        return BoardRepositoryImpl(boardRemoteDataSource)
+        return BoardRepositoryImpl(boardRemoteDataSource, api)
     }
 }
