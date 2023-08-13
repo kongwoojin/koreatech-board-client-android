@@ -65,10 +65,6 @@ fun Board(boardViewModel: BoardViewModel) {
         tabIndex = 0
     }
 
-    val selectedBoard by remember {
-        mutableStateOf(dept.boards[tabIndex])
-    }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -76,8 +72,9 @@ fun Board(boardViewModel: BoardViewModel) {
     ) {
 
         val context = LocalContext.current
+
         val lazyPostList =
-            boardViewModel.getAPI(dept.name, selectedBoard.board).collectAsLazyPagingItems()
+            boardViewModel.getAPI(dept.name, dept.boards[tabIndex].board).collectAsLazyPagingItems()
 
         ScrollableTabRow(
             selectedTabIndex = tabIndex,
