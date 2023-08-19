@@ -77,7 +77,7 @@ fun SearchContent(searchViewModel: SearchViewModel = hiltViewModel(), contentPad
         modifier = Modifier
             .fillMaxSize()
             .padding(contentPadding),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(lazyPostList.itemCount) { index ->
