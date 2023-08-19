@@ -6,7 +6,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -22,7 +24,12 @@ class SettingsLocalDataSource @Inject constructor(
         }
     }
 
-    fun getDepartment(): String? {
-        return runBlocking { context.dataStore.data.first()[departmentKey] }
+    fun getDepartment(): Flow<String> {
+        val departmentFlow: Flow<String> = context.dataStore.data
+            .map { preferences ->
+                preferences[departmentKey] ?: "cse"
+            }
+
+        return departmentFlow
     }
 }

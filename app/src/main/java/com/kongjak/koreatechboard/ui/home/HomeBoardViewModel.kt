@@ -7,12 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardMinimumUseCase
+import com.kongjak.koreatechboard.domain.usecase.GetDepartmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getBoardMinimumUseCase: GetBoardMinimumUseCase,
+    private val getDepartmentUseCase: GetDepartmentUseCase,
+    ) : ViewModel() {
     private val _isLoaded = MutableLiveData(false)
     val isLoaded: LiveData<Boolean>
         get() = _isLoaded
@@ -25,18 +29,27 @@ class HomeViewModel @Inject constructor(private val getBoardMinimumUseCase: GetB
     val statusCode: LiveData<Int>
         get() = _statusCode
 
-    fun getApi(site: String, board: String) {
+    private val _department = MutableLiveData("")
+    val department: LiveData<String>
+        get() = _department
 
-        if (!boardList.containsKey(board)) {
+    init {
+        _department.value = getDepartmentUseCase()
+    }
+
+    fun getApi(site: String, board: String) {
+        val key = "$site:$board"
+
+        if (!boardList.containsKey(key)) {
             _isLoaded.value = false
-            _boardList[board] = MutableLiveData(emptyList())
+            _boardList[key] = MutableLiveData(emptyList())
             viewModelScope.launch {
                 runCatching {
                     getBoardMinimumUseCase(site, board)
                 }.onSuccess {
                     when (it) {
                         is ResponseResult.Success -> {
-                            _boardList[board]!!.postValue(it.data.boardData)
+                            _boardList[key]!!.postValue(it.data.boardData)
                             _statusCode.value = it.data.statusCode
                             _isLoaded.postValue(true)
                         }
