@@ -64,4 +64,11 @@
     <string name="bottom_nav_bar_home">Home</string>
     <string name="bottom_nav_bar_board">Board</string>
     <string name="bottom_nav_bar_settings">Settings</string>
+
+    <string name="search_dialog_title">Search</string>
+    <string name="search_dialog_hint">Type keyword</string>
+    <string name="search_dialog_search">Search</string>
+    <string name="search_dialog_cancel">Cancel</string>
+
+    <string name="search_result">Search result</string>
 </resources>

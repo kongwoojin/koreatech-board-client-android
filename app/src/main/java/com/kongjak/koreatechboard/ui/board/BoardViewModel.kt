@@ -1,6 +1,10 @@
 package com.kongjak.koreatechboard.ui.board
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -17,6 +21,7 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     ViewModel() {
 
     val department = mutableStateOf<Department>(Department.School)
+    var tabIndex = mutableIntStateOf(0)
 
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
         getBoardUseCase.execute(site, board).cachedIn(viewModelScope)
