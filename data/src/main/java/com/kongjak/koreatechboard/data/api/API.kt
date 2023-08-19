@@ -24,6 +24,15 @@ interface API {
         @Query("num_of_items") numOfItems: Int = 5
     ): Response<BoardResponse>
 
+    @GET("{site}/{board}/search/title")
+    suspend fun searchBoardWithTitle(
+        @Path("site") site: String,
+        @Path("board") board: String,
+        @Query("title") title: String,
+        @Query("page") page: Int = 1,
+        @Query("num_of_items") numOfItems: Int = 5
+    ): Response<BoardResponse>
+
     @GET("article/{site}")
     suspend fun getArticle(
         @Path("site") site: String,
