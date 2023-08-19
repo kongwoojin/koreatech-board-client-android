@@ -31,9 +31,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.SettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activity.ArticleActivity"
             android:exported="false" />
     </application>
