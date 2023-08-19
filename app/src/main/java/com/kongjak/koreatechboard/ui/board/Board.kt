@@ -284,8 +284,7 @@ fun SearchFAB(boardViewModel: BoardViewModel) {
                         Text(
                             text = stringResource(id = R.string.search_dialog_title),
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         OutlinedTextField(
