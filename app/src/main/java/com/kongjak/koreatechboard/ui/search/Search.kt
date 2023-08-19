@@ -128,5 +128,4 @@ fun SearchContent(searchViewModel: SearchViewModel = hiltViewModel(), contentPad
             }
         }
     }
-
 }

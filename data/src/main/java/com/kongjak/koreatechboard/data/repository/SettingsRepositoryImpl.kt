@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
     private val settingsLocalDataSource: SettingsLocalDataSource
-): SettingsRepository {
+) : SettingsRepository {
     override suspend fun setDepartment(department: String) {
         settingsLocalDataSource.setDepartment(department)
     }

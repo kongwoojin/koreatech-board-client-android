@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.repository.SettingsRepository
 import com.kongjak.koreatechboard.domain.usecase.GetDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDepartmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

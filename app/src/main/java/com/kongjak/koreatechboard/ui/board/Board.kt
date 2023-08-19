@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.board
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +21,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,8 +30,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -62,7 +58,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.activity.AppBar
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
 import com.kongjak.koreatechboard.util.routes.deptList
@@ -245,7 +240,7 @@ fun BottomSheetScaffold(
         },
     ) { innerPadding ->
         Box(Modifier.padding(innerPadding)) {
-            Scaffold (
+            Scaffold(
                 floatingActionButton = {
                     SearchFAB(boardViewModel = boardViewModel)
                 },
@@ -256,7 +251,6 @@ fun BottomSheetScaffold(
         }
     }
 }
-
 
 @Composable
 fun SearchFAB(boardViewModel: BoardViewModel) {

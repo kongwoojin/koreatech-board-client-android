@@ -146,7 +146,8 @@ fun ListPreferenceDialog(
                     val (selectedValue, onValueSelected) = remember { mutableStateOf(savedValue) }
 
                     zippedList.forEach { item ->
-                        Row(verticalAlignment = Alignment.CenterVertically,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.selectable(
                                 selected = (selectedValue == item.second),
                                 onClick = {
@@ -154,7 +155,8 @@ fun ListPreferenceDialog(
                                     onValueSelected(item.second)
                                     showDialog.value = false
                                 }
-                            )) {
+                            )
+                        ) {
                             RadioButton(selected = selectedValue == item.second, onClick = {
                                 onClick(item.second)
                                 onValueSelected(item.second)
