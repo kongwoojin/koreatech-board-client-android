@@ -71,4 +71,7 @@
     <string name="search_dialog_cancel">Cancel</string>
 
     <string name="search_result">Search result</string>
+
+    <string name="setting_department_title">Department</string>
+    <string name="setting_department_summary">Select your department</string>
 </resources>
