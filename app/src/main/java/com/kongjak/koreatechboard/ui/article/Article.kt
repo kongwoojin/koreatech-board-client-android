@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,55 +45,67 @@ fun ArticleScreen(articleViewModel: ArticleViewModel = hiltViewModel(), site: St
     Box(
         contentAlignment = Alignment.TopCenter
     ) {
-        data?.let {
+        val isLoading by articleViewModel.isLoading.observeAsState()
+
+        if (isLoading == true) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = it.title,
-                    fontSize = 18.sp,
+                CircularProgressIndicator()
+            }
+        } else {
+            data?.let {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.End
+                    Text(
+                        text = it.title,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Text(
-                            text = it.writer,
-                            fontSize = MaterialTheme.typography.titleSmall.fontSize
-                        )
-                        Text(
-                            text = it.date,
-                            fontSize = MaterialTheme.typography.titleSmall.fontSize
-                        )
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            horizontalAlignment = Alignment.End
+                        ) {
+                            Text(
+                                text = it.writer,
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize
+                            )
+                            Text(
+                                text = it.date,
+                                fontSize = MaterialTheme.typography.titleSmall.fontSize
+                            )
+                        }
                     }
+                    AndroidView(
+                        factory = { contentTextView },
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxSize(),
+                        update = {
+                            it.htmlText = data?.content
+                            it.textSize = 16F
+                        }
+                    )
+                    AndroidView(
+                        factory = { filesTextView },
+                        modifier = Modifier
+                            .padding(16.dp),
+                        update = {
+                            it.fileText = data?.files
+                        }
+                    )
                 }
-                AndroidView(
-                    factory = { contentTextView },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    update = {
-                        it.htmlText = data?.content
-                        it.textSize = 16F
-                    }
-                )
-                AndroidView(
-                    factory = { filesTextView },
-                    modifier = Modifier
-                        .padding(16.dp),
-                    update = {
-                        it.fileText = data?.files
-                    }
-                )
             }
         }
     }
