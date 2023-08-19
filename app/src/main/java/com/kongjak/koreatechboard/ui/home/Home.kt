@@ -33,33 +33,35 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.util.routes.Department
+import com.kongjak.koreatechboard.util.routes.deptList
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
+        val selectedDepartmentName = homeViewModel.department.observeAsState()
         BoardInMain(department = Department.School)
         BoardInMain(department = Department.Dorm)
-        // Third BoardInMain will be user's department,
-        // Other will fixed to School and Dormitory
-        BoardInMain(department = Department.Cse)
+
+        val selectedDepartment = deptList.firstOrNull { it.name == selectedDepartmentName.value }
+        BoardInMain(department = selectedDepartment ?: Department.Cse)
     }
 }
 
 @Composable
-fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewModel(key = department.name)) {
+fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)) {
     val context = LocalContext.current
 
     var key by remember {
         mutableStateOf(department.boards[0].board)
     }
     var tabIndex by remember { mutableIntStateOf(0) }
-    val isLoaded by homeViewModel.isLoaded.observeAsState(false)
+    val isLoaded by homeBoardViewModel.isLoaded.observeAsState(false)
 
     LaunchedEffect(key1 = tabIndex) {
-        homeViewModel.getApi(department.name, key)
+        homeBoardViewModel.getApi(department.name, key)
     }
 
     Card(
@@ -85,7 +87,7 @@ fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewM
                             tabIndex = index
                             key = board.board
 
-                            homeViewModel.getApi(department.name, board.board)
+                            homeBoardViewModel.getApi(department.name, board.board)
                         }
                     )
                 }
@@ -101,8 +103,8 @@ fun BoardInMain(department: Department, homeViewModel: HomeViewModel = hiltViewM
                     CircularProgressIndicator()
                 }
             } else {
-                if (homeViewModel.statusCode.value!! == 200) {
-                    homeViewModel.boardList[key]!!.value!!.forEach { data ->
+                if (homeBoardViewModel.statusCode.value!! == 200) {
+                    homeBoardViewModel.boardList[key]!!.value!!.forEach { data ->
                         Box(
                             modifier = Modifier
                                 .padding(vertical = 8.dp)

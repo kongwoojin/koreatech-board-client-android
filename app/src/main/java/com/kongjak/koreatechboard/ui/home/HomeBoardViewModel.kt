@@ -7,16 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardMinimumUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDepartmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getBoardMinimumUseCase: GetBoardMinimumUseCase,
-    private val getDepartmentUseCase: GetDepartmentUseCase,
-    ) : ViewModel() {
+class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) : ViewModel() {
     private val _isLoaded = MutableLiveData(false)
     val isLoaded: LiveData<Boolean>
         get() = _isLoaded
@@ -29,27 +25,18 @@ class HomeViewModel @Inject constructor(
     val statusCode: LiveData<Int>
         get() = _statusCode
 
-    private val _department = MutableLiveData("")
-    val department: LiveData<String>
-        get() = _department
-
-    init {
-        _department.value = getDepartmentUseCase()
-    }
-
     fun getApi(site: String, board: String) {
-        val key = "$site:$board"
 
-        if (!boardList.containsKey(key)) {
+        if (!boardList.containsKey(board)) {
             _isLoaded.value = false
-            _boardList[key] = MutableLiveData(emptyList())
+            _boardList[board] = MutableLiveData(emptyList())
             viewModelScope.launch {
                 runCatching {
                     getBoardMinimumUseCase(site, board)
                 }.onSuccess {
                     when (it) {
                         is ResponseResult.Success -> {
-                            _boardList[key]!!.postValue(it.data.boardData)
+                            _boardList[board]!!.postValue(it.data.boardData)
                             _statusCode.value = it.data.statusCode
                             _isLoaded.postValue(true)
                         }
