@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.components.ListPreference
+import com.kongjak.koreatechboard.ui.components.SwitchPreference
 import com.kongjak.koreatechboard.util.routes.Department
 
 val deptList = listOf(
@@ -60,6 +61,14 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         ) { item ->
             settingsViewModel.setDepartment(item)
         }
+
+        val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
+
+        SwitchPreference(
+            title = stringResource(id = R.string.setting_dynamic_theme_title),
+            checked = isChecked,
+            onCheckedChange = { settingsViewModel.setDynamicTheme(it) }
+        )
     }
 }
 

@@ -70,6 +70,5 @@ fun SwitchPreference(
 @Composable
 fun SwitchPreferencePreview() {
     SwitchPreference(modifier = Modifier, title = "Title", summary = "Summary", checked = false) {
-        
     }
 }

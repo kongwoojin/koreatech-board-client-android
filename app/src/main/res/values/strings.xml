@@ -74,4 +74,5 @@
 
     <string name="setting_department_title">Department</string>
     <string name="setting_department_summary">Select your department</string>
+    <string name="setting_dynamic_theme_title">Dynamic theme</string>
 </resources>
