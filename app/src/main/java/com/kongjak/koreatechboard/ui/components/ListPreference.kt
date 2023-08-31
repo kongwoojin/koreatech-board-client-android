@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,8 +26,8 @@ fun ListPreference(
     title: String,
     itemStringResource: List<Int>,
     itemValue: List<String>,
-    savedValue: String,
-    onClick: (String) -> Unit
+    selectedIndex: Int,
+    onClick: (Int) -> Unit
 ) {
     val zippedList = itemStringResource.zip(itemValue)
     val showDialog = remember { mutableStateOf(false) }
@@ -39,7 +40,7 @@ fun ListPreference(
         ListPreferenceDialog(
             zippedList = zippedList,
             showDialog = showDialog,
-            savedValue = savedValue,
+            selectedIndex = selectedIndex,
             onClick = onClick
         )
     }
@@ -52,8 +53,8 @@ fun ListPreference(
     summary: String,
     itemStringResource: List<Int>,
     itemValue: List<String>,
-    savedValue: String,
-    onClick: (String) -> Unit
+    selectedIndex: Int,
+    onClick: (Int) -> Unit
 ) {
     val zippedList = itemStringResource.zip(itemValue)
     val showDialog = remember { mutableStateOf(false) }
@@ -66,7 +67,7 @@ fun ListPreference(
         ListPreferenceDialog(
             zippedList = zippedList,
             showDialog = showDialog,
-            savedValue = savedValue,
+            selectedIndex = selectedIndex,
             onClick = onClick
         )
     }
@@ -79,8 +80,8 @@ fun ListPreference(
     icon: ImageVector,
     itemStringResource: List<Int>,
     itemValue: List<String>,
-    savedValue: String,
-    onClick: (String) -> Unit
+    selectedIndex: Int,
+    onClick: (Int) -> Unit
 ) {
     val zippedList = itemStringResource.zip(itemValue)
     val showDialog = remember { mutableStateOf(false) }
@@ -93,7 +94,7 @@ fun ListPreference(
         ListPreferenceDialog(
             zippedList = zippedList,
             showDialog = showDialog,
-            savedValue = savedValue,
+            selectedIndex = selectedIndex,
             onClick = onClick
         )
     }
@@ -107,8 +108,8 @@ fun ListPreference(
     icon: ImageVector,
     itemStringResource: List<Int>,
     itemValue: List<String>,
-    savedValue: String,
-    onClick: (String) -> Unit
+    selectedIndex: Int,
+    onClick: (Int) -> Unit
 ) {
     val zippedList = itemStringResource.zip(itemValue)
     val showDialog = remember { mutableStateOf(false) }
@@ -121,7 +122,7 @@ fun ListPreference(
         ListPreferenceDialog(
             zippedList = zippedList,
             showDialog = showDialog,
-            savedValue = savedValue,
+            selectedIndex = selectedIndex,
             onClick = onClick
         )
     }
@@ -131,8 +132,8 @@ fun ListPreference(
 fun ListPreferenceDialog(
     zippedList: List<Pair<Int, String>>,
     showDialog: MutableState<Boolean>,
-    savedValue: String,
-    onClick: (String) -> Unit
+    selectedIndex: Int,
+    onClick: (Int) -> Unit
 ) {
     Dialog(
         onDismissRequest = { showDialog.value = false },
@@ -143,23 +144,23 @@ fun ListPreferenceDialog(
                     .padding(16.dp),
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    val (selectedValue, onValueSelected) = remember { mutableStateOf(savedValue) }
+                    val (selectedValue, onValueSelected) = remember { mutableIntStateOf(selectedIndex) }
 
-                    zippedList.forEach { item ->
+                    zippedList.forEachIndexed { index, item ->
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.selectable(
-                                selected = (selectedValue == item.second),
+                                selected = (selectedValue == index),
                                 onClick = {
-                                    onClick(item.second)
-                                    onValueSelected(item.second)
+                                    onClick(index)
+                                    onValueSelected(index)
                                     showDialog.value = false
                                 }
                             )
                         ) {
-                            RadioButton(selected = selectedValue == item.second, onClick = {
-                                onClick(item.second)
-                                onValueSelected(item.second)
+                            RadioButton(selected = selectedValue == index, onClick = {
+                                onClick(index)
+                                onValueSelected(index)
                                 showDialog.value = false
                             })
                             Text(text = stringResource(id = item.first))
