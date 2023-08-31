@@ -14,8 +14,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getDepartmentUseCase: GetDepartmentUseCase
 ) : ViewModel() {
-    private val _department = MutableLiveData("")
-    val department: LiveData<String>
+    private val _department = MutableLiveData(0)
+    val department: LiveData<Int>
         get() = _department
 
     init {

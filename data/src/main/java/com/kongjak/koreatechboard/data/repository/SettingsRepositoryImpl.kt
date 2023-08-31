@@ -8,10 +8,10 @@ import javax.inject.Inject
 class SettingsRepositoryImpl @Inject constructor(
     private val settingsLocalDataSource: SettingsLocalDataSource
 ) : SettingsRepository {
-    override suspend fun setDepartment(department: String) {
-        settingsLocalDataSource.setDepartment(department)
+    override suspend fun setDepartment(index: Int) {
+        settingsLocalDataSource.setDepartment(index)
     }
-    override fun getDepartment(): Flow<String> {
+    override fun getDepartment(): Flow<Int> {
         return settingsLocalDataSource.getDepartment()
     }
 }

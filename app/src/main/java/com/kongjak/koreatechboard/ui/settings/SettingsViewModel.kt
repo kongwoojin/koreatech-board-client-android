@@ -16,8 +16,8 @@ class SettingsViewModel @Inject constructor(
     private val getDepartmentUseCase: GetDepartmentUseCase,
     private val setDepartmentUseCase: SetDepartmentUseCase
 ) : ViewModel() {
-    private val _department = MutableLiveData("")
-    val department: LiveData<String>
+    private val _department = MutableLiveData(0)
+    val department: LiveData<Int>
         get() = _department
 
     init {
@@ -32,9 +32,9 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun setDepartment(department: String) {
+    fun setDepartment(index: Int) {
         viewModelScope.launch {
-            setDepartmentUseCase(department)
+            setDepartmentUseCase(index)
         }
     }
 }

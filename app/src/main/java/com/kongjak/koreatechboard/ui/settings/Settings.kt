@@ -13,6 +13,17 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.components.ListPreference
 import com.kongjak.koreatechboard.util.routes.Department
 
+val deptList = listOf(
+    Department.Cse,
+    Department.Mechanical,
+    Department.Mechatronics,
+    Department.Ite,
+    Department.Ide,
+    Department.Arch,
+    Department.Emc,
+    Department.Sim
+)
+
 val deptListName = listOf(
     Department.Cse.stringResource,
     Department.Mechanical.stringResource,
@@ -38,14 +49,14 @@ val deptListValue = listOf(
 @Composable
 fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     Column(modifier = Modifier.fillMaxSize()) {
-        val selected by settingsViewModel.department.observeAsState()
+        val selectedIndex by settingsViewModel.department.observeAsState()
 
         ListPreference(
             title = stringResource(id = R.string.setting_department_title),
-            summary = stringResource(id = R.string.setting_department_summary),
+            summary = stringResource(id = deptListName[selectedIndex ?: 0]),
             itemStringResource = deptListName,
             itemValue = deptListValue,
-            savedValue = selected ?: Department.Cse.name,
+            selectedIndex = selectedIndex ?: 0,
         ) { item ->
             settingsViewModel.setDepartment(item)
         }

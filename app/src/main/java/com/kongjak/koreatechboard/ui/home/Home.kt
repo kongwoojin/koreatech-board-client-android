@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
-import com.kongjak.koreatechboard.util.routes.deptList
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -41,12 +41,12 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
-        val selectedDepartmentName = homeViewModel.department.observeAsState()
+        val selectedDepartmentIndex by homeViewModel.department.observeAsState()
         BoardInMain(department = Department.School)
         BoardInMain(department = Department.Dorm)
 
-        val selectedDepartment = deptList.firstOrNull { it.name == selectedDepartmentName.value }
-        BoardInMain(department = selectedDepartment ?: Department.Cse)
+        val selectedDepartment = deptList[selectedDepartmentIndex ?: 0]
+        BoardInMain(department = selectedDepartment)
     }
 }
 
