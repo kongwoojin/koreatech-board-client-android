@@ -1,19 +1,29 @@
 package com.kongjak.koreatechboard.ui.settings
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.ui.components.ListPreference
+import com.kongjak.koreatechboard.ui.components.Preference
+import com.kongjak.koreatechboard.ui.components.PreferenceHeader
 import com.kongjak.koreatechboard.ui.components.SwitchPreference
 import com.kongjak.koreatechboard.util.routes.Department
 
@@ -51,10 +61,16 @@ val deptListValue = listOf(
 )
 
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_DARK_THEME, DARK_THEME_LIGHT_THEME)
-val darkThemeString = listOf(R.string.setting_dark_theme_system_default, R.string.setting_dark_theme_dark, R.string.setting_dark_theme_light)
+val darkThemeString = listOf(
+    R.string.setting_dark_theme_system_default,
+    R.string.setting_dark_theme_dark,
+    R.string.setting_dark_theme_light
+)
 
 @Composable
 fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+
     Column(modifier = Modifier.fillMaxSize()) {
         val selectedIndex by settingsViewModel.department.observeAsState()
 
@@ -68,6 +84,48 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             settingsViewModel.setDepartment(item)
         }
 
+        PreferenceHeader(title = stringResource(id = R.string.setting_header_info))
+
+        Preference(
+            title = stringResource(id = R.string.license_title)
+        ) {
+            context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+        }
+
+        Preference(title = stringResource(id = R.string.source_code_title)) {
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(
+                context,
+                Uri.parse("https://github.com/kongwoojin/koreatech_board_client_android")
+            )
+        }
+
+        Preference(title = stringResource(id = R.string.enquiry_mail_title)) {
+            val mailIntent = Intent(Intent.ACTION_SENDTO)
+            mailIntent.data = Uri.parse("mailto:")
+            mailIntent.putExtra(
+                Intent.EXTRA_EMAIL,
+                arrayOf(context.getString(R.string.mail_address))
+            )
+            mailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.mail_subject))
+            mailIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                context.getString(R.string.mail_text, Build.MODEL, Build.VERSION.SDK_INT)
+            )
+            try {
+                context.startActivity(mailIntent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.mail_app_not_found),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        PreferenceHeader(title = stringResource(id = R.string.setting_header_theme))
+
         val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
 
         SwitchPreference(
@@ -80,7 +138,9 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
         ListPreference(
             title = stringResource(id = R.string.setting_dark_theme_title),
-            summary = stringResource(id = darkThemeString[isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT]),
+            summary = stringResource(
+                id = darkThemeString[isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT]
+            ),
             itemStringResource = darkThemeString,
             itemValue = darkTheme,
             selectedIndex = isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT,

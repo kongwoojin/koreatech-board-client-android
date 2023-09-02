@@ -70,6 +70,9 @@
 
     <string name="search_result">검색 결과</string>
 
+    <string name="setting_header_info">안내</string>
+    <string name="setting_header_theme">테마</string>
+
     <string name="setting_department_title">학과</string>
     <string name="setting_department_summary">학과를 선택하세요.</string>
     <string name="setting_dynamic_theme_title">동적 테마</string>
