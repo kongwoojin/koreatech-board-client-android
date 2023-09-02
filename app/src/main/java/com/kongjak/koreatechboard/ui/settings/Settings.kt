@@ -60,11 +60,11 @@ val deptListValue = listOf(
     Department.Sim.name
 )
 
-val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_DARK_THEME, DARK_THEME_LIGHT_THEME)
+val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 val darkThemeString = listOf(
     R.string.setting_dark_theme_system_default,
-    R.string.setting_dark_theme_dark,
-    R.string.setting_dark_theme_light
+    R.string.setting_dark_theme_light,
+    R.string.setting_dark_theme_dark
 )
 
 @Composable
