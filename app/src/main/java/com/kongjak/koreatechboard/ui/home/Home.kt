@@ -51,7 +51,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)) {
+fun BoardInMain(
+    department: Department,
+    homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
+) {
     val context = LocalContext.current
 
     var key by remember {
@@ -78,7 +81,11 @@ fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel =
                 Text(text = stringResource(id = department.stringResource), fontSize = 16.sp)
             }
 
-            ScrollableTabRow(selectedTabIndex = tabIndex, containerColor = Color.Transparent, edgePadding = 0.dp) {
+            ScrollableTabRow(
+                selectedTabIndex = tabIndex,
+                containerColor = Color.Transparent,
+                edgePadding = 0.dp
+            ) {
                 department.boards.forEachIndexed { index, board ->
                     Tab(
                         text = { Text(text = stringResource(id = board.stringResource)) },
@@ -107,7 +114,6 @@ fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel =
                     homeBoardViewModel.boardList[key]!!.value!!.forEach { data ->
                         Box(
                             modifier = Modifier
-                                .padding(vertical = 8.dp)
                                 .clickable {
                                     val intent = Intent(context, ArticleActivity::class.java)
                                     intent.putExtra("site", department.name)
@@ -115,7 +121,14 @@ fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel =
                                     context.startActivity(intent)
                                 }
                         ) {
-                            Text(modifier = Modifier.fillMaxWidth(), text = data.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp),
+                                text = data.title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                         Divider(color = Color.Gray, thickness = 0.5.dp)
                     }
