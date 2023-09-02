@@ -21,8 +21,8 @@ class BoardPagingSource(private val api: API, private val site: String, private 
 
             return LoadResult.Page(
                 data = response!!,
-                prevKey = if (page == 1) null else page - 1,
-                nextKey = if (page == responseRaw.body()!!.lastPage) null else page + 1
+                prevKey = if (page <= 1) null else page - 1,
+                nextKey = if (page >= responseRaw.body()!!.lastPage) null else page + 1
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)
