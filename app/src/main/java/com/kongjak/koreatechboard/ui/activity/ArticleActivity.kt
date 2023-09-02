@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -58,7 +59,13 @@ fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(),  site: Str
 @Composable
 fun Toolbar(articleViewModel: ArticleViewModel, context: Context, site: String, uuid: UUID) {
     val articleUrl by articleViewModel.url.observeAsState()
-    KoreatechBoardTheme {
+    val isDynamicColor by articleViewModel.isDynamicTheme.observeAsState(true)
+    val isDarkTheme by articleViewModel.isDarkTheme.observeAsState()
+
+    KoreatechBoardTheme(
+        dynamicColor = isDynamicColor,
+        darkTheme = isDarkTheme ?: isSystemInDarkTheme()
+    ) {
         Scaffold(
             topBar = {
                 TopAppBar(

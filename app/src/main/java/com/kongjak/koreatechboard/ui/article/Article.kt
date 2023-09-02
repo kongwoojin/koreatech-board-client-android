@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.article
 
 import android.widget.TextView
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,15 +17,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.util.fileText
 import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
@@ -87,24 +90,42 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) 
                             )
                         }
                     }
-                    AndroidView(
-                        factory = { contentTextView },
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize(),
-                        update = {
-                            it.htmlText = data?.content
-                            it.textSize = 16F
-                        }
-                    )
-                    AndroidView(
-                        factory = { filesTextView },
-                        modifier = Modifier
-                            .padding(16.dp),
-                        update = {
-                            it.fileText = data?.files
-                        }
-                    )
+
+
+                    key(articleViewModel.isDarkTheme) {
+                        var isDarkTheme = articleViewModel.isDarkTheme.value
+
+                        if (isDarkTheme == null) isDarkTheme = isSystemInDarkTheme()
+
+                        val textColor =
+                            if (isDarkTheme == true) {
+                                Color(0xFFFFFFFF)
+                            } else {
+                                Color(0xFF000000)
+                            }
+
+                        AndroidView(
+                            factory = { contentTextView },
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxSize(),
+                            update = {
+                                it.htmlText = data?.content
+                                it.textSize = 16F
+                                it.setTextColor(textColor.toArgb())
+                            }
+                        )
+
+                        AndroidView(
+                            factory = { filesTextView },
+                            modifier = Modifier
+                                .padding(16.dp),
+                            update = {
+                                it.fileText = data?.files
+                                it.setTextColor(textColor.toArgb())
+                            }
+                        )
+                    }
                 }
             }
         }
