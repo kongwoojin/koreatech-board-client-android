@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +30,5 @@ class MainViewModel @Inject constructor(
                 _isDynamicTheme.value = it
             }
         }
-        Log.d("Test", isDynamicTheme.value.toString())
     }
 }
