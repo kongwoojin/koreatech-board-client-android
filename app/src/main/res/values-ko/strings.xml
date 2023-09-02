@@ -71,7 +71,6 @@
     <string name="search_more_letter">세 글자 이상 입력하세요!</string>
 
     <string name="search_result">검색 결과</string>
-    <string name="search_no_result">검색 결과가 없습니다!</string>
 
     <string name="setting_header_info">안내</string>
     <string name="setting_header_theme">테마</string>
