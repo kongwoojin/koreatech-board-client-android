@@ -74,6 +74,7 @@
     <string name="search_more_letter">Type three more letter!</string>
 
     <string name="search_result">Search result</string>
+    <string name="search_no_result">No search result!</string>
 
     <string name="setting_header_info">Info</string>
     <string name="setting_header_theme">Theme</string>
