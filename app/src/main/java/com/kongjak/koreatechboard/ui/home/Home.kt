@@ -115,7 +115,7 @@ fun BoardInMain(department: Department, homeBoardViewModel: HomeBoardViewModel =
                                     context.startActivity(intent)
                                 }
                         ) {
-                            Text(text = data.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(modifier = Modifier.fillMaxWidth(), text = data.title, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
                         Divider(color = Color.Gray, thickness = 0.5.dp)
                     }
