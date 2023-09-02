@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.ui.search
 import android.content.Intent
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -126,6 +127,12 @@ fun SearchContent(searchViewModel: SearchViewModel = hiltViewModel(), contentPad
                     item { BoardError(errorMessage) }
                 }
             }
+        }
+    }
+
+    if (lazyPostList.itemCount == 0) {
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(id = R.string.search_no_result))
         }
     }
 }
