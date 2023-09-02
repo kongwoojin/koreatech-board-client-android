@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.board
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
@@ -49,6 +51,7 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -83,7 +86,9 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(contentPadding),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -291,20 +296,26 @@ fun SearchFAB(boardViewModel: BoardViewModel) {
                             value = searchText,
                             onValueChange = { searchText = it },
                             label = { Text(text = stringResource(id = R.string.search_dialog_hint)) },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                             keyboardActions = KeyboardActions(
-                                onDone = {
-                                    showDialog = false
-                                    val intent = Intent(context, SearchActivity::class.java)
-                                    intent.putExtra(
-                                        "site",
-                                        boardViewModel.department.value.name
-                                    )
-                                    intent.putExtra(
-                                        "board",
-                                        boardViewModel.department.value.boards[boardViewModel.tabIndex.intValue].board
-                                    )
-                                    intent.putExtra("title", searchText)
-                                    context.startActivity(intent)
+                                onSearch = {
+                                    if (searchText.length < 3) {
+                                        Toast.makeText(context, context.getString(R.string.search_more_letter), Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        showDialog = false
+                                        val intent = Intent(context, SearchActivity::class.java)
+                                        intent.putExtra(
+                                            "site",
+                                            boardViewModel.department.value.name
+                                        )
+                                        intent.putExtra(
+                                            "board",
+                                            boardViewModel.department.value.boards[boardViewModel.tabIndex.intValue].board
+                                        )
+                                        intent.putExtra("title", searchText)
+                                        context.startActivity(intent)
+                                    }
                                 }
                             )
                         )
