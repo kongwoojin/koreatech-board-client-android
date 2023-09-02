@@ -25,7 +25,7 @@ fun ListPreference(
     modifier: Modifier = Modifier,
     title: String,
     itemStringResource: List<Int>,
-    itemValue: List<String>,
+    itemValue: List<Any>,
     selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
@@ -52,7 +52,7 @@ fun ListPreference(
     title: String,
     summary: String,
     itemStringResource: List<Int>,
-    itemValue: List<String>,
+    itemValue: List<Any>,
     selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
@@ -79,7 +79,7 @@ fun ListPreference(
     title: String,
     icon: ImageVector,
     itemStringResource: List<Int>,
-    itemValue: List<String>,
+    itemValue: List<Any>,
     selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
@@ -107,7 +107,7 @@ fun ListPreference(
     summary: String,
     icon: ImageVector,
     itemStringResource: List<Int>,
-    itemValue: List<String>,
+    itemValue: List<Any>,
     selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
@@ -130,7 +130,7 @@ fun ListPreference(
 
 @Composable
 fun ListPreferenceDialog(
-    zippedList: List<Pair<Int, String>>,
+    zippedList: List<Pair<Int, Any>>,
     showDialog: MutableState<Boolean>,
     selectedIndex: Int,
     onClick: (Int) -> Unit
