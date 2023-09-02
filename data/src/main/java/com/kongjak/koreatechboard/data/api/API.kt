@@ -29,8 +29,7 @@ interface API {
         @Path("site") site: String,
         @Path("board") board: String,
         @Query("title") title: String,
-        @Query("page") page: Int = 1,
-        @Query("num_of_items") numOfItems: Int = 5
+        @Query("page") page: Int = 1
     ): Response<BoardResponse>
 
     @GET("article/{site}")
