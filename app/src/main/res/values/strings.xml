@@ -60,6 +60,7 @@
     <string name="finish">Finish</string>
 
     <string name="open_in_browser">Open in browser</string>
+    <string name="open_in_browser_failed">Failed to open browser!</string>
 
     <string name="bottom_nav_bar_home">Home</string>
     <string name="bottom_nav_bar_board">Board</string>

@@ -30,7 +30,7 @@ import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
 
 @Composable
-fun ArticleScreen(articleViewModel: ArticleViewModel = hiltViewModel(), site: String, uuid: UUID) {
+fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) {
     val data by articleViewModel.article.observeAsState()
     val context = LocalContext.current
     val contentTextView = remember { TextView(context) }

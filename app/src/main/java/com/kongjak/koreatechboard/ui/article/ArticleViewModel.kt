@@ -35,6 +35,10 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val statusCode: LiveData<Int>
         get() = _statusCode
 
+    private val _url = MutableLiveData<String?>()
+    val url: LiveData<String?>
+        get() = _url
+
     fun setUUIDData(uuid: UUID) {
         _uuid.value = uuid
     }
@@ -54,6 +58,7 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
                     is ResponseResult.Success -> {
                         _article.value = it.data!!
                         _statusCode.value = it.data.statusCode
+                        _url.value = it.data.articleUrl
                     }
                     is ResponseResult.Error -> {
                         _statusCode.value = it.errorType.statusCode

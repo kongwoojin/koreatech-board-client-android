@@ -57,6 +57,7 @@
     <string name="finish">종료</string>
 
     <string name="open_in_browser">브라우저에서 열기</string>
+    <string name="open_in_browser_failed">브라우저를 열지 못했습니다!</string>
 
     <string name="bottom_nav_bar_home">홈</string>
     <string name="bottom_nav_bar_board">게시판</string>
