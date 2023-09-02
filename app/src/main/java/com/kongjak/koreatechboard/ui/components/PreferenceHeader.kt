@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,8 +19,11 @@ fun PreferenceHeader(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
-            modifier = Modifier.padding(horizontal = 16.dp),
-            fontSize = MaterialTheme.typography.labelMedium.fontSize
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp),
+            fontSize = MaterialTheme.typography.labelLarge.fontSize,
+            fontStyle = MaterialTheme.typography.labelLarge.fontStyle,
+            fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
+            color = MaterialTheme.typography.labelLarge.color
         )
     }
 }
