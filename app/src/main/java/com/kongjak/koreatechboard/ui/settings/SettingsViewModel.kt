@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.settings
 
+import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,7 +40,9 @@ class SettingsViewModel @Inject constructor(
 
     init {
         getDepartment()
-        getDynamicTheme()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getDynamicTheme()
+        }
         getDarkTheme()
     }
 

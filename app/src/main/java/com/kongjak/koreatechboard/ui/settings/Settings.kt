@@ -126,13 +126,16 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_theme))
 
-        val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            
+            val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
 
-        SwitchPreference(
-            title = stringResource(id = R.string.setting_dynamic_theme_title),
-            checked = isChecked,
-            onCheckedChange = { settingsViewModel.setDynamicTheme(it) }
-        )
+            SwitchPreference(
+                title = stringResource(id = R.string.setting_dynamic_theme_title),
+                checked = isChecked,
+                onCheckedChange = { settingsViewModel.setDynamicTheme(it) }
+            )
+        }
 
         val isDarkTheme by settingsViewModel.isDarkTheme.observeAsState()
 
