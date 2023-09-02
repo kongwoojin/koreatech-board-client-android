@@ -7,4 +7,6 @@ interface SettingsRepository {
     fun getDepartment(): Flow<Int>
     suspend fun setDynamicTheme(state: Boolean)
     fun getDynamicTheme(): Flow<Boolean>
+    suspend fun setDarkTheme(theme: Int)
+    fun getDarkTheme(): Flow<Int>
 }

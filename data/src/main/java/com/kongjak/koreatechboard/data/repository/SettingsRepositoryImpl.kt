@@ -21,4 +21,12 @@ class SettingsRepositoryImpl @Inject constructor(
     override fun getDynamicTheme(): Flow<Boolean> {
         return settingsLocalDataSource.getDynamicTheme()
     }
+
+    override suspend fun setDarkTheme(theme: Int) {
+        settingsLocalDataSource.setDarkTheme(theme)
+    }
+
+    override fun getDarkTheme(): Flow<Int> {
+        return settingsLocalDataSource.getDarkTheme()
+    }
 }

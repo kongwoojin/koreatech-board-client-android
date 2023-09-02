@@ -10,6 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
+import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
+import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.ui.components.ListPreference
 import com.kongjak.koreatechboard.ui.components.SwitchPreference
 import com.kongjak.koreatechboard.util.routes.Department
@@ -47,6 +50,9 @@ val deptListValue = listOf(
     Department.Sim.name
 )
 
+val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_DARK_THEME, DARK_THEME_LIGHT_THEME)
+val darkThemeString = listOf(R.string.setting_dark_theme_system_default, R.string.setting_dark_theme_dark, R.string.setting_dark_theme_light)
+
 @Composable
 fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -69,6 +75,18 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             checked = isChecked,
             onCheckedChange = { settingsViewModel.setDynamicTheme(it) }
         )
+
+        val isDarkTheme by settingsViewModel.isDarkTheme.observeAsState()
+
+        ListPreference(
+            title = stringResource(id = R.string.setting_dark_theme_title),
+            summary = stringResource(id = darkThemeString[isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT]),
+            itemStringResource = darkThemeString,
+            itemValue = darkTheme,
+            selectedIndex = isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT,
+        ) { theme ->
+            settingsViewModel.setDarkTheme(theme)
+        }
     }
 }
 

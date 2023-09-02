@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
+import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +21,9 @@ class SettingsViewModel @Inject constructor(
     private val getDepartmentUseCase: GetDepartmentUseCase,
     private val setDepartmentUseCase: SetDepartmentUseCase,
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
-    private val setDynamicThemeUseCase: SetDynamicThemeUseCase
+    private val setDynamicThemeUseCase: SetDynamicThemeUseCase,
+    private val getDarkThemeUseCase: GetDarkThemeUseCase,
+    private val setDarkThemeUseCase: SetDarkThemeUseCase
 ) : ViewModel() {
     private val _department = MutableLiveData(0)
     val department: LiveData<Int>
@@ -28,9 +33,14 @@ class SettingsViewModel @Inject constructor(
     val isDynamicTheme: LiveData<Boolean>
         get() = _isDynamicTheme
 
+    private val _isDarkTheme = MutableLiveData(DARK_THEME_SYSTEM_DEFAULT)
+    val isDarkTheme: LiveData<Int>
+        get() = _isDarkTheme
+
     init {
         getDepartment()
         getDynamicTheme()
+        getDarkTheme()
     }
 
     private fun getDepartment() {
@@ -58,6 +68,20 @@ class SettingsViewModel @Inject constructor(
     fun setDynamicTheme(state: Boolean) {
         viewModelScope.launch {
             setDynamicThemeUseCase(state)
+        }
+    }
+
+    private fun getDarkTheme() {
+        viewModelScope.launch {
+            getDarkThemeUseCase().collectLatest {
+                _isDarkTheme.value = it
+            }
+        }
+    }
+
+    fun setDarkTheme(theme: Int) {
+        viewModelScope.launch {
+            setDarkThemeUseCase(theme)
         }
     }
 }

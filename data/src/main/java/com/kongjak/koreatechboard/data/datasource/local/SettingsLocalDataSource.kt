@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -18,6 +19,7 @@ class SettingsLocalDataSource @Inject constructor(
 
     private val departmentKey = intPreferencesKey("department")
     private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
+    private val darkThemeKey = intPreferencesKey("dark_theme")
 
     suspend fun setDepartment(newIndex: Int) {
         context.dataStore.edit { preferences ->
@@ -44,5 +46,17 @@ class SettingsLocalDataSource @Inject constructor(
         context.dataStore.data
             .map { preferences ->
                 preferences[dynamicThemeKey] ?: true
+            }
+
+    suspend fun setDarkTheme(newTheme: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[darkThemeKey] = newTheme
+        }
+    }
+
+    fun getDarkTheme(): Flow<Int> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[darkThemeKey] ?: DARK_THEME_SYSTEM_DEFAULT
             }
 }
