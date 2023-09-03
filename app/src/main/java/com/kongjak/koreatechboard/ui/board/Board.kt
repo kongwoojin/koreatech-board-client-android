@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.board
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -329,26 +328,18 @@ fun SearchFAB(boardViewModel: BoardViewModel, department: Department) {
                             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                             keyboardActions = KeyboardActions(
                                 onSearch = {
-                                    if (searchText.length < 3) {
-                                        Toast.makeText(
-                                            context,
-                                            context.getString(R.string.search_more_letter),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    } else {
-                                        showDialog = false
-                                        val intent = Intent(context, SearchActivity::class.java)
-                                        intent.putExtra(
-                                            "site",
-                                            department.name
-                                        )
-                                        intent.putExtra(
-                                            "board",
-                                            department.boards[boardViewModel.tabIndex.intValue].board
-                                        )
-                                        intent.putExtra("title", searchText)
-                                        context.startActivity(intent)
-                                    }
+                                    showDialog = false
+                                    val intent = Intent(context, SearchActivity::class.java)
+                                    intent.putExtra(
+                                        "site",
+                                        department.name
+                                    )
+                                    intent.putExtra(
+                                        "board",
+                                        department.boards[boardViewModel.tabIndex.intValue].board
+                                    )
+                                    intent.putExtra("title", searchText)
+                                    context.startActivity(intent)
                                 }
                             )
                         )
