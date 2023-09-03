@@ -15,8 +15,6 @@ import javax.inject.Inject
 class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) :
     ViewModel() {
 
-    val tabIndex = mutableIntStateOf(0)
-
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
         getBoardUseCase(site, board).cachedIn(viewModelScope)
 }
