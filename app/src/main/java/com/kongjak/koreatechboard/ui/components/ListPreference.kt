@@ -163,7 +163,7 @@ fun ListPreferenceDialog(
                                 onValueSelected(index)
                                 showDialog.value = false
                             })
-                            Text(text = stringResource(id = item.first))
+                            Text(modifier = Modifier.fillMaxWidth(), text = stringResource(id = item.first))
                         }
                     }
                 }
