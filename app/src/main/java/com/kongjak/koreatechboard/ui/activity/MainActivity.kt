@@ -32,19 +32,19 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.board.BoardScreen
 import com.kongjak.koreatechboard.ui.home.HomeScreen
-import com.kongjak.koreatechboard.ui.main.MainViewModel
+import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.ui.settings.SettingsScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val mainViewModel: MainViewModel by viewModels()
+    private val themeViewModel: ThemeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val isDynamicColor by mainViewModel.isDynamicTheme.observeAsState(true)
-            val isDarkTheme by mainViewModel.isDarkTheme.observeAsState()
+            val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
+            val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
             KoreatechBoardTheme(
                 dynamicColor = isDynamicColor,
                 darkTheme = isDarkTheme ?: isSystemInDarkTheme()

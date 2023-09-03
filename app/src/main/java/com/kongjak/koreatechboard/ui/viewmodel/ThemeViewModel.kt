@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.main
+package com.kongjak.koreatechboard.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class ThemeViewModel @Inject constructor(
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
     private val getDarkThemeUseCase: GetDarkThemeUseCase
 ) : ViewModel() {

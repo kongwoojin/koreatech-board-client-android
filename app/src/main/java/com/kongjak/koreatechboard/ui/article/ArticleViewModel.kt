@@ -4,25 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
-import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
-import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
-    private val getArticleUseCase: GetArticleUseCase,
-    private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
-    private val getDarkThemeUseCase: GetDarkThemeUseCase
+    private val getArticleUseCase: GetArticleUseCase
 ) :
     ViewModel() {
     private val _isDynamicTheme = MutableLiveData(true)
@@ -57,11 +49,6 @@ class ArticleViewModel @Inject constructor(
     val url: LiveData<String?>
         get() = _url
 
-    init {
-        getDynamicTheme()
-        getDarkTheme()
-    }
-
     fun setUUIDData(uuid: UUID) {
         _uuid.value = uuid
     }
@@ -92,34 +79,6 @@ class ArticleViewModel @Inject constructor(
             }
 
             _isLoading.value = false
-        }
-    }
-
-    private fun getDynamicTheme() {
-        viewModelScope.launch {
-            getDynamicThemeUseCase().collectLatest {
-                _isDynamicTheme.value = it
-            }
-        }
-    }
-
-    private fun getDarkTheme() {
-        viewModelScope.launch {
-            getDarkThemeUseCase().collectLatest {
-                when (it) {
-                    DARK_THEME_SYSTEM_DEFAULT -> {
-                        _isDarkTheme.value = null
-                    }
-
-                    DARK_THEME_DARK_THEME -> {
-                        _isDarkTheme.value = true
-                    }
-
-                    DARK_THEME_LIGHT_THEME -> {
-                        _isDarkTheme.value = false
-                    }
-                }
-            }
         }
     }
 }

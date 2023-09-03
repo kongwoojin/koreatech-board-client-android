@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.article.ArticleViewModel
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
+import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
@@ -57,10 +59,10 @@ fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(),  site: Str
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Toolbar(articleViewModel: ArticleViewModel, context: Context, site: String, uuid: UUID) {
+fun Toolbar(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel = hiltViewModel(), context: Context, site: String, uuid: UUID) {
     val articleUrl by articleViewModel.url.observeAsState()
-    val isDynamicColor by articleViewModel.isDynamicTheme.observeAsState(true)
-    val isDarkTheme by articleViewModel.isDarkTheme.observeAsState()
+    val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
+    val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
 
     KoreatechBoardTheme(
         dynamicColor = isDynamicColor,
