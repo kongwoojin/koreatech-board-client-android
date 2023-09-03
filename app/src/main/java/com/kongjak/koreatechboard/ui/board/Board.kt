@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,7 +43,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,6 +58,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -66,32 +68,26 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.util.routes.Department
 import com.kongjak.koreatechboard.util.routes.deptList
 import kotlinx.coroutines.launch
 
 @Composable
-fun BoardScreen(boardViewModel: BoardViewModel = hiltViewModel()) {
-    BottomSheetScaffold(boardViewModel = boardViewModel)
+fun BoardScreen() {
+    BottomSheetScaffold()
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
-    val dept by boardViewModel.department
+fun Board(contentPadding: PaddingValues, department: Department) {
     val pagerState = rememberPagerState(
         initialPage = 0
     ) {
-        dept.boards.size
+        department.boards.size
     }
 
     val coroutineScope = rememberCoroutineScope()
-    val tabIndex =
-        if (pagerState.currentPage >= dept.boards.size) pagerState.initialPage else pagerState.currentPage
-    val context = LocalContext.current
-
-    LaunchedEffect(key1 = dept) {
-        pagerState.scrollToPage(0)
-    }
+    val tabIndex = pagerState.currentPage
 
     Column(
         modifier = Modifier
@@ -100,16 +96,12 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        val lazyPostList =
-            boardViewModel.getAPI(dept.name, dept.boards[tabIndex].board).collectAsLazyPagingItems()
-
         ScrollableTabRow(
             selectedTabIndex = tabIndex,
             containerColor = Color.Transparent,
             edgePadding = 0.dp
         ) {
-            dept.boards.forEachIndexed { index, board ->
+            department.boards.forEachIndexed { index, board ->
                 Tab(
                     text = { Text(text = stringResource(id = board.stringResource)) },
                     selected = tabIndex == index,
@@ -122,10 +114,39 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
             }
         }
 
-        HorizontalPager(state = pagerState, verticalAlignment = Alignment.Top) { page ->
-            boardViewModel.changeIndex(page)
+        HorizontalPager(
+            state = pagerState,
+            verticalAlignment = Alignment.Top
+        ) { page ->
+            BoardContent(department = department, page = page)
+        }
+    }
+}
 
+@Composable
+fun BoardContent(
+    department: Department,
+    page: Int,
+    boardViewModel: BoardViewModel = hiltViewModel(key = department.name)
+) {
+    val lazyPostList =
+        boardViewModel.getAPI(department.name, department.boards[page].board)
+            .collectAsLazyPagingItems()
+
+    val context = LocalContext.current
+
+    Scaffold(
+        floatingActionButton = {
+            SearchFAB(boardViewModel = boardViewModel, department = department)
+        },
+        content = { contentPadding ->
             LazyColumn(
+                contentPadding = PaddingValues(
+                    top = contentPadding.calculateTopPadding(),
+                    bottom = (64 + 16).dp + contentPadding.calculateBottomPadding(),
+                    start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                    end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                ),
                 modifier = Modifier
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -143,8 +164,9 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
                                     interactionSource = remember { MutableInteractionSource() },
                                     selected = false,
                                     onClick = {
-                                        val intent = Intent(context, ArticleActivity::class.java)
-                                        intent.putExtra("site", dept.name)
+                                        val intent =
+                                            Intent(context, ArticleActivity::class.java)
+                                        intent.putExtra("site", department.name)
                                         intent.putExtra("uuid", it.uuid.toString())
                                         context.startActivity(intent)
                                     }
@@ -180,7 +202,7 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
                 }
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -231,10 +253,12 @@ fun BoardError(errorMessage: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetScaffold(
-    boardViewModel: BoardViewModel
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
+
+    val department = remember { mutableStateOf<Department>(Department.School) }
+
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -249,7 +273,7 @@ fun BottomSheetScaffold(
                                 .padding(16.dp)
                                 .fillMaxWidth()
                                 .clickable {
-                                    boardViewModel.changeDept(it)
+                                    department.value = it
                                     scope.launch { scaffoldState.bottomSheetState.partialExpand() }
                                 }
                         )
@@ -258,21 +282,12 @@ fun BottomSheetScaffold(
             }
         },
     ) { innerPadding ->
-        Box(Modifier.padding(innerPadding)) {
-            Scaffold(
-                floatingActionButton = {
-                    SearchFAB(boardViewModel = boardViewModel)
-                },
-                content = { contentPadding ->
-                    Board(boardViewModel = boardViewModel, contentPadding = contentPadding)
-                }
-            )
-        }
+        Board(contentPadding = innerPadding, department = department.value)
     }
 }
 
 @Composable
-fun SearchFAB(boardViewModel: BoardViewModel) {
+fun SearchFAB(boardViewModel: BoardViewModel, department: Department) {
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -325,11 +340,11 @@ fun SearchFAB(boardViewModel: BoardViewModel) {
                                         val intent = Intent(context, SearchActivity::class.java)
                                         intent.putExtra(
                                             "site",
-                                            boardViewModel.department.value.name
+                                            department.name
                                         )
                                         intent.putExtra(
                                             "board",
-                                            boardViewModel.department.value.boards[boardViewModel.tabIndex.intValue].board
+                                            department.boards[boardViewModel.tabIndex.intValue].board
                                         )
                                         intent.putExtra("title", searchText)
                                         context.startActivity(intent)
@@ -351,11 +366,11 @@ fun SearchFAB(boardViewModel: BoardViewModel) {
                                 val intent = Intent(context, SearchActivity::class.java)
                                 intent.putExtra(
                                     "site",
-                                    boardViewModel.department.value.name
+                                    department.name
                                 )
                                 intent.putExtra(
                                     "board",
-                                    boardViewModel.department.value.boards[boardViewModel.tabIndex.intValue].board
+                                    department.boards[boardViewModel.tabIndex.intValue].board
                                 )
                                 intent.putExtra("title", searchText)
                                 context.startActivity(intent)
