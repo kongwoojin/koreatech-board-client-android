@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.ui.board
 
 import android.content.Intent
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -71,18 +74,23 @@ fun BoardScreen(boardViewModel: BoardViewModel = hiltViewModel()) {
     BottomSheetScaffold(boardViewModel = boardViewModel)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
     val dept by boardViewModel.department
-    var tabIndex by boardViewModel.tabIndex
+    val pagerState = rememberPagerState(
+        initialPage = 0
+    ) {
+        dept.boards.size
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+    val tabIndex =
+        if (pagerState.currentPage >= dept.boards.size) pagerState.initialPage else pagerState.currentPage
     val context = LocalContext.current
 
     LaunchedEffect(key1 = dept) {
-        tabIndex = 0
-    }
-
-    if (tabIndex >= dept.boards.size) {
-        tabIndex = 0
+        pagerState.scrollToPage(0)
     }
 
     Column(
@@ -106,62 +114,68 @@ fun Board(boardViewModel: BoardViewModel, contentPadding: PaddingValues) {
                     text = { Text(text = stringResource(id = board.stringResource)) },
                     selected = tabIndex == index,
                     onClick = {
-                        tabIndex = index
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
                     }
                 )
             }
         }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            items(lazyPostList.itemCount) { index ->
-                val boardItem = lazyPostList[index]
-                boardItem?.let {
-                    BoardItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .selectable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() },
-                                selected = false,
-                                onClick = {
-                                    val intent = Intent(context, ArticleActivity::class.java)
-                                    intent.putExtra("site", dept.name)
-                                    intent.putExtra("uuid", it.uuid.toString())
-                                    context.startActivity(intent)
-                                }
-                            ),
-                        title = it.title, writer = it.writer, date = it.writeDate
-                    )
-                    Divider(color = Gray, thickness = 0.5.dp)
+        HorizontalPager(state = pagerState, verticalAlignment = Alignment.Top) { page ->
+            boardViewModel.changeIndex(page)
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                items(lazyPostList.itemCount) { index ->
+                    val boardItem = lazyPostList[index]
+                    boardItem?.let {
+                        BoardItem(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                                .selectable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    selected = false,
+                                    onClick = {
+                                        val intent = Intent(context, ArticleActivity::class.java)
+                                        intent.putExtra("site", dept.name)
+                                        intent.putExtra("uuid", it.uuid.toString())
+                                        context.startActivity(intent)
+                                    }
+                                ),
+                            title = it.title, writer = it.writer, date = it.writeDate
+                        )
+                        Divider(color = Gray, thickness = 0.5.dp)
+                    }
                 }
-            }
 
-            lazyPostList.apply {
-                when {
-                    loadState.refresh is LoadState.Loading -> {
-                        item { CircularProgressIndicator() }
-                    }
+                lazyPostList.apply {
+                    when {
+                        loadState.refresh is LoadState.Loading -> {
+                            item { CircularProgressIndicator() }
+                        }
 
-                    loadState.append is LoadState.Loading -> {
-                        item { CircularProgressIndicator() }
-                    }
+                        loadState.append is LoadState.Loading -> {
+                            item { CircularProgressIndicator() }
+                        }
 
-                    loadState.refresh is LoadState.Error -> {
-                        val errorMessage =
-                            (loadState.refresh as LoadState.Error).error.localizedMessage
-                        item { BoardError(errorMessage) }
-                    }
+                        loadState.refresh is LoadState.Error -> {
+                            val errorMessage =
+                                (loadState.refresh as LoadState.Error).error.localizedMessage
+                            item { BoardError(errorMessage) }
+                        }
 
-                    loadState.append is LoadState.Error -> {
-                        val errorMessage =
-                            (loadState.append as LoadState.Error).error.localizedMessage
-                        item { BoardError(errorMessage) }
+                        loadState.append is LoadState.Error -> {
+                            val errorMessage =
+                                (loadState.append as LoadState.Error).error.localizedMessage
+                            item { BoardError(errorMessage) }
+                        }
                     }
                 }
             }
@@ -301,7 +315,11 @@ fun SearchFAB(boardViewModel: BoardViewModel) {
                             keyboardActions = KeyboardActions(
                                 onSearch = {
                                     if (searchText.length < 3) {
-                                        Toast.makeText(context, context.getString(R.string.search_more_letter), Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.search_more_letter),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     } else {
                                         showDialog = false
                                         val intent = Intent(context, SearchActivity::class.java)

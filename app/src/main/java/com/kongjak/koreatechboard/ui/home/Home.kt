@@ -1,11 +1,14 @@
 package com.kongjak.koreatechboard.ui.home
 
 import android.content.Intent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
@@ -18,9 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -50,6 +54,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoardInMain(
     department: Department,
@@ -60,9 +65,18 @@ fun BoardInMain(
     var key by remember {
         mutableStateOf(department.boards[0].board)
     }
-    var tabIndex by remember { mutableIntStateOf(0) }
     val isLoaded by homeBoardViewModel.isLoaded.observeAsState(false)
 
+    val pagerState = rememberPagerState(
+        initialPage = 0
+    ) {
+        department.boards.size
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+
+    val tabIndex = pagerState.currentPage
+    
     LaunchedEffect(key1 = tabIndex) {
         homeBoardViewModel.getApi(department.name, key)
     }
@@ -91,49 +105,57 @@ fun BoardInMain(
                         text = { Text(text = stringResource(id = board.stringResource)) },
                         selected = tabIndex == index,
                         onClick = {
-                            tabIndex = index
-                            key = board.board
-
-                            homeBoardViewModel.getApi(department.name, board.board)
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
                         }
                     )
                 }
             }
 
-            if (!isLoaded) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                if (homeBoardViewModel.statusCode.value!! == 200) {
-                    homeBoardViewModel.boardList[key]!!.value!!.forEach { data ->
-                        Box(
-                            modifier = Modifier
-                                .clickable {
-                                    val intent = Intent(context, ArticleActivity::class.java)
-                                    intent.putExtra("site", department.name)
-                                    intent.putExtra("uuid", data.uuid.toString())
-                                    context.startActivity(intent)
-                                }
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp),
-                                text = data.title,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                        Divider(color = Color.Gray, thickness = 0.5.dp)
+            HorizontalPager(
+                state = pagerState, verticalAlignment = Alignment.Top
+            ) { page ->
+                key = department.boards[page].board
+                homeBoardViewModel.getApi(department.name, key)
+
+                if (!isLoaded) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator()
                     }
                 } else {
-                    Text(text = "Error!")
+                    if (homeBoardViewModel.statusCode.value!! == 200) {
+                        Column {
+                            homeBoardViewModel.boardList[key]!!.value!!.forEach { data ->
+                                Box(
+                                    modifier = Modifier
+                                        .clickable {
+                                            val intent = Intent(context, ArticleActivity::class.java)
+                                            intent.putExtra("site", department.name)
+                                            intent.putExtra("uuid", data.uuid.toString())
+                                            context.startActivity(intent)
+                                        }
+                                ) {
+                                    Text(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 8.dp),
+                                        text = data.title,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                    )
+                                }
+                                Divider(color = Color.Gray, thickness = 0.5.dp)
+                            }
+                        }
+                    } else {
+                        Text(text = "Error!")
+                    }
                 }
             }
         }

@@ -20,12 +20,16 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     ViewModel() {
 
     val department = mutableStateOf<Department>(Department.School)
-    var tabIndex = mutableIntStateOf(0)
+    val tabIndex = mutableIntStateOf(0)
 
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
         getBoardUseCase.execute(site, board).cachedIn(viewModelScope)
 
     fun changeDept(dept: Department) {
         department.value = dept
+    }
+
+    fun changeIndex(index: Int) {
+        tabIndex.intValue = index
     }
 }
