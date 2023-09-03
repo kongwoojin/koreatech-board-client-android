@@ -22,7 +22,7 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
     val tabIndex = mutableIntStateOf(0)
 
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
-        getBoardUseCase.execute(site, board).cachedIn(viewModelScope)
+        getBoardUseCase(site, board).cachedIn(viewModelScope)
 
     fun changeIndex(index: Int) {
         tabIndex.intValue = index

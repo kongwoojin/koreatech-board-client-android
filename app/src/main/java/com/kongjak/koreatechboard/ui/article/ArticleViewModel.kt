@@ -62,7 +62,7 @@ class ArticleViewModel @Inject constructor(
             _isLoading.value = true
 
             runCatching {
-                getArticleUseCase.execute(site.value!!, uuid.value!!)
+                getArticleUseCase(site.value!!, uuid.value!!)
             }.onSuccess {
                 when (it) {
                     is ResponseResult.Success -> {
