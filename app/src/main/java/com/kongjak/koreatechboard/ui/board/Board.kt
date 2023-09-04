@@ -31,6 +31,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -172,7 +173,7 @@ fun BoardContent(
                                 ),
                             title = it.title, writer = it.writer, date = it.writeDate
                         )
-                        Divider(color = Gray, thickness = 0.5.dp)
+                        HorizontalDivider(thickness = 0.5.dp, color = Gray)
                     }
                 }
 
