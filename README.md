@@ -13,4 +13,4 @@
 * [한국기술교육대학교 산업경영학부](https://cms3.koreatech.ac.kr/sim/index.do)
 
 ## API
-[API 소스코드](https://github.com/kongwoojin/Koreatech_board_crawler_API)
+[API 소스코드](https://github.com/kongwoojin/koreatech-board-api-golang)
