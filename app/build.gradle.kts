@@ -10,7 +10,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.android.gms.oss-licenses-plugin")
     id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
     id("com.google.devtools.ksp")
     kotlin("kapt")
     kotlin("plugin.parcelize")
