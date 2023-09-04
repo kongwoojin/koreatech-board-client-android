@@ -68,6 +68,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.ui.theme.articleSubText
+import com.kongjak.koreatechboard.ui.theme.articleTitle
+import com.kongjak.koreatechboard.ui.theme.boardItemSubText
+import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import com.kongjak.koreatechboard.util.routes.deptList
 import kotlinx.coroutines.launch
@@ -218,22 +222,18 @@ fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            fontSize = MaterialTheme.typography.titleMedium.fontSize,
-            color = MaterialTheme.typography.titleMedium.color
+            style = MaterialTheme.typography.boardItemTitle
         )
         Column(
             horizontalAlignment = Alignment.End
         ) {
             Text(
                 text = writer,
-                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                color = MaterialTheme.typography.titleSmall.color
-
+                style = MaterialTheme.typography.boardItemSubText
             )
             Text(
                 text = date,
-                fontSize = MaterialTheme.typography.titleSmall.fontSize,
-                color = MaterialTheme.typography.titleSmall.color
+                style = MaterialTheme.typography.boardItemSubText
             )
         }
     }

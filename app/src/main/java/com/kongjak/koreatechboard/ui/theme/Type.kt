@@ -60,3 +60,48 @@ val Typography.preferenceSummary: TextStyle
             includeFontPadding = false
         )
     )
+
+val Typography.articleTitle: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        letterSpacing = 0.5.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )
+
+val Typography.articleSubText: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 4.sp,
+        letterSpacing = 0.5.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )
+
+val Typography.boardItemTitle: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )
+
+val Typography.boardItemSubText: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 4.sp,
+        letterSpacing = 0.5.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )

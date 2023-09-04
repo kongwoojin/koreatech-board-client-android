@@ -28,6 +28,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.kongjak.koreatechboard.ui.theme.articleSubText
+import com.kongjak.koreatechboard.ui.theme.articleTitle
 import com.kongjak.koreatechboard.util.fileText
 import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
@@ -67,7 +69,7 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) 
                 ) {
                     Text(
                         text = it.title,
-                        fontSize = 18.sp,
+                        style = MaterialTheme.typography.articleTitle,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
@@ -82,11 +84,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) 
                         ) {
                             Text(
                                 text = it.writer,
-                                fontSize = MaterialTheme.typography.titleSmall.fontSize
+                                style = MaterialTheme.typography.articleSubText
                             )
                             Text(
                                 text = it.date,
-                                fontSize = MaterialTheme.typography.titleSmall.fontSize
+                                style = MaterialTheme.typography.articleSubText
                             )
                         }
                     }
