@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +17,13 @@ import javax.inject.Inject
 class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) :
     ViewModel() {
 
-    fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> =
-        getBoardUseCase(site, board).cachedIn(viewModelScope)
+    private val boardItemsMap = mutableMapOf<String, Flow<PagingData<BoardData>>>()
+
+    fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> {
+        val key = "${site}:${board}"
+        if (boardItemsMap[key] == null) {
+            boardItemsMap[key] = getBoardUseCase(site, board).cachedIn(viewModelScope)
+        }
+        return boardItemsMap[key]!!
+    }
 }

@@ -126,7 +126,7 @@ fun Board(contentPadding: PaddingValues, department: Department) {
 fun BoardContent(
     department: Department,
     page: Int,
-    boardViewModel: BoardViewModel = hiltViewModel(key = department.name)
+    boardViewModel: BoardViewModel = hiltViewModel()
 ) {
     val lazyPostList =
         boardViewModel.getAPI(department.name, department.boards[page].board)
