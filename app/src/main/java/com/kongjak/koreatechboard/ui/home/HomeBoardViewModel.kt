@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,10 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
     val isLoaded: LiveData<Boolean>
         get() = _isLoaded
 
+    private val _isSuccess = MutableLiveData(true)
+    val isSuccess: LiveData<Boolean>
+        get() = _isSuccess
+
     private val _boardList = mutableMapOf<String, MutableLiveData<List<BoardData>>>()
     val boardList: Map<String, LiveData<List<BoardData>>>
         get() = _boardList
@@ -24,6 +29,10 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
     private val _statusCode = MutableLiveData(200)
     val statusCode: LiveData<Int>
         get() = _statusCode
+
+    private val _error = MutableLiveData("")
+    val error: LiveData<String>
+        get() = _error
 
     fun getApi(site: String, board: String) {
         if (!boardList.containsKey(board)) {
@@ -33,6 +42,7 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                 runCatching {
                     getBoardMinimumUseCase(site, board)
                 }.onSuccess {
+                    _isSuccess.postValue(true)
                     when (it) {
                         is ResponseResult.Success -> {
                             _boardList[board]!!.postValue(it.data.boardData)
@@ -41,9 +51,13 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                         }
                         is ResponseResult.Error -> {
                             _statusCode.value = it.errorType.statusCode
+                            _isLoaded.postValue(true)
                         }
                     }
                 }.onFailure {
+                    _isLoaded.postValue(true)
+                    _isSuccess.postValue(false)
+                    _error.value = it.localizedMessage
                 }
             }
         }

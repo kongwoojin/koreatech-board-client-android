@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
@@ -65,6 +66,7 @@ fun BoardInMain(
     var key by remember {
         mutableStateOf(department.boards[0].board)
     }
+    val isSuccess by homeBoardViewModel.isSuccess.observeAsState(true)
     val isLoaded by homeBoardViewModel.isLoaded.observeAsState(false)
 
     val pagerState = rememberPagerState(
@@ -130,7 +132,7 @@ fun BoardInMain(
                         CircularProgressIndicator()
                     }
                 } else {
-                    if (homeBoardViewModel.statusCode.value!! == 200) {
+                    if (isSuccess && homeBoardViewModel.statusCode.value!! == 200) {
                         Column {
                             homeBoardViewModel.boardList[key]!!.value!!.forEach { data ->
                                 Box(
@@ -154,8 +156,10 @@ fun BoardInMain(
                                 HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                             }
                         }
-                    } else {
-                        Text(text = "Error!")
+                    } else if(isSuccess && homeBoardViewModel.statusCode.value!! != 200) {
+                        Text(text = stringResource(R.string.server_down, homeBoardViewModel.statusCode.value!!))
+                    } else if (!isSuccess) {
+                        Text(text = homeBoardViewModel.error.value!!)
                     }
                 }
             }
