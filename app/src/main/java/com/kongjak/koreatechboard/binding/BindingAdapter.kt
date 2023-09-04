@@ -53,7 +53,7 @@ object BindingAdapter {
 
             for (file in files) {
                 val pattern = Pattern.compile(file.fileName.replace("(", "\\(").replace(")", "\\)"))
-                Linkify.addLinks(textView, pattern, file.fileUri, null, transform)
+                Linkify.addLinks(textView, pattern, file.fileUrl, null, transform)
             }
         }
     }

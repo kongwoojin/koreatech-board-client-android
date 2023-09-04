@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,9 +19,9 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val article: LiveData<Article>
         get() = _article
 
-    private val _url = MutableLiveData<String>()
-    val url: LiveData<String>
-        get() = _url
+    private val _uuid = MutableLiveData<UUID>()
+    val uuid: LiveData<UUID>
+        get() = _uuid
 
     private val _site = MutableLiveData<String>()
     val site: LiveData<String>
@@ -29,8 +31,12 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    fun setUrlData(url: String) {
-        _url.value = url
+    private val _statusCode = MutableLiveData(200)
+    val statusCode: LiveData<Int>
+        get() = _statusCode
+
+    fun setUUIDData(uuid: UUID) {
+        _uuid.value = uuid
     }
 
     fun setSiteData(site: String) {
@@ -40,7 +46,22 @@ class ArticleViewModel @Inject constructor(private val getArticleUseCase: GetArt
     fun getArticleData() {
         viewModelScope.launch {
             _isLoading.value = true
-            _article.value = getArticleUseCase.execute(site.value!!, url.value!!)
+
+            runCatching {
+                getArticleUseCase.execute(site.value!!, uuid.value!!)
+            }.onSuccess {
+                when (it) {
+                    is ResponseResult.Success -> {
+                        _article.value = it.data!!
+                        _statusCode.value = it.data.statusCode
+                    }
+                    is ResponseResult.Error -> {
+                        _statusCode.value = it.errorType.statusCode
+                    }
+                }
+            }.onFailure {
+            }
+
             _isLoading.value = false
         }
     }

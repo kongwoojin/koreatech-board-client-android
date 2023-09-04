@@ -77,27 +77,24 @@ class BoardFragment : Fragment() {
             }
         })
 
-        boardAdapter.setOnClickListener { url ->
+        boardAdapter.setOnClickListener { uuid ->
             when (resources.getBoolean(R.bool.is_tablet)) {
                 true -> {
                     val articleFragment = ArticleFragment()
                     val articleBundle = Bundle()
                     articleBundle.putString("site", boardViewModel.site.value)
-                    articleBundle.putString("url", url)
+                    articleBundle.putString("uuid", uuid.toString())
                     articleFragment.arguments = articleBundle
 
                     parentFragmentManager
                         .beginTransaction()
                         .replace(R.id.article_fragment_container_view, articleFragment)
                         .commit()
-
-                    mainViewModel.updateUrl(url)
-                    mainViewModel.updateMenuNeeded(true)
                 }
                 false -> {
                     val intent = Intent(context, ArticleActivity::class.java)
                     intent.putExtra("site", boardViewModel.site.value)
-                    intent.putExtra("url", url)
+                    intent.putExtra("uuid", uuid.toString())
                     startActivity(intent)
                 }
             }

@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class BoardResponse(
     @SerializedName("last_page")
@@ -12,6 +13,8 @@ data class BoardResponse(
 )
 
 data class BoardResponseData(
+    @SerializedName("id")
+    val uuid: UUID,
     @SerializedName("title")
     val title: String?,
     @SerializedName("notice_type")
@@ -22,7 +25,7 @@ data class BoardResponseData(
     val writer: String?,
     @SerializedName("write_date")
     val writeDate: String?,
-    @SerializedName("read")
+    @SerializedName("read_count")
     val read: Int,
     @SerializedName("article_url")
     val articleUrl: String
