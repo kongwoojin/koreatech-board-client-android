@@ -136,7 +136,7 @@ fun BoardContent(
 
     Scaffold(
         floatingActionButton = {
-            SearchFAB(boardViewModel = boardViewModel, department = department, index = page)
+            SearchFAB(department = department, index = page)
         },
         content = { contentPadding ->
             LazyColumn(
@@ -286,7 +286,7 @@ fun BottomSheetScaffold(
 }
 
 @Composable
-fun SearchFAB(boardViewModel: BoardViewModel, department: Department, index: Int) {
+fun SearchFAB(department: Department, index: Int) {
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
     val context = LocalContext.current
