@@ -225,6 +225,7 @@ fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
             style = MaterialTheme.typography.boardItemTitle
         )
         Column(
+            modifier = Modifier.padding(start = 8.dp),
             horizontalAlignment = Alignment.End
         ) {
             Text(
