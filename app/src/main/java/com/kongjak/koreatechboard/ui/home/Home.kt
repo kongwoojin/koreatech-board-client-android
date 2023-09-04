@@ -13,7 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -150,7 +150,7 @@ fun BoardInMain(
                                         overflow = TextOverflow.Ellipsis
                                     )
                                 }
-                                Divider(color = Color.Gray, thickness = 0.5.dp)
+                                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                             }
                         }
                     } else {
