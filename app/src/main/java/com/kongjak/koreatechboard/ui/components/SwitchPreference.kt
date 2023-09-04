@@ -20,10 +20,10 @@ fun SwitchPreference(
     BasicPreference(modifier = modifier, title = title, onClick = {
         onCheckedChange(!checked)
     }, content = {
-        CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-            Switch(checked = checked, onCheckedChange = onCheckedChange)
-        }
-    })
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                Switch(checked = checked, onCheckedChange = onCheckedChange)
+            }
+        })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,10 +38,10 @@ fun SwitchPreference(
     BasicPreference(modifier = modifier, title = title, summary = summary, onClick = {
         onCheckedChange(!checked)
     }, content = {
-        CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-            Switch(checked = checked, onCheckedChange = onCheckedChange)
-        }
-    })
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                Switch(checked = checked, onCheckedChange = onCheckedChange)
+            }
+        })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,10 +56,10 @@ fun SwitchPreference(
     BasicPreference(modifier = modifier, icon = icon, title = title, onClick = {
         onCheckedChange(!checked)
     }, content = {
-        CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-            Switch(checked = checked, onCheckedChange = onCheckedChange)
-        }
-    })
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                Switch(checked = checked, onCheckedChange = onCheckedChange)
+            }
+        })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,10 +75,10 @@ fun SwitchPreference(
     BasicPreference(modifier = modifier, icon = icon, title = title, summary = summary, onClick = {
         onCheckedChange(!checked)
     }, content = {
-        CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-            Switch(checked = checked, onCheckedChange = onCheckedChange)
-        }
-    })
+            CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                Switch(checked = checked, onCheckedChange = onCheckedChange)
+            }
+        })
 }
 
 @Preview

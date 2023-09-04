@@ -28,7 +28,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -68,8 +67,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
-import com.kongjak.koreatechboard.ui.theme.articleSubText
-import com.kongjak.koreatechboard.ui.theme.articleTitle
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
@@ -175,7 +172,9 @@ fun BoardContent(
                                         context.startActivity(intent)
                                     }
                                 ),
-                            title = it.title, writer = it.writer, date = it.writeDate
+                            title = it.title,
+                            writer = it.writer,
+                            date = it.writeDate
                         )
                         HorizontalDivider(thickness = 0.5.dp, color = Gray)
                     }
@@ -253,13 +252,11 @@ fun BoardError(errorMessage: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetScaffold(
-) {
+fun BottomSheetScaffold() {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
     val department = remember { mutableStateOf<Department>(Department.School) }
-
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -281,7 +278,7 @@ fun BottomSheetScaffold(
                     }
                 }
             }
-        },
+        }
     ) { innerPadding ->
         Board(contentPadding = innerPadding, department = department.value)
     }
@@ -311,7 +308,7 @@ fun SearchFAB(department: Department, index: Int) {
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(16.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp)

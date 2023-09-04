@@ -79,7 +79,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             summary = stringResource(id = deptListName[selectedIndex ?: 0]),
             itemStringResource = deptListName,
             itemValue = deptListValue,
-            selectedIndex = selectedIndex ?: 0,
+            selectedIndex = selectedIndex ?: 0
         ) { item ->
             settingsViewModel.setDepartment(item)
         }
@@ -127,7 +127,6 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         PreferenceHeader(title = stringResource(id = R.string.setting_header_theme))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            
             val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
 
             SwitchPreference(
@@ -146,7 +145,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             ),
             itemStringResource = darkThemeString,
             itemValue = darkTheme,
-            selectedIndex = isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT,
+            selectedIndex = isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT
         ) { theme ->
             settingsViewModel.setDarkTheme(theme)
         }

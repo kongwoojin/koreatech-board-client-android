@@ -127,7 +127,8 @@ fun BasicPreference(
             )
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    text = title, style = MaterialTheme.typography.preferenceTitle
+                    text = title,
+                    style = MaterialTheme.typography.preferenceTitle
                 )
                 Text(text = summary, style = MaterialTheme.typography.preferenceSummary)
             }

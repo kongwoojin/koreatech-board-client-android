@@ -33,8 +33,7 @@ class SearchActivity : ComponentActivity() {
             KoreatechBoardTheme(
                 dynamicColor = isDynamicColor,
                 darkTheme = isDarkTheme ?: isSystemInDarkTheme()
-            )
-            {
+            ) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

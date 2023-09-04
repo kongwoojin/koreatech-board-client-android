@@ -26,7 +26,6 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
         get() = _statusCode
 
     fun getApi(site: String, board: String) {
-
         if (!boardList.containsKey(board)) {
             _isLoaded.value = false
             _boardList[board] = MutableLiveData(emptyList())

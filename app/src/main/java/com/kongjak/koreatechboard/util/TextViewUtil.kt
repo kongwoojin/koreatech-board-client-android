@@ -15,8 +15,9 @@ var TextView.fileText: ArrayList<Files>?
         if (value != null) {
             for (file in value) {
                 append(file.fileName)
-                if (value.iterator().hasNext())
+                if (value.iterator().hasNext()) {
                     append("\n")
+                }
             }
             val transform = Linkify.TransformFilter { _, _ -> "" }
 

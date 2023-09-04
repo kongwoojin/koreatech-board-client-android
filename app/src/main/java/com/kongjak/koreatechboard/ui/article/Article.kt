@@ -26,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
@@ -92,7 +91,6 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) 
                             )
                         }
                     }
-
 
                     key(articleViewModel.isDarkTheme) {
                         var isDarkTheme = articleViewModel.isDarkTheme.value

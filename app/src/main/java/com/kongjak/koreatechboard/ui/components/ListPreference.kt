@@ -141,7 +141,7 @@ fun ListPreferenceDialog(
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     val (selectedValue, onValueSelected) = remember { mutableIntStateOf(selectedIndex) }

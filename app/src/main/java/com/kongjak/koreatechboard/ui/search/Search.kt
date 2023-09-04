@@ -109,7 +109,9 @@ fun SearchContent(
                                 context.startActivity(intent)
                             }
                         ),
-                    title = it.title, writer = it.writer, date = it.writeDate
+                    title = it.title,
+                    writer = it.writer,
+                    date = it.writeDate
                 )
                 HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
             }

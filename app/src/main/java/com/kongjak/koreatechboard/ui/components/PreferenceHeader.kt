@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PreferenceHeader(
     modifier: Modifier = Modifier,
-    title: String,
+    title: String
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(

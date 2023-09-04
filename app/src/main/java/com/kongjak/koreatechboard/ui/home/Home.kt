@@ -76,7 +76,7 @@ fun BoardInMain(
     val coroutineScope = rememberCoroutineScope()
 
     val tabIndex = pagerState.currentPage
-    
+
     LaunchedEffect(key1 = tabIndex) {
         homeBoardViewModel.getApi(department.name, key)
     }
@@ -114,7 +114,8 @@ fun BoardInMain(
             }
 
             HorizontalPager(
-                state = pagerState, verticalAlignment = Alignment.Top
+                state = pagerState,
+                verticalAlignment = Alignment.Top
             ) { page ->
                 key = department.boards[page].board
                 homeBoardViewModel.getApi(department.name, key)

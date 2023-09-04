@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -52,7 +51,7 @@ class ArticleActivity : ComponentActivity() {
 }
 
 @Composable
-fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(),  site: String, uuid: UUID) {
+fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(), site: String, uuid: UUID) {
     val context = LocalContext.current
     Toolbar(articleViewModel = articleViewModel, context = context, site = site, uuid = uuid)
 }
