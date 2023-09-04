@@ -11,6 +11,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     id("dagger.hilt.android.plugin")
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("com.google.devtools.ksp")
     kotlin("kapt")
     kotlin("plugin.parcelize")
 }
@@ -113,7 +114,7 @@ dependencies {
     implementation("androidx.paging:paging-compose:3.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")
     implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
-    kapt("com.github.bumptech.glide:compiler:4.16.0")
+    ksp("com.github.bumptech.glide:ksp:4.16.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
