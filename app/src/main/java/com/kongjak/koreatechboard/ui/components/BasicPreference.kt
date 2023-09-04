@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.kongjak.koreatechboard.ui.theme.preferenceSummary
+import com.kongjak.koreatechboard.ui.theme.preferenceTitle
 
 @Composable
 fun BasicPreference(
@@ -30,7 +33,7 @@ fun BasicPreference(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(modifier = Modifier.weight(1f), text = title)
+            Text(modifier = Modifier.weight(1f), text = title, style = MaterialTheme.typography.preferenceTitle)
             Column(horizontalAlignment = Alignment.End) {
                 if (content != null) {
                     content()
@@ -56,9 +59,9 @@ fun BasicPreference(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = title)
-                Text(text = summary, fontSize = MaterialTheme.typography.bodySmall.fontSize)
+            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(text = title, style = MaterialTheme.typography.preferenceTitle)
+                Text(text = summary, style = MaterialTheme.typography.preferenceSummary)
             }
             Column(horizontalAlignment = Alignment.End) {
                 if (content != null) {
@@ -90,7 +93,7 @@ fun BasicPreference(
                 contentDescription = title,
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Text(modifier = Modifier.weight(1f), text = title)
+            Text(modifier = Modifier.weight(1f), text = title, style = MaterialTheme.typography.preferenceTitle)
             Column(horizontalAlignment = Alignment.End) {
                 if (content != null) {
                     content()
@@ -122,9 +125,11 @@ fun BasicPreference(
                 contentDescription = title,
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = title)
-                Text(text = summary, fontSize = MaterialTheme.typography.bodySmall.fontSize)
+            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    text = title, style = MaterialTheme.typography.preferenceTitle
+                )
+                Text(text = summary, style = MaterialTheme.typography.preferenceSummary)
             }
             Column(horizontalAlignment = Alignment.End) {
                 if (content != null) {
