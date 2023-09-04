@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RetrofitBuilder {
 
-    private const val API_PRODUCTION = "https://api.kongjak.com/v2/"
+    private const val API_PRODUCTION = "https://api.kongjak.com/v3/"
     private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v3/"
 
     private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
