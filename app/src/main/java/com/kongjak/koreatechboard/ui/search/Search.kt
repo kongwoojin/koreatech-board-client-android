@@ -3,7 +3,6 @@ package com.kongjak.koreatechboard.ui.search
 import android.content.Intent
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,8 +12,8 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -112,7 +111,7 @@ fun SearchContent(
                         ),
                     title = it.title, writer = it.writer, date = it.writeDate
                 )
-                Divider(color = Color.Gray, thickness = 0.5.dp)
+                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
             }
         }
 
