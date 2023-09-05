@@ -10,7 +10,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.android.gms.oss-licenses-plugin")
     id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("org.jlleitschuh.gradle.ktlint") version Versions.ktlint
     id("com.google.devtools.ksp")
     kotlin("kapt")
     kotlin("plugin.parcelize")
@@ -21,10 +21,10 @@ android {
 
     defaultConfig {
         applicationId = "com.kongjak.koreatechboard"
-        minSdk = 25
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        minSdk = Project.minSdk
+        targetSdk = Project.targetSdk
+        versionCode = Project.versionCode
+        versionName = Project.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -71,7 +71,7 @@ android {
     }
     namespace = "com.kongjak.koreatechboard"
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = Versions.Kotlin.kotlinCompilerExtension
     }
     packaging {
         resources {
@@ -84,38 +84,47 @@ dependencies {
 
     implementation(project(":data"))
     implementation(project(":domain"))
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-    implementation("androidx.browser:browser:1.6.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.github.bumptech.glide:glide:4.13.0")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.13.0")
-    implementation("com.github.bumptech.glide:annotations:4.16.0")
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3-android:1.2.0-alpha04")
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.0")
-    implementation("androidx.navigation:navigation-compose:2.7.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.paging:paging-runtime-ktx:3.2.0")
-    implementation("androidx.paging:paging-compose:3.2.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
-    ksp("com.github.bumptech.glide:ksp:4.16.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation(Dependencies.AndroidX.activityCompose)
+    implementation(Dependencies.AndroidX.browser)
+    implementation(Dependencies.AndroidX.composeMaterial3)
+    implementation(Dependencies.AndroidX.composeRuntimeLivedata)
+    implementation(Dependencies.AndroidX.composeUI)
+    implementation(Dependencies.AndroidX.composeUIGraphics)
+    implementation(Dependencies.AndroidX.composeUIToolingPreview)
+    implementation(Dependencies.AndroidX.coreKtx)
+    implementation(Dependencies.AndroidX.hiltNavigationCompose)
+    implementation(Dependencies.AndroidX.lifecycleRuntime)
+    implementation(Dependencies.AndroidX.lifecycleViewModelCompose)
+    implementation(Dependencies.AndroidX.lifecycleViewModelKtx)
+    implementation(Dependencies.AndroidX.livedataKtx)
+    implementation(Dependencies.AndroidX.navigationCompose)
+    implementation(Dependencies.AndroidX.pagingCompose)
+    implementation(Dependencies.AndroidX.pagingRuntimeKtx)
+    implementation(platform(Dependencies.AndroidX.composeBom))
+
+    implementation(Dependencies.Etc.glide)
+    implementation(Dependencies.Etc.glideOkhttp3)
+    implementation(Dependencies.Etc.glideAnnotation)
+    implementation(Dependencies.Etc.retrofit2)
+    implementation(Dependencies.Etc.retrofit2Gson)
+
+    implementation(Dependencies.Google.hilt)
+    implementation(Dependencies.Google.material)
+    implementation(Dependencies.Google.ossLicense)
+
+    kapt(Dependencies.Google.hiltCompiler)
+    ksp(Dependencies.Etc.glideKsp)
+
+    debugImplementation(Dependencies.Debug.composeUITestManifest)
+    debugImplementation(Dependencies.Debug.composeUITooling)
+
+    testImplementation(Dependencies.Test.junit)
+
+    androidTestImplementation(Dependencies.AndroidTest.composeJunit)
+    androidTestImplementation(Dependencies.AndroidTest.espresso)
+    androidTestImplementation(Dependencies.AndroidTest.junit)
+    androidTestImplementation(platform(Dependencies.AndroidTest.composeBom))
+
+
 }
