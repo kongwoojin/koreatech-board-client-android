@@ -104,7 +104,7 @@ fun Toolbar(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel =
             }
         ) { contentPadding ->
             Column(modifier = Modifier.padding(contentPadding)) {
-                ArticleScreen(articleViewModel = articleViewModel, site = site, uuid = uuid)
+                ArticleScreen(articleViewModel = articleViewModel, themeViewModel = themeViewModel, site = site, uuid = uuid)
             }
         }
     }

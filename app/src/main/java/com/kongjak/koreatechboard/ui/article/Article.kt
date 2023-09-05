@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
+import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.fileText
 import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
 
 @Composable
-fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) {
+fun ArticleScreen(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel, site: String, uuid: UUID) {
     val data by articleViewModel.article.observeAsState()
     val context = LocalContext.current
     val contentTextView = remember { TextView(context) }
@@ -92,8 +93,8 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, site: String, uuid: UUID) 
                         }
                     }
 
-                    key(articleViewModel.isDarkTheme) {
-                        var isDarkTheme = articleViewModel.isDarkTheme.value
+                    key(themeViewModel.isDarkTheme) {
+                        var isDarkTheme = themeViewModel.isDarkTheme.value
 
                         if (isDarkTheme == null) isDarkTheme = isSystemInDarkTheme()
 

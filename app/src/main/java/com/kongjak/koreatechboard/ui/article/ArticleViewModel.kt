@@ -17,14 +17,6 @@ class ArticleViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
 ) :
     ViewModel() {
-    private val _isDynamicTheme = MutableLiveData(true)
-    val isDynamicTheme: LiveData<Boolean>
-        get() = _isDynamicTheme
-
-    private val _isDarkTheme = MutableLiveData<Boolean?>()
-    val isDarkTheme: LiveData<Boolean?>
-        get() = _isDarkTheme
-
     private val _article = MutableLiveData<Article>()
     val article: LiveData<Article>
         get() = _article
