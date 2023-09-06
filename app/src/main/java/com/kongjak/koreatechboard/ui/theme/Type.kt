@@ -40,7 +40,6 @@ val Typography.preferenceTitle: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 0.sp,
         letterSpacing = 0.sp,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
@@ -53,7 +52,6 @@ val Typography.preferenceSummary: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        lineHeight = 0.sp,
         letterSpacing = 0.sp,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
