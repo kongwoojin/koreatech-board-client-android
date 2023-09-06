@@ -46,6 +46,7 @@ import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -70,6 +71,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.ui.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
@@ -77,8 +79,9 @@ import com.kongjak.koreatechboard.util.routes.deptList
 import kotlinx.coroutines.launch
 
 @Composable
-fun BoardScreen() {
-    BottomSheetScaffold()
+fun BoardScreen(boardInitViewModel: BoardInitViewModel = hiltViewModel()) {
+    val initDepartment by boardInitViewModel.initDepartment.observeAsState(0)
+    BottomSheetScaffold(fullDeptList[initDepartment])
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -147,7 +150,9 @@ fun BoardContent(
             SearchFAB(department = department, index = page)
         },
         content = { contentPadding ->
-            Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)) {
                 LazyColumn(
                     contentPadding = PaddingValues(
                         top = contentPadding.calculateTopPadding(),

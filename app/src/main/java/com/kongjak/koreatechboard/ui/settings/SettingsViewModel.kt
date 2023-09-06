@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDarkThemeUseCase
-import com.kongjak.koreatechboard.domain.usecase.SetDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.SetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDynamicThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.SetInitDepartmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,16 +21,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val getDepartmentUseCase: GetDepartmentUseCase,
-    private val setDepartmentUseCase: SetDepartmentUseCase,
+    private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
+    private val setUserDepartmentUseCase: SetUserDepartmentUseCase,
+    private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
+    private val setInitDepartmentUseCase: SetInitDepartmentUseCase,
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
     private val setDynamicThemeUseCase: SetDynamicThemeUseCase,
     private val getDarkThemeUseCase: GetDarkThemeUseCase,
     private val setDarkThemeUseCase: SetDarkThemeUseCase
 ) : ViewModel() {
-    private val _department = MutableLiveData(0)
-    val department: LiveData<Int>
-        get() = _department
+    private val _userDepartment = MutableLiveData(0)
+    val userDepartment: LiveData<Int>
+        get() = _userDepartment
+
+    private val _initDepartment = MutableLiveData(0)
+    val initDepartment: LiveData<Int>
+        get() = _initDepartment
 
     private val _isDynamicTheme = MutableLiveData(true)
     val isDynamicTheme: LiveData<Boolean>
@@ -39,24 +47,39 @@ class SettingsViewModel @Inject constructor(
         get() = _isDarkTheme
 
     init {
-        getDepartment()
+        getUserDepartment()
+        getInitDepartment()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             getDynamicTheme()
         }
         getDarkTheme()
     }
 
-    private fun getDepartment() {
+    private fun getUserDepartment() {
         viewModelScope.launch {
-            getDepartmentUseCase().collectLatest {
-                _department.value = it
+            getUserDepartmentUseCase().collectLatest {
+                _userDepartment.value = it
             }
         }
     }
 
-    fun setDepartment(index: Int) {
+    fun setUserDepartment(index: Int) {
         viewModelScope.launch {
-            setDepartmentUseCase(index)
+            setUserDepartmentUseCase(index)
+        }
+    }
+
+    private fun getInitDepartment() {
+        viewModelScope.launch {
+            getInitDepartmentUseCase().collectLatest {
+                _initDepartment.value = it
+            }
+        }
+    }
+
+    fun setInitDepartment(index: Int) {
+        viewModelScope.launch {
+            setInitDepartmentUseCase(index)
         }
     }
 

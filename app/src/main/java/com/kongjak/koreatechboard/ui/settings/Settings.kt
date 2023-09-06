@@ -37,10 +37,23 @@ val deptList = listOf(
     Department.Emc,
     Department.Sim
 )
+val deptListString = deptList.map { it.stringResource }
+val deptListName = deptList.map { it.name }
 
-val deptListName = deptList.map { it.stringResource }
-
-val deptListValue = deptList.map { it.name }
+val fullDeptList = listOf(
+    Department.School,
+    Department.Dorm,
+    Department.Cse,
+    Department.Mechanical,
+    Department.Mechatronics,
+    Department.Ite,
+    Department.Ide,
+    Department.Arch,
+    Department.Emc,
+    Department.Sim
+)
+val fullDeptListString = fullDeptList.map { it.stringResource }
+val fullDeptListName = fullDeptList.map { it.name }
 
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 val darkThemeString = listOf(
@@ -54,16 +67,28 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize()) {
-        val selectedIndex by settingsViewModel.department.observeAsState()
+        val userDepartment by settingsViewModel.userDepartment.observeAsState()
 
         ListPreference(
-            title = stringResource(id = R.string.setting_department_title),
-            summary = stringResource(id = deptListName[selectedIndex ?: 0]),
-            itemStringResource = deptListName,
-            itemValue = deptListValue,
-            selectedIndex = selectedIndex ?: 0
+            title = stringResource(id = R.string.setting_user_department_title),
+            summary = stringResource(id = deptListString[userDepartment ?: 0]),
+            itemStringResource = deptListString,
+            itemValue = deptListName,
+            selectedIndex = userDepartment ?: 0
         ) { item ->
-            settingsViewModel.setDepartment(item)
+            settingsViewModel.setUserDepartment(item)
+        }
+
+        val initDepartment by settingsViewModel.initDepartment.observeAsState()
+
+        ListPreference(
+            title = stringResource(id = R.string.setting_default_board_title),
+            summary = stringResource(id = fullDeptListString[initDepartment ?: 0]),
+            itemStringResource = fullDeptListString,
+            itemValue = fullDeptListName,
+            selectedIndex = initDepartment ?: 0
+        ) { item ->
+            settingsViewModel.setInitDepartment(item)
         }
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_info))

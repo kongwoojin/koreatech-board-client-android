@@ -17,20 +17,36 @@ class SettingsLocalDataSource @Inject constructor(
 ) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-    private val departmentKey = intPreferencesKey("department")
+    private val userDepartmentKey = intPreferencesKey("user_department")
+    private val initDepartmentKey = intPreferencesKey("init_department")
     private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
     private val darkThemeKey = intPreferencesKey("dark_theme")
 
-    suspend fun setDepartment(newIndex: Int) {
+    suspend fun setUserDepartment(newIndex: Int) {
         context.dataStore.edit { preferences ->
-            preferences[departmentKey] = newIndex
+            preferences[userDepartmentKey] = newIndex
         }
     }
 
-    fun getDepartment(): Flow<Int> {
+    fun getUserDepartment(): Flow<Int> {
         val departmentFlow: Flow<Int> = context.dataStore.data
             .map { preferences ->
-                preferences[departmentKey] ?: 0
+                preferences[userDepartmentKey] ?: 0
+            }
+
+        return departmentFlow
+    }
+
+    suspend fun setInitDepartment(newIndex: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[initDepartmentKey] = newIndex
+        }
+    }
+
+    fun getInitDepartment(): Flow<Int> {
+        val departmentFlow: Flow<Int> = context.dataStore.data
+            .map { preferences ->
+                preferences[initDepartmentKey] ?: 0
             }
 
         return departmentFlow

@@ -79,8 +79,9 @@
     <string name="setting_header_info">Info</string>
     <string name="setting_header_theme">Theme</string>
 
-    <string name="setting_department_title">Department</string>
-    <string name="setting_department_summary">Select your department</string>
+    <string name="setting_user_department_title">Home department</string>
+    <string name="setting_user_department_summary">Select your department</string>
+    <string name="setting_default_board_title">Default board</string>
     <string name="setting_dynamic_theme_title">Dynamic theme</string>
     <string name="setting_dark_theme_title">Dark theme</string>
     <string name="setting_dark_theme_system_default">System default</string>
