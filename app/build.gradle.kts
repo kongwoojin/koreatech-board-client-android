@@ -88,6 +88,7 @@ dependencies {
     implementation(Dependencies.AndroidX.activityCompose)
     implementation(Dependencies.AndroidX.browser)
     implementation(Dependencies.AndroidX.composeMaterial3)
+    implementation(Dependencies.AndroidX.composeMaterial3PullRequest)
     implementation(Dependencies.AndroidX.composeRuntimeLivedata)
     implementation(Dependencies.AndroidX.composeUI)
     implementation(Dependencies.AndroidX.composeUIGraphics)

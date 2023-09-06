@@ -4,6 +4,7 @@ object Dependencies {
         const val browser = "androidx.browser:browser:${Versions.AndroidX.browser}"
         const val composeBom = "androidx.compose:compose-bom:${Versions.AndroidX.composeBom}"
         const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.AndroidX.composeMaterial3}"
+        const val composeMaterial3PullRequest = "me.omico.lux:lux-androidx-compose-material3-pullrefresh"
         const val composeRuntimeLivedata = "androidx.compose.runtime:runtime-livedata:${Versions.AndroidX.composeRuntimeLivedata}"
         const val composeUI = "androidx.compose.ui:ui:${Versions.AndroidX.composeUI}"
         const val composeUIGraphics = "androidx.compose.ui:ui-graphics:${Versions.AndroidX.composeUIGraphics}"
