@@ -10,22 +10,26 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.android.gms.oss-licenses-plugin")
     id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version Versions.ktlint
+    id("com.google.devtools.ksp")
     kotlin("kapt")
     kotlin("plugin.parcelize")
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.kongjak.koreatechboard"
-        minSdk = 25
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0.0"
+        minSdk = Project.minSdk
+        targetSdk = Project.targetSdk
+        versionCode = Project.versionCode
+        versionName = Project.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     signingConfigs {
@@ -46,46 +50,82 @@ android {
                 "proguard-rules.pro"
             )
         }
+        getByName("debug") {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+                "proguard-debug.pro"
+            )
+        }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
+        compose = true
     }
     namespace = "com.kongjak.koreatechboard"
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.Kotlin.kotlinCompilerExtension
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
 
     implementation(project(":data"))
     implementation(project(":domain"))
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("com.google.android.material:material:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.2")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.2")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("androidx.browser:browser:1.4.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.github.bumptech.glide:glide:4.13.0")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.13.0")
-    implementation("com.github.bumptech.glide:annotations:4.13.0")
-    implementation("com.google.dagger:hilt-android:2.43.2")
-    kapt("com.google.dagger:hilt-android-compiler:2.43.2")
-    implementation("androidx.preference:preference:1.2.0")
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.0")
-    kapt("com.github.bumptech.glide:compiler:4.13.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    implementation(Dependencies.AndroidX.activityCompose)
+    implementation(Dependencies.AndroidX.browser)
+    implementation(Dependencies.AndroidX.composeMaterial3)
+    implementation(Dependencies.AndroidX.composeMaterial3PullRequest)
+    implementation(Dependencies.AndroidX.composeRuntimeLivedata)
+    implementation(Dependencies.AndroidX.composeUI)
+    implementation(Dependencies.AndroidX.composeUIGraphics)
+    implementation(Dependencies.AndroidX.composeUIToolingPreview)
+    implementation(Dependencies.AndroidX.coreKtx)
+    implementation(Dependencies.AndroidX.hiltNavigationCompose)
+    implementation(Dependencies.AndroidX.lifecycleRuntime)
+    implementation(Dependencies.AndroidX.lifecycleViewModelCompose)
+    implementation(Dependencies.AndroidX.lifecycleViewModelKtx)
+    implementation(Dependencies.AndroidX.livedataKtx)
+    implementation(Dependencies.AndroidX.navigationCompose)
+    implementation(Dependencies.AndroidX.pagingCompose)
+    implementation(Dependencies.AndroidX.pagingRuntimeKtx)
+    implementation(platform(Dependencies.AndroidX.composeBom))
+
+    implementation(Dependencies.Etc.glide)
+    implementation(Dependencies.Etc.glideOkhttp3)
+    implementation(Dependencies.Etc.glideAnnotation)
+    implementation(Dependencies.Etc.retrofit2)
+    implementation(Dependencies.Etc.retrofit2Gson)
+
+    implementation(Dependencies.Google.hilt)
+    implementation(Dependencies.Google.material)
+    implementation(Dependencies.Google.ossLicense)
+
+    kapt(Dependencies.Google.hiltCompiler)
+    ksp(Dependencies.Etc.glideKsp)
+
+    debugImplementation(Dependencies.Debug.composeUITestManifest)
+    debugImplementation(Dependencies.Debug.composeUITooling)
+
+    testImplementation(Dependencies.Test.junit)
+
+    androidTestImplementation(Dependencies.AndroidTest.composeJunit)
+    androidTestImplementation(Dependencies.AndroidTest.espresso)
+    androidTestImplementation(Dependencies.AndroidTest.junit)
+    androidTestImplementation(platform(Dependencies.AndroidTest.composeBom))
+
+
 }

@@ -7,7 +7,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class GetArticleUseCase @Inject constructor(private val articleRepository: ArticleRepository) {
-    suspend fun execute(site: String, uuid: UUID): ResponseResult<Article> {
+    suspend operator fun invoke(site: String, uuid: UUID): ResponseResult<Article> {
         return articleRepository.getArticle(site, uuid)
     }
 }

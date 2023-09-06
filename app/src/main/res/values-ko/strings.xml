@@ -3,7 +3,7 @@
     <string name="item_notice">공지사항</string>
     <string name="item_free_board">자유 게시판</string>
     <string name="item_job_board">취업 게시판</string>
-    <string name="item_lecture_notice">강의 공지</string>
+    <string name="item_lecture_board">강의 공지</string>
     <string name="item_scholar_board">장학공지</string>
     <string name="item_bachelor_board">학사공지</string>
     <string name="item_covid19_board">코로나19 공지</string>
@@ -25,7 +25,7 @@
 
     <string name="notice">공지</string>
     <string name="no_more_article">게시글이 더 없습니다!</string>
-    <string name="server_down">서버가 %d 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
+    <string name="server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
     <string name="no_data">데이터가 없습니다!</string>
 
     <string name="app_settings_header">앱 설정</string>
@@ -57,4 +57,31 @@
     <string name="finish">종료</string>
 
     <string name="open_in_browser">브라우저에서 열기</string>
+    <string name="open_in_browser_failed">브라우저를 열지 못했습니다!</string>
+
+    <string name="bottom_nav_bar_home">홈</string>
+    <string name="bottom_nav_bar_board">게시판</string>
+    <string name="bottom_nav_bar_settings">설정</string>
+
+    <string name="search_dialog_title">검색</string>
+    <string name="search_dialog_hint">검색어를 입력하세요.</string>
+    <string name="search_dialog_search">검색</string>
+    <string name="search_dialog_cancel">취소</string>
+
+    <string name="search_more_letter">세 글자 이상 입력하세요!</string>
+
+    <string name="search_result">검색 결과</string>
+    <string name="search_no_result">검색 결과가 없습니다!</string>
+
+    <string name="setting_header_info">안내</string>
+    <string name="setting_header_theme">테마</string>
+
+    <string name="setting_user_department_title">홈 화면 학과</string>
+    <string name="setting_user_department_summary">학과를 선택하세요.</string>
+    <string name="setting_default_board_title">기본 게시판</string>
+    <string name="setting_dynamic_theme_title">동적 테마</string>
+    <string name="setting_dark_theme_title">어두운 테마</string>
+    <string name="setting_dark_theme_system_default">시스템 기본값</string>
+    <string name="setting_dark_theme_dark">어두운 테마</string>
+    <string name="setting_dark_theme_light">밝은 테마</string>
 </resources>

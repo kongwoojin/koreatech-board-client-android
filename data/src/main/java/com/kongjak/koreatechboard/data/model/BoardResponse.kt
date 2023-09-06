@@ -1,32 +1,30 @@
 package com.kongjak.koreatechboard.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.domain.model.BoardData
 import java.util.UUID
 
 data class BoardResponse(
     @SerializedName("last_page")
-    val lastPage: Int,
+    override val lastPage: Int,
     @SerializedName("status_code")
-    val statusCode: Int,
+    override val statusCode: Int,
     @SerializedName("posts")
-    val boardData: List<BoardResponseData>?
-)
+    override val boardData: List<BoardResponseData>?
+) : Board
 
 data class BoardResponseData(
     @SerializedName("id")
-    val uuid: UUID,
+    override val uuid: UUID,
     @SerializedName("title")
-    val title: String?,
-    @SerializedName("notice_type")
-    val noticeType: String?,
+    override val title: String,
     @SerializedName("num")
-    val num: String?,
+    override val num: String,
     @SerializedName("writer")
-    val writer: String?,
+    override val writer: String,
     @SerializedName("write_date")
-    val writeDate: String?,
+    override val writeDate: String,
     @SerializedName("read_count")
-    val read: Int,
-    @SerializedName("article_url")
-    val articleUrl: String
-)
+    override val read: Int
+) : BoardData

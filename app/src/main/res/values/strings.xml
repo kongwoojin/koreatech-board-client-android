@@ -3,7 +3,7 @@
     <string name="item_notice">Notice</string>
     <string name="item_free_board">Free Board</string>
     <string name="item_job_board">Job Board</string>
-    <string name="item_lecture_notice">Lecture notice</string>
+    <string name="item_lecture_board">Lecture notice</string>
     <string name="item_scholar_board">Scholar Notice</string>
     <string name="item_bachelor_board">Bachelor Notice</string>
     <string name="item_covid19_board">Covid-19 Notice</string>
@@ -25,7 +25,7 @@
 
     <string name="notice">Notice</string>
     <string name="no_more_article">No more article!</string>
-    <string name="server_down">Server returns %d error!\nPlease contact to server admin.</string>
+    <string name="server_down">Server returns %s error!\nPlease contact to server admin.</string>
     <string name="no_data">No data!</string>
 
     <string name="app_settings_header">App Settings</string>
@@ -60,4 +60,31 @@
     <string name="finish">Finish</string>
 
     <string name="open_in_browser">Open in browser</string>
+    <string name="open_in_browser_failed">Failed to open browser!</string>
+
+    <string name="bottom_nav_bar_home">Home</string>
+    <string name="bottom_nav_bar_board">Board</string>
+    <string name="bottom_nav_bar_settings">Settings</string>
+
+    <string name="search_dialog_title">Search</string>
+    <string name="search_dialog_hint">Type keyword</string>
+    <string name="search_dialog_search">Search</string>
+    <string name="search_dialog_cancel">Cancel</string>
+
+    <string name="search_more_letter">Type more than three letter!</string>
+
+    <string name="search_result">Search result</string>
+    <string name="search_no_result">No search result!</string>
+
+    <string name="setting_header_info">Info</string>
+    <string name="setting_header_theme">Theme</string>
+
+    <string name="setting_user_department_title">Home department</string>
+    <string name="setting_user_department_summary">Select your department</string>
+    <string name="setting_default_board_title">Default board</string>
+    <string name="setting_dynamic_theme_title">Dynamic theme</string>
+    <string name="setting_dark_theme_title">Dark theme</string>
+    <string name="setting_dark_theme_system_default">System default</string>
+    <string name="setting_dark_theme_dark">Dark theme</string>
+    <string name="setting_dark_theme_light">Light theme</string>
 </resources>
