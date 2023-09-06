@@ -259,11 +259,11 @@ fun BoardError(errorMessage: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetScaffold() {
+fun BottomSheetScaffold(initDepartment: Department = Department.School) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
-    val department = remember { mutableStateOf<Department>(Department.School) }
+    val department = remember { mutableStateOf(initDepartment) }
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
