@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pullrefresh.PullRefreshIndicator
+import androidx.compose.material3.pullrefresh.pullRefresh
+import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,7 +37,17 @@ import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
 
 @Composable
-fun ArticleScreen(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel, site: String, uuid: UUID) {
+fun ArticleScreen(
+    articleViewModel: ArticleViewModel,
+    themeViewModel: ThemeViewModel,
+    site: String,
+    uuid: UUID
+) {
+    val isLoading by articleViewModel.isLoading.observeAsState(false)
+
+    val pullRefreshState =
+        rememberPullRefreshState(isLoading, { articleViewModel.getArticleData() })
+
     val data by articleViewModel.article.observeAsState()
     val context = LocalContext.current
     val contentTextView = remember { TextView(context) }
@@ -48,19 +60,11 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewM
     }
 
     Box(
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.TopCenter,
+        modifier = Modifier.pullRefresh(pullRefreshState)
     ) {
-        val isLoading by articleViewModel.isLoading.observeAsState()
 
-        if (isLoading == true) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
+        Column(modifier = Modifier.fillMaxSize()) {
             data?.let {
                 Column(
                     modifier = Modifier
@@ -130,5 +134,12 @@ fun ArticleScreen(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewM
                 }
             }
         }
+
+        PullRefreshIndicator(
+            refreshing = isLoading,
+            state = pullRefreshState,
+            modifier = Modifier.align(Alignment.TopCenter),
+            contentColor = MaterialTheme.colorScheme.primary
+        )
     }
 }
