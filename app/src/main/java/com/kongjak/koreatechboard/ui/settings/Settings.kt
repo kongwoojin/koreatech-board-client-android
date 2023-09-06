@@ -38,27 +38,9 @@ val deptList = listOf(
     Department.Sim
 )
 
-val deptListName = listOf(
-    Department.Cse.stringResource,
-    Department.Mechanical.stringResource,
-    Department.Mechatronics.stringResource,
-    Department.Ite.stringResource,
-    Department.Ide.stringResource,
-    Department.Arch.stringResource,
-    Department.Emc.stringResource,
-    Department.Sim.stringResource
-)
+val deptListName = deptList.map { it.stringResource }
 
-val deptListValue = listOf(
-    Department.Cse.name,
-    Department.Mechanical.name,
-    Department.Mechatronics.name,
-    Department.Ite.name,
-    Department.Ide.name,
-    Department.Arch.name,
-    Department.Emc.name,
-    Department.Sim.name
-)
+val deptListValue = deptList.map { it.name }
 
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 val darkThemeString = listOf(
