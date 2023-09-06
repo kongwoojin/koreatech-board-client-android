@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.activity
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.search.SearchScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
@@ -26,6 +28,11 @@ class SearchActivity : ComponentActivity() {
         val site = intent.getStringExtra("site")!!
         val board = intent.getStringExtra("board")!!
         val title = intent.getStringExtra("title")!!
+
+        if (title.length < 3) {
+            Toast.makeText(this, getString(R.string.search_more_letter), Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         setContent {
             val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)

@@ -71,7 +71,7 @@
     <string name="search_dialog_search">Search</string>
     <string name="search_dialog_cancel">Cancel</string>
 
-    <string name="search_more_letter">Type three more letter!</string>
+    <string name="search_more_letter">Type more than three letter!</string>
 
     <string name="search_result">Search result</string>
     <string name="search_no_result">No search result!</string>
