@@ -40,6 +40,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.pullrefresh.PullRefreshIndicator
+import androidx.compose.material3.pullrefresh.pullRefresh
+import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -134,6 +137,9 @@ fun BoardContent(
         boardViewModel.getAPI(department.name, department.boards[page].board)
             .collectAsLazyPagingItems()
 
+    val pullRefreshState =
+        rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, { lazyPostList.refresh() })
+
     val context = LocalContext.current
 
     Scaffold(
@@ -141,68 +147,69 @@ fun BoardContent(
             SearchFAB(department = department, index = page)
         },
         content = { contentPadding ->
-            LazyColumn(
-                contentPadding = PaddingValues(
-                    top = contentPadding.calculateTopPadding(),
-                    bottom = (64 + 16).dp + contentPadding.calculateBottomPadding(),
-                    start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                    end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
-                ),
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(lazyPostList.itemCount) { index ->
-                    val boardItem = lazyPostList[index]
-                    boardItem?.let {
-                        BoardItem(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                                .selectable(
-                                    indication = null,
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    selected = false,
-                                    onClick = {
-                                        val intent =
-                                            Intent(context, ArticleActivity::class.java)
-                                        intent.putExtra("site", department.name)
-                                        intent.putExtra("uuid", it.uuid.toString())
-                                        context.startActivity(intent)
-                                    }
-                                ),
-                            title = it.title,
-                            writer = it.writer,
-                            date = it.writeDate
-                        )
-                        HorizontalDivider(thickness = 0.5.dp, color = Gray)
+            Box(modifier = Modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        top = contentPadding.calculateTopPadding(),
+                        bottom = (64 + 16).dp + contentPadding.calculateBottomPadding(),
+                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                    ),
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    items(lazyPostList.itemCount) { index ->
+                        val boardItem = lazyPostList[index]
+                        boardItem?.let {
+                            BoardItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                                    .selectable(
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        selected = false,
+                                        onClick = {
+                                            val intent =
+                                                Intent(context, ArticleActivity::class.java)
+                                            intent.putExtra("site", department.name)
+                                            intent.putExtra("uuid", it.uuid.toString())
+                                            context.startActivity(intent)
+                                        }
+                                    ),
+                                title = it.title,
+                                writer = it.writer,
+                                date = it.writeDate
+                            )
+                            HorizontalDivider(thickness = 0.5.dp, color = Gray)
+                        }
+                    }
+
+                    lazyPostList.apply {
+                        when {
+                            loadState.refresh is LoadState.Error -> {
+                                val errorMessage =
+                                    (loadState.refresh as LoadState.Error).error.localizedMessage
+                                item { BoardError(errorMessage) }
+                            }
+
+                            loadState.append is LoadState.Error -> {
+                                val errorMessage =
+                                    (loadState.append as LoadState.Error).error.localizedMessage
+                                item { BoardError(errorMessage) }
+                            }
+                        }
                     }
                 }
 
-                lazyPostList.apply {
-                    when {
-                        loadState.refresh is LoadState.Loading -> {
-                            item { CircularProgressIndicator() }
-                        }
-
-                        loadState.append is LoadState.Loading -> {
-                            item { CircularProgressIndicator() }
-                        }
-
-                        loadState.refresh is LoadState.Error -> {
-                            val errorMessage =
-                                (loadState.refresh as LoadState.Error).error.localizedMessage
-                            item { BoardError(errorMessage) }
-                        }
-
-                        loadState.append is LoadState.Error -> {
-                            val errorMessage =
-                                (loadState.append as LoadState.Error).error.localizedMessage
-                            item { BoardError(errorMessage) }
-                        }
-                    }
-                }
+                PullRefreshIndicator(
+                    refreshing = lazyPostList.loadState.refresh is LoadState.Loading,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    contentColor = MaterialTheme.colorScheme.primary
+                )
             }
         }
     )
