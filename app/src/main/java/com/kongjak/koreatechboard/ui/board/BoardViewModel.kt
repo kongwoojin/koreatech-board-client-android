@@ -14,7 +14,7 @@ import javax.inject.Inject
 class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUseCase) :
     ViewModel() {
 
-    private val boardItemsMap = mutableMapOf<String, Flow<PagingData<BoardData>>>()
+    private val boardItemsMap = mutableMapOf<String, Flow<PagingData<BoardData>>?>()
 
     fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> {
         val key = "$site:$board"
@@ -22,5 +22,10 @@ class BoardViewModel @Inject constructor(private val getBoardUseCase: GetBoardUs
             boardItemsMap[key] = getBoardUseCase(site, board).cachedIn(viewModelScope)
         }
         return boardItemsMap[key]!!
+    }
+
+    fun cleanUpCachedData(site: String ,board: String) {
+        val key = "$site:$board"
+        boardItemsMap[key] = null
     }
 }

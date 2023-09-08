@@ -141,7 +141,10 @@ fun BoardContent(
             .collectAsLazyPagingItems()
 
     val pullRefreshState =
-        rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, { lazyPostList.refresh() })
+        rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, {
+            boardViewModel.cleanUpCachedData(site = department.name, board = department.boards[page].board)
+            lazyPostList.refresh()
+        })
 
     val context = LocalContext.current
 
