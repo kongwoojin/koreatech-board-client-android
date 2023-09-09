@@ -8,7 +8,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +23,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -29,7 +32,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.article.ArticleViewModel
+import com.kongjak.koreatechboard.ui.state.NetworkState
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
+import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +63,14 @@ fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(), site: Stri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Toolbar(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel = hiltViewModel(), context: Context, site: String, uuid: UUID) {
+fun Toolbar(
+    articleViewModel: ArticleViewModel,
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    networkViewModel: NetworkViewModel = hiltViewModel(),
+    context: Context,
+    site: String,
+    uuid: UUID
+) {
     val articleUrl by articleViewModel.url.observeAsState()
     val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
     val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
@@ -91,7 +103,11 @@ fun Toolbar(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel =
                                 val customTabsIntent = builder.build()
                                 customTabsIntent.launchUrl(context, Uri.parse(articleUrl))
                             } else {
-                                Toast.makeText(context, context.getString(R.string.open_in_browser_failed), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.open_in_browser_failed),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }) {
                             Icon(
@@ -104,7 +120,19 @@ fun Toolbar(articleViewModel: ArticleViewModel, themeViewModel: ThemeViewModel =
             }
         ) { contentPadding ->
             Column(modifier = Modifier.padding(contentPadding)) {
-                ArticleScreen(articleViewModel = articleViewModel, themeViewModel = themeViewModel, site = site, uuid = uuid)
+                val networkState by networkViewModel.networkState.observeAsState()
+                if (networkState == NetworkState.Connected) {
+                    ArticleScreen(
+                        articleViewModel = articleViewModel,
+                        themeViewModel = themeViewModel,
+                        site = site,
+                        uuid = uuid
+                    )
+                } else {
+                    Column(modifier = Modifier.fillMaxSize(), verticalArrangement =  Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(text = stringResource(id = R.string.network_unavailable))
+                    }
+                }
             }
         }
     }
