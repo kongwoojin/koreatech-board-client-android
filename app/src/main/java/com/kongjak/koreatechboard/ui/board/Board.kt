@@ -168,12 +168,13 @@ fun BoardContent(
             SnackbarHost(hostState = snackbarHostState)
         },
         content = { contentPadding ->
-            val networkState by networkViewModel.networkState.observeAsState()
+            val prevNetworkState by networkViewModel.prevNetworkState.observeAsState(NetworkState.Unknown)
+            val networkState by networkViewModel.networkState.observeAsState(NetworkState.Unknown)
 
             LaunchedEffect(key1 = networkState) {
-                if (networkState != NetworkState.Connected) {
+                if (networkState == NetworkState.Disconnected) {
                     snackbarHostState.showSnackbar(context.getString(R.string.network_unavailable))
-                } else {
+                } else if (networkState == NetworkState.Connected && prevNetworkState == NetworkState.Disconnected) {
                     lazyPostList.retry()
                 }
             }

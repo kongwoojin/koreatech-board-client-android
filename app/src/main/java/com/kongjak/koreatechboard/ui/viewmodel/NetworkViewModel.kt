@@ -20,6 +20,10 @@ import javax.inject.Inject
 class NetworkViewModel @Inject constructor(
     private val networkUtil: NetworkUtil
 ) : ViewModel() {
+    private val _prevNetworkState = MutableLiveData<NetworkState>()
+    val prevNetworkState: LiveData<NetworkState>
+        get() = _prevNetworkState
+
     private val _networkState = MutableLiveData<NetworkState>()
     val networkState: LiveData<NetworkState>
         get() = _networkState
@@ -31,6 +35,7 @@ class NetworkViewModel @Inject constructor(
     private fun getNetworkState() {
         viewModelScope.launch {
             networkUtil.networkState().collectLatest {
+                _prevNetworkState.value = _networkState.value
                 _networkState.value = it
             }
         }
