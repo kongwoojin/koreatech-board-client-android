@@ -1,71 +1,34 @@
 <resources>
     <string name="app_name">KOREATECH Board</string>
-    <string name="item_notice">Notice</string>
-    <string name="item_free_board">Free Board</string>
-    <string name="item_job_board">Job Board</string>
-    <string name="item_lecture_board">Lecture notice</string>
-    <string name="item_scholar_board">Scholar Notice</string>
-    <string name="item_bachelor_board">Bachelor Notice</string>
-    <string name="item_covid19_board">Covid-19 Notice</string>
-    <string name="item_pds_board">PDS Board</string>
 
-    <string name="drawer_title_settings">Settings</string>
+    <!-- Department -->
+    <string name="department_school">KOREATECH</string>
+    <string name="department_dorm">KOREATECH Dormitory</string>
+    <string name="department_cse">School of Computer Science and Engineering</string>
+    <string name="department_mechanical">School of Mechanical Engineering</string>
+    <string name="department_mechatronics">School of Mechatronics Engineering</string>
+    <string name="department_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
+    <string name="department_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
+    <string name="department_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
+    <string name="department_emc">School of Energy Materials and Chemical Engineering</string>
+    <string name="department_sim">School of Industrial Management</string>
 
-    <string name="drawer_item_school">KOREATECH</string>
-    <string name="drawer_item_dorm">KOREATECH Dormitory</string>
-    <string name="drawer_item_cse">School of Computer Science and Engineering</string>
-    <string name="drawer_item_mechanical">School of Mechanical Engineering</string>
-    <string name="drawer_item_mechatronics">School of Mechatronics Engineering</string>
-    <string name="drawer_item_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
-    <string name="drawer_item_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
-    <string name="drawer_item_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
-    <string name="drawer_item_emc">School of Energy Materials and Chemical Engineering</string>
-    <string name="drawer_item_sim">School of Industrial Management</string>
-    <string name="drawer_item_settings">Settings</string>
+    <!-- Board -->
+    <string name="board_notice">Notice</string>
+    <string name="board_free_board">Free Board</string>
+    <string name="board_job_board">Job Board</string>
+    <string name="board_lecture_board">Lecture notice</string>
+    <string name="board_scholar_board">Scholar Notice</string>
+    <string name="board_bachelor_board">Bachelor Notice</string>
+    <string name="board_covid19_board">Covid-19 Notice</string>
+    <string name="board_pds_board">PDS Board</string>
 
-    <string name="notice">Notice</string>
-    <string name="no_more_article">No more article!</string>
-    <string name="server_down">Server returns %s error!\nPlease contact to server admin.</string>
-    <string name="no_data">No data!</string>
-
-    <string name="app_settings_header">App Settings</string>
-    <string name="info_settings_header">Info</string>
-    <string name="enquiry_settings_header">Enquiry</string>
-
-    <string name="default_board_title">Default Board</string>
-
-    <string name="license_title">Opensource License</string>
-    <string name="source_code_title">Source Code</string>
-    <string name="enquiry_mail_title">Send email</string>
-
-    <string name="arrays_board_school">KOREATECH</string>
-    <string name="arrays_board_dorm">KOREATECH Dormitory</string>
-    <string name="arrays_board_cse">School of Computer Science and Engineering</string>
-    <string name="arrays_board_mechanical">School of Mechanical Engineering</string>
-    <string name="arrays_board_mechatronics">School of Mechatronics Engineering</string>
-    <string name="arrays_board_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
-    <string name="arrays_board_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
-    <string name="arrays_board_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
-    <string name="arrays_board_emc">School of Energy Materials and Chemical Engineering</string>
-    <string name="arrays_board_sim">School of Industrial Management</string>
-
-    <string name="article_title" translatable="false">%s | %s</string>
-
-    <string name="mail_address" translatable="false">kongjak@kongjak.com</string>
-    <string name="mail_subject">Koreatech Board Enquiry</string>
-    <string name="mail_text">Device: %1$s\nOS: %2$d\nEnquiry type (Bug, Feature request, ETC): \nEnquiry:</string>
-    <string name="mail_app_not_found">Cannot find mail application!</string>
-
-    <string name="network_unavailable">Can\'t connect network!</string>
-    <string name="finish">Finish</string>
-
-    <string name="open_in_browser">Open in browser</string>
-    <string name="open_in_browser_failed">Failed to open browser!</string>
-
+    <!-- Navigation -->
     <string name="bottom_nav_bar_home">Home</string>
     <string name="bottom_nav_bar_board">Board</string>
     <string name="bottom_nav_bar_settings">Settings</string>
 
+    <!-- Search -->
     <string name="search_dialog_title">Search</string>
     <string name="search_dialog_hint">Type keyword</string>
     <string name="search_dialog_search">Search</string>
@@ -76,6 +39,7 @@
     <string name="search_result">Search result</string>
     <string name="search_no_result">No search result!</string>
 
+    <!-- Settings -->
     <string name="setting_header_info">Info</string>
     <string name="setting_header_theme">Theme</string>
 
@@ -89,4 +53,21 @@
     <string name="setting_dark_theme_light">Light theme</string>
     <string name="setting_show_article_number_title">Show article number</string>
     <string name="setting_show_article_number_summary">Show article number with title in board page</string>
+    <string name="setting_license_title">Opensource License</string>
+    <string name="setting_source_code_title">Source Code</string>
+    <string name="setting_enquiry_mail_title">Send email</string>
+    <string name="setting_mail_address" translatable="false">kongjak@kongjak.com</string>
+    <string name="setting_mail_subject">Koreatech Board Enquiry</string>
+    <string name="setting_mail_text">Device: %1$s\nOS: %2$d\nEnquiry type (Bug, Feature request, ETC): \nEnquiry:</string>
+    <string name="setting_mail_app_not_found">Cannot find mail application!</string>
+
+    <!-- ETC -->
+    <string name="server_down">Server returns %s error!\nPlease contact to server admin.</string>
+
+    <string name="article_title" translatable="false">%s | %s</string>
+
+    <string name="network_unavailable">Can\'t connect network!</string>
+
+    <string name="open_in_browser">Open in browser</string>
+    <string name="open_in_browser_failed">Failed to open browser!</string>
 </resources>

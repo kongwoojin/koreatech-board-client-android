@@ -103,12 +103,12 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         PreferenceHeader(title = stringResource(id = R.string.setting_header_info))
 
         Preference(
-            title = stringResource(id = R.string.license_title)
+            title = stringResource(id = R.string.setting_license_title)
         ) {
             context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
         }
 
-        Preference(title = stringResource(id = R.string.source_code_title)) {
+        Preference(title = stringResource(id = R.string.setting_source_code_title)) {
             val builder = CustomTabsIntent.Builder()
             val customTabsIntent = builder.build()
             customTabsIntent.launchUrl(
@@ -117,24 +117,24 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             )
         }
 
-        Preference(title = stringResource(id = R.string.enquiry_mail_title)) {
+        Preference(title = stringResource(id = R.string.setting_enquiry_mail_title)) {
             val mailIntent = Intent(Intent.ACTION_SENDTO)
             mailIntent.data = Uri.parse("mailto:")
             mailIntent.putExtra(
                 Intent.EXTRA_EMAIL,
-                arrayOf(context.getString(R.string.mail_address))
+                arrayOf(context.getString(R.string.setting_mail_address))
             )
-            mailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.mail_subject))
+            mailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.setting_mail_subject))
             mailIntent.putExtra(
                 Intent.EXTRA_TEXT,
-                context.getString(R.string.mail_text, Build.MODEL, Build.VERSION.SDK_INT)
+                context.getString(R.string.setting_mail_text, Build.MODEL, Build.VERSION.SDK_INT)
             )
             try {
                 context.startActivity(mailIntent)
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(
                     context,
-                    context.getString(R.string.mail_app_not_found),
+                    context.getString(R.string.setting_mail_app_not_found),
                     Toast.LENGTH_SHORT
                 ).show()
             }

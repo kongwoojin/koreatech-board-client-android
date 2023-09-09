@@ -1,68 +1,34 @@
 <resources>
     <string name="app_name">KOREATECH 게시판</string>
-    <string name="item_notice">공지사항</string>
-    <string name="item_free_board">자유 게시판</string>
-    <string name="item_job_board">취업 게시판</string>
-    <string name="item_lecture_board">강의 공지</string>
-    <string name="item_scholar_board">장학공지</string>
-    <string name="item_bachelor_board">학사공지</string>
-    <string name="item_covid19_board">코로나19 공지</string>
-    <string name="item_pds_board">자료실</string>
 
-    <string name="drawer_title_settings">설정</string>
+    <!-- Department -->
+    <string name="department_school">KOREATECH</string>
+    <string name="department_dorm">KOREATECH 생활관</string>
+    <string name="department_cse">컴퓨터공학부</string>
+    <string name="department_mechanical">기계공학부</string>
+    <string name="department_mechatronics">메카트로닉스공학부</string>
+    <string name="department_ite">전기전자통신공학부</string>
+    <string name="department_ide">디자인·건축공학부 (디자인)</string>
+    <string name="department_arch">디자인·건축공학부 (건축)</string>
+    <string name="department_emc">에너지신소재화학공학부</string>
+    <string name="department_sim">산업경영학부</string>
 
-    <string name="drawer_item_school">KOREATECH</string>
-    <string name="drawer_item_dorm">KOREATECH 생활관</string>
-    <string name="drawer_item_cse">컴퓨터공학부</string>
-    <string name="drawer_item_mechanical">기계공학부</string>
-    <string name="drawer_item_mechatronics">메카트로닉스공학부</string>
-    <string name="drawer_item_ite">전기전자통신공학부</string>
-    <string name="drawer_item_ide">디자인·건축공학부 (디자인)</string>
-    <string name="drawer_item_arch">디자인·건축공학부 (건축)</string>
-    <string name="drawer_item_emc">에너지신소재화학공학부</string>
-    <string name="drawer_item_sim">산업경영학부</string>
-    <string name="drawer_item_settings">설정</string>
+    <!-- Board -->
+    <string name="board_notice">공지사항</string>
+    <string name="board_free_board">자유 게시판</string>
+    <string name="board_job_board">취업 게시판</string>
+    <string name="board_lecture_board">강의 공지</string>
+    <string name="board_scholar_board">장학공지</string>
+    <string name="board_bachelor_board">학사공지</string>
+    <string name="board_covid19_board">코로나19 공지</string>
+    <string name="board_pds_board">자료실</string>
 
-    <string name="notice">공지</string>
-    <string name="no_more_article">게시글이 더 없습니다!</string>
-    <string name="server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
-    <string name="no_data">데이터가 없습니다!</string>
-
-    <string name="app_settings_header">앱 설정</string>
-    <string name="info_settings_header">안내</string>
-    <string name="enquiry_settings_header">문의하기</string>
-    <string name="enquiry_mail_title">메일 보내기</string>
-
-    <string name="default_board_title">기본 게시판</string>
-
-    <string name="license_title">오픈소스 라이선스</string>
-    <string name="source_code_title">소스코드</string>
-
-    <string name="arrays_board_school">KOREATECH</string>
-    <string name="arrays_board_dorm">KOREATECH 생활관</string>
-    <string name="arrays_board_cse">컴퓨터공학부</string>
-    <string name="arrays_board_mechanical">기계공학부</string>
-    <string name="arrays_board_mechatronics">메카트로닉스공학부</string>
-    <string name="arrays_board_ite">전기전자통신공학부</string>
-    <string name="arrays_board_ide">디자인·건축공학부 (디자인)</string>
-    <string name="arrays_board_arch">디자인·건축공학부 (건축)</string>
-    <string name="arrays_board_emc">에너지신소재화학공학부</string>
-    <string name="arrays_board_sim">산업경영학부</string>
-
-    <string name="mail_subject">Koreatech Board 문의</string>
-    <string name="mail_text">기기: %1$s\nAPI: %2$d\n문의 종류 (오류, 기능, 기타): \n문의 내용:</string>
-    <string name="mail_app_not_found">메일 앱을 찾을 수 없습니다!</string>
-
-    <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
-    <string name="finish">종료</string>
-
-    <string name="open_in_browser">브라우저에서 열기</string>
-    <string name="open_in_browser_failed">브라우저를 열지 못했습니다!</string>
-
+    <!-- Navigation -->
     <string name="bottom_nav_bar_home">홈</string>
     <string name="bottom_nav_bar_board">게시판</string>
     <string name="bottom_nav_bar_settings">설정</string>
 
+    <!-- Search -->
     <string name="search_dialog_title">검색</string>
     <string name="search_dialog_hint">검색어를 입력하세요.</string>
     <string name="search_dialog_search">검색</string>
@@ -73,6 +39,7 @@
     <string name="search_result">검색 결과</string>
     <string name="search_no_result">검색 결과가 없습니다!</string>
 
+    <!-- Settings -->
     <string name="setting_header_info">안내</string>
     <string name="setting_header_theme">테마</string>
 
@@ -86,4 +53,18 @@
     <string name="setting_dark_theme_light">밝은 테마</string>
     <string name="setting_show_article_number_title">게시글 번호 표시</string>
     <string name="setting_show_article_number_summary">게시글 제목에 번호를 함께 표시합니다.</string>
+    <string name="setting_license_title">오픈소스 라이선스</string>
+    <string name="setting_source_code_title">소스코드</string>
+    <string name="setting_enquiry_mail_title">메일 보내기</string>
+    <string name="setting_mail_subject">Koreatech Board 문의</string>
+    <string name="setting_mail_text">기기: %1$s\nAPI: %2$d\n문의 종류 (오류, 기능, 기타): \n문의 내용:</string>
+    <string name="setting_mail_app_not_found">메일 앱을 찾을 수 없습니다!</string>
+
+    <!-- ETC -->
+    <string name="server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
+
+    <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
+
+    <string name="open_in_browser">브라우저에서 열기</string>
+    <string name="open_in_browser_failed">브라우저를 열지 못했습니다!</string>
 </resources>
