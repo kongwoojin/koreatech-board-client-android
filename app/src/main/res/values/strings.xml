@@ -61,9 +61,13 @@
     <string name="setting_mail_text">Device: %1$s\nOS: %2$d\nEnquiry type (Bug, Feature request, ETC): \nEnquiry:</string>
     <string name="setting_mail_app_not_found">Cannot find mail application!</string>
 
-    <!-- ETC -->
-    <string name="server_down">Server returns %s error!\nPlease contact to server admin.</string>
+    <!-- Error -->
+    <string name="error_minimum_message">Error occurred!</string>
+    <string name="error_show_detail">Show detail</string>
+    <string name="error_hide_detail">Hide detail</string>
+    <string name="error_server_down">Server returns %s error!\nPlease contact to server admin.</string>
 
+    <!-- ETC -->
     <string name="article_title" translatable="false">%s | %s</string>
 
     <string name="network_unavailable">Can\'t connect network!</string>

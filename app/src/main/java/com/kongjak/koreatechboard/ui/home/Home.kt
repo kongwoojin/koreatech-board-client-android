@@ -168,7 +168,7 @@ fun BoardInMain(
                             }
                         }
                     } else if(isSuccess && homeBoardViewModel.statusCode.value!! != 200) {
-                        Text(text = stringResource(R.string.server_down, homeBoardViewModel.statusCode.value!!))
+                        Text(text = stringResource(R.string.error_server_down, homeBoardViewModel.statusCode.value!!))
                     } else if (!isSuccess) {
                         Text(text = homeBoardViewModel.error.value!!)
                     }

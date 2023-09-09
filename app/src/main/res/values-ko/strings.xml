@@ -60,9 +60,13 @@
     <string name="setting_mail_text">기기: %1$s\nAPI: %2$d\n문의 종류 (오류, 기능, 기타): \n문의 내용:</string>
     <string name="setting_mail_app_not_found">메일 앱을 찾을 수 없습니다!</string>
 
-    <!-- ETC -->
-    <string name="server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
+    <!-- Error -->
+    <string name="error_minimum_message">오류가 발생했습니다!</string>
+    <string name="error_show_detail">자세히 보기</string>
+    <string name="error_hide_detail">숨기기</string>
+    <string name="error_server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
 
+    <!-- ETC -->
     <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
 
     <string name="open_in_browser">브라우저에서 열기</string>

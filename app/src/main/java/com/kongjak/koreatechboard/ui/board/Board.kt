@@ -27,6 +27,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -292,13 +293,28 @@ fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
 
 @Composable
 fun BoardError(errorMessage: String) {
-    Text(
-        text = stringResource(R.string.server_down, errorMessage),
-        textAlign = TextAlign.Center,
+    val (showDetailError, setShowDetailError) = remember { mutableStateOf(false) }
+    Column(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
-    )
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = stringResource(R.string.error_minimum_message, errorMessage),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+
+            Button(onClick = { setShowDetailError(!showDetailError) }) {
+                Text(text = stringResource(id = if (showDetailError) R.string.error_hide_detail else R.string.error_show_detail))
+            }
+        }
+        if (showDetailError) {
+            Text(text = errorMessage)
+        }
+    }
 }
 
 @Composable
