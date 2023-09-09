@@ -91,6 +91,15 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             settingsViewModel.setInitDepartment(item)
         }
 
+        val showNumber by settingsViewModel.showNumber.observeAsState(true)
+
+        SwitchPreference(
+            title = stringResource(id = R.string.setting_show_article_number_title),
+            summary = stringResource(id = R.string.setting_show_article_number_summary),
+            checked = showNumber,
+            onCheckedChange = { settingsViewModel.setShowArticleNumber(it) }
+        )
+
         PreferenceHeader(title = stringResource(id = R.string.setting_header_info))
 
         Preference(

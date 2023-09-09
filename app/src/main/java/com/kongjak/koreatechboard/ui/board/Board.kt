@@ -154,6 +154,8 @@ fun BoardContent(
             lazyPostList.refresh()
         })
 
+    val showArticleNumber by boardViewModel.showNumber.observeAsState(true)
+
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -211,7 +213,11 @@ fun BoardContent(
                                             context.startActivity(intent)
                                         }
                                     ),
-                                title = it.title,
+                                title = if (showArticleNumber) stringResource(
+                                    id = R.string.article_title,
+                                    it.num,
+                                    it.title
+                                ) else it.title,
                                 writer = it.writer,
                                 date = it.writeDate
                             )

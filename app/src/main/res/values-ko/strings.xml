@@ -84,4 +84,6 @@
     <string name="setting_dark_theme_system_default">시스템 기본값</string>
     <string name="setting_dark_theme_dark">어두운 테마</string>
     <string name="setting_dark_theme_light">밝은 테마</string>
+    <string name="setting_show_article_number_title">게시글 번호 표시</string>
+    <string name="setting_show_article_number_summary">게시글 제목에 번호를 함께 표시합니다.</string>
 </resources>

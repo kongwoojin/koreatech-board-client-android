@@ -10,10 +10,12 @@ import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetInitDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.GetShowArticleNumberUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetInitDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.SetShowArticleNumberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,7 +30,9 @@ class SettingsViewModel @Inject constructor(
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
     private val setDynamicThemeUseCase: SetDynamicThemeUseCase,
     private val getDarkThemeUseCase: GetDarkThemeUseCase,
-    private val setDarkThemeUseCase: SetDarkThemeUseCase
+    private val setDarkThemeUseCase: SetDarkThemeUseCase,
+    private val getShowArticleNumberUseCase: GetShowArticleNumberUseCase,
+    private val setShowArticleNumberUseCase: SetShowArticleNumberUseCase
 ) : ViewModel() {
     private val _userDepartment = MutableLiveData(0)
     val userDepartment: LiveData<Int>
@@ -46,6 +50,10 @@ class SettingsViewModel @Inject constructor(
     val isDarkTheme: LiveData<Int>
         get() = _isDarkTheme
 
+    private val _showNumber = MutableLiveData(true)
+    val showNumber: LiveData<Boolean>
+        get() = _showNumber
+
     init {
         getUserDepartment()
         getInitDepartment()
@@ -53,6 +61,7 @@ class SettingsViewModel @Inject constructor(
             getDynamicTheme()
         }
         getDarkTheme()
+        getShowArticleNumber()
     }
 
     private fun getUserDepartment() {
@@ -108,6 +117,20 @@ class SettingsViewModel @Inject constructor(
     fun setDarkTheme(theme: Int) {
         viewModelScope.launch {
             setDarkThemeUseCase(theme)
+        }
+    }
+
+    private fun getShowArticleNumber() {
+        viewModelScope.launch {
+            getShowArticleNumberUseCase().collectLatest {
+                _showNumber.value = it
+            }
+        }
+    }
+
+    fun setShowArticleNumber(state: Boolean) {
+        viewModelScope.launch {
+            setShowArticleNumberUseCase(state)
         }
     }
 }

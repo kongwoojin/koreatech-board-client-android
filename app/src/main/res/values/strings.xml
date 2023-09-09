@@ -87,4 +87,6 @@
     <string name="setting_dark_theme_system_default">System default</string>
     <string name="setting_dark_theme_dark">Dark theme</string>
     <string name="setting_dark_theme_light">Light theme</string>
+    <string name="setting_show_article_number_title">Show article number</string>
+    <string name="setting_show_article_number_summary">Show article number with title in board page</string>
 </resources>

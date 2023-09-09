@@ -11,4 +11,6 @@ interface SettingsRepository {
     fun getDynamicTheme(): Flow<Boolean>
     suspend fun setDarkTheme(theme: Int)
     fun getDarkTheme(): Flow<Int>
+    suspend fun setShowArticleNumber(state: Boolean)
+    fun getShowArticleNumber(): Flow<Boolean>
 }

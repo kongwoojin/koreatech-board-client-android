@@ -21,6 +21,7 @@ class SettingsLocalDataSource @Inject constructor(
     private val initDepartmentKey = intPreferencesKey("init_department")
     private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
     private val darkThemeKey = intPreferencesKey("dark_theme")
+    private val showArticleNumber = booleanPreferencesKey("show_article_number")
 
     suspend fun setUserDepartment(newIndex: Int) {
         context.dataStore.edit { preferences ->
@@ -74,5 +75,17 @@ class SettingsLocalDataSource @Inject constructor(
         context.dataStore.data
             .map { preferences ->
                 preferences[darkThemeKey] ?: DARK_THEME_SYSTEM_DEFAULT
+            }
+
+    suspend fun setShowArticleNumber(state: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[showArticleNumber] = state
+        }
+    }
+
+    fun getShowArticleNumber(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[showArticleNumber] ?: true
             }
 }
