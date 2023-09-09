@@ -27,7 +27,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
@@ -36,6 +35,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -45,6 +46,7 @@ import androidx.compose.material3.pullrefresh.pullRefresh
 import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -72,8 +74,10 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
 import com.kongjak.koreatechboard.ui.settings.fullDeptList
+import com.kongjak.koreatechboard.ui.state.NetworkState
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
+import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import com.kongjak.koreatechboard.util.routes.deptList
 import kotlinx.coroutines.launch
@@ -134,7 +138,8 @@ fun Board(contentPadding: PaddingValues, department: Department) {
 fun BoardContent(
     department: Department,
     page: Int,
-    boardViewModel: BoardViewModel = hiltViewModel()
+    boardViewModel: BoardViewModel = hiltViewModel(),
+    networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     val lazyPostList =
         boardViewModel.getAPI(department.name, department.boards[page].board)
@@ -142,20 +147,39 @@ fun BoardContent(
 
     val pullRefreshState =
         rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, {
-            boardViewModel.cleanUpCachedData(site = department.name, board = department.boards[page].board)
+            boardViewModel.cleanUpCachedData(
+                site = department.name,
+                board = department.boards[page].board
+            )
             lazyPostList.refresh()
         })
 
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         floatingActionButton = {
             SearchFAB(department = department, index = page)
         },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         content = { contentPadding ->
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .pullRefresh(pullRefreshState)) {
+            val networkState by networkViewModel.networkState.observeAsState()
+
+            LaunchedEffect(key1 = networkState) {
+                if (networkState != NetworkState.Connected) {
+                    snackbarHostState.showSnackbar(context.getString(R.string.network_unavailable))
+                } else {
+                    lazyPostList.retry()
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pullRefresh(pullRefreshState)
+            ) {
                 LazyColumn(
                     contentPadding = PaddingValues(
                         top = contentPadding.calculateTopPadding(),
@@ -196,18 +220,24 @@ fun BoardContent(
                     }
 
                     lazyPostList.apply {
-                        when {
-                            loadState.refresh is LoadState.Error -> {
-                                val errorMessage =
-                                    (loadState.refresh as LoadState.Error).error.localizedMessage
-                                item { BoardError(errorMessage) }
+                        when (networkState) {
+                            NetworkState.Connected -> {
+                                when {
+                                    loadState.refresh is LoadState.Error -> {
+                                        val errorMessage =
+                                            (loadState.refresh as LoadState.Error).error.localizedMessage
+                                        item { BoardError(errorMessage) }
+                                    }
+
+                                    loadState.append is LoadState.Error -> {
+                                        val errorMessage =
+                                            (loadState.append as LoadState.Error).error.localizedMessage
+                                        item { BoardError(errorMessage) }
+                                    }
+                                }
                             }
 
-                            loadState.append is LoadState.Error -> {
-                                val errorMessage =
-                                    (loadState.append as LoadState.Error).error.localizedMessage
-                                item { BoardError(errorMessage) }
-                            }
+                            else -> item { NetworkUnavailable() }
                         }
                     }
                 }
@@ -258,6 +288,17 @@ fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
 fun BoardError(errorMessage: String) {
     Text(
         text = stringResource(R.string.server_down, errorMessage),
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+    )
+}
+
+@Composable
+fun NetworkUnavailable() {
+    Text(
+        text = stringResource(R.string.network_unavailable),
         textAlign = TextAlign.Center,
         modifier = Modifier
             .padding(16.dp)

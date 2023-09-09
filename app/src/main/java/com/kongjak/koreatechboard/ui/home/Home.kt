@@ -3,8 +3,10 @@ package com.kongjak.koreatechboard.ui.home
 import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -37,21 +39,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.settings.deptList
+import com.kongjak.koreatechboard.ui.state.NetworkState
+import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
-    Column(
-        modifier = Modifier
-            .verticalScroll(rememberScrollState())
-    ) {
-        val selectedDepartmentIndex by homeViewModel.department.observeAsState()
-        BoardInMain(department = Department.School)
-        BoardInMain(department = Department.Dorm)
+fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel(), networkViewModel: NetworkViewModel = hiltViewModel()) {
+    val networkState by networkViewModel.networkState.observeAsState()
+    if (networkState == NetworkState.Connected) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
+            val selectedDepartmentIndex by homeViewModel.department.observeAsState()
+            BoardInMain(department = Department.School)
+            BoardInMain(department = Department.Dorm)
 
-        val selectedDepartment = deptList[selectedDepartmentIndex ?: 0]
-        BoardInMain(department = selectedDepartment)
+            val selectedDepartment = deptList[selectedDepartmentIndex ?: 0]
+            BoardInMain(department = selectedDepartment)
+        }
+    } else {
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(id = R.string.network_unavailable))
+        }
     }
 }
 
