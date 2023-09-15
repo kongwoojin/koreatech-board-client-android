@@ -117,6 +117,7 @@ fun ArticleScreen(
                             update = {
                                 it.htmlText = data?.content
                                 it.textSize = 16F
+                                it.autoLinkMask = 0x0f
                                 it.setTextColor(textColor.toArgb())
                             }
                         )
