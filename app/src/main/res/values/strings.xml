@@ -66,6 +66,7 @@
     <string name="error_show_detail">Show detail</string>
     <string name="error_hide_detail">Hide detail</string>
     <string name="error_server_down">Server returns %s error!\nPlease contact to server admin.</string>
+    <string name="error_retry">Retry</string>
 
     <!-- ETC -->
     <string name="article_title" translatable="false">%s | %s</string>

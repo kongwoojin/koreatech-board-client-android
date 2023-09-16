@@ -13,6 +13,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
@@ -168,9 +169,23 @@ fun BoardInMain(
                             }
                         }
                     } else if(isSuccess && homeBoardViewModel.statusCode.value!! != 200) {
-                        Text(text = stringResource(R.string.error_server_down, homeBoardViewModel.statusCode.value!!))
+                        Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                            Text(text = stringResource(R.string.error_server_down, homeBoardViewModel.statusCode.value!!))
+                            Button(onClick = {
+                                homeBoardViewModel.getApi(department.name, key, true)
+                            }) {
+                                Text(text = stringResource(id = R.string.error_retry))
+                            }
+                        }
                     } else if (!isSuccess) {
-                        Text(text = homeBoardViewModel.error.value!!)
+                        Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+                            Text(text = homeBoardViewModel.error.value!!)
+                            Button(onClick = {
+                                homeBoardViewModel.getApi(department.name, key, true)
+                            }) {
+                                Text(text = stringResource(id = R.string.error_retry))
+                            }
+                        }
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,8 +33,8 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
     val error: LiveData<String>
         get() = _error
 
-    fun getApi(site: String, board: String) {
-        if (!boardList.containsKey(board)) {
+    fun getApi(site: String, board: String, isReload: Boolean = false) {
+        if (!boardList.containsKey(board) || isReload) {
             _isLoaded.value = false
             _boardList[board] = MutableLiveData(emptyList())
             viewModelScope.launch {
