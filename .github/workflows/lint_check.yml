@@ -40,13 +40,15 @@ jobs:
 
       - name: Generate local.properties
         run: |
+          echo localKeyPassword\"\$KEY_PASSWORD" >> local.properties
+          echo localKeyAlias=\"$KEY_ALIAS\" >> local.properties
           echo localStoreFile=\"../keystore.jks\" >> local.properties
-          echo localStorePassword=\"$PASSWORD\" >> local.properties
-          echo localKeyAlias=\"$API_KEY\" >> local.properties
+          echo localStorePassword=\"$STORE_PASSWORD\" >> local.properties
         shell: bash
         env:
-          PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
-          ALIAS: ${{ secrets.RELEASE_ALIAS }}
+          STORE_PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 
       - name: Run ktlint
         run: ./gradlew ktlintCheck
