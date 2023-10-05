@@ -40,7 +40,7 @@ jobs:
 
       - name: Generate local.properties
         run: |
-          echo localKeyPassword\"$KEY_PASSWORD\" >> local.properties
+          echo localKeyPassword=\"$KEY_PASSWORD\" >> local.properties
           echo localKeyAlias=\"$KEY_ALIAS\" >> local.properties
           echo localStoreFile=\"../keystore.jks\" >> local.properties
           echo localStorePassword=\"$STORE_PASSWORD\" >> local.properties
