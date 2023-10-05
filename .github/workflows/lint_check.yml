@@ -31,5 +31,22 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Generate Keystore file
+        run: |
+          echo "$KEYSTORE" > ./keystore/keystore.b64
+          base64 -d -i ./keystore/keystore.b64 > ./keystore/keystore.jks
+        env:
+          KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+
+      - name: Generate local.properties
+        run: |
+          echo localStoreFile=\"../keystore/keystore.jks\" >> local.properties
+          echo localStorePassword=\"$PASSWORD\" >> local.properties
+          echo localKeyAlias=\"$API_KEY\" >> local.properties
+        shell: bash
+        env:
+          PASSWORD: ${{ secrets.RELEASE_PASSWORD }}
+          ALIAS: ${{ secrets.RELEASE_ALIAS }}
+
       - name: Run ktlint
         run: ./gradlew ktlintCheck
