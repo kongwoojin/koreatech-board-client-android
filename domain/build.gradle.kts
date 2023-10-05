@@ -56,7 +56,7 @@ dependencies {
     kapt(Dependencies.Google.hiltCompiler)
 
     testImplementation(Dependencies.Test.junit)
-    
+
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(Dependencies.AndroidTest.espresso)
 }

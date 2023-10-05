@@ -126,6 +126,4 @@ dependencies {
     androidTestImplementation(Dependencies.AndroidTest.espresso)
     androidTestImplementation(Dependencies.AndroidTest.junit)
     androidTestImplementation(platform(Dependencies.AndroidTest.composeBom))
-
-
 }

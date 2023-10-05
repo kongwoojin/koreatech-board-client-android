@@ -168,7 +168,7 @@ fun BoardInMain(
                                 HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                             }
                         }
-                    } else if(isSuccess && homeBoardViewModel.statusCode.value!! != 200) {
+                    } else if (isSuccess && homeBoardViewModel.statusCode.value!! != 200) {
                         Column(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
                             Text(text = stringResource(R.string.error_server_down, homeBoardViewModel.statusCode.value!!))
                             Button(onClick = {

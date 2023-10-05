@@ -63,7 +63,6 @@ fun ArticleScreen(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier.pullRefresh(pullRefreshState)
     ) {
-
         Column(modifier = Modifier.fillMaxSize()) {
             data?.let {
                 Column(

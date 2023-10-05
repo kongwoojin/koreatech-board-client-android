@@ -129,7 +129,7 @@ fun Toolbar(
                         uuid = uuid
                     )
                 } else {
-                    Column(modifier = Modifier.fillMaxSize(), verticalArrangement =  Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(text = stringResource(id = R.string.network_unavailable))
                     }
                 }

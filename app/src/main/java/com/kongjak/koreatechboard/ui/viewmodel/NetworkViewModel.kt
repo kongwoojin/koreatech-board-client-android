@@ -4,11 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
-import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
-import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
-import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.ui.state.NetworkState
 import com.kongjak.koreatechboard.util.NetworkUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

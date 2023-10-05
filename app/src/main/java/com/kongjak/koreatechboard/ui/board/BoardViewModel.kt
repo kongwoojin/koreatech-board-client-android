@@ -19,7 +19,7 @@ import javax.inject.Inject
 class BoardViewModel @Inject constructor(
     private val getBoardUseCase: GetBoardUseCase,
     private val getShowArticleNumberUseCase: GetShowArticleNumberUseCase
-    ) :
+) :
     ViewModel() {
 
     private val boardItemsMap = mutableMapOf<String, Flow<PagingData<BoardData>>?>()
@@ -40,7 +40,7 @@ class BoardViewModel @Inject constructor(
         return boardItemsMap[key]!!
     }
 
-    fun cleanUpCachedData(site: String ,board: String) {
+    fun cleanUpCachedData(site: String, board: String) {
         val key = "$site:$board"
         boardItemsMap[key] = null
     }

@@ -29,5 +29,4 @@ class BoardInitViewModel @Inject constructor(private val getInitDepartmentUseCas
             }
         }
     }
-
 }

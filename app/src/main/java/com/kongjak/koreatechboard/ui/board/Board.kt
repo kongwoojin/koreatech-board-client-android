@@ -215,11 +215,15 @@ fun BoardContent(
                                             context.startActivity(intent)
                                         }
                                     ),
-                                title = if (showArticleNumber) stringResource(
-                                    id = R.string.article_title,
-                                    it.num,
+                                title = if (showArticleNumber) {
+                                    stringResource(
+                                        id = R.string.article_title,
+                                        it.num,
+                                        it.title
+                                    )
+                                } else {
                                     it.title
-                                ) else it.title,
+                                },
                                 writer = it.writer,
                                 date = it.writeDate
                             )
