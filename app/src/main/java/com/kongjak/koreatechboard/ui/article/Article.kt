@@ -29,11 +29,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.fileText
-import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
 
 @Composable
@@ -96,6 +96,13 @@ fun ArticleScreen(
                         }
                     }
 
+                    HtmlView(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxSize(),
+                        html = data?.content!!
+                    )
+
                     key(themeViewModel.isDarkTheme) {
                         var isDarkTheme = themeViewModel.isDarkTheme.value
 
@@ -107,19 +114,6 @@ fun ArticleScreen(
                             } else {
                                 Color(0xFF000000)
                             }
-
-                        AndroidView(
-                            factory = { contentTextView },
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize(),
-                            update = {
-                                it.htmlText = data?.content
-                                it.textSize = 16F
-                                it.autoLinkMask = 0x0f
-                                it.setTextColor(textColor.toArgb())
-                            }
-                        )
 
                         AndroidView(
                             factory = { filesTextView },
