@@ -128,7 +128,12 @@ fun HtmlView(
                 // Build UI
                 if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
                     when (parser.name) {
-                        HtmlTags.P.tag, HtmlTags.H1.tag, HtmlTags.H2.tag, HtmlTags.H3.tag -> {
+                        HtmlTags.IMG.tag -> GlideImage(
+                            model = url,
+                            contentDescription = ""
+                        )
+
+                        else -> {
                             Text(
                                 modifier = modifier,
                                 text = annotatedString
@@ -136,11 +141,6 @@ fun HtmlView(
 
                             annotatedString = buildAnnotatedString { }
                         }
-
-                        HtmlTags.IMG.tag -> GlideImage(
-                            model = url,
-                            contentDescription = ""
-                        )
                     }
                 }
             }
