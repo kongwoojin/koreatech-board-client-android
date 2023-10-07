@@ -186,7 +186,6 @@ fun HtmlView(
                                     )
 
                                     annotatedString = buildAnnotatedString { }
-
                                 } else {
                                     annotatedString = buildAnnotatedString {
                                         append(annotatedString)
