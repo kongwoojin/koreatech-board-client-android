@@ -181,10 +181,12 @@ fun HtmlView(
 
                             else -> {
                                 if (!isTable) {
-                                    Text(
-                                        modifier = modifier,
-                                        text = annotatedString
-                                    )
+                                    if (annotatedString.text.isNotBlank()) {
+                                        Text(
+                                            modifier = modifier,
+                                            text = annotatedString
+                                        )
+                                    }
 
                                     annotatedString = buildAnnotatedString { }
                                 } else {
