@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.util
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.graphics.toColorInt
 
@@ -27,6 +28,18 @@ fun parseFontWeight(value: String): FontWeight? {
             "lighter" -> FontWeight.Light
             else -> null
         }
+    }
+}
+
+fun parseTextAlign(value: String): TextAlign? {
+    return when (value) {
+        "start" -> TextAlign.Start
+        "left" -> TextAlign.Left
+        "center" -> TextAlign.Center
+        "right" -> TextAlign.Right
+        "end" -> TextAlign.End
+        "justify" -> TextAlign.Justify
+        else -> null
     }
 }
 

@@ -5,15 +5,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.kongjak.koreatechboard.util.HtmlTags
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseFontWeight
+import com.kongjak.koreatechboard.util.parseTextAlign
 import com.kongjak.koreatechboard.util.parseTextDecoration
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
@@ -38,6 +41,7 @@ fun HtmlView(
     var background = Color.Unspecified
     var fontWeight: FontWeight? = null
     var textDecoration: TextDecoration = TextDecoration.None
+    var textAlign: TextAlign? = null
 
     // Image or link url
     var url = ""
@@ -50,11 +54,6 @@ fun HtmlView(
                         append(annotatedString)
                         append("\n")
                     }
-
-                    HtmlTags.IMG.tag -> GlideImage(
-                        model = parser.getAttributeValue(null, "src"),
-                        contentDescription = ""
-                    )
 
                     HtmlTags.B.tag -> fontWeight = FontWeight.Bold
 
@@ -70,8 +69,8 @@ fun HtmlView(
                         val styleList =
                             styles.split(";").map { it.trim() }.filter { it.isNotEmpty() }
                         for (style in styleList) {
-                            val (name, value) = style.split(":").map { it.trim() }
-                            when (name.lowercase()) {
+                            val (name, value) = style.split(":").map { it.trim().lowercase() }
+                            when (name) {
                                 "color" -> {
                                     color = parseColor(value)
                                 }
@@ -86,6 +85,10 @@ fun HtmlView(
 
                                 "text-decoration" -> {
                                     textDecoration = parseTextDecoration(value)
+                                }
+
+                                "text-align" -> {
+                                    textAlign = parseTextAlign(value)
                                 }
                             }
                         }
@@ -127,12 +130,17 @@ fun HtmlView(
             XmlPullParser.END_TAG -> {
                 // Build UI
                 if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
-                    when (parser.name) {
-                        HtmlTags.IMG.tag -> GlideImage(
-                            model = url,
-                            contentDescription = ""
-                        )
-
+                    if (textAlign != null) {
+                        // Apply paragraph style if tag is block tag
+                        annotatedString = buildAnnotatedString {
+                            pushStyle(style = ParagraphStyle(textAlign = textAlign))
+                            append(annotatedString)
+                            pop()
+                        }
+                        textAlign = null
+                    }
+                    when (parser.name.lowercase()) {
+                        HtmlTags.TABLE.tag -> {}
                         else -> {
                             Text(
                                 modifier = modifier,
@@ -141,6 +149,10 @@ fun HtmlView(
 
                             annotatedString = buildAnnotatedString { }
                         }
+                    }
+                } else {
+                    when (parser.name.lowercase()) {
+                        HtmlTags.IMG.tag -> GlideImage(model = url, contentDescription = "Image")
                     }
                 }
             }
