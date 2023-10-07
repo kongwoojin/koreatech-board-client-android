@@ -56,6 +56,8 @@ fun HtmlView(
                         contentDescription = ""
                     )
 
+                    HtmlTags.B.tag -> fontWeight = FontWeight.Bold
+
                     HtmlTags.U.tag -> textDecoration = TextDecoration.Underline
 
                     HtmlTags.STRIKE.tag -> textDecoration = TextDecoration.LineThrough
