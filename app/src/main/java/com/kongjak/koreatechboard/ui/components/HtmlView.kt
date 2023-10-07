@@ -35,6 +35,7 @@ fun HtmlView(
 
     /* Styles */
     var color = Color.Unspecified
+    var background = Color.Unspecified
     var fontWeight: FontWeight? = null
     var textDecoration: TextDecoration = TextDecoration.None
 
@@ -73,6 +74,10 @@ fun HtmlView(
                                     color = parseColor(value)
                                 }
 
+                                "background-color" -> {
+                                    background = parseColor(value)
+                                }
+
                                 "font-weight" -> {
                                     fontWeight = parseFontWeight(value)
                                 }
@@ -97,6 +102,7 @@ fun HtmlView(
                         pushStyle(
                             style = SpanStyle(
                                 color = color,
+                                background = background,
                                 fontWeight = fontWeight,
                                 textDecoration = textDecoration
                             )
@@ -107,6 +113,7 @@ fun HtmlView(
 
                     /* Reset styles */
                     color = Color.Unspecified
+                    background = Color.Unspecified
                     fontWeight = null
                     textDecoration = TextDecoration.None
 
