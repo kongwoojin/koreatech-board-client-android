@@ -46,6 +46,7 @@ fun HtmlView(
     var textAlign: TextAlign? = null
 
     var isTable = false
+    var hasNewLine = false
 
     // Image or link url
     var url = ""
@@ -57,10 +58,7 @@ fun HtmlView(
         when (eventType) {
             XmlPullParser.START_TAG -> {
                 when (parser.name.lowercase()) {
-                    HtmlTags.BR.tag -> annotatedString = buildAnnotatedString {
-                        append(annotatedString)
-                        append("\n")
-                    }
+                    HtmlTags.BR.tag -> hasNewLine = true
 
                     HtmlTags.B.tag -> fontWeight = FontWeight.Bold
 
@@ -184,11 +182,19 @@ fun HtmlView(
                                     if (annotatedString.text.isNotBlank()) {
                                         Text(
                                             modifier = modifier,
-                                            text = annotatedString
+                                            text = if (hasNewLine) {
+                                                annotatedString + buildAnnotatedString {
+                                                    append("\n")
+                                                }
+                                            } else {
+                                                annotatedString
+                                            }
                                         )
+                                        hasNewLine = false
+                                        annotatedString = buildAnnotatedString { }
+                                    } else {
+                                        hasNewLine = true
                                     }
-
-                                    annotatedString = buildAnnotatedString { }
                                 } else {
                                     annotatedString = buildAnnotatedString {
                                         append(annotatedString)
