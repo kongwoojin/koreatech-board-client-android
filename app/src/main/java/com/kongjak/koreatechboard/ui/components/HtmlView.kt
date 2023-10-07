@@ -27,7 +27,8 @@ import org.xmlpull.v1.XmlPullParserFactory
 @Composable
 fun HtmlView(
     modifier: Modifier = Modifier,
-    html: String
+    html: String,
+    enableCss: Boolean
 ) {
     val xmlPullParserFactory = XmlPullParserFactory.newInstance()
     val parser = xmlPullParserFactory.newPullParser()
@@ -72,7 +73,7 @@ fun HtmlView(
 
                 for (i in 0 until parser.attributeCount) {
                     // parse styles
-                    if (parser.getAttributeName(i) == "style") {
+                    if (enableCss && parser.getAttributeName(i) == "style") {
                         val styles = parser.getAttributeValue(i).trim()
                         val styleList =
                             styles.split(";").map { it.trim() }.filter { it.isNotEmpty() }

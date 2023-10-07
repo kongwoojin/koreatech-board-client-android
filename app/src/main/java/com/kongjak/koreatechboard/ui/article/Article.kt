@@ -100,7 +100,8 @@ fun ArticleScreen(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxSize(),
-                        html = data?.content!!
+                        html = data?.content!!,
+                        !(themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme())
                     )
 
                     key(themeViewModel.isDarkTheme) {
