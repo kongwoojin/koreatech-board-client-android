@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -43,8 +44,13 @@ fun HtmlView(
     var textDecoration: TextDecoration = TextDecoration.None
     var textAlign: TextAlign? = null
 
+    var isTable = false
+
     // Image or link url
     var url = ""
+
+    val tableRow = mutableListOf<AnnotatedString>()
+    val tableItemList = mutableListOf<MutableList<AnnotatedString>>()
 
     while (eventType != XmlPullParser.END_DOCUMENT) {
         when (eventType) {
@@ -60,6 +66,8 @@ fun HtmlView(
                     HtmlTags.U.tag -> textDecoration = TextDecoration.Underline
 
                     HtmlTags.STRIKE.tag -> textDecoration = TextDecoration.LineThrough
+
+                    HtmlTags.TABLE.tag -> isTable = true
                 }
 
                 for (i in 0 until parser.attributeCount) {
@@ -101,7 +109,7 @@ fun HtmlView(
             }
 
             XmlPullParser.TEXT -> {
-                if (parser.text.trim().isNotEmpty()) {
+                if (parser.text != null && parser.text.trim().isNotEmpty()) {
                     annotatedString = buildAnnotatedString {
                         append(annotatedString)
                         pushStyle(
@@ -129,30 +137,71 @@ fun HtmlView(
 
             XmlPullParser.END_TAG -> {
                 // Build UI
-                if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
-                    if (textAlign != null) {
-                        // Apply paragraph style if tag is block tag
-                        annotatedString = buildAnnotatedString {
-                            pushStyle(style = ParagraphStyle(textAlign = textAlign))
-                            append(annotatedString)
-                            pop()
+                if (parser.name != null) {
+                    if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
+                        if (annotatedString.paragraphStyles.isEmpty()) {
+                            // Apply paragraph style if tag is block tag
+                            annotatedString = buildAnnotatedString {
+                                pushStyle(style = ParagraphStyle(textAlign = textAlign))
+                                append(annotatedString)
+                                pop()
+                            }
+                            textAlign = null
                         }
-                        textAlign = null
-                    }
-                    when (parser.name.lowercase()) {
-                        HtmlTags.TABLE.tag -> {}
-                        else -> {
-                            Text(
-                                modifier = modifier,
-                                text = annotatedString
-                            )
 
-                            annotatedString = buildAnnotatedString { }
+                        when (parser.name.lowercase()) {
+                            HtmlTags.TABLE.tag -> {
+                                Table(modifier = modifier, tableItems = tableItemList)
+                                isTable = false
+                                tableItemList.clear()
+                            }
+
+                            HtmlTags.TBODY.tag, HtmlTags.THEAD.tag -> {
+                                /*
+                                Don't render tbody and thead,
+                                will render at table
+                                 */
+                            }
+
+                            HtmlTags.TD.tag -> {
+                                tableRow.add(annotatedString)
+
+                                annotatedString = buildAnnotatedString { }
+                            }
+
+                            HtmlTags.TR.tag -> {
+                                val tmp = mutableListOf<AnnotatedString>()
+                                tableRow.forEach {
+                                    tmp.add(it)
+                                }
+                                tableItemList.add(tmp)
+                                tableRow.clear()
+                            }
+
+                            else -> {
+                                if (!isTable) {
+                                    Text(
+                                        modifier = modifier,
+                                        text = annotatedString
+                                    )
+
+                                    annotatedString = buildAnnotatedString { }
+
+                                } else {
+                                    annotatedString = buildAnnotatedString {
+                                        append(annotatedString)
+                                        append("\n")
+                                    }
+                                }
+                            }
                         }
-                    }
-                } else {
-                    when (parser.name.lowercase()) {
-                        HtmlTags.IMG.tag -> GlideImage(model = url, contentDescription = "Image")
+                    } else {
+                        when (parser.name.lowercase()) {
+                            HtmlTags.IMG.tag -> GlideImage(
+                                model = url,
+                                contentDescription = "Image"
+                            )
+                        }
                     }
                 }
             }
@@ -160,6 +209,8 @@ fun HtmlView(
         try {
             eventType = parser.next()
         } catch (e: XmlPullParserException) {
+            e.message?.let { Log.e("Exception", it) }
+        } catch (e: ArrayIndexOutOfBoundsException) {
             e.message?.let { Log.e("Exception", it) }
         }
     }
