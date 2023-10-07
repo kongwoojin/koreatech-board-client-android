@@ -45,6 +45,10 @@ fun RowScope.TableItem(
 ) {
     // Force align start for now
     if (item.text.isNotEmpty()) {
-        Text(modifier = modifier, text = item, textAlign = TextAlign.Start)
+        Text(modifier = modifier, text = item.trim(), textAlign = TextAlign.Start)
     }
+}
+
+fun AnnotatedString.trim(): AnnotatedString {
+    return AnnotatedString(this.text.trim(), this.spanStyles)
 }
