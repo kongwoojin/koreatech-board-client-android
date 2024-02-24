@@ -1,6 +1,10 @@
 package com.kongjak.koreatechboard.ui.components
 
+import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -47,6 +51,7 @@ fun HtmlView(
 
     var isTable = false
     var hasNewLine = false
+    var isHyperLink = false
 
     // Image or link url
     var url = ""
@@ -54,9 +59,12 @@ fun HtmlView(
     val tableRow = mutableListOf<AnnotatedString>()
     val tableItemList = mutableListOf<MutableList<AnnotatedString>>()
 
+    val urlTagList = mutableListOf<String>()
+
     while (eventType != XmlPullParser.END_DOCUMENT) {
         when (eventType) {
             XmlPullParser.START_TAG -> {
+
                 when (parser.name.lowercase()) {
                     HtmlTags.BR.tag -> hasNewLine = true
 
@@ -67,6 +75,8 @@ fun HtmlView(
                     HtmlTags.STRIKE.tag -> textDecoration = TextDecoration.LineThrough
 
                     HtmlTags.TABLE.tag -> isTable = true
+
+                    HtmlTags.A.tag -> isHyperLink = true
                 }
 
                 for (i in 0 until parser.attributeCount) {
@@ -119,7 +129,18 @@ fun HtmlView(
                                 textDecoration = textDecoration
                             )
                         )
+                        if (isHyperLink) {
+                            val tag = getRandomUrlTag()
+                            urlTagList.add(tag)
+                            Log.d("url", "$tag $url")
+                            pushStringAnnotation(tag = "URL", annotation = url)
+                            pushStyle(SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline))
+                        }
                         append(parser.text.trim())
+                        if (isHyperLink) {
+                            pop()
+                            pop()
+                        }
                         pop()
                     }
 
@@ -130,7 +151,6 @@ fun HtmlView(
                     textDecoration = TextDecoration.None
 
                     // Reset url
-                    url = ""
                 }
             }
 
@@ -140,11 +160,6 @@ fun HtmlView(
                     if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
                         if (annotatedString.paragraphStyles.isEmpty()) {
                             // Apply paragraph style if tag is block tag
-                            annotatedString = buildAnnotatedString {
-                                pushStyle(style = ParagraphStyle(textAlign = textAlign))
-                                append(annotatedString)
-                                pop()
-                            }
                             textAlign = null
                         }
 
@@ -180,7 +195,7 @@ fun HtmlView(
                             else -> {
                                 if (!isTable) {
                                     if (annotatedString.text.isNotBlank()) {
-                                        Text(
+                                        CustomClickableText(
                                             modifier = modifier,
                                             text = if (hasNewLine) {
                                                 annotatedString + buildAnnotatedString {
@@ -189,7 +204,18 @@ fun HtmlView(
                                             } else {
                                                 annotatedString
                                             }
-                                        )
+                                        ) { offset ->
+                                            Log.d("Test",
+                                                annotatedString.hasStringAnnotations(tag = "URL", start = offset, end = offset)
+                                                    .toString()
+                                            )
+                                            for (tag in urlTagList) {
+                                                annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let {
+                                                    Log.d("url", it.item)
+                                                }
+                                            }
+                                        }
+
                                         hasNewLine = false
                                         annotatedString = buildAnnotatedString { }
                                     } else {
@@ -205,6 +231,8 @@ fun HtmlView(
                         }
                     } else {
                         when (parser.name.lowercase()) {
+                            HtmlTags.A.tag -> isHyperLink = false
+
                             HtmlTags.IMG.tag -> GlideImage(
                                 model = url,
                                 contentDescription = "Image"
@@ -222,4 +250,11 @@ fun HtmlView(
             e.message?.let { Log.e("Exception", it) }
         }
     }
+}
+
+private fun getRandomUrlTag() : String {
+    val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
+    return "url" + (1..6)
+        .map { charset.random() }
+        .joinToString("")
 }
