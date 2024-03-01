@@ -74,19 +74,20 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.state.NetworkState
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
-import com.kongjak.koreatechboard.util.routes.deptList
 import kotlinx.coroutines.launch
 
 @Composable
 fun BoardScreen(boardInitViewModel: BoardInitViewModel = hiltViewModel()) {
     val initDepartment by boardInitViewModel.initDepartment.observeAsState(0)
-    BottomSheetScaffold(fullDeptList[initDepartment])
+    val userDepartment by boardInitViewModel.userDepartment.observeAsState(0)
+    BottomSheetScaffold(fullDeptList[initDepartment], userDepartment)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -335,18 +336,24 @@ fun NetworkUnavailable() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetScaffold(initDepartment: Department = Department.School) {
+fun BottomSheetScaffold(initDepartment: Department = Department.School, userDepartment: Int = 0) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
     val department = remember { mutableStateOf(initDepartment) }
+
+    val scaffoldItemList = listOf(
+        Department.School,
+        Department.Dorm,
+        deptList[userDepartment]
+    )
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
-                items(deptList) {
+                items(scaffoldItemList) {
                     Box {
                         Text(
                             text = stringResource(id = it.stringResource),

@@ -52,8 +52,6 @@ val fullDeptList = listOf(
     Department.Emc,
     Department.Sim
 )
-val fullDeptListString = fullDeptList.map { it.stringResource }
-val fullDeptListName = fullDeptList.map { it.name }
 
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 val darkThemeString = listOf(
@@ -81,11 +79,17 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
         val initDepartment by settingsViewModel.initDepartment.observeAsState()
 
+        val initDeptList = listOf(
+            Department.School,
+            Department.Dorm,
+            deptList[userDepartment ?: 0]
+        )
+
         ListPreference(
             title = stringResource(id = R.string.setting_default_board_title),
-            summary = stringResource(id = fullDeptListString[initDepartment ?: 0]),
-            itemStringResource = fullDeptListString,
-            itemValue = fullDeptListName,
+            summary = stringResource(id = initDeptList.map { it.stringResource }[initDepartment ?: 0]),
+            itemStringResource = initDeptList.map { it.stringResource },
+            itemValue = initDeptList.map { it.name },
             selectedIndex = initDepartment ?: 0
         ) { item ->
             settingsViewModel.setInitDepartment(item)
