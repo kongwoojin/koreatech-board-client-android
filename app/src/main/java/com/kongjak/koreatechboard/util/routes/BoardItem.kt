@@ -50,8 +50,7 @@ val mechatronicsBoards = listOf(
 val schoolBoards = listOf(
     BoardItem.Notice,
     BoardItem.Scholar,
-    BoardItem.Bachelor,
-    BoardItem.Covid19
+    BoardItem.Bachelor
 )
 
 val dormBoards = listOf(
