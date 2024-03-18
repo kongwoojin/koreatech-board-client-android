@@ -34,7 +34,8 @@ val deptList = listOf(
     Department.Ite,
     Department.Ide,
     Department.Arch,
-    Department.Emc,
+    Department.Mse,
+    Department.Ace,
     Department.Sim
 )
 val deptListString = deptList.map { it.stringResource }
@@ -49,7 +50,8 @@ val fullDeptList = listOf(
     Department.Ite,
     Department.Ide,
     Department.Arch,
-    Department.Emc,
+    Department.Mse,
+    Department.Ace,
     Department.Sim
 )
 

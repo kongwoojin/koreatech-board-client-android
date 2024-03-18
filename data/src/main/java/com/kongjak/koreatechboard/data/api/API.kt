@@ -32,9 +32,8 @@ interface API {
         @Query("page") page: Int = 1
     ): Response<BoardResponse>
 
-    @GET("article/{site}")
+    @GET("article")
     suspend fun getArticle(
-        @Path("site") site: String,
         @Query("uuid") uuid: UUID
     ): Response<ArticleResponse>
 }

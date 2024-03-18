@@ -20,30 +20,34 @@ sealed class BoardItem(
 
 val cseBoards = listOf(
     BoardItem.Notice,
-    BoardItem.Free,
+    BoardItem.Lecture,
     BoardItem.Job,
     BoardItem.PDS
 )
 
 val archBoards = listOf(
     BoardItem.Notice,
+    BoardItem.Job,
     BoardItem.Free
 )
 
 val ideBoards = listOf(
     BoardItem.Notice,
-    BoardItem.Free
+    BoardItem.Job
 )
 
 val mechanicalBoards = listOf(
-    BoardItem.Notice
+    BoardItem.Notice,
+    BoardItem.Lecture,
+    BoardItem.Bachelor,
+    BoardItem.Job
 )
 
 val mechatronicsBoards = listOf(
     BoardItem.Notice,
-    BoardItem.Lecture,
     BoardItem.Bachelor,
     BoardItem.Job,
+    BoardItem.PDS,
     BoardItem.Free
 )
 
@@ -54,17 +58,28 @@ val schoolBoards = listOf(
 )
 
 val dormBoards = listOf(
-    BoardItem.Notice
+    BoardItem.Notice,
+    BoardItem.Free
 )
 
 val iteBoards = listOf(
-    BoardItem.Notice
+    BoardItem.Notice,
+    BoardItem.Job
 )
 
 val simBoards = listOf(
     BoardItem.Notice
 )
 
-val emcBoards = listOf(
-    BoardItem.Notice
+val mseBoards = listOf(
+    BoardItem.Notice,
+    BoardItem.Bachelor,
+    BoardItem.PDS
+)
+
+val aceBoards = listOf(
+    BoardItem.Notice,
+    BoardItem.Bachelor,
+    BoardItem.Job,
+    BoardItem.PDS
 )
