@@ -33,7 +33,7 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                                 setState(
                                     oldState.copy(
                                         isSuccess = true,
-                                        boardList = (oldState.boardList + (event.board to (it.data.boardData)!!)),
+                                        boardList = (oldState.boardList + (event.board to (it.data.boardData))),
                                         statusCode = it.data.statusCode,
                                         isLoaded = true
                                     )
