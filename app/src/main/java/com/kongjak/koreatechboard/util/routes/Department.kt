@@ -11,19 +11,7 @@ sealed class Department(val name: String, val stringResource: Int, val boards: L
     object Ite : Department("ite", R.string.department_ite, iteBoards)
     object Ide : Department("ide", R.string.department_ide, ideBoards)
     object Arch : Department("arch", R.string.department_arch, archBoards)
-    object Emc : Department("emc", R.string.department_emc, emcBoards)
+    object Mse : Department("mse", R.string.department_mse, mseBoards)
+    object Ace : Department("ace", R.string.department_ace, aceBoards)
     object Sim : Department("sim", R.string.department_sim, simBoards)
 }
-
-val deptList = listOf(
-    Department.School,
-    Department.Dorm,
-    Department.Cse,
-    Department.Mechanical,
-    Department.Mechatronics,
-    Department.Ite,
-    Department.Ide,
-    Department.Arch,
-    Department.Emc,
-    Department.Sim
-)

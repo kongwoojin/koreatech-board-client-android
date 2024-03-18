@@ -8,9 +8,10 @@
     <string name="department_mechanical">School of Mechanical Engineering</string>
     <string name="department_mechatronics">School of Mechatronics Engineering</string>
     <string name="department_ite">School of Electrical, Electronics &amp; Communication Engineering</string>
-    <string name="department_ide">School of Industrial Design Engineering &amp; Architectural Engineering (Design)</string>
-    <string name="department_arch">School of Industrial Design Engineering &amp; Architectural Engineering (Architectural)</string>
-    <string name="department_emc">School of Energy Materials and Chemical Engineering</string>
+    <string name="department_ide">School of Industrial Design Engineering</string>
+    <string name="department_arch">School of Architectural Engineering</string>
+    <string name="department_mse">School of Energy Materials</string>
+    <string name="department_ace">School of Chemical Engineering</string>
     <string name="department_sim">School of Industrial Management</string>
 
     <!-- Board -->
@@ -43,7 +44,7 @@
     <string name="setting_header_info">Info</string>
     <string name="setting_header_theme">Theme</string>
 
-    <string name="setting_user_department_title">Home department</string>
+    <string name="setting_user_department_title">Department</string>
     <string name="setting_user_department_summary">Select your department</string>
     <string name="setting_default_board_title">Default board</string>
     <string name="setting_dynamic_theme_title">Dynamic theme</string>
@@ -67,6 +68,7 @@
     <string name="error_hide_detail">Hide detail</string>
     <string name="error_server_down">Server returns %s error!\nPlease contact to server admin.</string>
     <string name="error_retry">Retry</string>
+    <string name="error_no_data">No data!</string>
 
     <!-- ETC -->
     <string name="article_title" translatable="false">%s | %s</string>

@@ -20,6 +20,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,8 +84,13 @@ fun SearchContent(
 ) {
     val context = LocalContext.current
 
-    val lazyPostList =
-        searchViewModel.getAPI(site, board, title).collectAsLazyPagingItems()
+    val uiState by searchViewModel.uiState.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        searchViewModel.getAPI(site, board, title)
+    }
+
+    val lazyPostList = uiState.boardData.collectAsLazyPagingItems()
 
     LazyColumn(
         modifier = Modifier
