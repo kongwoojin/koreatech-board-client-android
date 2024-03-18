@@ -29,6 +29,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
@@ -36,6 +38,7 @@ import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.fileText
 import java.util.UUID
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
@@ -101,7 +104,16 @@ fun ArticleScreen(
                             .padding(horizontal = 16.dp)
                             .fillMaxSize(),
                         html = data?.content!!,
-                        !(themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme())
+                        themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme(),
+                        image = { url, description ->
+                            GlideImage(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .fillMaxSize(),
+                                model = url,
+                                contentDescription = description
+                            )
+                        }
                     )
 
                     key(themeViewModel.isDarkTheme) {

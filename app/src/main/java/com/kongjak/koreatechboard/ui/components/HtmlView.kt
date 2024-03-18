@@ -2,37 +2,26 @@ package com.kongjak.koreatechboard.ui.components
 
 import android.net.Uri
 import android.util.Log
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import androidx.compose.ui.text.withStyle
+import com.kongjak.koreatechboard.util.HtmlData
 import com.kongjak.koreatechboard.util.HtmlTags
-import com.kongjak.koreatechboard.util.parseColor
-import com.kongjak.koreatechboard.util.parseFontWeight
-import com.kongjak.koreatechboard.util.parseTextAlign
-import com.kongjak.koreatechboard.util.parseTextDecoration
+import com.kongjak.koreatechboard.util.parseSpanStyle
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun HtmlView(
     modifier: Modifier = Modifier,
     html: String,
-    enableCss: Boolean
+    isDarkMode: Boolean = false,
+    image: @Composable (String, String) -> Unit
 ) {
     val xmlPullParserFactory = XmlPullParserFactory.newInstance()
     val parser = xmlPullParserFactory.newPullParser()
@@ -40,208 +29,59 @@ fun HtmlView(
 
     var eventType = parser.eventType
 
-    var annotatedString = buildAnnotatedString { }
+    val queue = ArrayDeque<HtmlData>()
 
-    /* Styles */
-    var color = Color.Unspecified
-    var background = Color.Unspecified
-    var fontWeight: FontWeight? = null
-    var textDecoration: TextDecoration = TextDecoration.None
-    var textAlign: TextAlign? = null
-
-    var isTable = false
-    var hasNewLine = false
-    var isHyperLink = false
-
-    // Image or link url
-    var url = ""
-
-    val tableRow = mutableListOf<AnnotatedString>()
-    val tableItemList = mutableListOf<MutableList<AnnotatedString>>()
-
-    val urlTagList = mutableListOf<String>()
+    var tag: HtmlTags? = null
+    var attributes: Map<String, String> = emptyMap()
+    var text = ""
 
     while (eventType != XmlPullParser.END_DOCUMENT) {
         when (eventType) {
             XmlPullParser.START_TAG -> {
+                if (tag != null) {
+                    if (text.isBlank()) {
+                        if (queue.size > 0) {
+                            queue.add(HtmlData(tag, attributes, text))
+                            text = ""
+                        }
+                    } else {
+                        queue.add(HtmlData(tag, attributes, text))
+                        text = ""
+                    }
 
-                when (parser.name.lowercase()) {
-                    HtmlTags.BR.tag -> hasNewLine = true
-
-                    HtmlTags.B.tag -> fontWeight = FontWeight.Bold
-
-                    HtmlTags.U.tag -> textDecoration = TextDecoration.Underline
-
-                    HtmlTags.STRIKE.tag -> textDecoration = TextDecoration.LineThrough
-
-                    HtmlTags.TABLE.tag -> isTable = true
-
-                    HtmlTags.A.tag -> isHyperLink = true
                 }
 
-                for (i in 0 until parser.attributeCount) {
-                    // parse styles
-                    if (enableCss && parser.getAttributeName(i) == "style") {
-                        val styles = parser.getAttributeValue(i).trim()
-                        val styleList =
-                            styles.split(";").map { it.trim() }.filter { it.isNotEmpty() }
-                        for (style in styleList) {
-                            val (name, value) = style.split(":").map { it.trim().lowercase() }
-                            when (name) {
-                                "color" -> {
-                                    color = parseColor(value)
-                                }
+                tag = HtmlTags.valueOf(parser.name.uppercase())
 
-                                "background-color" -> {
-                                    background = parseColor(value)
-                                }
-
-                                "font-weight" -> {
-                                    fontWeight = parseFontWeight(value)
-                                }
-
-                                "text-decoration" -> {
-                                    textDecoration = parseTextDecoration(value)
-                                }
-
-                                "text-align" -> {
-                                    textAlign = parseTextAlign(value)
-                                }
-                            }
-                        }
-                    } else if (parser.getAttributeName(i) == "href") {
-                        url = parser.getAttributeValue(i)
-                    } else if (parser.getAttributeName(i) == "src") {
-                        url = parser.getAttributeValue(i)
-                    }
+                attributes = (0 until parser.attributeCount).associate {
+                    parser.getAttributeName(it) to parser.getAttributeValue(it)
                 }
             }
 
             XmlPullParser.TEXT -> {
-                if (parser.text != null && parser.text.trim().isNotEmpty()) {
-                    annotatedString = buildAnnotatedString {
-                        append(annotatedString)
-                        pushStyle(
-                            style = SpanStyle(
-                                color = color,
-                                background = background,
-                                fontWeight = fontWeight,
-                                textDecoration = textDecoration
-                            )
-                        )
-                        if (isHyperLink) {
-                            val tag = getRandomUrlTag()
-                            urlTagList.add(tag)
-                            Log.d("url", "$tag $url")
-                            pushStringAnnotation(tag = "URL", annotation = url)
-                            pushStyle(SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline))
-                        }
-                        append(parser.text.trim())
-                        if (isHyperLink) {
-                            pop()
-                            pop()
-                        }
-                        pop()
-                    }
-
-                    /* Reset styles */
-                    color = Color.Unspecified
-                    background = Color.Unspecified
-                    fontWeight = null
-                    textDecoration = TextDecoration.None
-
-                    // Reset url
-                }
+                text = parser.text
             }
 
             XmlPullParser.END_TAG -> {
-                // Build UI
-                if (parser.name != null) {
-                    if (HtmlTags.valueOf(parser.name.uppercase()).isBlock) {
-                        if (annotatedString.paragraphStyles.isEmpty()) {
-                            // Apply paragraph style if tag is block tag
-                            textAlign = null
-                        }
-
-                        when (parser.name.lowercase()) {
-                            HtmlTags.TABLE.tag -> {
-                                Table(modifier = modifier, tableItems = tableItemList)
-                                isTable = false
-                                tableItemList.clear()
-                            }
-
-                            HtmlTags.TBODY.tag, HtmlTags.THEAD.tag -> {
-                                /*
-                                Don't render tbody and thead,
-                                will render at table
-                                 */
-                            }
-
-                            HtmlTags.TD.tag -> {
-                                tableRow.add(annotatedString)
-
-                                annotatedString = buildAnnotatedString { }
-                            }
-
-                            HtmlTags.TR.tag -> {
-                                val tmp = mutableListOf<AnnotatedString>()
-                                tableRow.forEach {
-                                    tmp.add(it)
-                                }
-                                tableItemList.add(tmp)
-                                tableRow.clear()
-                            }
-
-                            else -> {
-                                if (!isTable) {
-                                    if (annotatedString.text.isNotBlank()) {
-                                        CustomClickableText(
-                                            modifier = modifier,
-                                            text = if (hasNewLine) {
-                                                annotatedString + buildAnnotatedString {
-                                                    append("\n")
-                                                }
-                                            } else {
-                                                annotatedString
-                                            }
-                                        ) { offset ->
-                                            Log.d("Test",
-                                                annotatedString.hasStringAnnotations(tag = "URL", start = offset, end = offset)
-                                                    .toString()
-                                            )
-                                            for (tag in urlTagList) {
-                                                annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset).firstOrNull()?.let {
-                                                    Log.d("url", it.item)
-                                                }
-                                            }
-                                        }
-
-                                        hasNewLine = false
-                                        annotatedString = buildAnnotatedString { }
-                                    } else {
-                                        hasNewLine = true
-                                    }
-                                } else {
-                                    annotatedString = buildAnnotatedString {
-                                        append(annotatedString)
-                                        append("\n")
-                                    }
-                                }
-                            }
+                if (tag != null) {
+                    if (text.isBlank()) {
+                        if (queue.size > 0) {
+                            queue.add(HtmlData(tag, attributes, text))
+                            tag = null
+                            attributes = emptyMap()
+                            text = ""
                         }
                     } else {
-                        when (parser.name.lowercase()) {
-                            HtmlTags.A.tag -> isHyperLink = false
-
-                            HtmlTags.IMG.tag -> GlideImage(
-                                model = url,
-                                contentDescription = "Image"
-                            )
-                        }
+                        queue.add(HtmlData(tag, attributes, text))
+                        tag = null
+                        attributes = emptyMap()
+                        text = ""
                     }
+
                 }
             }
         }
+
         try {
             eventType = parser.next()
         } catch (e: XmlPullParserException) {
@@ -250,11 +90,79 @@ fun HtmlView(
             e.message?.let { Log.e("Exception", it) }
         }
     }
+
+    if (tag != null) {
+        queue.add(HtmlData(tag, attributes, text))
+    }
+
+    // Remove blank from back
+    while (queue.size > 0 && queue.last().text.isBlank()) {
+        queue.removeLast()
+    }
+
+    val tmpQueue = ArrayDeque<HtmlData>()
+    val urlList = ArrayDeque<String>()
+
+    while (queue.isNotEmpty()) {
+        when (queue.first().tag) {
+            HtmlTags.IMG -> {
+                RenderText(modifier = modifier, queue = tmpQueue, urlList, isDarkMode = isDarkMode)
+                tmpQueue.clear()
+                image(queue.first().attributes["src"] ?: "", queue.first().attributes["alt"] ?: "")
+            }
+
+            HtmlTags.A -> {
+                urlList.add(queue.first().attributes["href"] ?: "")
+                tmpQueue.add(queue.first())
+            }
+
+            else -> {
+                tmpQueue.add(queue.first())
+            }
+        }
+        queue.removeFirst()
+    }
+    RenderText(modifier = modifier, queue = tmpQueue, urlList, isDarkMode = isDarkMode)
 }
 
-private fun getRandomUrlTag() : String {
-    val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
-    return "url" + (1..6)
-        .map { charset.random() }
-        .joinToString("")
+@Composable
+fun RenderText(
+    modifier: Modifier,
+    queue: ArrayDeque<HtmlData>,
+    urlList: ArrayDeque<String>,
+    isDarkMode: Boolean
+) {
+    val context = LocalContext.current
+    val annotatedString = buildAnnotatedString {
+        var needHyperLink = false
+        for (data in queue) {
+            withStyle(parseSpanStyle(data.attributes["style"] ?: "", isDarkMode)) {
+                if (data.tag == HtmlTags.A) {
+                    needHyperLink = true
+                } else {
+                    if (needHyperLink && data.text.isNotBlank()) {
+                        pushStringAnnotation(
+                            tag = data.text,
+                            annotation = urlList.first().ifBlank { data.text.trim() })
+                        urlList.removeFirst()
+                        needHyperLink = false
+                    }
+                    append(data.text)
+                }
+            }
+            if (data.tag.isBlock || data.tag == HtmlTags.BR) {
+                append("\n")
+            }
+        }
+    }
+    SelectionContainer {
+        CustomClickableText(modifier = modifier, text = annotatedString, onClick = { offset ->
+            annotatedString.getStringAnnotations(offset, offset)
+                .firstOrNull()?.let { url ->
+                    val builder = CustomTabsIntent.Builder()
+                    val customTabsIntent = builder.build()
+                    customTabsIntent.launchUrl(context, Uri.parse(url.item))
+                }
+        })
+    }
 }
