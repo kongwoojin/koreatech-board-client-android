@@ -156,42 +156,45 @@ fun BoardInMain(
                     }
                 } else {
                     if (isSuccess && statusCode == 200) {
-                        Column {
-                            boardList[key]!!.forEach { data ->
-                                Box(
-                                    modifier = Modifier
-                                        .clickable {
-                                            val intent =
-                                                Intent(context, ArticleActivity::class.java)
-                                            intent.putExtra("site", department.name)
-                                            intent.putExtra("uuid", data.uuid.toString())
-                                            context.startActivity(intent)
-                                        }
-                                ) {
-                                    Text(
+                        if (boardList[key] == null) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(text = stringResource(R.string.error_no_data))
+                            }
+                        } else {
+                            Column {
+                                boardList[key]!!.forEach { data ->
+                                    Box(
                                         modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 8.dp),
-                                        text = data.title,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                    )
+                                            .clickable {
+                                                val intent = Intent(context, ArticleActivity::class.java)
+                                                intent.putExtra("site", department.name)
+                                                intent.putExtra("uuid", data.uuid.toString())
+                                                context.startActivity(intent)
+                                            }
+                                    ) {
+                                        Text(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 8.dp),
+                                            text = data.title,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
+                                    HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                                 }
-                                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                             }
                         }
                     } else if (isSuccess && statusCode != 200) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                        ) {
-                            Text(
-                                text = stringResource(
-                                    R.string.error_server_down,
-                                    statusCode
-                                )
-                            )
+                        Column(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)) {
+                            Text(text = stringResource(R.string.error_server_down, statusCode))
                             Button(onClick = {
                                 homeBoardViewModel.getApi(department.name, key)
                             }) {
@@ -199,11 +202,9 @@ fun BoardInMain(
                             }
                         }
                     } else if (!isSuccess) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                        ) {
+                        Column(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)) {
                             Text(text = uiState.value.error)
                             Button(onClick = {
                                 homeBoardViewModel.getApi(department.name, key)

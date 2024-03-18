@@ -186,72 +186,82 @@ fun BoardContent(
                     .fillMaxSize()
                     .pullRefresh(pullRefreshState)
             ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(
-                        top = contentPadding.calculateTopPadding(),
-                        bottom = (64 + 16).dp + contentPadding.calculateBottomPadding(),
-                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
-                    ),
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    items(lazyPostList.itemCount) { index ->
-                        val boardItem = lazyPostList[index]
-                        boardItem?.let {
-                            BoardItem(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                                    .selectable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() },
-                                        selected = false,
-                                        onClick = {
-                                            val intent =
-                                                Intent(context, ArticleActivity::class.java)
-                                            intent.putExtra("site", department.name)
-                                            intent.putExtra("uuid", it.uuid.toString())
-                                            context.startActivity(intent)
-                                        }
-                                    ),
-                                title = if (showArticleNumber) {
-                                    stringResource(
-                                        id = R.string.article_title,
-                                        it.num,
-                                        it.title
-                                    )
-                                } else {
-                                    it.title
-                                },
-                                writer = it.writer,
-                                date = it.writeDate
-                            )
-                            HorizontalDivider(thickness = 0.5.dp, color = Gray)
-                        }
+                if (lazyPostList.itemCount == 0) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = stringResource(id = R.string.error_no_data))
                     }
+                } else {
+                    LazyColumn(
+                        contentPadding = PaddingValues(
+                            top = contentPadding.calculateTopPadding(),
+                            bottom = (64 + 16).dp + contentPadding.calculateBottomPadding(),
+                            start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                            end = contentPadding.calculateEndPadding(LayoutDirection.Ltr)
+                        ),
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        items(lazyPostList.itemCount) { index ->
+                            val boardItem = lazyPostList[index]
+                            boardItem?.let {
+                                BoardItem(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
+                                        .selectable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() },
+                                            selected = false,
+                                            onClick = {
+                                                val intent =
+                                                    Intent(context, ArticleActivity::class.java)
+                                                intent.putExtra("site", department.name)
+                                                intent.putExtra("uuid", it.uuid.toString())
+                                                context.startActivity(intent)
+                                            }
+                                        ),
+                                    title = if (showArticleNumber) {
+                                        stringResource(
+                                            id = R.string.article_title,
+                                            it.num,
+                                            it.title
+                                        )
+                                    } else {
+                                        it.title
+                                    },
+                                    writer = it.writer,
+                                    date = it.writeDate
+                                )
+                                HorizontalDivider(thickness = 0.5.dp, color = Gray)
+                            }
+                        }
 
-                    lazyPostList.apply {
-                        when (isNetworkConnected) {
-                            true -> {
-                                when {
-                                    loadState.refresh is LoadState.Error -> {
-                                        val errorMessage =
-                                            (loadState.refresh as LoadState.Error).error.localizedMessage
-                                        item { BoardError(errorMessage ?: "") }
-                                    }
+                        lazyPostList.apply {
+                            when (isNetworkConnected) {
+                                true -> {
+                                    when {
+                                        loadState.refresh is LoadState.Error -> {
+                                            val errorMessage =
+                                                (loadState.refresh as LoadState.Error).error.localizedMessage
+                                            item { BoardError(errorMessage ?: "") }
+                                        }
 
-                                    loadState.append is LoadState.Error -> {
-                                        val errorMessage =
-                                            (loadState.append as LoadState.Error).error.localizedMessage
-                                        item { BoardError(errorMessage ?: "") }
+                                        loadState.append is LoadState.Error -> {
+                                            val errorMessage =
+                                                (loadState.append as LoadState.Error).error.localizedMessage
+                                            item { BoardError(errorMessage ?: "") }
+                                        }
                                     }
                                 }
+                                false -> item { NetworkUnavailable() }
                             }
-
-                            false -> item { NetworkUnavailable() }
                         }
                     }
                 }

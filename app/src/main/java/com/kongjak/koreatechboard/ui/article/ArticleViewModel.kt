@@ -25,7 +25,7 @@ class ArticleViewModel @Inject constructor(
                     setState(oldState.copy(isLoading = true, isLoaded = false))
 
                     runCatching {
-                        getArticleUseCase(event.department, event.uuid)
+                        getArticleUseCase(event.uuid)
                     }.onSuccess {
                         when (it) {
                             is ResponseResult.Success -> {
