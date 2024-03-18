@@ -38,6 +38,7 @@ import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
+import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 
@@ -48,18 +49,18 @@ class ArticleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val uuid = UUID.fromString(intent.getStringExtra("uuid"))
-        val site = intent.getStringExtra("site")!!
+        val department = intent.getStringExtra("site")!!
 
         setContent {
-            ArticleMain(site = site, uuid = uuid)
+            ArticleMain(department = department, uuid = uuid)
         }
     }
 }
 
 @Composable
-fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(), site: String, uuid: UUID) {
+fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(), department: String, uuid: UUID) {
     val context = LocalContext.current
-    Toolbar(articleViewModel = articleViewModel, context = context, site = site, uuid = uuid)
+    Toolbar(articleViewModel = articleViewModel, context = context, department = department, uuid = uuid)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,10 +70,11 @@ fun Toolbar(
     themeViewModel: ThemeViewModel = hiltViewModel(),
     networkViewModel: NetworkViewModel = hiltViewModel(),
     context: Context,
-    site: String,
+    department: String,
     uuid: UUID
 ) {
-    val articleUrl by articleViewModel.url.observeAsState()
+    val uiState by articleViewModel.uiState.collectAsState()
+    val articleUrl = uiState.url
     val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
     val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
 
@@ -127,7 +129,7 @@ fun Toolbar(
                     ArticleScreen(
                         articleViewModel = articleViewModel,
                         themeViewModel = themeViewModel,
-                        site = site,
+                        department = department,
                         uuid = uuid
                     )
                 } else {

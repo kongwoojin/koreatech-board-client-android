@@ -18,6 +18,7 @@ import androidx.compose.material3.pullrefresh.pullRefresh
 import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,23 +41,23 @@ import java.util.UUID
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
     themeViewModel: ThemeViewModel,
-    site: String,
+    department: String,
     uuid: UUID
 ) {
-    val isLoading by articleViewModel.isLoading.observeAsState(false)
+    val uiState by articleViewModel.uiState.collectAsState()
+
+    val isLoading = uiState.isLoading
 
     val pullRefreshState =
-        rememberPullRefreshState(isLoading, { articleViewModel.getArticleData() })
+        rememberPullRefreshState(isLoading, { articleViewModel.getArticleData(department, uuid) })
 
-    val data by articleViewModel.article.observeAsState()
+    val data = uiState.article
     val context = LocalContext.current
     val contentTextView = remember { TextView(context) }
     val filesTextView = remember { TextView(context) }
 
     LaunchedEffect(key1 = Unit) {
-        articleViewModel.setSiteData(site)
-        articleViewModel.setUUIDData(uuid)
-        articleViewModel.getArticleData()
+        articleViewModel.getArticleData(department, uuid)
     }
 
     Box(
@@ -114,7 +115,7 @@ fun ArticleScreen(
                                 .padding(16.dp)
                                 .fillMaxSize(),
                             update = {
-                                it.htmlText = data?.content
+                                it.htmlText = data.content
                                 it.textSize = 16F
                                 it.autoLinkMask = 0x0f
                                 it.setTextColor(textColor.toArgb())
@@ -126,7 +127,7 @@ fun ArticleScreen(
                             modifier = Modifier
                                 .padding(16.dp),
                             update = {
-                                it.fileText = data?.files
+                                it.fileText = data.files
                                 it.setTextColor(textColor.toArgb())
                             }
                         )
