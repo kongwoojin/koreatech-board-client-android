@@ -99,7 +99,7 @@ fun Toolbar(
                     },
                     actions = {
                         IconButton(onClick = {
-                            if (articleUrl != null) {
+                            if (articleUrl != "") {
                                 val builder = CustomTabsIntent.Builder()
                                 val customTabsIntent = builder.build()
                                 customTabsIntent.launchUrl(context, Uri.parse(articleUrl))
