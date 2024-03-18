@@ -191,9 +191,11 @@ fun BoardInMain(
                             }
                         }
                     } else if (isSuccess && statusCode != 200) {
-                        Column(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        ) {
                             Text(text = stringResource(R.string.error_server_down, statusCode))
                             Button(onClick = {
                                 homeBoardViewModel.getApi(department.name, key)
@@ -202,9 +204,11 @@ fun BoardInMain(
                             }
                         }
                     } else if (!isSuccess) {
-                        Column(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        ) {
                             Text(text = uiState.value.error)
                             Button(onClick = {
                                 homeBoardViewModel.getApi(department.name, key)
