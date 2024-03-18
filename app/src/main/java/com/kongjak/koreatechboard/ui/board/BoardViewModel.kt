@@ -1,16 +1,11 @@
 package com.kongjak.koreatechboard.ui.board
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetShowArticleNumberUseCase
+import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,36 +14,43 @@ import javax.inject.Inject
 class BoardViewModel @Inject constructor(
     private val getBoardUseCase: GetBoardUseCase,
     private val getShowArticleNumberUseCase: GetShowArticleNumberUseCase
-) :
-    ViewModel() {
-
-    private val boardItemsMap = mutableMapOf<String, Flow<PagingData<BoardData>>?>()
-
-    private val _showNumber = MutableLiveData(true)
-    val showNumber: LiveData<Boolean>
-        get() = _showNumber
+) : BaseViewModel<BoardState, BoardEvent>(BoardState()) {
 
     init {
         getShowArticleNumber()
     }
 
-    fun getAPI(site: String, board: String): Flow<PagingData<BoardData>> {
-        val key = "$site:$board"
-        if (boardItemsMap[key] == null) {
-            boardItemsMap[key] = getBoardUseCase(site, board).cachedIn(viewModelScope)
-        }
-        return boardItemsMap[key]!!
-    }
-
-    fun cleanUpCachedData(site: String, board: String) {
-        val key = "$site:$board"
-        boardItemsMap[key] = null
+    fun getAPI(department: String, board: String) {
+        sendEvent(BoardEvent.FetchData(department, board))
     }
 
     private fun getShowArticleNumber() {
         viewModelScope.launch {
             getShowArticleNumberUseCase().collectLatest {
-                _showNumber.value = it
+                sendEvent(BoardEvent.ShowNumberUpdated(it))
+            }
+        }
+    }
+
+    override fun reduce(oldState: BoardState, event: BoardEvent) {
+        when (event) {
+            is BoardEvent.ShowNumberUpdated -> {
+                setState(oldState.copy(showNumber = event.showNumber))
+            }
+
+            is BoardEvent.FetchData -> {
+                if (oldState.department == event.department && oldState.board == event.board) {
+                    return
+                }
+                setState(
+                    oldState.copy(
+                        department = event.department,
+                        board = event.board,
+                        boardItemsMap = getBoardUseCase(event.department, event.board).cachedIn(
+                            viewModelScope
+                        )
+                    )
+                )
             }
         }
     }

@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -32,9 +33,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.article.ArticleViewModel
-import com.kongjak.koreatechboard.ui.state.NetworkState
+import com.kongjak.koreatechboard.ui.network.NetworkEvent
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
-import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
+import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -120,8 +121,9 @@ fun Toolbar(
             }
         ) { contentPadding ->
             Column(modifier = Modifier.padding(contentPadding)) {
-                val networkState by networkViewModel.networkState.observeAsState()
-                if (networkState == NetworkState.Connected) {
+                val networkState by networkViewModel.uiState.collectAsState()
+                val isNetworkConnected = networkState.isConnected
+                if (isNetworkConnected) {
                     ArticleScreen(
                         articleViewModel = articleViewModel,
                         themeViewModel = themeViewModel,
