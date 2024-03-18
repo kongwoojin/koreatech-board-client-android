@@ -20,8 +20,11 @@ class NetworkViewModel @Inject constructor(
     private fun getNetworkState() {
         viewModelScope.launch {
             networkUtil.networkState().collectLatest { networkConnected ->
-                if (networkConnected) sendEvent(NetworkEvent.Connected)
-                else sendEvent(NetworkEvent.Disconnected)
+                if (networkConnected) {
+                    sendEvent(NetworkEvent.Connected)
+                } else {
+                    sendEvent(NetworkEvent.Disconnected)
+                }
             }
         }
     }

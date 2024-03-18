@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-open class BaseViewModel<S: UiState, E: UiEvent>(initialState: S) : ViewModel() {
+open class BaseViewModel<S : UiState, E : UiEvent>(initialState: S) : ViewModel() {
     private val _uiState = MutableStateFlow(initialState)
     val uiState get() = _uiState.asStateFlow()
 

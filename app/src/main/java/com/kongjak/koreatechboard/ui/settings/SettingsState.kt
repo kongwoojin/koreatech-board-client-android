@@ -9,4 +9,4 @@ data class SettingsState(
     val isDynamicTheme: Boolean = true,
     val isDarkTheme: Int = DARK_THEME_SYSTEM_DEFAULT,
     val showNumber: Boolean = true
-): UiState
+) : UiState
