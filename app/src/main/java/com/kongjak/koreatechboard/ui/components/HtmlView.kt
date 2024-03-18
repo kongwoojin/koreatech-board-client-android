@@ -48,7 +48,6 @@ fun HtmlView(
                         queue.add(HtmlData(tag, attributes, text))
                         text = ""
                     }
-
                 }
 
                 tag = HtmlTags.valueOf(parser.name.uppercase())
@@ -77,7 +76,6 @@ fun HtmlView(
                         attributes = emptyMap()
                         text = ""
                     }
-
                 }
             }
         }
@@ -143,7 +141,8 @@ fun RenderText(
                     if (needHyperLink && data.text.isNotBlank()) {
                         pushStringAnnotation(
                             tag = data.text,
-                            annotation = urlList.first().ifBlank { data.text.trim() })
+                            annotation = urlList.first().ifBlank { data.text.trim() }
+                        )
                         urlList.removeFirst()
                         needHyperLink = false
                     }
