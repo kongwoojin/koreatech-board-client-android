@@ -48,8 +48,8 @@ import androidx.compose.material3.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -74,19 +74,19 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.activity.ArticleActivity
 import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.settings.fullDeptList
-import com.kongjak.koreatechboard.ui.state.NetworkState
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
-import com.kongjak.koreatechboard.ui.viewmodel.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 
 @Composable
 fun BoardScreen(boardInitViewModel: BoardInitViewModel = hiltViewModel()) {
-    val initDepartment by boardInitViewModel.initDepartment.observeAsState(0)
-    val userDepartment by boardInitViewModel.userDepartment.observeAsState(0)
+    val uiState by boardInitViewModel.uiState.collectAsState()
+    val initDepartment = uiState.initDepartment
+    val userDepartment = uiState.userDepartment
     BottomSheetScaffold(fullDeptList[initDepartment], userDepartment)
 }
 
@@ -140,23 +140,24 @@ fun Board(contentPadding: PaddingValues, department: Department) {
 fun BoardContent(
     department: Department,
     page: Int,
-    boardViewModel: BoardViewModel = hiltViewModel(),
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
-    val lazyPostList =
+    val boardViewModel =
+        hiltViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
+
+    LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
         boardViewModel.getAPI(department.name, department.boards[page].board)
-            .collectAsLazyPagingItems()
+    }
+
+    val uiState by boardViewModel.uiState.collectAsState()
+    val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
     val pullRefreshState =
         rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, {
-            boardViewModel.cleanUpCachedData(
-                site = department.name,
-                board = department.boards[page].board
-            )
             lazyPostList.refresh()
         })
 
-    val showArticleNumber by boardViewModel.showNumber.observeAsState(true)
+    val showArticleNumber = uiState.showNumber
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -169,13 +170,13 @@ fun BoardContent(
             SnackbarHost(hostState = snackbarHostState)
         },
         content = { contentPadding ->
-            val prevNetworkState by networkViewModel.prevNetworkState.observeAsState(NetworkState.Unknown)
-            val networkState by networkViewModel.networkState.observeAsState(NetworkState.Unknown)
+            val networkState by networkViewModel.uiState.collectAsState()
+            val isNetworkConnected = networkState.isConnected
 
             LaunchedEffect(key1 = networkState) {
-                if (networkState == NetworkState.Disconnected) {
+                if (!isNetworkConnected) {
                     snackbarHostState.showSnackbar(context.getString(R.string.network_unavailable))
-                } else if (networkState == NetworkState.Connected && prevNetworkState == NetworkState.Disconnected) {
+                } else if (isNetworkConnected) {
                     lazyPostList.retry()
                 }
             }
@@ -186,12 +187,12 @@ fun BoardContent(
                     .pullRefresh(pullRefreshState)
             ) {
                 if (lazyPostList.itemCount == 0) {
-                    Column (
+                    Column(
                         modifier = Modifier
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ){
+                    ) {
                         Text(text = stringResource(id = R.string.error_no_data))
                     }
                 } else {
@@ -243,8 +244,8 @@ fun BoardContent(
                         }
 
                         lazyPostList.apply {
-                            when (networkState) {
-                                NetworkState.Connected -> {
+                            when (isNetworkConnected) {
+                                true -> {
                                     when {
                                         loadState.refresh is LoadState.Error -> {
                                             val errorMessage =
@@ -259,8 +260,7 @@ fun BoardContent(
                                         }
                                     }
                                 }
-
-                                else -> item { NetworkUnavailable() }
+                                false -> item { NetworkUnavailable() }
                             }
                         }
                     }

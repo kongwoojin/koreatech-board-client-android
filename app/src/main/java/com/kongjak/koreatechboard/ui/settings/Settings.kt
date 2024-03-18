@@ -9,8 +9,8 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -65,45 +65,46 @@ val darkThemeString = listOf(
 @Composable
 fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    val uiState by settingsViewModel.uiState.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        val userDepartment by settingsViewModel.userDepartment.observeAsState()
+        val userDepartment = uiState.userDepartment
 
         ListPreference(
             title = stringResource(id = R.string.setting_user_department_title),
-            summary = stringResource(id = deptListString[userDepartment ?: 0]),
+            summary = stringResource(id = deptListString[userDepartment]),
             itemStringResource = deptListString,
             itemValue = deptListName,
-            selectedIndex = userDepartment ?: 0
+            selectedIndex = userDepartment
         ) { item ->
-            settingsViewModel.setUserDepartment(item)
+            settingsViewModel.sendEvent(SettingsEvent.SetUserDepartment(item))
         }
 
-        val initDepartment by settingsViewModel.initDepartment.observeAsState()
+        val initDepartment = uiState.initDepartment
 
         val initDeptList = listOf(
             Department.School,
             Department.Dorm,
-            deptList[userDepartment ?: 0]
+            deptList[userDepartment]
         )
 
         ListPreference(
             title = stringResource(id = R.string.setting_default_board_title),
-            summary = stringResource(id = initDeptList.map { it.stringResource }[initDepartment ?: 0]),
+            summary = stringResource(id = initDeptList.map { it.stringResource }[initDepartment]),
             itemStringResource = initDeptList.map { it.stringResource },
             itemValue = initDeptList.map { it.name },
-            selectedIndex = initDepartment ?: 0
+            selectedIndex = initDepartment
         ) { item ->
-            settingsViewModel.setInitDepartment(item)
+            settingsViewModel.sendEvent(SettingsEvent.SetInitDepartment(item))
         }
 
-        val showNumber by settingsViewModel.showNumber.observeAsState(true)
+        val showNumber = uiState.showNumber
 
         SwitchPreference(
             title = stringResource(id = R.string.setting_show_article_number_title),
             summary = stringResource(id = R.string.setting_show_article_number_summary),
             checked = showNumber,
-            onCheckedChange = { settingsViewModel.setShowArticleNumber(it) }
+            onCheckedChange = { settingsViewModel.sendEvent(SettingsEvent.SetShowArticleNumber(it)) }
         )
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_info))
@@ -130,7 +131,10 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
                 Intent.EXTRA_EMAIL,
                 arrayOf(context.getString(R.string.setting_mail_address))
             )
-            mailIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.setting_mail_subject))
+            mailIntent.putExtra(
+                Intent.EXTRA_SUBJECT,
+                context.getString(R.string.setting_mail_subject)
+            )
             mailIntent.putExtra(
                 Intent.EXTRA_TEXT,
                 context.getString(R.string.setting_mail_text, Build.MODEL, Build.VERSION.SDK_INT)
@@ -149,27 +153,27 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         PreferenceHeader(title = stringResource(id = R.string.setting_header_theme))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val isChecked by settingsViewModel.isDynamicTheme.observeAsState(true)
+            val isChecked = uiState.isDynamicTheme
 
             SwitchPreference(
                 title = stringResource(id = R.string.setting_dynamic_theme_title),
                 checked = isChecked,
-                onCheckedChange = { settingsViewModel.setDynamicTheme(it) }
+                onCheckedChange = { settingsViewModel.sendEvent(SettingsEvent.SetDynamicTheme(it)) }
             )
         }
 
-        val isDarkTheme by settingsViewModel.isDarkTheme.observeAsState()
+        val isDarkTheme = uiState.isDarkTheme
 
         ListPreference(
             title = stringResource(id = R.string.setting_dark_theme_title),
             summary = stringResource(
-                id = darkThemeString[isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT]
+                id = darkThemeString[isDarkTheme]
             ),
             itemStringResource = darkThemeString,
             itemValue = darkTheme,
-            selectedIndex = isDarkTheme ?: DARK_THEME_SYSTEM_DEFAULT
+            selectedIndex = isDarkTheme
         ) { theme ->
-            settingsViewModel.setDarkTheme(theme)
+            settingsViewModel.sendEvent(SettingsEvent.SetDarkTheme(theme))
         }
     }
 }
