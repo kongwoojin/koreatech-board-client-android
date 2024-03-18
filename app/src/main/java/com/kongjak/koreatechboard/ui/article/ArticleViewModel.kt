@@ -34,7 +34,8 @@ class ArticleViewModel @Inject constructor(
                                         isSuccess = true,
                                         article = it.data,
                                         isLoading = false,
-                                        isLoaded = true
+                                        isLoaded = true,
+                                        url = it.data.articleUrl
                                     )
                                 )
                             }
