@@ -133,11 +133,16 @@ fun RenderText(
     val context = LocalContext.current
     val annotatedString = buildAnnotatedString {
         var needHyperLink = false
+        var needLineBreak = false
         for (data in queue) {
             withStyle(parseSpanStyle(data.attributes["style"] ?: "", isDarkMode)) {
                 if (data.tag == HtmlTags.A) {
                     needHyperLink = true
                 } else {
+                    if (needLineBreak) {
+                        append("\n")
+                        needLineBreak = false
+                    }
                     if (needHyperLink && data.text.isNotBlank()) {
                         pushStringAnnotation(
                             tag = data.text,
@@ -147,10 +152,24 @@ fun RenderText(
                         needHyperLink = false
                     }
                     append(data.text)
+
                 }
             }
             if (data.tag.isBlock || data.tag == HtmlTags.BR) {
-                append("\n")
+                // Only allow two line breaks
+                val text = this.toAnnotatedString()
+                Log.d("RenderText", "${text[text.lastIndex - 1]} ${text[text.lastIndex]}")
+
+                needLineBreak = if (text[text.lastIndex] == '\n') {
+                    if (text.length < 2) continue
+                    if (text[text.lastIndex - 1] == '\n') {
+                        continue
+                    } else {
+                        true
+                    }
+                } else {
+                    true
+                }
             }
         }
     }
