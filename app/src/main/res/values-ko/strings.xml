@@ -81,5 +81,9 @@
 
     <string name="open_in_browser">브라우저에서 열기</string>
     <string name="open_in_browser_failed">브라우저를 열지 못했습니다!</string>
+
+    <!-- Notification -->
     <string name="new_notice_notification_channel">새 공지사항 알림</string>
+    <string name="new_notice_notification_title">새로운 공지사항!</string>
+    <string name="new_notice_notification_content">%s 게시판에 새로운 공지사항이 올라왔습니다.</string>
 </resources>

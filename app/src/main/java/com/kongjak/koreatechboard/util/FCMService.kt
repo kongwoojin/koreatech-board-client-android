@@ -11,6 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.main.MainActivity
+import com.kongjak.koreatechboard.util.routes.Department
 
 class FCMService : FirebaseMessagingService() {
 
@@ -21,7 +22,7 @@ class FCMService : FirebaseMessagingService() {
     private fun sendNotification(message: RemoteMessage) {
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra("screen", message.data["screen"] ?: "home")
+            putExtra("screen", message.data["screen"] ?: "board")
             putExtra("department", message.data["department"])
         }
 
@@ -31,9 +32,11 @@ class FCMService : FirebaseMessagingService() {
 
         val channelId = this.getString(R.string.new_notice_notification_channel_id)
 
+        val department = Department.valueOf(message.data["department"] ?: "school")
+
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(message.notification?.title)
-            .setContentText(message.notification?.body)
+            .setContentTitle(getString(R.string.new_notice_notification_title))
+            .setContentText(getString(R.string.new_notice_notification_content, getString(department.stringResource)))
             .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
