@@ -159,13 +159,15 @@ fun RenderText(
                 // Only allow two line breaks
                 val text = this.toAnnotatedString()
 
-                needLineBreak = if (text[text.lastIndex] == '\n') {
+                needLineBreak = if (text.lastIndex > 0 && text[text.lastIndex] == '\n') {
                     if (text.length < 2) continue
                     if (text[text.lastIndex - 1] == '\n') {
                         continue
                     } else {
                         true
                     }
+                } else if (text.lastIndex <= 0) {
+                    continue
                 } else {
                     true
                 }
