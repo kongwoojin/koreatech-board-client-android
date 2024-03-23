@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.home
+package com.kongjak.koreatechboard.ui.main.home
 
 import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -39,9 +39,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.activity.ArticleActivity
+import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
-import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 

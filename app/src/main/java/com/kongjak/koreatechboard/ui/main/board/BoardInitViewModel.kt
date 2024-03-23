@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.board
+package com.kongjak.koreatechboard.ui.main.board
 
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.GetInitDepartmentUseCase

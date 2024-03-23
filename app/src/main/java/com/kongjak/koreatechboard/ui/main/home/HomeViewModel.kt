@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.home
+package com.kongjak.koreatechboard.ui.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

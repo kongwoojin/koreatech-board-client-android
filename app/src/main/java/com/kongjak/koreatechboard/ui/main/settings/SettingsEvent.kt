@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.settings
+package com.kongjak.koreatechboard.ui.main.settings
 
 import com.kongjak.koreatechboard.ui.base.UiEvent
 

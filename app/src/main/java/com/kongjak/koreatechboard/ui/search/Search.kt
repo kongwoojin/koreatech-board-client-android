@@ -34,9 +34,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.activity.ArticleActivity
-import com.kongjak.koreatechboard.ui.board.BoardError
-import com.kongjak.koreatechboard.ui.board.BoardItem
+import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.main.board.BoardError
+import com.kongjak.koreatechboard.ui.main.board.BoardItem
 import com.kongjak.koreatechboard.util.findActivity
 
 @OptIn(ExperimentalMaterial3Api::class)

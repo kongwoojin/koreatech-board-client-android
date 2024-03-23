@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.activity
+package com.kongjak.koreatechboard.ui.search
 
 import android.os.Bundle
 import android.widget.Toast
@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.search.SearchScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint

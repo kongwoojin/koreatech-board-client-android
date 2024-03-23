@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.activity
+package com.kongjak.koreatechboard.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -30,18 +31,30 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
-import com.kongjak.koreatechboard.ui.board.BoardScreen
-import com.kongjak.koreatechboard.ui.home.HomeScreen
-import com.kongjak.koreatechboard.ui.settings.SettingsScreen
+import com.kongjak.koreatechboard.ui.main.board.BoardScreen
+import com.kongjak.koreatechboard.ui.main.home.HomeScreen
+import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
+import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val mainViewModel: MainViewModel by viewModels()
     private val themeViewModel: ThemeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val defaultScreen = intent.getStringExtra("screen")
+        if (defaultScreen != null) {
+            mainViewModel.setDefaultScreen(BottomNavigationItem.valueOf(defaultScreen))
+        }
+
+        val defaultDepartment = intent.getStringExtra("department")
+        if (defaultDepartment != null) {
+            mainViewModel.setDefaultDepartment(Department.valueOf(defaultDepartment))
+        }
+
         setContent {
             val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
             val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
@@ -53,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainScreen(mainViewModel)
                 }
             }
         }
@@ -61,7 +74,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -72,7 +85,10 @@ fun MainScreen() {
         },
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
-                NavigationGraph(navController = navController)
+                NavigationGraph(
+                    navController = navController,
+                    mainViewModel = mainViewModel
+                )
             }
         }
     )
@@ -133,13 +149,16 @@ fun BottomNavigation(navController: NavHostController) {
 }
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavigationItem.Home.name) {
+fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewModel) {
+    val uiState by mainViewModel.uiState.collectAsState()
+    val defaultScreen = uiState.defaultScreen
+    val defaultDepartment = uiState.defaultDepartment
+    NavHost(navController = navController, startDestination = defaultScreen.name) {
         composable(BottomNavigationItem.Home.name) {
             HomeScreen()
         }
         composable(BottomNavigationItem.Board.name) {
-            BoardScreen()
+            BoardScreen(defaultDepartment = defaultDepartment)
         }
         composable(BottomNavigationItem.Settings.name) {
             SettingsScreen()

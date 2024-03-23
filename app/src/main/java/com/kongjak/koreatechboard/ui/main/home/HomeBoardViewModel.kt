@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.home
+package com.kongjak.koreatechboard.ui.main.home
 
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.ResponseResult

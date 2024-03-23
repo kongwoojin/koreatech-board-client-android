@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.settings
+package com.kongjak.koreatechboard.ui.main.settings
 
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.ui.base.UiState

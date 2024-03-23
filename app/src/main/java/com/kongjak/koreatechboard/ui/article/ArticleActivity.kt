@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.activity
+package com.kongjak.koreatechboard.ui.article
 
 import android.content.Context
 import android.net.Uri
@@ -31,8 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.article.ArticleScreen
-import com.kongjak.koreatechboard.ui.article.ArticleViewModel
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel

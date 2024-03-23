@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.board
+package com.kongjak.koreatechboard.ui.main.board
 
 import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -72,22 +72,25 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.activity.ArticleActivity
-import com.kongjak.koreatechboard.ui.activity.SearchActivity
+import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.ui.main.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
-import com.kongjak.koreatechboard.ui.settings.deptList
-import com.kongjak.koreatechboard.ui.settings.fullDeptList
+import com.kongjak.koreatechboard.ui.search.SearchActivity
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 
 @Composable
-fun BoardScreen(boardInitViewModel: BoardInitViewModel = hiltViewModel()) {
+fun BoardScreen(
+    boardInitViewModel: BoardInitViewModel = hiltViewModel(),
+    defaultDepartment: Department? // Default department from MainActivity.
+) {
     val uiState by boardInitViewModel.uiState.collectAsState()
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
-    BottomSheetScaffold(fullDeptList[initDepartment], userDepartment)
+    BottomSheetScaffold(defaultDepartment ?: fullDeptList[initDepartment], userDepartment)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -260,6 +263,7 @@ fun BoardContent(
                                         }
                                     }
                                 }
+
                                 false -> item { NetworkUnavailable() }
                             }
                         }

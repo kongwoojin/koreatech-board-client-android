@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.home
+package com.kongjak.koreatechboard.ui.main.home
 
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.ui.base.UiState
