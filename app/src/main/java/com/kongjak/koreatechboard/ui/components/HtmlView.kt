@@ -158,7 +158,6 @@ fun RenderText(
             if (data.tag.isBlock || data.tag == HtmlTags.BR) {
                 // Only allow two line breaks
                 val text = this.toAnnotatedString()
-                Log.d("RenderText", "${text[text.lastIndex - 1]} ${text[text.lastIndex]}")
 
                 needLineBreak = if (text[text.lastIndex] == '\n') {
                     if (text.length < 2) continue
