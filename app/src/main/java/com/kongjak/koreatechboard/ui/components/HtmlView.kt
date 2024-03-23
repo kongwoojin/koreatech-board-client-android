@@ -93,11 +93,6 @@ fun HtmlView(
         queue.add(HtmlData(tag, attributes, text))
     }
 
-    // Remove blank from back
-    while (queue.size > 0 && queue.last().text.isBlank()) {
-        queue.removeLast()
-    }
-
     val tmpQueue = ArrayDeque<HtmlData>()
     val urlList = ArrayDeque<String>()
 
