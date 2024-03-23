@@ -11,6 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version Versions.Kotlin.kotlin apply false
     id("com.google.devtools.ksp") version Versions.ksp apply false
     id("com.google.dagger.hilt.android") version Versions.Hilt.hilt apply false
+    id("com.google.gms.google-services") version Versions.Google.googleService apply false
 }
 
 tasks.register("clean",Delete::class){

@@ -19,7 +19,7 @@ object RetrofitBuilder {
     private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v3/"
 
     private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
-        API_PRODUCTION
+        API_DEVELOPMENT
     } else {
         API_DEVELOPMENT
     }

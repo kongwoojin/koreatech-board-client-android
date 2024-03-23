@@ -41,4 +41,28 @@ class SettingsRepositoryImpl @Inject constructor(
     override fun getShowArticleNumber(): Flow<Boolean> {
         return settingsLocalDataSource.getShowArticleNumber()
     }
+
+    override suspend fun setSchoolNoticeSubscribe(state: Boolean) {
+        settingsLocalDataSource.setSchoolNoticeSubscribe(state)
+    }
+
+    override fun getSchoolNoticeSubscribe(): Flow<Boolean> {
+        return settingsLocalDataSource.getSchoolNoticeSubscribe()
+    }
+
+    override suspend fun setDormNoticeSubscribe(state: Boolean) {
+        settingsLocalDataSource.setDormNoticeSubscribe(state)
+    }
+
+    override fun getDormNoticeSubscribe(): Flow<Boolean> {
+        return settingsLocalDataSource.getDormNoticeSubscribe()
+    }
+
+    override suspend fun setDepartmentNoticeSubscribe(state: Boolean) {
+        settingsLocalDataSource.setDepartmentNoticeSubscribe(state)
+    }
+
+    override fun getDepartmentNoticeSubscribe(): Flow<Boolean> {
+        return settingsLocalDataSource.getDepartmentNoticeSubscribe()
+    }
 }

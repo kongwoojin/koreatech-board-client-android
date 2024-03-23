@@ -8,5 +8,8 @@ data class SettingsState(
     val initDepartment: Int = 0,
     val isDynamicTheme: Boolean = true,
     val isDarkTheme: Int = DARK_THEME_SYSTEM_DEFAULT,
-    val showNumber: Boolean = true
+    val showNumber: Boolean = true,
+    val subscribeSchool: Boolean = false,
+    val subscribeDepartment: Boolean = false,
+    val subscribeDormitory: Boolean = false
 ) : UiState

@@ -43,6 +43,7 @@
     <!-- Settings -->
     <string name="setting_header_info">Info</string>
     <string name="setting_header_theme">Theme</string>
+    <string name="setting_header_notification">Notification</string>
 
     <string name="setting_user_department_title">Department</string>
     <string name="setting_user_department_summary">Select your department</string>
@@ -54,6 +55,12 @@
     <string name="setting_dark_theme_light">Light theme</string>
     <string name="setting_show_article_number_title">Show article number</string>
     <string name="setting_show_article_number_summary">Show article number with title in board page</string>
+    <string name="setting_subscribe_new_notice_school">Subscribe new notices of School</string>
+    <string name="setting_subscribe_new_notice_summary_school">Receive notification when new school notice posted</string>
+    <string name="setting_subscribe_new_notice_dorm">Subscribe new notices of Dormitory</string>
+    <string name="setting_subscribe_new_notice_summary_dorm">Receive notification when new dormitory notice posted</string>
+    <string name="setting_subscribe_new_notice_department">Subscribe new notices of department</string>
+    <string name="setting_subscribe_new_notice_summary_department">Receive notification when new department notice posted</string>
     <string name="setting_license_title">Opensource License</string>
     <string name="setting_source_code_title">Source Code</string>
     <string name="setting_enquiry_mail_title">Send email</string>
@@ -77,4 +84,6 @@
 
     <string name="open_in_browser">Open in browser</string>
     <string name="open_in_browser_failed">Failed to open browser!</string>
+    <string name="new_notice_notification_channel_id" translatable="false">1001</string>
+    <string name="new_notice_notification_channel">New notice notification</string>
 </resources>
