@@ -1,9 +1,8 @@
 name: Build debug APK
 on:
-  workflow_run:
-    workflows: ["Lint Check"]
-    types:
-      - completed
+  push:
+    branches:
+      - '**'
 
 jobs:
   build:
