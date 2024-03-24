@@ -52,9 +52,6 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 
-      - name: Generate google-services.json
-        run: echo "$GOOGLE_SERVICES_JSON" > app/google-services.json
-
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
