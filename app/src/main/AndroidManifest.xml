@@ -37,7 +37,7 @@
             android:name=".ui.article.ArticleActivity"
             android:exported="false" />
         <service
-            android:name=".util.FCMService"
+            android:name=".service.FCMService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
