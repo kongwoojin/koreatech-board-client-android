@@ -4,6 +4,8 @@ import android.os.Build
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
+import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
 import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetDepartmentNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.GetDormNoticeSubscribe
@@ -21,8 +23,6 @@ import com.kongjak.koreatechboard.domain.usecase.SetSchoolNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.SetShowArticleNumberUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
-import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
-import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

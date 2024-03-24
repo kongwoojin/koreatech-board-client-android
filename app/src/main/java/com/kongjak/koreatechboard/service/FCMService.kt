@@ -26,7 +26,10 @@ class FCMService : FirebaseMessagingService() {
         }
 
         val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_IMMUTABLE
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         val channelId = this.getString(R.string.new_notice_notification_channel_id)

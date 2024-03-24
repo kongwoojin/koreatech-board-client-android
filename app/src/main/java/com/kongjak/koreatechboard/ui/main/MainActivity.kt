@@ -3,7 +3,6 @@ package com.kongjak.koreatechboard.ui.main
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -37,8 +36,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
@@ -48,10 +45,6 @@ import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -191,17 +184,18 @@ fun RequestNotificationPermissionDialog() {
         rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
 
     if (!permissionState.status.isGranted) {
-        if (permissionState.status.shouldShowRationale) RationaleDialog()
-        else PermissionDialog { permissionState.launchPermissionRequest() }
+        if (permissionState.status.shouldShowRationale) {
+            RationaleDialog()
+        } else {
+            PermissionDialog { permissionState.launchPermissionRequest() }
+        }
     }
 }
 
 @Composable
 fun RationaleDialog() {
-
 }
 
 @Composable
 fun PermissionDialog(content: () -> Unit) {
-
 }

@@ -71,9 +71,11 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
     val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(scrollState)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         val userDepartment = uiState.userDepartment
 
         ListPreference(
