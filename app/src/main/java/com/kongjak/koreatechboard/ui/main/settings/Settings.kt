@@ -27,7 +27,6 @@ import com.kongjak.koreatechboard.ui.components.ListPreference
 import com.kongjak.koreatechboard.ui.components.Preference
 import com.kongjak.koreatechboard.ui.components.PreferenceHeader
 import com.kongjak.koreatechboard.ui.components.SwitchPreference
-import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department

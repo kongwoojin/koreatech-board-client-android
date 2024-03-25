@@ -48,7 +48,8 @@ fun BasicDialog(
                 )
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(), horizontalArrangement = Arrangement.End
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { onDismiss() }) {
                         Text(text = onDismissString)

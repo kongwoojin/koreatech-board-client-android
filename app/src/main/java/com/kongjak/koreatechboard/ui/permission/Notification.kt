@@ -21,7 +21,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.components.BasicDialog
 
-
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun CheckNotificationPermission() {
@@ -71,7 +70,8 @@ private fun RationaleDialog() {
             },
             onDismiss = {
                 showDialog = false
-            })
+            }
+        )
     }
 }
 
@@ -94,6 +94,7 @@ private fun PermissionDialog(content: () -> Unit) {
                     Toast.LENGTH_SHORT
                 ).show()
                 showDialog = false
-            })
+            }
+        )
     }
 }
