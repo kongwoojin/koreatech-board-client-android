@@ -189,7 +189,7 @@ fun BoardContent(
                     .fillMaxSize()
                     .pullRefresh(pullRefreshState)
             ) {
-                if (lazyPostList.itemCount == 0) {
+                if ((lazyPostList.loadState.refresh is LoadState.NotLoading) && lazyPostList.itemCount == 0) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
