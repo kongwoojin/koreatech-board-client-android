@@ -41,6 +41,10 @@ object Dependencies {
         const val ossLicensePlugin = "com.google.android.gms:oss-licenses-plugin:${Versions.Google.ossLicensePlugin}"
 
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.Google.hilt}"
+
+        const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.Google.firebaseBom}"
+        const val firebaseMessaging = "com.google.firebase:firebase-messaging-ktx"
+        const val permission = "com.google.accompanist:accompanist-permissions:${Versions.Google.permission}"
     }
 
     object Kotlin {

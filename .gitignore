@@ -161,3 +161,8 @@ lint/tmp/
 # Android Profiling
 *.hprof
 
+# Firebase
+.idea
+**/node_modules/*
+**/.firebaserc
+*/google-services.json

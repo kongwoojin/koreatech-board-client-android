@@ -35,6 +35,11 @@ object Versions {
         const val material = "1.9.0"
         const val ossLicense = "17.0.1"
         const val ossLicensePlugin = "0.10.6"
+
+        const val firebaseBom = "32.8.0"
+
+        const val googleService = "4.4.1"
+        const val permission = "0.30.1"
     }
 
     object Hilt {

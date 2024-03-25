@@ -12,6 +12,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.jlleitschuh.gradle.ktlint") version Versions.ktlint
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
     kotlin("kapt")
     kotlin("plugin.parcelize")
 }
@@ -113,6 +114,10 @@ dependencies {
     implementation(Dependencies.Google.hilt)
     implementation(Dependencies.Google.material)
     implementation(Dependencies.Google.ossLicense)
+
+    implementation(platform(Dependencies.Google.firebaseBom))
+    implementation(Dependencies.Google.firebaseMessaging)
+    implementation(Dependencies.Google.permission)
 
     kapt(Dependencies.Google.hiltCompiler)
     ksp(Dependencies.Etc.glideKsp)

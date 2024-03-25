@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +27,8 @@ import com.kongjak.koreatechboard.ui.components.ListPreference
 import com.kongjak.koreatechboard.ui.components.Preference
 import com.kongjak.koreatechboard.ui.components.PreferenceHeader
 import com.kongjak.koreatechboard.ui.components.SwitchPreference
+import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
+import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department
 
 val deptList = listOf(
@@ -67,7 +71,13 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val uiState by settingsViewModel.uiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
         val userDepartment = uiState.userDepartment
 
         ListPreference(
@@ -77,7 +87,14 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             itemValue = deptListName,
             selectedIndex = userDepartment
         ) { item ->
+            val subscribe = uiState.subscribeDepartment
+            if (subscribe) {
+                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(false))
+            }
             settingsViewModel.sendEvent(SettingsEvent.SetUserDepartment(item))
+            if (subscribe) {
+                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(true))
+            }
         }
 
         val initDepartment = uiState.initDepartment
@@ -105,6 +122,49 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             summary = stringResource(id = R.string.setting_show_article_number_summary),
             checked = showNumber,
             onCheckedChange = { settingsViewModel.sendEvent(SettingsEvent.SetShowArticleNumber(it)) }
+        )
+
+        PreferenceHeader(title = stringResource(id = R.string.setting_header_notification))
+
+        val isNotificationPermissionGranted =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                isNotificationPermissionGranted()
+            } else {
+                true
+            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
+            RequestNotificationPermission()
+        }
+
+        SwitchPreference(
+            title = stringResource(id = R.string.setting_subscribe_new_notice_school),
+            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
+            checked = uiState.subscribeSchool,
+            enabled = isNotificationPermissionGranted,
+            onCheckedChange = {
+                settingsViewModel.sendEvent(SettingsEvent.UpdateSchoolSubscribe(it))
+            }
+        )
+
+        SwitchPreference(
+            title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
+            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
+            checked = uiState.subscribeDormitory,
+            enabled = isNotificationPermissionGranted,
+            onCheckedChange = {
+                settingsViewModel.sendEvent(SettingsEvent.UpdateDormSubscribe(it))
+            }
+        )
+
+        SwitchPreference(
+            title = stringResource(id = R.string.setting_subscribe_new_notice_department),
+            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
+            checked = uiState.subscribeDepartment,
+            enabled = isNotificationPermissionGranted,
+            onCheckedChange = {
+                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(it))
+            }
         )
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_info))

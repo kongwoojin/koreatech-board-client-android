@@ -15,13 +15,14 @@ fun SwitchPreference(
     modifier: Modifier = Modifier,
     title: String,
     checked: Boolean,
+    enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
     BasicPreference(modifier = modifier, title = title, onClick = {
-        onCheckedChange(!checked)
+        if (enabled) onCheckedChange(!checked)
     }, content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-                Switch(checked = checked, onCheckedChange = onCheckedChange)
+                Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
             }
         })
 }
@@ -33,13 +34,14 @@ fun SwitchPreference(
     title: String,
     summary: String,
     checked: Boolean,
+    enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
     BasicPreference(modifier = modifier, title = title, summary = summary, onClick = {
-        onCheckedChange(!checked)
+        if (enabled) onCheckedChange(!checked)
     }, content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-                Switch(checked = checked, onCheckedChange = onCheckedChange)
+                Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
             }
         })
 }
@@ -51,13 +53,14 @@ fun SwitchPreference(
     icon: ImageVector,
     title: String,
     checked: Boolean,
+    enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
     BasicPreference(modifier = modifier, icon = icon, title = title, onClick = {
-        onCheckedChange(!checked)
+        if (enabled) onCheckedChange(!checked)
     }, content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-                Switch(checked = checked, onCheckedChange = onCheckedChange)
+                Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
             }
         })
 }
@@ -70,13 +73,14 @@ fun SwitchPreference(
     title: String,
     summary: String,
     checked: Boolean,
+    enabled: Boolean = true,
     onCheckedChange: (Boolean) -> Unit
 ) {
     BasicPreference(modifier = modifier, icon = icon, title = title, summary = summary, onClick = {
-        onCheckedChange(!checked)
+        if (enabled) onCheckedChange(!checked)
     }, content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
-                Switch(checked = checked, onCheckedChange = onCheckedChange)
+                Switch(checked = checked, onCheckedChange = onCheckedChange, enabled = enabled)
             }
         })
 }
