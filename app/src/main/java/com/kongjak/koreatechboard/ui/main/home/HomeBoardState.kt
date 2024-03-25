@@ -6,7 +6,7 @@ import com.kongjak.koreatechboard.ui.base.UiState
 data class HomeBoardState(
     val isLoaded: Boolean = false,
     val isSuccess: Boolean = false,
-    val boardList: Map<String, List<BoardData>?> = emptyMap(),
+    val boardData: List<BoardData> = emptyList(),
     val statusCode: Int = 0,
     val error: String = ""
 ) : UiState

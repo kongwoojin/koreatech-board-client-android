@@ -189,7 +189,7 @@ fun BoardContent(
                     .fillMaxSize()
                     .pullRefresh(pullRefreshState)
             ) {
-                if (lazyPostList.itemCount == 0) {
+                if ((lazyPostList.loadState.refresh is LoadState.NotLoading) && lazyPostList.itemCount == 0) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
@@ -208,7 +208,7 @@ fun BoardContent(
                         ),
                         modifier = Modifier
                             .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         items(lazyPostList.itemCount) { index ->

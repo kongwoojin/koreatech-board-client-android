@@ -78,8 +78,7 @@ fun HomeScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoardInMain(
-    department: Department,
-    homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
+    department: Department
 ) {
     val context = LocalContext.current
 
@@ -96,16 +95,6 @@ fun BoardInMain(
     var key by remember {
         mutableStateOf(department.boards[0].board)
     }
-
-    LaunchedEffect(key1 = tabIndex) {
-        homeBoardViewModel.getApi(department.name, key)
-    }
-
-    val uiState = homeBoardViewModel.uiState.collectAsState()
-    val isSuccess = uiState.value.isSuccess
-    val isLoaded = uiState.value.isLoaded
-    val boardList = uiState.value.boardList
-    val statusCode = uiState.value.statusCode
 
     Card(
         modifier = Modifier
@@ -145,6 +134,18 @@ fun BoardInMain(
             ) { page ->
                 key = department.boards[page].board
 
+                val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = "${department.name}:$key")
+
+                LaunchedEffect(Unit) {
+                    homeBoardViewModel.getApi(department.name, key)
+                }
+
+                val uiState = homeBoardViewModel.uiState.collectAsState()
+                val isSuccess = uiState.value.isSuccess
+                val isLoaded = uiState.value.isLoaded
+                val boardData = uiState.value.boardData
+                val statusCode = uiState.value.statusCode
+
                 if (!isLoaded) {
                     Column(
                         modifier = Modifier
@@ -156,7 +157,7 @@ fun BoardInMain(
                     }
                 } else {
                     if (isSuccess && statusCode == 200) {
-                        if (boardList[key] == null) {
+                        if (boardData.isEmpty()) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -167,7 +168,7 @@ fun BoardInMain(
                             }
                         } else {
                             Column {
-                                boardList[key]!!.forEach { data ->
+                                boardData.forEach { data ->
                                     Box(
                                         modifier = Modifier
                                             .clickable {
