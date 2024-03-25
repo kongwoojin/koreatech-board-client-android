@@ -91,6 +91,12 @@
     <string name="new_notice_notification_title">New notice!</string>
     <string name="new_notice_notification_content">New notice posted on %s.</string>
 
+    <!-- Permission -->
+    <string name="permission_notification_request_title">Notification permission requested!</string>
+    <string name="permission_notification_request_content">Notification permission is needed to receive new notice!\n Press confirm to allow permission!</string>
+    <string name="permission_notification_request_rationale_content">Notification permission is needed to receive new notice!\n Press confirm to open setting and allow permission!</string>
+    <string name="permission_notification_denied">Notification permission denied!</string>
+
     <!-- Component -->
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_dismiss">Dismiss</string>
