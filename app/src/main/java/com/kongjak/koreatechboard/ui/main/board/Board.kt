@@ -208,7 +208,7 @@ fun BoardContent(
                         ),
                         modifier = Modifier
                             .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         items(lazyPostList.itemCount) { index ->
