@@ -86,4 +86,8 @@
     <string name="new_notice_notification_channel">새 공지사항 알림</string>
     <string name="new_notice_notification_title">새로운 공지사항!</string>
     <string name="new_notice_notification_content">%s 게시판에 새로운 공지사항이 올라왔습니다.</string>
+
+    <!-- Component -->
+    <string name="dialog_confirm">확인</string>
+    <string name="dialog_dismiss">취소</string>
 </resources>

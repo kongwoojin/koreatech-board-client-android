@@ -90,4 +90,8 @@
     <string name="new_notice_notification_channel">New notice notification</string>
     <string name="new_notice_notification_title">New notice!</string>
     <string name="new_notice_notification_content">New notice posted on %s.</string>
+
+    <!-- Component -->
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_dismiss">Dismiss</string>
 </resources>
