@@ -27,6 +27,9 @@ import com.kongjak.koreatechboard.ui.components.ListPreference
 import com.kongjak.koreatechboard.ui.components.Preference
 import com.kongjak.koreatechboard.ui.components.PreferenceHeader
 import com.kongjak.koreatechboard.ui.components.SwitchPreference
+import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
+import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
+import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department
 
 val deptList = listOf(
@@ -124,10 +127,22 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_notification))
 
+        val isNotificationPermissionGranted =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                isNotificationPermissionGranted()
+            } else {
+                true
+            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
+            RequestNotificationPermission()
+        }
+
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_school),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
             checked = uiState.subscribeSchool,
+            enabled = isNotificationPermissionGranted,
             onCheckedChange = {
                 settingsViewModel.sendEvent(SettingsEvent.UpdateSchoolSubscribe(it))
             }
@@ -137,6 +152,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
             checked = uiState.subscribeDormitory,
+            enabled = isNotificationPermissionGranted,
             onCheckedChange = {
                 settingsViewModel.sendEvent(SettingsEvent.UpdateDormSubscribe(it))
             }
@@ -146,6 +162,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             title = stringResource(id = R.string.setting_subscribe_new_notice_department),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
             checked = uiState.subscribeDepartment,
+            enabled = isNotificationPermissionGranted,
             onCheckedChange = {
                 settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(it))
             }
