@@ -38,7 +38,7 @@ var TextView.htmlText: String?
             val htmlText = Html.fromHtml(
                 value.toString(),
                 HtmlCompat.FROM_HTML_MODE_COMPACT,
-                GlideImageGetter(this),
+                HtmlImageGetter(this),
                 null
             )
             text = htmlText

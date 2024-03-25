@@ -105,9 +105,7 @@ dependencies {
     implementation(Dependencies.AndroidX.pagingRuntimeKtx)
     implementation(platform(Dependencies.AndroidX.composeBom))
 
-    implementation(Dependencies.Etc.glide)
-    implementation(Dependencies.Etc.glideOkhttp3)
-    implementation(Dependencies.Etc.glideAnnotation)
+    implementation(Dependencies.Etc.coil)
     implementation(Dependencies.Etc.retrofit2)
     implementation(Dependencies.Etc.retrofit2Gson)
 

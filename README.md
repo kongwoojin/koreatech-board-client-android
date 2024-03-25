@@ -6,7 +6,7 @@
 
 ## 사용된 라이브러리
 * [Retrofit2](https://square.github.io/retrofit/)
-* [Glide](https://github.com/bumptech/glide)
+* [Coil](https://coil-kt.github.io/coil/)
 * [AndroidX](https://developer.android.com/jetpack/androidx)
 * [Hilt](https://dagger.dev/hilt/)
 
