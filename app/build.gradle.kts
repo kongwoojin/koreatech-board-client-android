@@ -12,7 +12,6 @@ plugins {
     alias(libs.plugins.koreatechboard.hilt)
     id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     kotlin("plugin.parcelize")
 }
