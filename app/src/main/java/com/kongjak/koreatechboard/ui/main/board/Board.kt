@@ -147,7 +147,6 @@ fun BottomSheetScaffold(
     }
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Board(
@@ -373,10 +372,11 @@ fun BoardItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            style = if (shouldSetBold)
+            style = if (shouldSetBold) {
                 MaterialTheme.typography.boardItemTitle.copy(fontWeight = FontWeight.Bold)
-            else
+            } else {
                 MaterialTheme.typography.boardItemTitle
+            }
         )
         Column(
             modifier = Modifier.padding(start = 8.dp),
