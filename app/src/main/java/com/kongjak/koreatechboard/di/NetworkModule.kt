@@ -1,6 +1,7 @@
-package com.kongjak.koreatechboard.data.api
+package com.kongjak.koreatechboard.di
 
 import com.kongjak.koreatechboard.data.BuildConfig
+import com.kongjak.koreatechboard.data.api.API
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitBuilder {
-
+object NetworkModule {
     private const val API_PRODUCTION = "https://api.kongjak.com/v3/"
     private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v3/"
 
