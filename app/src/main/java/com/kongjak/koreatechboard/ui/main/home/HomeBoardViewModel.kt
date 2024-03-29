@@ -12,8 +12,8 @@ import javax.inject.Inject
 class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) :
     BaseViewModel<HomeBoardState, HomeBoardEvent>(HomeBoardState()) {
 
-    fun getApi(site: String, board: String) {
-        sendEvent(HomeBoardEvent.FetchData(site, board))
+    fun getApi(department: String, board: String) {
+        sendEvent(HomeBoardEvent.FetchData(department, board))
     }
 
     override fun reduce(oldState: HomeBoardState, event: HomeBoardEvent) {

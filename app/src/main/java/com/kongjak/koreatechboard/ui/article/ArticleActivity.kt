@@ -45,7 +45,7 @@ class ArticleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val uuid = UUID.fromString(intent.getStringExtra("uuid"))
-        val department = intent.getStringExtra("site")!!
+        val department = intent.getStringExtra("department")!!
 
         setContent {
             ArticleMain(department = department, uuid = uuid)

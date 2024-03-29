@@ -275,7 +275,7 @@ fun BoardContent(
                                             onClick = {
                                                 val intent =
                                                     Intent(context, ArticleActivity::class.java)
-                                                intent.putExtra("site", department.name)
+                                                intent.putExtra("department", department.name)
                                                 intent.putExtra("uuid", it.uuid.toString())
                                                 context.startActivity(intent)
                                             }
@@ -438,7 +438,7 @@ fun SearchFAB(department: Department, index: Int) {
                                     showDialog = false
                                     val intent = Intent(context, SearchActivity::class.java)
                                     intent.putExtra(
-                                        "site",
+                                        "department",
                                         department.name
                                     )
                                     intent.putExtra(
@@ -463,7 +463,7 @@ fun SearchFAB(department: Department, index: Int) {
                                 showDialog = false
                                 val intent = Intent(context, SearchActivity::class.java)
                                 intent.putExtra(
-                                    "site",
+                                    "department",
                                     department.name
                                 )
                                 intent.putExtra(

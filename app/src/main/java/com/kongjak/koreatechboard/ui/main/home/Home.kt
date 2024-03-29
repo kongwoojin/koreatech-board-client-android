@@ -173,7 +173,7 @@ fun BoardInHome(
                                         modifier = Modifier
                                             .clickable {
                                                 val intent = Intent(context, ArticleActivity::class.java)
-                                                intent.putExtra("site", department.name)
+                                                intent.putExtra("department", department.name)
                                                 intent.putExtra("uuid", data.uuid.toString())
                                                 context.startActivity(intent)
                                             }

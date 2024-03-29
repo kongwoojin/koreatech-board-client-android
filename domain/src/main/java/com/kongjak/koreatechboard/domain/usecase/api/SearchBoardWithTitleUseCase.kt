@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SearchBoardWithTitleUseCase @Inject constructor(private val boardRepository: BoardRepository) {
-    operator fun invoke(site: String, board: String, title: String): Flow<PagingData<BoardData>> {
-        return boardRepository.searchTitle(site, board, title)
+    operator fun invoke(department: String, board: String, title: String): Flow<PagingData<BoardData>> {
+        return boardRepository.searchTitle(department, board, title)
     }
 }

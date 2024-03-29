@@ -24,7 +24,7 @@ class SearchActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val site = intent.getStringExtra("site")!!
+        val department = intent.getStringExtra("department")!!
         val board = intent.getStringExtra("board")!!
         val title = intent.getStringExtra("title")!!
 
@@ -45,7 +45,7 @@ class SearchActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SearchScreen(site, board, title)
+                    SearchScreen(department, board, title)
                 }
             }
         }

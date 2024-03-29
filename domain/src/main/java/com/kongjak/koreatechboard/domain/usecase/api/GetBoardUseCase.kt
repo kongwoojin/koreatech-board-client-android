@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetBoardUseCase @Inject constructor(private val boardRepository: BoardRepository) {
-    operator fun invoke(site: String, board: String): Flow<PagingData<BoardData>> {
-        return boardRepository.getBoard(site, board)
+    operator fun invoke(department: String, board: String): Flow<PagingData<BoardData>> {
+        return boardRepository.getBoard(department, board)
     }
 }

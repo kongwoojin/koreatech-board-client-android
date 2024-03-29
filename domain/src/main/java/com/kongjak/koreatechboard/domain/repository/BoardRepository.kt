@@ -7,7 +7,7 @@ import com.kongjak.koreatechboard.domain.model.BoardData
 import kotlinx.coroutines.flow.Flow
 
 interface BoardRepository {
-    fun getBoard(site: String, board: String): Flow<PagingData<BoardData>>
-    suspend fun getBoardMinimum(site: String, board: String): ResponseResult<Board>
-    fun searchTitle(site: String, board: String, title: String): Flow<PagingData<BoardData>>
+    fun getBoard(department: String, board: String): Flow<PagingData<BoardData>>
+    suspend fun getBoardMinimum(department: String, board: String): ResponseResult<Board>
+    fun searchTitle(department: String, board: String, title: String): Flow<PagingData<BoardData>>
 }
