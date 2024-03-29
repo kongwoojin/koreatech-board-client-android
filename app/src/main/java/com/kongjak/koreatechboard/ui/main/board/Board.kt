@@ -160,7 +160,6 @@ fun BoardContent(
     val uiState by boardViewModel.uiState.collectAsState()
     val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
-
     if (pullToRefreshState.isRefreshing) {
         LaunchedEffect(true) {
             lazyPostList.refresh()
