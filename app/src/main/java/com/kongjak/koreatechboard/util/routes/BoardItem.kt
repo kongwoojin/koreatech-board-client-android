@@ -58,8 +58,7 @@ val schoolBoards = listOf(
 )
 
 val dormBoards = listOf(
-    BoardItem.Notice,
-    BoardItem.Free
+    BoardItem.Notice
 )
 
 val iteBoards = listOf(
