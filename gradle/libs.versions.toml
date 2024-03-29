@@ -4,11 +4,10 @@ android-minSdk = "25"
 android-targetSdk = "34"
 project-version-code = "1"
 project-version-name = "1.0.0"
-kotlin-compiler-extension = "1.4.3"
+kotlin-compiler-extension = "1.5.10"
 
 agp = "8.1.4"
-kotlin = "1.8.10"
-hilt-plugin = "2.43.2"
+kotlin = "1.9.22"
 google-service = "4.4.1"
 androidx-activity-compose = "1.7.2"
 androidx-browser = "1.6.0"
@@ -24,7 +23,7 @@ hilt-compose = "1.1.0-alpha01"
 coil = "2.6.0"
 okhttp = "4.10.0"
 retrofit = "2.9.0"
-hilt = "2.46.1"
+hilt = "2.51"
 material = "1.9.0"
 oss-licenses = "17.0.1"
 oss-licenses-plugin = "0.10.6"
@@ -91,7 +90,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
