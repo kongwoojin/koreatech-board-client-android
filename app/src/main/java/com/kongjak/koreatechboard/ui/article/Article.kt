@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,10 +31,10 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
-import com.kongjak.koreatechboard.util.fileText
 import com.kongjak.koreatechboard.util.htmlText
 import java.util.UUID
 
@@ -108,11 +109,8 @@ fun ArticleScreen(
                         }
                     }
 
-                    key(themeViewModel.isDarkTheme) {
-                        var isDarkTheme = themeViewModel.isDarkTheme.value
-
-                        if (isDarkTheme == null) isDarkTheme = isSystemInDarkTheme()
-
+                    val isDarkTheme by themeViewModel.isDarkTheme.observeAsState(isSystemInDarkTheme())
+                    key(isDarkTheme) {
                         val textColor =
                             if (isDarkTheme == true) {
                                 Color(0xFFFFFFFF)
@@ -133,14 +131,9 @@ fun ArticleScreen(
                             }
                         )
 
-                        AndroidView(
-                            factory = { filesTextView },
-                            modifier = Modifier
-                                .padding(16.dp),
-                            update = {
-                                it.fileText = data.files
-                                it.setTextColor(textColor.toArgb())
-                            }
+                        FileText(
+                            modifier = Modifier.padding(16.dp),
+                            files = data.files
                         )
                     }
                 }
