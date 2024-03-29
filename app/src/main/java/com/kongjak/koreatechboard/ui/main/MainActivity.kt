@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -56,6 +55,11 @@ class MainActivity : ComponentActivity() {
         val defaultDepartment = intent.getStringExtra("department")
         if (defaultDepartment != null) {
             mainViewModel.setDefaultDepartment(Department.valueOf(defaultDepartment))
+        }
+
+        val isOpenedFromNotification = intent.getBooleanExtra("openedFromNotification", false)
+        if (isOpenedFromNotification) {
+            mainViewModel.setOpenedFromNotification()
         }
 
         setContent {
@@ -159,12 +163,16 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
     val uiState by mainViewModel.uiState.collectAsState()
     val defaultScreen = uiState.defaultScreen
     val defaultDepartment = uiState.defaultDepartment
+    val isOpenedFromNotification = uiState.isOpenedFromNotification
     NavHost(navController = navController, startDestination = defaultScreen.name) {
         composable(BottomNavigationItem.Home.name) {
             HomeScreen()
         }
         composable(BottomNavigationItem.Board.name) {
-            BoardScreen(defaultDepartment = defaultDepartment)
+            BoardScreen(
+                defaultDepartment = defaultDepartment,
+                isOpenedFromNotification = isOpenedFromNotification
+            )
         }
         composable(BottomNavigationItem.Settings.name) {
             SettingsScreen()

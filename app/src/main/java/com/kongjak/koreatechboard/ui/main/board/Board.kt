@@ -86,17 +86,26 @@ import kotlinx.coroutines.launch
 @Composable
 fun BoardScreen(
     boardInitViewModel: BoardInitViewModel = hiltViewModel(),
-    defaultDepartment: Department? // Default department from MainActivity.
+    defaultDepartment: Department?, // Default department from MainActivity.
+    isOpenedFromNotification: Boolean = false
 ) {
     val uiState by boardInitViewModel.uiState.collectAsState()
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
-    BottomSheetScaffold(defaultDepartment ?: fullDeptList[initDepartment], userDepartment)
+    BottomSheetScaffold(
+        defaultDepartment ?: fullDeptList[initDepartment],
+        userDepartment,
+        isOpenedFromNotification = isOpenedFromNotification
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetScaffold(initDepartment: Department = Department.School, userDepartment: Int = 0) {
+fun BottomSheetScaffold(
+    initDepartment: Department = Department.School,
+    userDepartment: Int = 0,
+    isOpenedFromNotification: Boolean
+) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -130,14 +139,22 @@ fun BottomSheetScaffold(initDepartment: Department = Department.School, userDepa
             }
         }
     ) { innerPadding ->
-        Board(contentPadding = innerPadding, department = department.value)
+        Board(
+            contentPadding = innerPadding,
+            department = department.value,
+            isOpenedFromNotification
+        )
     }
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Board(contentPadding: PaddingValues, department: Department) {
+fun Board(
+    contentPadding: PaddingValues,
+    department: Department,
+    isOpenedFromNotification: Boolean
+) {
     val pagerState = rememberPagerState(
         initialPage = 0
     ) {
@@ -176,7 +193,11 @@ fun Board(contentPadding: PaddingValues, department: Department) {
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { page ->
-            BoardContent(department = department, page = page)
+            BoardContent(
+                department = department,
+                page = page,
+                isOpenedFromNotification = isOpenedFromNotification
+            )
         }
     }
 }
@@ -186,6 +207,7 @@ fun Board(contentPadding: PaddingValues, department: Department) {
 fun BoardContent(
     department: Department,
     page: Int,
+    isOpenedFromNotification: Boolean,
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     val boardViewModel =
@@ -282,7 +304,9 @@ fun BoardContent(
                                         ),
                                     title = it.title,
                                     writer = it.writer,
-                                    date = it.writeDate
+                                    isNew = it.isNew,
+                                    date = it.writeDate,
+                                    isOpenedFromNotification = isOpenedFromNotification
                                 )
                                 HorizontalDivider(thickness = 0.5.dp, color = Gray)
                             }
@@ -316,7 +340,10 @@ fun BoardContent(
                     modifier = Modifier.align(Alignment.TopCenter),
                     state = pullToRefreshState,
                     indicator = { pullRefreshState ->
-                        PullToRefreshDefaults.Indicator(state = pullRefreshState, color = MaterialTheme.colorScheme.primary)
+                        PullToRefreshDefaults.Indicator(
+                            state = pullRefreshState,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 )
             }
@@ -325,7 +352,16 @@ fun BoardContent(
 }
 
 @Composable
-fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
+fun BoardItem(
+    modifier: Modifier,
+    title: String,
+    writer: String,
+    date: String,
+    isNew: Boolean,
+    isOpenedFromNotification: Boolean = false
+) {
+    val shouldSetBold = isOpenedFromNotification && isNew
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -337,7 +373,10 @@ fun BoardItem(modifier: Modifier, title: String, writer: String, date: String) {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            style = MaterialTheme.typography.boardItemTitle
+            style = if (shouldSetBold)
+                MaterialTheme.typography.boardItemTitle.copy(fontWeight = FontWeight.Bold)
+            else
+                MaterialTheme.typography.boardItemTitle
         )
         Column(
             modifier = Modifier.padding(start = 8.dp),

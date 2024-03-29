@@ -119,6 +119,7 @@ fun SearchContent(
                         ),
                     title = it.title,
                     writer = it.writer,
+                    isNew = it.isNew,
                     date = it.writeDate
                 )
                 HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)

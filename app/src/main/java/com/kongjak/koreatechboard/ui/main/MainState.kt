@@ -6,5 +6,6 @@ import com.kongjak.koreatechboard.util.routes.Department
 
 data class MainState(
     val defaultScreen: BottomNavigationItem = BottomNavigationItem.Home,
-    val defaultDepartment: Department? = null
+    val defaultDepartment: Department? = null,
+    val isOpenedFromNotification: Boolean = false
 ) : UiState

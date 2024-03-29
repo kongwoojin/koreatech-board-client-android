@@ -9,6 +9,7 @@ class MainViewModel : BaseViewModel<MainState, MainEvent>(MainState()) {
         when (event) {
             is MainEvent.SetDefaultScreen -> setState(oldState.copy(defaultScreen = event.defaultScreen))
             is MainEvent.SetDefaultDepartment -> setState(oldState.copy(defaultDepartment = event.defaultDepartment))
+            MainEvent.SetOpenedFromNotification -> setState(oldState.copy(isOpenedFromNotification = true))
         }
     }
 
@@ -18,5 +19,9 @@ class MainViewModel : BaseViewModel<MainState, MainEvent>(MainState()) {
 
     fun setDefaultDepartment(defaultDepartment: Department) {
         sendEvent(MainEvent.SetDefaultDepartment(defaultDepartment))
+    }
+
+    fun setOpenedFromNotification() {
+        sendEvent(MainEvent.SetOpenedFromNotification)
     }
 }

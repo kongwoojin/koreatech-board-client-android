@@ -23,6 +23,7 @@ class FCMService : FirebaseMessagingService() {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra("screen", message.data["screen"] ?: "board")
             putExtra("department", message.data["department"])
+            putExtra("openedFromNotification", true)
         }
 
         val pendingIntent = PendingIntent.getActivity(
