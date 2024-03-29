@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -110,10 +109,10 @@ fun ArticleScreen(
                         }
                     }
 
-                    val isDarkTheme by themeViewModel.isDarkTheme.observeAsState(isSystemInDarkTheme())
+                    val isDarkTheme = themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme()
                     key(isDarkTheme) {
                         val textColor =
-                            if (isDarkTheme == true) {
+                            if (isDarkTheme) {
                                 Color(0xFFFFFFFF)
                             } else {
                                 Color(0xFF000000)
@@ -131,12 +130,12 @@ fun ArticleScreen(
                                 it.setTextColor(textColor.toArgb())
                             }
                         )
-
-                        FileText(
-                            modifier = Modifier.padding(16.dp),
-                            files = data.files
-                        )
                     }
+
+                    FileText(
+                        modifier = Modifier.padding(16.dp),
+                        files = data.files
+                    )
                 }
             }
         }
@@ -145,7 +144,10 @@ fun ArticleScreen(
             modifier = Modifier.align(Alignment.TopCenter),
             state = pullToRefreshState,
             indicator = { pullRefreshState ->
-                PullToRefreshDefaults.Indicator(state = pullRefreshState, color = MaterialTheme.colorScheme.primary)
+                PullToRefreshDefaults.Indicator(
+                    state = pullRefreshState,
+                    color = MaterialTheme.colorScheme.primary
+                )
             }
         )
     }
