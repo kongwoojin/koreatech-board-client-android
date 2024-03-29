@@ -115,15 +115,6 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             settingsViewModel.sendEvent(SettingsEvent.SetInitDepartment(item))
         }
 
-        val showNumber = uiState.showNumber
-
-        SwitchPreference(
-            title = stringResource(id = R.string.setting_show_article_number_title),
-            summary = stringResource(id = R.string.setting_show_article_number_summary),
-            checked = showNumber,
-            onCheckedChange = { settingsViewModel.sendEvent(SettingsEvent.SetShowArticleNumber(it)) }
-        )
-
         PreferenceHeader(title = stringResource(id = R.string.setting_header_notification))
 
         val isNotificationPermissionGranted =

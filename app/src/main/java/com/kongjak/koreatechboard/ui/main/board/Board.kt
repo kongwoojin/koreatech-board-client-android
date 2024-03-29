@@ -172,8 +172,6 @@ fun BoardContent(
         pullToRefreshState.endRefresh()
     }
 
-    val showArticleNumber = uiState.showNumber
-
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -242,15 +240,7 @@ fun BoardContent(
                                                 context.startActivity(intent)
                                             }
                                         ),
-                                    title = if (showArticleNumber) {
-                                        stringResource(
-                                            id = R.string.article_title,
-                                            it.num,
-                                            it.title
-                                        )
-                                    } else {
-                                        it.title
-                                    },
+                                    title = it.title,
                                     writer = it.writer,
                                     date = it.writeDate
                                 )

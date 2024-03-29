@@ -34,14 +34,6 @@ class SettingsRepositoryImpl @Inject constructor(
         return settingsLocalDataSource.getDarkTheme()
     }
 
-    override suspend fun setShowArticleNumber(state: Boolean) {
-        settingsLocalDataSource.setShowArticleNumber(state)
-    }
-
-    override fun getShowArticleNumber(): Flow<Boolean> {
-        return settingsLocalDataSource.getShowArticleNumber()
-    }
-
     override suspend fun setSchoolNoticeSubscribe(state: Boolean) {
         settingsLocalDataSource.setSchoolNoticeSubscribe(state)
     }

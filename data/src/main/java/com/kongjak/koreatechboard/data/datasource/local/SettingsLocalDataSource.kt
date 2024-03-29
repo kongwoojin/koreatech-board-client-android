@@ -21,7 +21,6 @@ class SettingsLocalDataSource @Inject constructor(
     private val initDepartmentKey = intPreferencesKey("init_department")
     private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
     private val darkThemeKey = intPreferencesKey("dark_theme")
-    private val showArticleNumber = booleanPreferencesKey("show_article_number")
     private val schoolNoticeSubscribe = booleanPreferencesKey("school_notice_subscribe")
     private val dormNoticeSubscribe = booleanPreferencesKey("dorm_notice_subscribe")
     private val departmentNoticeSubscribe = booleanPreferencesKey("department_notice_subscribe")
@@ -78,18 +77,6 @@ class SettingsLocalDataSource @Inject constructor(
         context.dataStore.data
             .map { preferences ->
                 preferences[darkThemeKey] ?: DARK_THEME_SYSTEM_DEFAULT
-            }
-
-    suspend fun setShowArticleNumber(state: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[showArticleNumber] = state
-        }
-    }
-
-    fun getShowArticleNumber(): Flow<Boolean> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[showArticleNumber] ?: true
             }
 
     suspend fun setSchoolNoticeSubscribe(state: Boolean) {

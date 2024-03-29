@@ -12,7 +12,6 @@ import com.kongjak.koreatechboard.domain.usecase.GetDormNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetSchoolNoticeSubscribe
-import com.kongjak.koreatechboard.domain.usecase.GetShowArticleNumberUseCase
 import com.kongjak.koreatechboard.domain.usecase.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetDepartmentNoticeSubscribe
@@ -20,7 +19,6 @@ import com.kongjak.koreatechboard.domain.usecase.SetDormNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.SetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetSchoolNoticeSubscribe
-import com.kongjak.koreatechboard.domain.usecase.SetShowArticleNumberUseCase
 import com.kongjak.koreatechboard.domain.usecase.SetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,8 +36,6 @@ class SettingsViewModel @Inject constructor(
     private val setDynamicThemeUseCase: SetDynamicThemeUseCase,
     private val getDarkThemeUseCase: GetDarkThemeUseCase,
     private val setDarkThemeUseCase: SetDarkThemeUseCase,
-    private val getShowArticleNumberUseCase: GetShowArticleNumberUseCase,
-    private val setShowArticleNumberUseCase: SetShowArticleNumberUseCase,
     private val setSchoolNoticeSubscribe: SetSchoolNoticeSubscribe,
     private val getSchoolNoticeSubscribe: GetSchoolNoticeSubscribe,
     private val setDormNoticeSubscribe: SetDormNoticeSubscribe,
@@ -55,7 +51,6 @@ class SettingsViewModel @Inject constructor(
             sendEvent(SettingsEvent.GetDynamicTheme)
         }
         sendEvent(SettingsEvent.GetDarkTheme)
-        sendEvent(SettingsEvent.GetShowArticleNumber)
         sendEvent(SettingsEvent.GetSchoolSubscribe)
         sendEvent(SettingsEvent.GetDormSubscribe)
         sendEvent(SettingsEvent.GetDepartmentSubscribe)
@@ -81,12 +76,6 @@ class SettingsViewModel @Inject constructor(
                 }
             }
 
-            SettingsEvent.GetShowArticleNumber -> viewModelScope.launch {
-                getShowArticleNumberUseCase().collectLatest {
-                    setState(oldState.copy(showNumber = it))
-                }
-            }
-
             SettingsEvent.GetUserDepartment -> viewModelScope.launch {
                 getUserDepartmentUseCase().collectLatest {
                     setState(oldState.copy(userDepartment = it))
@@ -106,11 +95,6 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvent.SetInitDepartment -> viewModelScope.launch {
                 setInitDepartmentUseCase(event.index)
                 sendEvent(SettingsEvent.GetInitDepartment)
-            }
-
-            is SettingsEvent.SetShowArticleNumber -> viewModelScope.launch {
-                setShowArticleNumberUseCase(event.state)
-                sendEvent(SettingsEvent.GetShowArticleNumber)
             }
 
             is SettingsEvent.SetUserDepartment -> viewModelScope.launch {
