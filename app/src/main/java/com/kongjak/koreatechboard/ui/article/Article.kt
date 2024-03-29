@@ -69,7 +69,6 @@ fun ArticleScreen(
 
     LaunchedEffect(key1 = Unit) {
         pullToRefreshState.startRefresh()
-        articleViewModel.getArticleData(department, uuid)
     }
 
     Box(
