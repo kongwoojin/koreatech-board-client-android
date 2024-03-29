@@ -26,5 +26,7 @@ data class BoardResponseData(
     @SerializedName("write_date")
     override val writeDate: String,
     @SerializedName("read_count")
-    override val read: Int
+    override val read: Int,
+    @SerializedName("is_new")
+    override val isNew: Boolean
 ) : BoardData
