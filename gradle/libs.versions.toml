@@ -6,7 +6,7 @@ project-version-code = "1"
 project-version-name = "1.0.0"
 kotlin-compiler-extension = "1.4.3"
 
-agp = "8.1.1"
+agp = "8.1.4"
 kotlin = "1.8.10"
 hilt-plugin = "2.43.2"
 google-service = "4.4.1"
