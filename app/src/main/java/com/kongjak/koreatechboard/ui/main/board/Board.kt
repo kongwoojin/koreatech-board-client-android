@@ -43,6 +43,7 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
@@ -284,6 +285,9 @@ fun BoardContent(
                 PullToRefreshContainer(
                     modifier = Modifier.align(Alignment.TopCenter),
                     state = pullToRefreshState,
+                    indicator = { pullRefreshState ->
+                        PullToRefreshDefaults.Indicator(state = pullRefreshState, color = MaterialTheme.colorScheme.primary)
+                    }
                 )
             }
         }
