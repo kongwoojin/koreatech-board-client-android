@@ -66,7 +66,6 @@ fun ArticleScreen(
     val data = uiState.article
     val context = LocalContext.current
     val contentTextView = remember { TextView(context) }
-    val filesTextView = remember { TextView(context) }
 
     LaunchedEffect(key1 = Unit) {
         pullToRefreshState.startRefresh()
