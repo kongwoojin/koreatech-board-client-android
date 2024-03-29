@@ -1,8 +1,9 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ktlint)
     kotlin("kapt")
 }
 
@@ -46,17 +47,17 @@ android {
 
 dependencies {
 
-    implementation(Dependencies.AndroidX.coreKtx)
-    implementation(Dependencies.AndroidX.pagingCommon)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.paging.common)
 
-    implementation(Dependencies.Google.hilt)
+    implementation(libs.hilt)
 
-    implementation(Dependencies.Kotlin.kotlinCoroutineAndroid)
+    implementation(libs.coroutine.android)
 
-    kapt(Dependencies.Google.hiltCompiler)
+    kapt(libs.hilt.compiler)
 
-    testImplementation(Dependencies.Test.junit)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Dependencies.AndroidTest.junit)
-    androidTestImplementation(Dependencies.AndroidTest.espresso)
+    androidTestImplementation(libs.esspresso)
+    androidTestImplementation(libs.junit.test)
 }

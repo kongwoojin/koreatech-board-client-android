@@ -5,27 +5,28 @@ val localStorePassword: String = gradleLocalProperties(rootDir).getProperty("loc
 val localKeyAlias: String = gradleLocalProperties(rootDir).getProperty("localKeyAlias")
 val localKeyPassword: String = gradleLocalProperties(rootDir).getProperty("localKeyPassword")
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
     id("com.google.android.gms.oss-licenses-plugin")
-    id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version Versions.ktlint
-    id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
     kotlin("kapt")
     kotlin("plugin.parcelize")
 }
 
 android {
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.kongjak.koreatechboard"
-        minSdk = Project.minSdk
-        targetSdk = Project.targetSdk
-        versionCode = Project.versionCode
-        versionName = Project.versionName
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = libs.versions.project.version.code.get().toInt()
+        versionName = libs.versions.project.version.name.get().toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -72,7 +73,7 @@ android {
     }
     namespace = "com.kongjak.koreatechboard"
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Kotlin.kotlinCompilerExtension
+        kotlinCompilerExtensionVersion = libs.versions.kotlin.compiler.extension.get().toString()
     }
     packaging {
         resources {
@@ -86,47 +87,46 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation(Dependencies.AndroidX.activityCompose)
-    implementation(Dependencies.AndroidX.browser)
-    implementation(Dependencies.AndroidX.composeMaterial3)
-    implementation(Dependencies.AndroidX.composeMaterial3PullRequest)
-    implementation(Dependencies.AndroidX.composeRuntimeLivedata)
-    implementation(Dependencies.AndroidX.composeUI)
-    implementation(Dependencies.AndroidX.composeUIGraphics)
-    implementation(Dependencies.AndroidX.composeUIToolingPreview)
-    implementation(Dependencies.AndroidX.coreKtx)
-    implementation(Dependencies.AndroidX.hiltNavigationCompose)
-    implementation(Dependencies.AndroidX.lifecycleRuntime)
-    implementation(Dependencies.AndroidX.lifecycleViewModelCompose)
-    implementation(Dependencies.AndroidX.lifecycleViewModelKtx)
-    implementation(Dependencies.AndroidX.livedataKtx)
-    implementation(Dependencies.AndroidX.navigationCompose)
-    implementation(Dependencies.AndroidX.pagingCompose)
-    implementation(Dependencies.AndroidX.pagingRuntimeKtx)
-    implementation(platform(Dependencies.AndroidX.composeBom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.compose.material3)
+    implementation("me.omico.lux:lux-androidx-compose-material3-pullrefresh")
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.hilt.compose)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime)
+    implementation(platform(libs.androidx.compose.bom))
 
-    implementation(Dependencies.Etc.coil)
-    implementation(Dependencies.Etc.retrofit2)
-    implementation(Dependencies.Etc.retrofit2Gson)
+    implementation(libs.coil)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
-    implementation(Dependencies.Google.hilt)
-    implementation(Dependencies.Google.material)
-    implementation(Dependencies.Google.ossLicense)
+    implementation(libs.hilt)
+    implementation(libs.material)
+    implementation(libs.oss.licenses)
 
-    implementation(platform(Dependencies.Google.firebaseBom))
-    implementation(Dependencies.Google.firebaseMessaging)
-    implementation(Dependencies.Google.permission)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+    implementation(libs.accompanist.permissions)
 
-    kapt(Dependencies.Google.hiltCompiler)
-    ksp(Dependencies.Etc.glideKsp)
+    kapt(libs.hilt.compiler)
 
-    debugImplementation(Dependencies.Debug.composeUITestManifest)
-    debugImplementation(Dependencies.Debug.composeUITooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    testImplementation(Dependencies.Test.junit)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Dependencies.AndroidTest.composeJunit)
-    androidTestImplementation(Dependencies.AndroidTest.espresso)
-    androidTestImplementation(Dependencies.AndroidTest.junit)
-    androidTestImplementation(platform(Dependencies.AndroidTest.composeBom))
+    androidTestImplementation(libs.compose.junit)
+    androidTestImplementation(libs.esspresso)
+    androidTestImplementation(libs.junit.test)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 }

@@ -1,8 +1,9 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ktlint)
     kotlin("kapt")
 }
 
@@ -48,24 +49,24 @@ dependencies {
 
     implementation(project(":domain"))
 
-    implementation(Dependencies.AndroidX.coreKtx)
-    implementation(Dependencies.AndroidX.datastorePreference)
-    implementation(Dependencies.AndroidX.pagingCommon)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.paging.common)
 
-    implementation(Dependencies.Etc.okhttp3)
-    implementation(Dependencies.Etc.okhttp3Logging)
-    implementation(Dependencies.Etc.retrofit2)
-    implementation(Dependencies.Etc.retrofit2Gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
-    implementation(Dependencies.Google.hilt)
+    implementation(libs.hilt)
 
-    implementation(Dependencies.Kotlin.kotlinCoroutineAndroid)
-    implementation(Dependencies.Kotlin.kotlinCoroutineCore)
+    implementation(libs.coroutine.core)
+    implementation(libs.coroutine.android)
 
-    kapt(Dependencies.Google.hiltCompiler)
+    kapt(libs.hilt.compiler)
 
-    testImplementation(Dependencies.Test.junit)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Dependencies.AndroidTest.espresso)
-    androidTestImplementation(Dependencies.AndroidTest.junit)
+    androidTestImplementation(libs.esspresso)
+    androidTestImplementation(libs.junit.test)
 }

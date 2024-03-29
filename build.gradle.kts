@@ -1,17 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     dependencies {
-        classpath(Dependencies.Google.ossLicensePlugin)
+        classpath(libs.oss.licenses.plugin)
     }
 }
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application") version Versions.Android.application apply false
-    id("com.android.library") version Versions.Android.library apply false
-    id("org.jetbrains.kotlin.android") version Versions.Kotlin.kotlin apply false
-    id("com.google.devtools.ksp") version Versions.ksp apply false
-    id("com.google.dagger.hilt.android") version Versions.Hilt.hilt apply false
-    id("com.google.gms.google-services") version Versions.Google.googleService apply false
+    alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidLibrary) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.google.services) apply false
 }
 
 tasks.register("clean",Delete::class){
