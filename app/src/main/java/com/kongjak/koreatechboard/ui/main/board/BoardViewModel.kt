@@ -2,11 +2,9 @@ package com.kongjak.koreatechboard.ui.main.board
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.kongjak.koreatechboard.domain.usecase.GetBoardUseCase
+import com.kongjak.koreatechboard.domain.usecase.api.GetBoardUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

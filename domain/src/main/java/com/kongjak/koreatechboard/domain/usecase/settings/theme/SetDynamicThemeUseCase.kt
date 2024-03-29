@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.domain.usecase
+package com.kongjak.koreatechboard.domain.usecase.settings.theme
 
 import com.kongjak.koreatechboard.domain.repository.SettingsRepository
 import javax.inject.Inject

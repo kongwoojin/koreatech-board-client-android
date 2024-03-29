@@ -1,8 +1,8 @@
 package com.kongjak.koreatechboard.ui.main.board
 
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.usecase.GetInitDepartmentUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetUserDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest

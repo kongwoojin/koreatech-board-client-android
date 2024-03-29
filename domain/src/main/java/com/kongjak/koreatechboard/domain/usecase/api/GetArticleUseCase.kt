@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.domain.usecase
+package com.kongjak.koreatechboard.domain.usecase.api
 
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Article

@@ -2,7 +2,7 @@ package com.kongjak.koreatechboard.ui.main.home
 
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.ResponseResult
-import com.kongjak.koreatechboard.domain.usecase.GetBoardMinimumUseCase
+import com.kongjak.koreatechboard.domain.usecase.api.GetBoardMinimumUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

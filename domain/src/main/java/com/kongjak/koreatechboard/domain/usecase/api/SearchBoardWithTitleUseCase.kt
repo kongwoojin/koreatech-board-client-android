@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.domain.usecase
+package com.kongjak.koreatechboard.domain.usecase.api
 
 import androidx.paging.PagingData
 import com.kongjak.koreatechboard.domain.model.BoardData
