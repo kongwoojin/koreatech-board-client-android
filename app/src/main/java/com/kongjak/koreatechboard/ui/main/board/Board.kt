@@ -42,9 +42,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.pullrefresh.PullRefreshIndicator
-import androidx.compose.material3.pullrefresh.pullRefresh
-import androidx.compose.material3.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -58,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -139,6 +139,7 @@ fun Board(contentPadding: PaddingValues, department: Department) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BoardContent(
     department: Department,
@@ -148,17 +149,27 @@ fun BoardContent(
     val boardViewModel =
         hiltViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
 
+    val pullToRefreshState = rememberPullToRefreshState()
+
     LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
+        pullToRefreshState.startRefresh()
         boardViewModel.getAPI(department.name, department.boards[page].board)
     }
 
     val uiState by boardViewModel.uiState.collectAsState()
     val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
-    val pullRefreshState =
-        rememberPullRefreshState(lazyPostList.loadState.refresh is LoadState.Loading, {
+
+    if (pullToRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
             lazyPostList.refresh()
-        })
+        }
+    }
+
+    LaunchedEffect(key1 = lazyPostList.loadState.refresh is LoadState.Loading) {
+        if (lazyPostList.loadState.refresh is LoadState.Loading) return@LaunchedEffect
+        pullToRefreshState.endRefresh()
+    }
 
     val showArticleNumber = uiState.showNumber
 
@@ -187,7 +198,7 @@ fun BoardContent(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .pullRefresh(pullRefreshState)
+                    .nestedScroll(pullToRefreshState.nestedScrollConnection)
             ) {
                 if ((lazyPostList.loadState.refresh is LoadState.NotLoading) && lazyPostList.itemCount == 0) {
                     Column(
@@ -270,11 +281,9 @@ fun BoardContent(
                     }
                 }
 
-                PullRefreshIndicator(
-                    refreshing = lazyPostList.loadState.refresh is LoadState.Loading,
-                    state = pullRefreshState,
+                PullToRefreshContainer(
                     modifier = Modifier.align(Alignment.TopCenter),
-                    contentColor = MaterialTheme.colorScheme.primary
+                    state = pullToRefreshState,
                 )
             }
         }

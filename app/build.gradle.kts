@@ -90,7 +90,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.compose.material3)
-    implementation("me.omico.lux:lux-androidx-compose-material3-pullrefresh")
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
