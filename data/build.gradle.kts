@@ -1,20 +1,14 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.koreatechboard.library)
+    alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.ktlint)
-    kotlin("kapt")
 }
 
 android {
-    compileSdk = 34
-
     defaultConfig {
-        minSdk = 25
         targetSdk = 34
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -35,13 +29,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
     namespace = "com.kongjak.koreatechboard.data"
 }
 
@@ -58,12 +45,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 
-    implementation(libs.hilt)
-
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)
-
-    kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
 

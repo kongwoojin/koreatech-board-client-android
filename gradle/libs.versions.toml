@@ -38,6 +38,7 @@ junit-test = "1.1.5"
 kotlin-bom = "1.8.0"
 coroutine = "1.7.1"
 ktlint = "11.5.1"
+jetbrainsKotlinJvm = "1.8.10"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -84,7 +85,8 @@ compose-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "
 esspresso = { module = "androidx.test.espresso:espresso-core", version.ref = "esspresso" }
 junit-test = { module = "androidx.test.ext:junit", version.ref = "junit-test" }
 
-
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -94,3 +96,18 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+koreatechboard-compose = { id = "com.kongjak.koreatechboard.plugin.compose", version = "unspecified" }
+koreatechboard-application = { id = "com.kongjak.koreatechboard.plugin.application", version = "unspecified" }
+koreatechboard-library = { id = "com.kongjak.koreatechboard.plugin.library", version = "unspecified" }
+koreatechboard-hilt = { id = "com.kongjak.koreatechboard.plugin.hilt", version = "unspecified" }
+
+[bundles]
+androidx-compose = [
+    "androidx-activity-compose", "androidx-compose-material3", "androidx-compose-runtime-livedata",
+    "androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-ui-graphics"
+]
+androidx-lifecycle = [
+    "androidx-lifecycle-runtime-ktx", "androidx-lifecycle-viewmodel-compose",
+    "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-livedata-ktx"
+]
