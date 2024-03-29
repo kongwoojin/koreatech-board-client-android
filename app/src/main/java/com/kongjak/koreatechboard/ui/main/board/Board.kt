@@ -94,6 +94,47 @@ fun BoardScreen(
     BottomSheetScaffold(defaultDepartment ?: fullDeptList[initDepartment], userDepartment)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BottomSheetScaffold(initDepartment: Department = Department.School, userDepartment: Int = 0) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    val department = remember { mutableStateOf(initDepartment) }
+
+    val scaffoldItemList = listOf(
+        Department.School,
+        Department.Dorm,
+        deptList[userDepartment]
+    )
+
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 64.dp,
+        sheetContent = {
+            LazyColumn {
+                items(scaffoldItemList) {
+                    Box {
+                        Text(
+                            text = stringResource(id = it.stringResource),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth()
+                                .clickable {
+                                    department.value = it
+                                    scope.launch { scaffoldState.bottomSheetState.partialExpand() }
+                                }
+                        )
+                    }
+                }
+            }
+        }
+    ) { innerPadding ->
+        Board(contentPadding = innerPadding, department = department.value)
+    }
+}
+
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Board(contentPadding: PaddingValues, department: Department) {
@@ -349,46 +390,6 @@ fun NetworkUnavailable() {
             .padding(16.dp)
             .fillMaxWidth()
     )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BottomSheetScaffold(initDepartment: Department = Department.School, userDepartment: Int = 0) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
-    val scope = rememberCoroutineScope()
-
-    val department = remember { mutableStateOf(initDepartment) }
-
-    val scaffoldItemList = listOf(
-        Department.School,
-        Department.Dorm,
-        deptList[userDepartment]
-    )
-
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 64.dp,
-        sheetContent = {
-            LazyColumn {
-                items(scaffoldItemList) {
-                    Box {
-                        Text(
-                            text = stringResource(id = it.stringResource),
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth()
-                                .clickable {
-                                    department.value = it
-                                    scope.launch { scaffoldState.bottomSheetState.partialExpand() }
-                                }
-                        )
-                    }
-                }
-            }
-        }
-    ) { innerPadding ->
-        Board(contentPadding = innerPadding, department = department.value)
-    }
 }
 
 @Composable

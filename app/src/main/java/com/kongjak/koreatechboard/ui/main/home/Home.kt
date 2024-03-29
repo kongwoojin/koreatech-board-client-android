@@ -58,11 +58,11 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             val selectedDepartmentIndex by homeViewModel.department.observeAsState()
-            BoardInMain(department = Department.School)
-            BoardInMain(department = Department.Dorm)
+            BoardInHome(department = Department.School)
+            BoardInHome(department = Department.Dorm)
 
             val selectedDepartment = deptList[selectedDepartmentIndex ?: 0]
-            BoardInMain(department = selectedDepartment)
+            BoardInHome(department = selectedDepartment)
         }
     } else {
         Column(
@@ -77,7 +77,7 @@ fun HomeScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BoardInMain(
+fun BoardInHome(
     department: Department
 ) {
     val context = LocalContext.current
