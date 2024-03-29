@@ -1,0 +1,9 @@
+package com.kongjak.koreatechboard.data.api
+
+object APIConstraints {
+    object V3 {
+        const val BOARD = "{site}/{board}"
+        const val SEARCH_WITH_TITLE = "{site}/{board}/search/title"
+        const val ARTICLE = "article"
+    }
+}
