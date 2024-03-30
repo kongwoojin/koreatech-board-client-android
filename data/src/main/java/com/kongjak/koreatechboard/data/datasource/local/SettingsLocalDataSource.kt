@@ -21,7 +21,9 @@ class SettingsLocalDataSource @Inject constructor(
     private val initDepartmentKey = intPreferencesKey("init_department")
     private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
     private val darkThemeKey = intPreferencesKey("dark_theme")
-    private val showArticleNumber = booleanPreferencesKey("show_article_number")
+    private val schoolNoticeSubscribe = booleanPreferencesKey("school_notice_subscribe")
+    private val dormNoticeSubscribe = booleanPreferencesKey("dorm_notice_subscribe")
+    private val departmentNoticeSubscribe = booleanPreferencesKey("department_notice_subscribe")
 
     suspend fun setUserDepartment(newIndex: Int) {
         context.dataStore.edit { preferences ->
@@ -77,15 +79,39 @@ class SettingsLocalDataSource @Inject constructor(
                 preferences[darkThemeKey] ?: DARK_THEME_SYSTEM_DEFAULT
             }
 
-    suspend fun setShowArticleNumber(state: Boolean) {
+    suspend fun setSchoolNoticeSubscribe(state: Boolean) {
         context.dataStore.edit { preferences ->
-            preferences[showArticleNumber] = state
+            preferences[schoolNoticeSubscribe] = state
         }
     }
 
-    fun getShowArticleNumber(): Flow<Boolean> =
+    fun getSchoolNoticeSubscribe(): Flow<Boolean> =
         context.dataStore.data
             .map { preferences ->
-                preferences[showArticleNumber] ?: true
+                preferences[schoolNoticeSubscribe] ?: false
+            }
+
+    suspend fun setDormNoticeSubscribe(state: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[dormNoticeSubscribe] = state
+        }
+    }
+
+    fun getDormNoticeSubscribe(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[dormNoticeSubscribe] ?: false
+            }
+
+    suspend fun setDepartmentNoticeSubscribe(state: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[departmentNoticeSubscribe] = state
+        }
+    }
+
+    fun getDepartmentNoticeSubscribe(): Flow<Boolean> =
+        context.dataStore.data
+            .map { preferences ->
+                preferences[departmentNoticeSubscribe] ?: false
             }
 }

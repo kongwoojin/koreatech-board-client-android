@@ -15,4 +15,5 @@ interface BoardData {
     val writer: String
     val writeDate: String
     val read: Int
+    val isNew: Boolean
 }

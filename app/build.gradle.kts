@@ -5,28 +5,24 @@ val localStorePassword: String = gradleLocalProperties(rootDir).getProperty("loc
 val localKeyAlias: String = gradleLocalProperties(rootDir).getProperty("localKeyAlias")
 val localKeyPassword: String = gradleLocalProperties(rootDir).getProperty("localKeyPassword")
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.koreatechboard.application)
+    alias(libs.plugins.koreatechboard.compose)
+    alias(libs.plugins.koreatechboard.hilt)
     id("com.google.android.gms.oss-licenses-plugin")
-    id("dagger.hilt.android.plugin")
-    id("org.jlleitschuh.gradle.ktlint") version Versions.ktlint
-    id("com.google.devtools.ksp")
-    kotlin("kapt")
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.google.services)
     kotlin("plugin.parcelize")
 }
 
 android {
-    compileSdk = 34
-
     defaultConfig {
         applicationId = "com.kongjak.koreatechboard"
-        minSdk = Project.minSdk
-        targetSdk = Project.targetSdk
-        versionCode = Project.versionCode
-        versionName = Project.versionName
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+        versionCode = libs.versions.project.version.code.get().toInt()
+        versionName = libs.versions.project.version.name.get().toString()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -59,25 +55,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-    buildFeatures {
-        compose = true
-    }
     namespace = "com.kongjak.koreatechboard"
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.Kotlin.kotlinCompilerExtension
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
@@ -85,46 +63,35 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
 
-    implementation(Dependencies.AndroidX.activityCompose)
-    implementation(Dependencies.AndroidX.browser)
-    implementation(Dependencies.AndroidX.composeMaterial3)
-    implementation(Dependencies.AndroidX.composeMaterial3PullRequest)
-    implementation(Dependencies.AndroidX.composeRuntimeLivedata)
-    implementation(Dependencies.AndroidX.composeUI)
-    implementation(Dependencies.AndroidX.composeUIGraphics)
-    implementation(Dependencies.AndroidX.composeUIToolingPreview)
-    implementation(Dependencies.AndroidX.coreKtx)
-    implementation(Dependencies.AndroidX.hiltNavigationCompose)
-    implementation(Dependencies.AndroidX.lifecycleRuntime)
-    implementation(Dependencies.AndroidX.lifecycleViewModelCompose)
-    implementation(Dependencies.AndroidX.lifecycleViewModelKtx)
-    implementation(Dependencies.AndroidX.livedataKtx)
-    implementation(Dependencies.AndroidX.navigationCompose)
-    implementation(Dependencies.AndroidX.pagingCompose)
-    implementation(Dependencies.AndroidX.pagingRuntimeKtx)
-    implementation(platform(Dependencies.AndroidX.composeBom))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.hilt.compose)
+    implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime)
 
-    implementation(Dependencies.Etc.glide)
-    implementation(Dependencies.Etc.glideOkhttp3)
-    implementation(Dependencies.Etc.glideAnnotation)
-    implementation(Dependencies.Etc.glideCompose)
-    implementation(Dependencies.Etc.retrofit2)
-    implementation(Dependencies.Etc.retrofit2Gson)
+    implementation(libs.coil)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 
-    implementation(Dependencies.Google.hilt)
-    implementation(Dependencies.Google.material)
-    implementation(Dependencies.Google.ossLicense)
+    implementation(libs.material)
+    implementation(libs.oss.licenses)
 
-    kapt(Dependencies.Google.hiltCompiler)
-    ksp(Dependencies.Etc.glideKsp)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+    implementation(libs.accompanist.permissions)
 
-    debugImplementation(Dependencies.Debug.composeUITestManifest)
-    debugImplementation(Dependencies.Debug.composeUITooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    testImplementation(Dependencies.Test.junit)
+    testImplementation(libs.junit)
 
-    androidTestImplementation(Dependencies.AndroidTest.composeJunit)
-    androidTestImplementation(Dependencies.AndroidTest.espresso)
-    androidTestImplementation(Dependencies.AndroidTest.junit)
-    androidTestImplementation(platform(Dependencies.AndroidTest.composeBom))
+    androidTestImplementation(libs.compose.junit)
+    androidTestImplementation(libs.esspresso)
+    androidTestImplementation(libs.junit.test)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 }

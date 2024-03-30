@@ -34,14 +34,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.activity.ArticleActivity
-import com.kongjak.koreatechboard.ui.board.BoardError
-import com.kongjak.koreatechboard.ui.board.BoardItem
+import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.main.board.BoardError
+import com.kongjak.koreatechboard.ui.main.board.BoardItem
 import com.kongjak.koreatechboard.util.findActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(site: String, board: String, title: String) {
+fun SearchScreen(department: String, board: String, title: String) {
     val context = LocalContext.current
 
     Scaffold(
@@ -66,7 +66,7 @@ fun SearchScreen(site: String, board: String, title: String) {
         content = { contentPadding ->
             SearchContent(
                 contentPadding = contentPadding,
-                site = site,
+                department = department,
                 board = board,
                 title = title
             )
@@ -78,7 +78,7 @@ fun SearchScreen(site: String, board: String, title: String) {
 fun SearchContent(
     searchViewModel: SearchViewModel = hiltViewModel(),
     contentPadding: PaddingValues,
-    site: String,
+    department: String,
     board: String,
     title: String
 ) {
@@ -87,7 +87,7 @@ fun SearchContent(
     val uiState by searchViewModel.uiState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
-        searchViewModel.getAPI(site, board, title)
+        searchViewModel.getAPI(department, board, title)
     }
 
     val lazyPostList = uiState.boardData.collectAsLazyPagingItems()
@@ -112,13 +112,14 @@ fun SearchContent(
                             selected = false,
                             onClick = {
                                 val intent = Intent(context, ArticleActivity::class.java)
-                                intent.putExtra("site", site)
+                                intent.putExtra("department", department)
                                 intent.putExtra("uuid", it.uuid.toString())
                                 context.startActivity(intent)
                             }
                         ),
                     title = it.title,
                     writer = it.writer,
+                    isNew = it.isNew,
                     date = it.writeDate
                 )
                 HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)

@@ -11,6 +11,10 @@ interface SettingsRepository {
     fun getDynamicTheme(): Flow<Boolean>
     suspend fun setDarkTheme(theme: Int)
     fun getDarkTheme(): Flow<Int>
-    suspend fun setShowArticleNumber(state: Boolean)
-    fun getShowArticleNumber(): Flow<Boolean>
+    suspend fun setSchoolNoticeSubscribe(state: Boolean)
+    fun getSchoolNoticeSubscribe(): Flow<Boolean>
+    suspend fun setDormNoticeSubscribe(state: Boolean)
+    fun getDormNoticeSubscribe(): Flow<Boolean>
+    suspend fun setDepartmentNoticeSubscribe(state: Boolean)
+    fun getDepartmentNoticeSubscribe(): Flow<Boolean>
 }

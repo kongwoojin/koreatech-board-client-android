@@ -2,7 +2,7 @@ package com.kongjak.koreatechboard.ui.search
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.kongjak.koreatechboard.domain.usecase.SearchBoardWithTitleUseCase
+import com.kongjak.koreatechboard.domain.usecase.api.SearchBoardWithTitleUseCase
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

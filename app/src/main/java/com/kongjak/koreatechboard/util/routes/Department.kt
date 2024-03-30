@@ -14,4 +14,23 @@ sealed class Department(val name: String, val stringResource: Int, val boards: L
     object Mse : Department("mse", R.string.department_mse, mseBoards)
     object Ace : Department("ace", R.string.department_ace, aceBoards)
     object Sim : Department("sim", R.string.department_sim, simBoards)
+
+    companion object {
+        fun valueOf(name: String): Department {
+            return when (name.lowercase()) {
+                School.name -> School
+                Dorm.name -> Dorm
+                Cse.name -> Cse
+                Mechanical.name -> Mechanical
+                Mechatronics.name -> Mechatronics
+                Ite.name -> Ite
+                Ide.name -> Ide
+                Arch.name -> Arch
+                Mse.name -> Mse
+                Ace.name -> Ace
+                Sim.name -> Sim
+                else -> School
+            }
+        }
+    }
 }

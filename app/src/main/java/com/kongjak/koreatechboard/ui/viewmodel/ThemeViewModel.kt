@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
-import com.kongjak.koreatechboard.domain.usecase.GetDarkThemeUseCase
-import com.kongjak.koreatechboard.domain.usecase.GetDynamicThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

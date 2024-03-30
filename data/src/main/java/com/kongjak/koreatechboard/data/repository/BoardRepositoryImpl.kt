@@ -17,23 +17,23 @@ import javax.inject.Inject
 
 class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource: BoardRemoteDataSource, private val api: API) :
     BoardRepository {
-    override fun getBoard(site: String, board: String): Flow<PagingData<BoardData>> {
+    override fun getBoard(department: String, board: String): Flow<PagingData<BoardData>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { BoardPagingSource(api, site, board) }
+            pagingSourceFactory = { BoardPagingSource(api, department, board) }
         ).flow
     }
 
-    override suspend fun getBoardMinimum(site: String, board: String): ResponseResult<Board> {
-        val response = boardRemoteDataSource.getBoardMinimum(site, board)
+    override suspend fun getBoardMinimum(department: String, board: String): ResponseResult<Board> {
+        val response = boardRemoteDataSource.getBoardMinimum(department, board)
         return BoardMapper.mapToBoard(response.body(), response.code())
     }
 
     override fun searchTitle(
-        site: String,
+        department: String,
         board: String,
         title: String
     ): Flow<PagingData<BoardData>> {
@@ -42,7 +42,7 @@ class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource:
                 pageSize = 20,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { SearchTitlePagingSource(api, site, board, title) }
+            pagingSourceFactory = { SearchTitlePagingSource(api, department, board, title) }
         ).flow
     }
 }
