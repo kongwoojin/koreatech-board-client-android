@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,32 +21,114 @@ import com.kongjak.koreatechboard.R
 
 @Composable
 fun BasicDialog(
-    title: String,
-    content: String,
-    onConfirmString: String = stringResource(id = R.string.dialog_confirm),
-    onDismissString: String = stringResource(id = R.string.dialog_dismiss),
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
+    content: @Composable () -> Unit
 ) {
-    Dialog(onDismissRequest = onDismiss) {
+    Dialog(onDismissRequest = onDismissRequest) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16)
+        ) {
+            Box(modifier = modifier.padding(16.dp)) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onDismissRequest: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismissRequest) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
             shape = RoundedCornerShape(16)
         ) {
             Column(
-                modifier = Modifier.padding(vertical = 16.dp, horizontal = 32.dp)
+                modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
             ) {
                 Text(
                     modifier = Modifier.padding(vertical = 16.dp),
                     text = title,
                     style = MaterialTheme.typography.titleLarge
                 )
+                Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                    content()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onActionString: String,
+    onAction: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onAction) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16)
+        ) {
+            Column(
+                modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
+            ) {
                 Text(
-                    text = content,
-                    style = MaterialTheme.typography.bodyMedium
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
                 )
+                content()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { onAction() }) {
+                        Text(text = onActionString)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onConfirmString: String = stringResource(id = R.string.dialog_confirm),
+    onDismissString: String = stringResource(id = R.string.dialog_dismiss),
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16)
+        ) {
+            Column(
+                modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                content()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -68,9 +151,47 @@ fun BasicDialog(
 @Composable
 fun BasicDialogPreview() {
     BasicDialog(
+        content = {
+            Text("Content")
+        },
+        onDismissRequest = {}
+    )
+}
+
+@Preview
+@Composable
+fun BasicDialogWithTitlePreview() {
+    BasicDialog(
         title = "Title",
-        content = "Content",
+        content = {
+            Text("Content")
+        },
+        onDismissRequest = {}
+    )
+}
+
+@Preview
+@Composable
+fun BasicDialogWithActionPreview() {
+    BasicDialog(
+        title = "Title",
+        onActionString = "Action",
+        onAction = {},
+        content = {
+            Text("Content")
+        }
+    )
+}
+
+@Preview
+@Composable
+fun BasicDialogWithConfirmPreview() {
+    BasicDialog(
+        title = "Title",
         onConfirm = {},
-        onDismiss = {}
+        onDismiss = {},
+        content = {
+            Text("Content")
+        }
     )
 }
