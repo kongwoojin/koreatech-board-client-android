@@ -31,11 +31,15 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                     isFetching.set(true)
                     setState(
                         oldState.copy(
-                            boardData = oldState.boardData + (event.board to (oldState.boardData[event.board]?.copy(
-                                isLoaded = false
-                            ) ?: HomeBoardState.HomeBoardData(
-                                isLoaded = false
-                            )))
+                            boardData = oldState.boardData + (
+                                event.board to (
+                                    oldState.boardData[event.board]?.copy(
+                                        isLoaded = false
+                                    ) ?: HomeBoardState.HomeBoardData(
+                                        isLoaded = false
+                                    )
+                                    )
+                                )
                         )
                     )
 
@@ -46,17 +50,21 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                             is ResponseResult.Success -> {
                                 setState(
                                     oldState.copy(
-                                        boardData = oldState.boardData + (event.board to (oldState.boardData[event.board]?.copy(
-                                            isSuccess = true,
-                                            boardData = it.data.boardData ?: emptyList(),
-                                            statusCode = it.data.statusCode,
-                                            isLoaded = true
-                                        ) ?: HomeBoardState.HomeBoardData(
-                                            isSuccess = true,
-                                            boardData = it.data.boardData ?: emptyList(),
-                                            statusCode = it.data.statusCode,
-                                            isLoaded = true
-                                        )))
+                                        boardData = oldState.boardData + (
+                                            event.board to (
+                                                oldState.boardData[event.board]?.copy(
+                                                    isSuccess = true,
+                                                    boardData = it.data.boardData ?: emptyList(),
+                                                    statusCode = it.data.statusCode,
+                                                    isLoaded = true
+                                                ) ?: HomeBoardState.HomeBoardData(
+                                                    isSuccess = true,
+                                                    boardData = it.data.boardData ?: emptyList(),
+                                                    statusCode = it.data.statusCode,
+                                                    isLoaded = true
+                                                )
+                                                )
+                                            )
                                     )
                                 )
                             }
@@ -64,15 +72,19 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                             is ResponseResult.Error -> {
                                 setState(
                                     oldState.copy(
-                                        boardData = oldState.boardData + (event.board to (oldState.boardData[event.board]?.copy(
-                                            isSuccess = false,
-                                            statusCode = it.errorType.statusCode,
-                                            error = it.errorType.statusCode.toString()
-                                        ) ?: HomeBoardState.HomeBoardData(
-                                            isSuccess = false,
-                                            statusCode = it.errorType.statusCode,
-                                            error = it.errorType.statusCode.toString()
-                                        )))
+                                        boardData = oldState.boardData + (
+                                            event.board to (
+                                                oldState.boardData[event.board]?.copy(
+                                                    isSuccess = false,
+                                                    statusCode = it.errorType.statusCode,
+                                                    error = it.errorType.statusCode.toString()
+                                                ) ?: HomeBoardState.HomeBoardData(
+                                                    isSuccess = false,
+                                                    statusCode = it.errorType.statusCode,
+                                                    error = it.errorType.statusCode.toString()
+                                                )
+                                                )
+                                            )
                                     )
                                 )
                             }
@@ -80,15 +92,19 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                     }.onFailure {
                         setState(
                             oldState.copy(
-                                boardData = oldState.boardData + (event.board to (oldState.boardData[event.board]?.copy(
-                                    isSuccess = false,
-                                    error = it.localizedMessage ?: "",
-                                    isLoaded = true
-                                ) ?: HomeBoardState.HomeBoardData(
-                                    isSuccess = false,
-                                    error = it.localizedMessage ?: "",
-                                    isLoaded = true
-                                )))
+                                boardData = oldState.boardData + (
+                                    event.board to (
+                                        oldState.boardData[event.board]?.copy(
+                                            isSuccess = false,
+                                            error = it.localizedMessage ?: "",
+                                            isLoaded = true
+                                        ) ?: HomeBoardState.HomeBoardData(
+                                            isSuccess = false,
+                                            error = it.localizedMessage ?: "",
+                                            isLoaded = true
+                                        )
+                                        )
+                                    )
                             )
                         )
                     }
