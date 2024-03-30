@@ -105,7 +105,7 @@ fun ArticleScreen(
 
                     FileText(
                         modifier = Modifier.padding(16.dp),
-                        files = data.files
+                        files = it.files
                     )
                 }
             }
