@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime)
 
     implementation(libs.coil)
+    implementation(libs.coil.compose)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)

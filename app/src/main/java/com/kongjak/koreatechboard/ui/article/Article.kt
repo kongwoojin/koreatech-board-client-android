@@ -23,7 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
@@ -106,12 +110,16 @@ fun ArticleScreen(
                         html = data?.content!!,
                         themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme(),
                         image = { url, description ->
-                            GlideImage(
+                            AsyncImage(
                                 modifier = Modifier
                                     .padding(horizontal = 16.dp)
                                     .fillMaxSize(),
-                                model = url,
-                                contentDescription = description
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(url)
+                                    .crossfade(true)
+                                    .build(),
+                                contentDescription = description,
+                                contentScale = ContentScale.FillWidth
                             )
                         }
                     )
