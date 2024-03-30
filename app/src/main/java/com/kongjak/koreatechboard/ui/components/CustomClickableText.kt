@@ -67,7 +67,7 @@ fun CustomClickableText(
             color = textColor,
             fontSize = fontSize,
             fontWeight = fontWeight,
-            textAlign = textAlign,
+            textAlign = textAlign ?: TextAlign.Unspecified,
             lineHeight = lineHeight,
             fontFamily = fontFamily,
             textDecoration = textDecoration,
