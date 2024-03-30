@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.components
+package com.kongjak.koreatechboard.ui.components.dialog
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

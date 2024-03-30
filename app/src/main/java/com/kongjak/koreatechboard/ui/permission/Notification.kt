@@ -19,7 +19,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.components.TextDialog
+import com.kongjak.koreatechboard.ui.components.dialog.TextDialog
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable

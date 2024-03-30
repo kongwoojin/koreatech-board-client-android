@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.components
+package com.kongjak.koreatechboard.ui.components.preference
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons

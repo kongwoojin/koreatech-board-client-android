@@ -23,10 +23,10 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
-import com.kongjak.koreatechboard.ui.components.ListPreference
-import com.kongjak.koreatechboard.ui.components.Preference
-import com.kongjak.koreatechboard.ui.components.PreferenceHeader
-import com.kongjak.koreatechboard.ui.components.SwitchPreference
+import com.kongjak.koreatechboard.ui.components.preference.ListPreference
+import com.kongjak.koreatechboard.ui.components.preference.Preference
+import com.kongjak.koreatechboard.ui.components.preference.PreferenceHeader
+import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department

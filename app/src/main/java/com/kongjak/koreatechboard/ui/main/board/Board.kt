@@ -63,7 +63,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
-import com.kongjak.koreatechboard.ui.components.TextFieldDialog
+import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.main.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
