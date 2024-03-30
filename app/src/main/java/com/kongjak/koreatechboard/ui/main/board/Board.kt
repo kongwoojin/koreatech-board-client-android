@@ -9,21 +9,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
@@ -33,15 +28,12 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -62,18 +54,16 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.components.TextFieldDialog
 import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.main.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
@@ -449,75 +439,31 @@ fun SearchFAB(department: Department, index: Int) {
     }
 
     if (showDialog) {
-        Dialog(
-            onDismissRequest = { showDialog = false },
-            content = {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.search_dialog_title),
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        OutlinedTextField(
-                            value = searchText,
-                            onValueChange = { searchText = it },
-                            label = { Text(text = stringResource(id = R.string.search_dialog_hint)) },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                            keyboardActions = KeyboardActions(
-                                onSearch = {
-                                    showDialog = false
-                                    val intent = Intent(context, SearchActivity::class.java)
-                                    intent.putExtra(
-                                        "department",
-                                        department.name
-                                    )
-                                    intent.putExtra(
-                                        "board",
-                                        department.boards[index].board
-                                    )
-                                    intent.putExtra("title", searchText)
-                                    context.startActivity(intent)
-                                }
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            TextButton(onClick = { showDialog = false }) {
-                                Text(text = stringResource(id = R.string.search_dialog_cancel))
-                            }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            TextButton(onClick = {
-                                showDialog = false
-                                val intent = Intent(context, SearchActivity::class.java)
-                                intent.putExtra(
-                                    "department",
-                                    department.name
-                                )
-                                intent.putExtra(
-                                    "board",
-                                    department.boards[index].board
-                                )
-                                intent.putExtra("title", searchText)
-                                context.startActivity(intent)
-                            }) {
-                                Text(text = stringResource(id = R.string.search_dialog_search))
-                            }
-                        }
-                    }
-                }
-            }
-        )
+        TextFieldDialog(
+            title = stringResource(id = R.string.search_dialog_title),
+            onConfirmString = stringResource(id = R.string.search_dialog_search),
+            onDismissString = stringResource(id = R.string.search_dialog_cancel),
+            label = stringResource(id = R.string.search_dialog_hint),
+            onConfirm = {
+                showDialog = false
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(
+                    "department",
+                    department.name
+                )
+                intent.putExtra(
+                    "board",
+                    department.boards[index].board
+                )
+                intent.putExtra("title", searchText)
+                context.startActivity(intent)
+            },
+            onDismiss = {
+                showDialog = false
+            },
+            value = searchText
+        ) {
+            searchText = it
+        }
     }
 }

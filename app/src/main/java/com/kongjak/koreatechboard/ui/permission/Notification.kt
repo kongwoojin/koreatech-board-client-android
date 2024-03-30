@@ -19,7 +19,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.components.BasicDialog
+import com.kongjak.koreatechboard.ui.components.TextDialog
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -58,7 +58,7 @@ private fun RationaleDialog() {
     var showDialog by remember { mutableStateOf(true) }
 
     if (showDialog) {
-        BasicDialog(
+        TextDialog(
             title = stringResource(id = R.string.permission_notification_request_title),
             content = stringResource(id = R.string.permission_notification_request_rationale_content),
             onConfirm = {
@@ -80,7 +80,7 @@ private fun PermissionDialog(content: () -> Unit) {
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(true) }
     if (showDialog) {
-        BasicDialog(
+        TextDialog(
             title = stringResource(id = R.string.permission_notification_request_title),
             content = stringResource(id = R.string.permission_notification_request_content),
             onConfirm = {
