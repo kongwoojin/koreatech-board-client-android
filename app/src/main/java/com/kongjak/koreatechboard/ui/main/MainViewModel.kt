@@ -3,8 +3,11 @@ package com.kongjak.koreatechboard.ui.main
 import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import com.kongjak.koreatechboard.util.routes.Department
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel : BaseViewModel<MainState, MainEvent>(MainState()) {
+@HiltViewModel
+class MainViewModel @Inject constructor() : BaseViewModel<MainState, MainEvent>(MainState()) {
     override fun reduce(oldState: MainState, event: MainEvent) {
         when (event) {
             is MainEvent.SetDefaultScreen -> setState(oldState.copy(defaultScreen = event.defaultScreen))
