@@ -107,7 +107,7 @@ fun ArticleScreen(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxSize(),
-                        html = data?.content!!,
+                        html = it.content,
                         themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme(),
                         image = { url, description ->
                             AsyncImage(
