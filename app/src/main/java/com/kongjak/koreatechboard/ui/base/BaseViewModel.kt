@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.ui.base
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 open class BaseViewModel<S : UiState, E : UiEvent>(initialState: S) : ViewModel() {
     private val _uiState = MutableStateFlow(initialState)
@@ -13,7 +14,7 @@ open class BaseViewModel<S : UiState, E : UiEvent>(initialState: S) : ViewModel(
     }
 
     fun setState(newState: S) {
-        _uiState.value = newState
+        _uiState.update { newState }
     }
 
     open fun reduce(oldState: S, event: E) {}

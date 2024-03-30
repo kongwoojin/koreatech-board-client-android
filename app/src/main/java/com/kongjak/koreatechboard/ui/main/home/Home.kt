@@ -80,8 +80,6 @@ fun HomeScreen(
 fun BoardInHome(
     department: Department
 ) {
-    val context = LocalContext.current
-
     val pagerState = rememberPagerState(
         initialPage = 0
     ) {
@@ -91,10 +89,6 @@ fun BoardInHome(
     val coroutineScope = rememberCoroutineScope()
 
     val tabIndex = pagerState.currentPage
-
-    var key by remember {
-        mutableStateOf(department.boards[0].board)
-    }
 
     Card(
         modifier = Modifier
@@ -132,92 +126,105 @@ fun BoardInHome(
                 state = pagerState,
                 verticalAlignment = Alignment.Top
             ) { page ->
-                key = department.boards[page].board
+                ArticleList(department, page)
+            }
+        }
+    }
+}
 
-                val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = "${department.name}:$key")
+@Composable
+fun ArticleList(department: Department, page: Int) {
+    val context = LocalContext.current
 
-                LaunchedEffect(Unit) {
-                    homeBoardViewModel.getApi(department.name, key)
+    val key by remember { mutableStateOf(department.boards[page].board) }
+
+    val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
+
+    LaunchedEffect(Unit) {
+        homeBoardViewModel.getApi(department.name, key)
+    }
+
+    val uiState by homeBoardViewModel.uiState.collectAsState()
+    val isSuccess = uiState.boardData[key]?.isSuccess ?: false
+    val isLoaded = uiState.boardData[key]?.isLoaded ?: false
+    val boardData = uiState.boardData[key]?.boardData ?: emptyList()
+    val statusCode = uiState.boardData[key]?.statusCode ?: 0
+
+    val coroutineScope = rememberCoroutineScope()
+
+    if (!isLoaded) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        if (isSuccess && statusCode == 200) {
+            if (boardData.isEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = stringResource(R.string.error_no_data))
                 }
-
-                val uiState = homeBoardViewModel.uiState.collectAsState()
-                val isSuccess = uiState.value.isSuccess
-                val isLoaded = uiState.value.isLoaded
-                val boardData = uiState.value.boardData
-                val statusCode = uiState.value.statusCode
-
-                if (!isLoaded) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                } else {
-                    if (isSuccess && statusCode == 200) {
-                        if (boardData.isEmpty()) {
-                            Column(
+            } else {
+                Column {
+                    boardData.forEach { data ->
+                        Box(
+                            modifier = Modifier
+                                .clickable {
+                                    val intent = Intent(context, ArticleActivity::class.java)
+                                    intent.putExtra("department", department.name)
+                                    intent.putExtra("uuid", data.uuid.toString())
+                                    context.startActivity(intent)
+                                }
+                        ) {
+                            Text(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(text = stringResource(R.string.error_no_data))
-                            }
-                        } else {
-                            Column {
-                                boardData.forEach { data ->
-                                    Box(
-                                        modifier = Modifier
-                                            .clickable {
-                                                val intent = Intent(context, ArticleActivity::class.java)
-                                                intent.putExtra("department", department.name)
-                                                intent.putExtra("uuid", data.uuid.toString())
-                                                context.startActivity(intent)
-                                            }
-                                    ) {
-                                        Text(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 8.dp),
-                                            text = data.title,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                    }
-                                    HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
-                                }
-                            }
+                                    .padding(vertical = 8.dp),
+                                text = data.title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
-                    } else if (isSuccess && statusCode != 200) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                        ) {
-                            Text(text = stringResource(R.string.error_server_down, statusCode))
-                            Button(onClick = {
-                                homeBoardViewModel.getApi(department.name, key)
-                            }) {
-                                Text(text = stringResource(id = R.string.error_retry))
-                            }
-                        }
-                    } else if (!isSuccess) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                        ) {
-                            Text(text = uiState.value.error)
-                            Button(onClick = {
-                                homeBoardViewModel.getApi(department.name, key)
-                            }) {
-                                Text(text = stringResource(id = R.string.error_retry))
-                            }
-                        }
+                        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                     }
+                }
+            }
+        } else if (isSuccess && statusCode != 200) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(text = stringResource(R.string.error_server_down, statusCode))
+                Button(onClick = {
+                    coroutineScope.launch {
+                        homeBoardViewModel.getApi(department.name, key)
+                    }
+                }) {
+                    Text(text = stringResource(id = R.string.error_retry))
+                }
+            }
+        } else if (!isSuccess) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(text = uiState.boardData[key]?.error ?: "")
+                Button(onClick = {
+                    coroutineScope.launch {
+                        homeBoardViewModel.getApi(department.name, key)
+                    }
+                }) {
+                    Text(text = stringResource(id = R.string.error_retry))
                 }
             }
         }
