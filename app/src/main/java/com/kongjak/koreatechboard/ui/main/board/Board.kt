@@ -205,8 +205,8 @@ fun BoardContent(
     val pullToRefreshState = rememberPullToRefreshState()
 
     LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
-        pullToRefreshState.startRefresh()
-        boardViewModel.getAPI(department.name, department.boards[page].board)
+        val isCached = boardViewModel.getAPI(department.name, department.boards[page].board)
+        if (!isCached) pullToRefreshState.startRefresh()
     }
 
     val uiState by boardViewModel.uiState.collectAsState()

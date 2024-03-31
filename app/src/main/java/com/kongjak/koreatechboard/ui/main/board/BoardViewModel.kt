@@ -12,16 +12,17 @@ class BoardViewModel @Inject constructor(
     private val getBoardUseCase: GetBoardUseCase
 ) : BaseViewModel<BoardState, BoardEvent>(BoardState()) {
 
-    fun getAPI(department: String, board: String) {
+    fun getAPI(department: String, board: String): Boolean {
+        if (uiState.value.department == department && uiState.value.board == board) {
+            return true
+        }
         sendEvent(BoardEvent.FetchData(department, board))
+        return false
     }
 
     override fun reduce(oldState: BoardState, event: BoardEvent) {
         when (event) {
             is BoardEvent.FetchData -> {
-                if (oldState.department == event.department && oldState.board == event.board) {
-                    return
-                }
                 setState(
                     oldState.copy(
                         department = event.department,
