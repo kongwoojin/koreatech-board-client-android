@@ -147,7 +147,6 @@ fun RenderText(
                         needHyperLink = false
                     }
                     append(data.text)
-
                 }
             }
             if (data.tag.isBlock || data.tag == HtmlTags.BR) {
