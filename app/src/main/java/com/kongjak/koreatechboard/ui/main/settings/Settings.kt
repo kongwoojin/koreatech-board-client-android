@@ -13,6 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -128,32 +131,41 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             RequestNotificationPermission()
         }
 
+        var subscribeSchool by remember { mutableStateOf(uiState.subscribeSchool) }
+
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_school),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
-            checked = uiState.subscribeSchool,
+            checked = subscribeSchool,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
+                subscribeSchool = it
                 settingsViewModel.sendEvent(SettingsEvent.UpdateSchoolSubscribe(it))
             }
         )
 
+        var subscribeDormitory by remember { mutableStateOf(uiState.subscribeDormitory) }
+
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
-            checked = uiState.subscribeDormitory,
+            checked = subscribeDormitory,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
+                subscribeDormitory = it
                 settingsViewModel.sendEvent(SettingsEvent.UpdateDormSubscribe(it))
             }
         )
 
+        var subscribeDepartment by remember { mutableStateOf(uiState.subscribeDepartment) }
+
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_department),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
-            checked = uiState.subscribeDepartment,
+            checked = subscribeDepartment,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
+                subscribeDepartment = it
                 settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(it))
             }
         )

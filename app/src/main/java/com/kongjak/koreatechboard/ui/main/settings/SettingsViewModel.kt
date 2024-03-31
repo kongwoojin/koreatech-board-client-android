@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.main.settings
 
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
@@ -102,19 +103,25 @@ class SettingsViewModel @Inject constructor(
                 sendEvent(SettingsEvent.GetUserDepartment)
             }
 
-            is SettingsEvent.UpdateSchoolSubscribe -> viewModelScope.launch {
-                setSchoolNoticeSubscribe(event.subscribe)
-                sendEvent(SettingsEvent.GetSchoolSubscribe)
+            is SettingsEvent.UpdateSchoolSubscribe -> {
+                setState(oldState.copy(subscribeSchool = event.subscribe))
+                viewModelScope.launch {
+                    setSchoolNoticeSubscribe(event.subscribe)
+                }
             }
 
-            is SettingsEvent.UpdateDormSubscribe -> viewModelScope.launch {
-                setDormNoticeSubscribe(event.subscribe)
-                sendEvent(SettingsEvent.GetDormSubscribe)
+            is SettingsEvent.UpdateDormSubscribe -> {
+                setState(oldState.copy(subscribeDormitory = event.subscribe))
+                viewModelScope.launch {
+                    setDormNoticeSubscribe(event.subscribe)
+                }
             }
 
-            is SettingsEvent.UpdateDepartmentSubscribe -> viewModelScope.launch {
-                setDepartmentNoticeSubscribe(event.subscribe)
-                sendEvent(SettingsEvent.GetDepartmentSubscribe)
+            is SettingsEvent.UpdateDepartmentSubscribe -> {
+                setState(oldState.copy(subscribeDepartment = event.subscribe))
+                viewModelScope.launch {
+                    setDepartmentNoticeSubscribe(event.subscribe)
+                }
             }
 
             SettingsEvent.GetSchoolSubscribe -> viewModelScope.launch {
