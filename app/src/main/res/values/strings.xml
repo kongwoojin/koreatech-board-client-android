@@ -55,9 +55,9 @@
     <string name="setting_dark_theme_light">Light theme</string>
     <string name="setting_show_article_number_title">Show article number</string>
     <string name="setting_show_article_number_summary">Show article number with title in board page</string>
-    <string name="setting_subscribe_new_notice_school">Subscribe new notices of School</string>
+    <string name="setting_subscribe_new_notice_school">Subscribe new notices of school</string>
     <string name="setting_subscribe_new_notice_summary_school">Receive notification when new school notice posted</string>
-    <string name="setting_subscribe_new_notice_dorm">Subscribe new notices of Dormitory</string>
+    <string name="setting_subscribe_new_notice_dorm">Subscribe new notices of dormitory</string>
     <string name="setting_subscribe_new_notice_summary_dorm">Receive notification when new dormitory notice posted</string>
     <string name="setting_subscribe_new_notice_department">Subscribe new notices of department</string>
     <string name="setting_subscribe_new_notice_summary_department">Receive notification when new department notice posted</string>
