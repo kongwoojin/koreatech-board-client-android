@@ -21,6 +21,7 @@ class BoardViewModel @Inject constructor(
 
     fun getAPI(department: String, board: String) {
         intent {
+            if (state.department == department && state.board == board) return@intent
             postSideEffect(BoardSideEffect.FetchData(department, board))
         }
     }
