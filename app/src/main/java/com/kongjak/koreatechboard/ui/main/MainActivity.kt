@@ -20,7 +20,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -40,6 +39,8 @@ import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -63,6 +64,8 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
+
             val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
             val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
             KoreatechBoardTheme(
@@ -160,7 +163,7 @@ fun BottomNavigation(navController: NavHostController) {
 
 @Composable
 fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewModel) {
-    val uiState by mainViewModel.uiState.collectAsState()
+    val uiState by mainViewModel.collectAsState()
     val defaultScreen = uiState.defaultScreen
     val defaultDepartment = uiState.defaultDepartment
     val isOpenedFromNotification = uiState.isOpenedFromNotification

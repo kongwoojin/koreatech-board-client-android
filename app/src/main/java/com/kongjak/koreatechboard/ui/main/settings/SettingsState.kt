@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.main.settings
 
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
-import com.kongjak.koreatechboard.ui.base.UiState
 
 data class SettingsState(
     val userDepartment: Int = 0,
@@ -11,4 +10,4 @@ data class SettingsState(
     val subscribeSchool: Boolean = false,
     val subscribeDepartment: Boolean = false,
     val subscribeDormitory: Boolean = false
-) : UiState
+)

@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,6 +37,8 @@ import com.kongjak.koreatechboard.ui.article.ArticleActivity
 import com.kongjak.koreatechboard.ui.main.board.BoardError
 import com.kongjak.koreatechboard.ui.main.board.BoardItem
 import com.kongjak.koreatechboard.util.findActivity
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,7 +85,11 @@ fun SearchContent(
 ) {
     val context = LocalContext.current
 
-    val uiState by searchViewModel.uiState.collectAsState()
+    searchViewModel.collectSideEffect {
+        searchViewModel.handleSideEffect(it)
+    }
+
+    val uiState by searchViewModel.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         searchViewModel.getAPI(department, board, title)

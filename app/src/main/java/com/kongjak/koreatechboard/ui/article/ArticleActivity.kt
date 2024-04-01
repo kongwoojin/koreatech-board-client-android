@@ -36,6 +36,8 @@ import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
 import dagger.hilt.android.AndroidEntryPoint
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID
 
 @AndroidEntryPoint
@@ -54,9 +56,18 @@ class ArticleActivity : ComponentActivity() {
 }
 
 @Composable
-fun ArticleMain(articleViewModel: ArticleViewModel = hiltViewModel(), department: String, uuid: UUID) {
+fun ArticleMain(
+    articleViewModel: ArticleViewModel = hiltViewModel(),
+    department: String,
+    uuid: UUID
+) {
     val context = LocalContext.current
-    Toolbar(articleViewModel = articleViewModel, context = context, department = department, uuid = uuid)
+    Toolbar(
+        articleViewModel = articleViewModel,
+        context = context,
+        department = department,
+        uuid = uuid
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +80,10 @@ fun Toolbar(
     department: String,
     uuid: UUID
 ) {
-    val uiState by articleViewModel.uiState.collectAsState()
+    articleViewModel.collectSideEffect {
+        articleViewModel.handleSideEffect(it)
+    }
+    val uiState by articleViewModel.collectAsState()
     val articleUrl = uiState.url
     val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
     val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
@@ -119,7 +133,10 @@ fun Toolbar(
             }
         ) { contentPadding ->
             Column(modifier = Modifier.padding(contentPadding)) {
-                val networkState by networkViewModel.uiState.collectAsState()
+                networkViewModel.collectSideEffect {
+                    networkViewModel.handleSideEffect(it)
+                }
+                val networkState by networkViewModel.collectAsState()
                 val isNetworkConnected = networkState.isConnected
                 if (isNetworkConnected) {
                     ArticleScreen(
@@ -129,7 +146,11 @@ fun Toolbar(
                         uuid = uuid
                     )
                 } else {
-                    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Text(text = stringResource(id = R.string.network_unavailable))
                     }
                 }

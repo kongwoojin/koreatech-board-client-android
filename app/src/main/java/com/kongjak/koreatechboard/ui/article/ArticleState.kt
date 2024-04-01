@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.article
 
 import com.kongjak.koreatechboard.domain.model.Article
-import com.kongjak.koreatechboard.ui.base.UiState
 import com.kongjak.koreatechboard.util.routes.Department
 import java.util.UUID
 
@@ -15,4 +14,4 @@ data class ArticleState(
     val statusCode: Int = 200,
     val url: String = "",
     val error: String = ""
-) : UiState
+)

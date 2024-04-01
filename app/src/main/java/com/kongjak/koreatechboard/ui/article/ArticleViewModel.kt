@@ -1,65 +1,86 @@
 package com.kongjak.koreatechboard.ui.article
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
-import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
-) : BaseViewModel<ArticleState, ArticleEvent>(ArticleState()) {
+) : ContainerHost<ArticleState, ArticleSideEffect>, ViewModel() {
+
+    override val container = container<ArticleState, ArticleSideEffect>(ArticleState())
 
     fun getArticleData(department: String, uuid: UUID) {
-        sendEvent(ArticleEvent.FetchData(department, uuid))
+        intent {
+            postSideEffect(ArticleSideEffect.FetchData(department, uuid))
+        }
     }
 
-    override fun reduce(oldState: ArticleState, event: ArticleEvent) {
-        when (event) {
-            is ArticleEvent.FetchData -> {
+    fun handleSideEffect(sideEffect: ArticleSideEffect) {
+        when (sideEffect) {
+            is ArticleSideEffect.FetchData -> {
                 viewModelScope.launch {
-                    setState(oldState.copy(isLoading = true, isLoaded = false))
-
+                    intent {
+                        reduce {
+                            state.copy(
+                                isLoading = true,
+                                isLoaded = false
+                            )
+                        }
+                    }
                     runCatching {
-                        getArticleUseCase(event.uuid)
+                        getArticleUseCase(sideEffect.uuid)
                     }.onSuccess {
                         when (it) {
                             is ResponseResult.Success -> {
-                                setState(
-                                    oldState.copy(
-                                        isSuccess = true,
-                                        article = it.data,
-                                        isLoading = false,
-                                        isLoaded = true,
-                                        url = it.data.articleUrl
-                                    )
-                                )
+                                intent {
+                                    reduce {
+                                        state.copy(
+                                            isSuccess = true,
+                                            article = it.data,
+                                            isLoading = false,
+                                            isLoaded = true,
+                                            url = it.data.articleUrl
+                                        )
+                                    }
+                                }
                             }
 
                             is ResponseResult.Error -> {
-                                setState(
-                                    oldState.copy(
-                                        isSuccess = false,
-                                        isLoading = false,
-                                        statusCode = it.errorType.statusCode,
-                                        error = it.errorType.statusCode.toString()
-                                    )
-                                )
+                                intent {
+                                    reduce {
+                                        state.copy(
+                                            isSuccess = false,
+                                            isLoading = false,
+                                            statusCode = it.errorType.statusCode,
+                                            error = it.errorType.statusCode.toString()
+                                        )
+                                    }
+                                }
                             }
                         }
                     }.onFailure {
-                        setState(
-                            oldState.copy(
-                                isSuccess = false,
-                                isLoading = false,
-                                error = it.localizedMessage ?: "",
-                                isLoaded = true
-                            )
-                        )
+                        intent {
+                            reduce {
+                                state.copy(
+                                    isSuccess = false,
+                                    isLoading = false,
+                                    error = it.localizedMessage ?: "",
+                                    isLoaded = true
+                                )
+                            }
+                        }
                     }
                 }
             }

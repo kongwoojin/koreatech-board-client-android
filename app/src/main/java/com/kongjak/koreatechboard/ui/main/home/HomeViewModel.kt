@@ -1,31 +1,43 @@
 package com.kongjak.koreatechboard.ui.main.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase
-) : ViewModel() {
-    private val _department = MutableLiveData(0)
-    val department: LiveData<Int>
-        get() = _department
+) : ContainerHost<HomeState, HomeSideEffect>, ViewModel() {
+
+    override val container = container<HomeState, HomeSideEffect>(HomeState())
 
     init {
         getDepartment()
     }
 
     private fun getDepartment() {
-        viewModelScope.launch {
-            getUserDepartmentUseCase().collectLatest {
-                _department.value = it
+        intent { postSideEffect(HomeSideEffect.GetDepartment) }
+    }
+
+    fun handleSideEffect(sideEffect: HomeSideEffect) {
+        when (sideEffect) {
+            HomeSideEffect.GetDepartment -> viewModelScope.launch {
+                getUserDepartmentUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(department = it)
+                        }
+                    }
+                }
             }
         }
     }

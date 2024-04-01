@@ -2,7 +2,6 @@ package com.kongjak.koreatechboard.ui.search
 
 import androidx.paging.PagingData
 import com.kongjak.koreatechboard.domain.model.BoardData
-import com.kongjak.koreatechboard.ui.base.UiState
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +12,4 @@ data class SearchState(
     val board: String = BoardItem.Notice.board,
     val title: String = "",
     val boardData: Flow<PagingData<BoardData>> = emptyFlow()
-) : UiState
+)
