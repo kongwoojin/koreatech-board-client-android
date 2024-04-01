@@ -28,6 +28,7 @@
     <string name="bottom_nav_bar_home">홈</string>
     <string name="bottom_nav_bar_board">게시판</string>
     <string name="bottom_nav_bar_settings">설정</string>
+    <string name="navigation_back">뒤로</string>
 
     <!-- Search -->
     <string name="search_dialog_title">검색</string>

@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.main
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +10,11 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -36,6 +41,7 @@ import com.kongjak.koreatechboard.ui.main.board.BoardInitViewModel
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
 import com.kongjak.koreatechboard.ui.main.home.HomeScreen
 import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
+import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
@@ -112,9 +118,23 @@ fun MainScreen(mainViewModel: MainViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar() {
-    TopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
-    })
+    val context = LocalContext.current
+    TopAppBar(
+        title = {
+            Text(text = stringResource(id = R.string.app_name))
+        },
+        actions = {
+            IconButton(onClick = {
+                val intent = Intent(context, NoticeActivity::class.java)
+                context.startActivity(intent)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = stringResource(id = R.string.app_name)
+                )
+            }
+        }
+    )
 }
 
 @Composable

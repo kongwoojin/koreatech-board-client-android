@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -98,6 +99,27 @@ val Typography.boardItemSubText: TextStyle
         fontSize = 14.sp,
         lineHeight = 4.sp,
         letterSpacing = 0.5.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )
+
+val Typography.noticeDepartmentText: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp,
+        platformStyle = PlatformTextStyle(
+            includeFontPadding = false
+        )
+    )
+
+val Typography.noticeItemTitleRead: TextStyle
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontStyle = FontStyle.Italic,
+        fontSize = 16.sp,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
         )

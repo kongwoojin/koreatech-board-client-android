@@ -1,5 +1,7 @@
 package com.kongjak.koreatechboard.di
 import android.content.Context
+import com.kongjak.koreatechboard.data.dao.ArticleDao
+import com.kongjak.koreatechboard.data.datasource.local.DatabaseLocalDataSource
 import com.kongjak.koreatechboard.data.datasource.local.SettingsLocalDataSource
 import dagger.Module
 import dagger.Provides
@@ -17,5 +19,13 @@ object DataModule {
         @ApplicationContext context: Context
     ): SettingsLocalDataSource {
         return SettingsLocalDataSource(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDatabaseLocalDataSource(
+        articleDao: ArticleDao
+    ): DatabaseLocalDataSource {
+        return DatabaseLocalDataSource(articleDao)
     }
 }

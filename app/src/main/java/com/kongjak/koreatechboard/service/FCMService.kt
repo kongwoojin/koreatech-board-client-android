@@ -5,18 +5,33 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
 import com.kongjak.koreatechboard.ui.main.MainActivity
 import com.kongjak.koreatechboard.util.routes.Department
-import kotlin.random.Random
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.UUID
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FCMService : FirebaseMessagingService() {
-
+    @Inject
+    lateinit var insertMultipleArticleUseCase: InsertMultipleArticleUseCase
     override fun onMessageReceived(message: RemoteMessage) {
+        CoroutineScope(Dispatchers.IO).launch {
+            insertMultipleArticleUseCase(
+                message.data["new_articles"]?.split(":")?.map { UUID.fromString(it) } ?: emptyList(),
+                message.data["department"] ?: "school",
+                message.data["board"] ?: "notice"
+            )
+        }
+
         sendNotification(message)
     }
 
@@ -41,7 +56,12 @@ class FCMService : FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(getString(R.string.new_notice_notification_title))
-            .setContentText(getString(R.string.new_notice_notification_content, getString(department.stringResource)))
+            .setContentText(
+                getString(
+                    R.string.new_notice_notification_content,
+                    getString(department.stringResource)
+                )
+            )
             .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)

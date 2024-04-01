@@ -1,8 +1,11 @@
 package com.kongjak.koreatechboard.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.util.UUID
 
 data class ArticleResponse(
+    @SerializedName("id")
+    val uuid: UUID,
     @SerializedName("title")
     val title: String,
     @SerializedName("writer")
