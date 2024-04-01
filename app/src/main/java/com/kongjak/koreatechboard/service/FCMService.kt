@@ -5,12 +5,14 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.main.MainActivity
 import com.kongjak.koreatechboard.util.routes.Department
+import kotlin.random.Random
 
 class FCMService : FirebaseMessagingService() {
 
@@ -30,7 +32,7 @@ class FCMService : FirebaseMessagingService() {
             this,
             0,
             intent,
-            PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val channelId = this.getString(R.string.new_notice_notification_channel_id)
