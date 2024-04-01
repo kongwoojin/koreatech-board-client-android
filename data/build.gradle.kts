@@ -39,6 +39,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.paging.common)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
