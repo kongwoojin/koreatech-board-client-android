@@ -212,7 +212,6 @@ fun BoardContent(
 
     LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
         boardViewModel.getAPI(department.name, department.boards[page].board)
-        pullToRefreshState.startRefresh()
     }
 
     val uiState by boardViewModel.collectAsState()
@@ -225,7 +224,18 @@ fun BoardContent(
     }
 
     LaunchedEffect(key1 = lazyPostList.loadState.append is LoadState.Loading) {
-        if (lazyPostList.loadState.refresh is LoadState.Loading) return@LaunchedEffect
+        if (lazyPostList.loadState.append is LoadState.Loading) {
+            pullToRefreshState.startRefresh()
+            return@LaunchedEffect
+        }
+        pullToRefreshState.endRefresh()
+    }
+
+    LaunchedEffect(key1 = lazyPostList.loadState.refresh is LoadState.Loading) {
+        if (lazyPostList.loadState.refresh is LoadState.Loading) {
+            pullToRefreshState.startRefresh()
+            return@LaunchedEffect
+        }
         pullToRefreshState.endRefresh()
     }
 
