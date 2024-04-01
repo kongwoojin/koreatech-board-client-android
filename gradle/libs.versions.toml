@@ -34,9 +34,9 @@ compose-junit = "1.6.4"
 esspresso = "3.5.1"
 junit-test = "1.1.5"
 kotlin-bom = "1.9.20"
-coroutine = "1.7.3"
+coroutine = "1.8.0"
 ktlint = "11.5.1"
-jetbrainsKotlinJvm = "1.8.10"
+jetbrainsKotlinJvm = "1.9.22"
 orbit = "7.0.1"
 
 [libraries]
