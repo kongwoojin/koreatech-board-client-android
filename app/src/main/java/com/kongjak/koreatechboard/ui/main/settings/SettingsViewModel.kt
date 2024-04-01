@@ -62,7 +62,6 @@ class SettingsViewModel @Inject constructor(
             postSideEffect(SettingsSideEffect.GetSchoolSubscribe)
             postSideEffect(SettingsSideEffect.GetDormSubscribe)
             postSideEffect(SettingsSideEffect.GetDepartmentSubscribe)
-
         }
     }
 
@@ -195,7 +194,6 @@ class SettingsViewModel @Inject constructor(
                             unsubscribeTopic(FCM_TOPIC_SCHOOL)
                         }
                     }
-
                 }
             }
 
