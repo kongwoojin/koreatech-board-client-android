@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.main.board
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
@@ -23,41 +24,31 @@ class BoardInitViewModel @Inject constructor(
     override val container = container<BoardInitState, BoardInitSideEffect>(BoardInitState())
 
     init {
-        getInitDepartment()
-        getUserDepartment()
-    }
-
-    private fun getInitDepartment() {
-        viewModelScope.launch {
-            getInitDepartmentUseCase().collectLatest {
-                intent {
-                    postSideEffect(BoardInitSideEffect.InitDepartmentUpdated(it))
-                }
-            }
-        }
-    }
-
-    private fun getUserDepartment() {
-        viewModelScope.launch {
-            getUserDepartmentUseCase().collectLatest {
-                intent {
-                    postSideEffect(BoardInitSideEffect.UserDepartmentUpdated(it))
-                }
-            }
+        intent {
+            postSideEffect(BoardInitSideEffect.InitDepartmentUpdate)
+            postSideEffect(BoardInitSideEffect.UserDepartmentUpdate)
         }
     }
 
     fun handleSideEffect(sideEffect: BoardInitSideEffect) {
         when (sideEffect) {
-            is BoardInitSideEffect.InitDepartmentUpdated -> intent {
-                reduce {
-                    state.copy(initDepartment = sideEffect.value)
+            is BoardInitSideEffect.InitDepartmentUpdate -> viewModelScope.launch {
+                getInitDepartmentUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(initDepartment = it)
+                        }
+                    }
                 }
             }
 
-            is BoardInitSideEffect.UserDepartmentUpdated -> intent {
-                reduce {
-                    state.copy(userDepartment = sideEffect.value)
+            is BoardInitSideEffect.UserDepartmentUpdate -> viewModelScope.launch {
+                getUserDepartmentUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(userDepartment = it)
+                        }
+                    }
                 }
             }
         }

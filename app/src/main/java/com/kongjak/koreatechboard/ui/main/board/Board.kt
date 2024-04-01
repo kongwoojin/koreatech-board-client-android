@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.main.board
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -94,8 +95,8 @@ fun BoardScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetScaffold(
-    initDepartment: Department = Department.School,
-    userDepartment: Int = 0,
+    initDepartment: Department,
+    userDepartment: Int,
     isOpenedFromNotification: Boolean
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
