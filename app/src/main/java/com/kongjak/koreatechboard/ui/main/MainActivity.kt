@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -31,6 +32,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
+import com.kongjak.koreatechboard.ui.main.board.BoardInitViewModel
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
 import com.kongjak.koreatechboard.ui.main.home.HomeScreen
 import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
@@ -167,12 +169,17 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
     val defaultScreen = uiState.defaultScreen
     val defaultDepartment = uiState.defaultDepartment
     val isOpenedFromNotification = uiState.isOpenedFromNotification
+
+    val boardInitViewModel = hiltViewModel<BoardInitViewModel>()
+    boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
+
     NavHost(navController = navController, startDestination = defaultScreen.name) {
         composable(BottomNavigationItem.Home.name) {
             HomeScreen()
         }
         composable(BottomNavigationItem.Board.name) {
             BoardScreen(
+                boardInitViewModel = boardInitViewModel,
                 defaultDepartment = defaultDepartment,
                 isOpenedFromNotification = isOpenedFromNotification
             )

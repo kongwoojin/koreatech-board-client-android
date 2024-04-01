@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.main.board
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase

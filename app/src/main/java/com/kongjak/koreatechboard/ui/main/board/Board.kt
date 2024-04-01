@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.main.board
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -77,12 +76,11 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
-    boardInitViewModel: BoardInitViewModel = hiltViewModel(),
+    boardInitViewModel: BoardInitViewModel,
     defaultDepartment: Department?, // Default department from MainActivity.
     isOpenedFromNotification: Boolean = false
 ) {
     val uiState by boardInitViewModel.collectAsState()
-    boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
     BottomSheetScaffold(
