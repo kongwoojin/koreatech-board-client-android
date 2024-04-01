@@ -22,13 +22,10 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,24 +41,33 @@ import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
-    val networkState by networkViewModel.uiState.collectAsState()
+    val networkState by networkViewModel.collectAsState()
+    networkViewModel.collectSideEffect {
+        networkViewModel.handleSideEffect(it)
+    }
+    homeViewModel.collectSideEffect {
+        homeViewModel.handleSideEffect(it)
+    }
     val isNetworkConnected = networkState.isConnected
     if (isNetworkConnected) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
         ) {
-            val selectedDepartmentIndex by homeViewModel.department.observeAsState()
+            val homeUiState by homeViewModel.collectAsState()
+            val selectedDepartmentIndex = homeUiState.department
             BoardInHome(department = Department.School)
             BoardInHome(department = Department.Dorm)
 
-            val selectedDepartment = deptList[selectedDepartmentIndex ?: 0]
+            val selectedDepartment = deptList[selectedDepartmentIndex]
             BoardInHome(department = selectedDepartment)
         }
     } else {
@@ -140,11 +146,15 @@ fun ArticleList(department: Department, page: Int) {
 
     val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
 
-    LaunchedEffect(Unit) {
+    homeBoardViewModel.collectSideEffect {
+        homeBoardViewModel.handleSideEffect(it)
+    }
+
+    LaunchedEffect(key1 = department.name, key2 = key) {
         homeBoardViewModel.getApi(department.name, key)
     }
 
-    val uiState by homeBoardViewModel.uiState.collectAsState()
+    val uiState by homeBoardViewModel.collectAsState()
     val isSuccess = uiState.boardData[key]?.isSuccess ?: false
     val isLoaded = uiState.boardData[key]?.isLoaded ?: false
     val boardData = uiState.boardData[key]?.boardData ?: emptyList()

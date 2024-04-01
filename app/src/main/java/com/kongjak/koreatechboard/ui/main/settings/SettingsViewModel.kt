@@ -1,7 +1,7 @@
 package com.kongjak.koreatechboard.ui.main.settings
 
 import android.os.Build
-import android.util.Log
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
@@ -21,10 +21,14 @@ import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseC
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDynamicThemeUseCase
-import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,116 +47,184 @@ class SettingsViewModel @Inject constructor(
     private val getDormNoticeSubscribe: GetDormNoticeSubscribe,
     private val setDepartmentNoticeSubscribe: SetDepartmentNoticeSubscribe,
     private val getDepartmentNoticeSubscribe: GetDepartmentNoticeSubscribe
-) : BaseViewModel<SettingsState, SettingsEvent>(SettingsState()) {
+) : ContainerHost<SettingsState, SettingsSideEffect>, ViewModel() {
+
+    override val container = container<SettingsState, SettingsSideEffect>(SettingsState())
 
     init {
-        sendEvent(SettingsEvent.GetUserDepartment)
-        sendEvent(SettingsEvent.GetInitDepartment)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            sendEvent(SettingsEvent.GetDynamicTheme)
+        intent {
+            postSideEffect(SettingsSideEffect.GetUserDepartment)
+            postSideEffect(SettingsSideEffect.GetInitDepartment)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                postSideEffect(SettingsSideEffect.GetDynamicTheme)
+            }
+            postSideEffect(SettingsSideEffect.GetDarkTheme)
+            postSideEffect(SettingsSideEffect.GetSchoolSubscribe)
+            postSideEffect(SettingsSideEffect.GetDormSubscribe)
+            postSideEffect(SettingsSideEffect.GetDepartmentSubscribe)
+
         }
-        sendEvent(SettingsEvent.GetDarkTheme)
-        sendEvent(SettingsEvent.GetSchoolSubscribe)
-        sendEvent(SettingsEvent.GetDormSubscribe)
-        sendEvent(SettingsEvent.GetDepartmentSubscribe)
     }
 
-    override fun reduce(oldState: SettingsState, event: SettingsEvent) {
-        when (event) {
-            SettingsEvent.GetDarkTheme -> viewModelScope.launch {
+    fun sendSideEffect(sideEffect: SettingsSideEffect) {
+        intent {
+            postSideEffect(sideEffect)
+        }
+    }
+
+    fun handleSideEffect(sideEffect: SettingsSideEffect) {
+        when (sideEffect) {
+            SettingsSideEffect.GetDarkTheme -> viewModelScope.launch {
                 getDarkThemeUseCase().collectLatest {
-                    setState(oldState.copy(isDarkTheme = it))
+                    intent {
+                        reduce {
+                            state.copy(isDarkTheme = it)
+                        }
+                    }
                 }
             }
 
-            SettingsEvent.GetDynamicTheme -> viewModelScope.launch {
+            SettingsSideEffect.GetDynamicTheme -> viewModelScope.launch {
                 getDynamicThemeUseCase().collectLatest {
-                    setState(oldState.copy(isDynamicTheme = it))
+                    intent {
+                        reduce {
+                            state.copy(isDynamicTheme = it)
+                        }
+                    }
                 }
             }
 
-            SettingsEvent.GetInitDepartment -> viewModelScope.launch {
+            SettingsSideEffect.GetInitDepartment -> viewModelScope.launch {
                 getInitDepartmentUseCase().collectLatest {
-                    setState(oldState.copy(initDepartment = it))
+                    intent {
+                        reduce {
+                            state.copy(initDepartment = it)
+                        }
+                    }
                 }
             }
 
-            SettingsEvent.GetUserDepartment -> viewModelScope.launch {
+            SettingsSideEffect.GetUserDepartment -> viewModelScope.launch {
                 getUserDepartmentUseCase().collectLatest {
-                    setState(oldState.copy(userDepartment = it))
+                    intent {
+                        reduce {
+                            state.copy(userDepartment = it)
+                        }
+                    }
                 }
             }
 
-            is SettingsEvent.SetDarkTheme -> viewModelScope.launch {
-                setDarkThemeUseCase(event.index)
-                sendEvent(SettingsEvent.GetDarkTheme)
+            is SettingsSideEffect.SetDarkTheme -> viewModelScope.launch {
+                setDarkThemeUseCase(sideEffect.index)
+                intent {
+                    reduce {
+                        state.copy(isDarkTheme = sideEffect.index)
+                    }
+                }
             }
 
-            is SettingsEvent.SetDynamicTheme -> viewModelScope.launch {
-                setDynamicThemeUseCase(event.state)
-                sendEvent(SettingsEvent.GetDynamicTheme)
+            is SettingsSideEffect.SetDynamicTheme -> viewModelScope.launch {
+                setDynamicThemeUseCase(sideEffect.state)
+                intent {
+                    reduce {
+                        state.copy(isDynamicTheme = sideEffect.state)
+                    }
+                }
             }
 
-            is SettingsEvent.SetInitDepartment -> viewModelScope.launch {
-                setInitDepartmentUseCase(event.index)
-                sendEvent(SettingsEvent.GetInitDepartment)
+            is SettingsSideEffect.SetInitDepartment -> viewModelScope.launch {
+                setInitDepartmentUseCase(sideEffect.index)
+                intent {
+                    reduce {
+                        state.copy(initDepartment = sideEffect.index)
+                    }
+                }
             }
 
-            is SettingsEvent.SetUserDepartment -> viewModelScope.launch {
-                setUserDepartmentUseCase(event.index)
-                sendEvent(SettingsEvent.GetUserDepartment)
+            is SettingsSideEffect.SetUserDepartment -> viewModelScope.launch {
+                setUserDepartmentUseCase(sideEffect.index)
+                intent {
+                    reduce {
+                        state.copy(userDepartment = sideEffect.index)
+                    }
+                }
             }
 
-            is SettingsEvent.UpdateSchoolSubscribe -> {
-                setState(oldState.copy(subscribeSchool = event.subscribe))
+            is SettingsSideEffect.UpdateSchoolSubscribe -> {
+                intent {
+                    reduce {
+                        state.copy(subscribeSchool = sideEffect.subscribe)
+                    }
+                }
                 viewModelScope.launch {
-                    setSchoolNoticeSubscribe(event.subscribe)
+                    setSchoolNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
-            is SettingsEvent.UpdateDormSubscribe -> {
-                setState(oldState.copy(subscribeDormitory = event.subscribe))
+            is SettingsSideEffect.UpdateDormSubscribe -> {
+                intent {
+                    reduce {
+                        state.copy(subscribeDormitory = sideEffect.subscribe)
+                    }
+                }
                 viewModelScope.launch {
-                    setDormNoticeSubscribe(event.subscribe)
+                    setDormNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
-            is SettingsEvent.UpdateDepartmentSubscribe -> {
-                setState(oldState.copy(subscribeDepartment = event.subscribe))
+            is SettingsSideEffect.UpdateDepartmentSubscribe -> {
+                intent {
+                    reduce {
+                        state.copy(subscribeDepartment = sideEffect.subscribe)
+                    }
+                }
                 viewModelScope.launch {
-                    setDepartmentNoticeSubscribe(event.subscribe)
+                    setDepartmentNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
-            SettingsEvent.GetSchoolSubscribe -> viewModelScope.launch {
+            SettingsSideEffect.GetSchoolSubscribe -> viewModelScope.launch {
                 getSchoolNoticeSubscribe().collectLatest {
-                    setState(oldState.copy(subscribeSchool = it))
-                    if (it) {
-                        subscribeTopic(FCM_TOPIC_SCHOOL)
-                    } else {
-                        unsubscribeTopic(FCM_TOPIC_SCHOOL)
+                    intent {
+                        reduce {
+                            state.copy(subscribeSchool = it)
+                        }
+                        if (it) {
+                            subscribeTopic(FCM_TOPIC_SCHOOL)
+                        } else {
+                            unsubscribeTopic(FCM_TOPIC_SCHOOL)
+                        }
                     }
+
                 }
             }
 
-            SettingsEvent.GetDepartmentSubscribe -> viewModelScope.launch {
+            SettingsSideEffect.GetDepartmentSubscribe -> viewModelScope.launch {
                 getDepartmentNoticeSubscribe().collectLatest {
-                    setState(oldState.copy(subscribeDepartment = it))
-                    if (it) {
-                        subscribeTopic(deptList[uiState.value.userDepartment].name)
-                    } else {
-                        unsubscribeTopic(deptList[uiState.value.userDepartment].name)
+                    intent {
+                        reduce {
+                            state.copy(subscribeDepartment = it)
+                        }
+                        if (it) {
+                            subscribeTopic(deptList[state.userDepartment].name)
+                        } else {
+                            unsubscribeTopic(deptList[state.userDepartment].name)
+                        }
                     }
                 }
             }
 
-            SettingsEvent.GetDormSubscribe -> viewModelScope.launch {
+            SettingsSideEffect.GetDormSubscribe -> viewModelScope.launch {
                 getDormNoticeSubscribe().collectLatest {
-                    setState(oldState.copy(subscribeDormitory = it))
-                    if (it) {
-                        subscribeTopic(FCM_TOPIC_DORM)
-                    } else {
-                        unsubscribeTopic(FCM_TOPIC_DORM)
+                    intent {
+                        reduce {
+                            state.copy(subscribeDormitory = it)
+                        }
+                        if (it) {
+                            subscribeTopic(FCM_TOPIC_DORM)
+                        } else {
+                            unsubscribeTopic(FCM_TOPIC_DORM)
+                        }
                     }
                 }
             }

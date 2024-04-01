@@ -86,6 +86,11 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.accompanist.permissions)
 
+    implementation(libs.orbit.core)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.compose)
+
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 

@@ -1,37 +1,47 @@
 package com.kongjak.koreatechboard.ui.main.board
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardUseCase
-import com.kongjak.koreatechboard.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class BoardViewModel @Inject constructor(
     private val getBoardUseCase: GetBoardUseCase
-) : BaseViewModel<BoardState, BoardEvent>(BoardState()) {
+) : ContainerHost<BoardState, BoardSideEffect>, ViewModel() {
 
-    fun getAPI(department: String, board: String): Boolean {
-        if (uiState.value.department == department && uiState.value.board == board) {
-            return true
+    override val container = container<BoardState, BoardSideEffect>(BoardState())
+
+    fun getAPI(department: String, board: String) {
+        intent {
+            postSideEffect(BoardSideEffect.FetchData(department, board))
         }
-        sendEvent(BoardEvent.FetchData(department, board))
-        return false
     }
 
-    override fun reduce(oldState: BoardState, event: BoardEvent) {
-        when (event) {
-            is BoardEvent.FetchData -> {
-                setState(
-                    oldState.copy(
-                        department = event.department,
-                        board = event.board,
-                        boardItemsMap = getBoardUseCase(event.department, event.board).cachedIn(
-                            viewModelScope
+    fun handleSideEffect(sideEffect: BoardSideEffect) {
+        when (sideEffect) {
+            is BoardSideEffect.FetchData -> {
+                intent {
+                    reduce {
+                        state.copy(
+                            department = sideEffect.department,
+                            board = sideEffect.board,
+                            boardItemsMap = getBoardUseCase(
+                                sideEffect.department,
+                                sideEffect.board
+                            ).cachedIn(
+                                viewModelScope
+                            )
                         )
-                    )
-                )
+                    }
+                }
             }
         }
     }

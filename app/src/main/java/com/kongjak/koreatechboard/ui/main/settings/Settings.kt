@@ -11,11 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -33,6 +28,8 @@ import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 val deptList = listOf(
     Department.Cse,
@@ -72,8 +69,9 @@ val darkThemeString = listOf(
 @Composable
 fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     val context = LocalContext.current
-    val uiState by settingsViewModel.uiState.collectAsState()
+    val uiState = settingsViewModel.collectAsState().value
 
+    settingsViewModel.collectSideEffect { settingsViewModel.handleSideEffect(it) }
     val scrollState = rememberScrollState()
 
     Column(
@@ -92,11 +90,11 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         ) { item ->
             val subscribe = uiState.subscribeDepartment
             if (subscribe) {
-                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(false))
+                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(false))
             }
-            settingsViewModel.sendEvent(SettingsEvent.SetUserDepartment(item))
+            settingsViewModel.sendSideEffect(SettingsSideEffect.SetUserDepartment(item))
             if (subscribe) {
-                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(true))
+                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(true))
             }
         }
 
@@ -115,7 +113,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             itemValue = initDeptList.map { it.name },
             selectedIndex = initDepartment
         ) { item ->
-            settingsViewModel.sendEvent(SettingsEvent.SetInitDepartment(item))
+            settingsViewModel.sendSideEffect(SettingsSideEffect.SetInitDepartment(item))
         }
 
         PreferenceHeader(title = stringResource(id = R.string.setting_header_notification))
@@ -130,43 +128,33 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
             RequestNotificationPermission()
         }
-
-        var subscribeSchool by remember { mutableStateOf(uiState.subscribeSchool) }
-
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_school),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
-            checked = subscribeSchool,
+            checked = uiState.subscribeSchool,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
-                subscribeSchool = it
-                settingsViewModel.sendEvent(SettingsEvent.UpdateSchoolSubscribe(it))
+                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateSchoolSubscribe(it))
             }
         )
-
-        var subscribeDormitory by remember { mutableStateOf(uiState.subscribeDormitory) }
 
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
-            checked = subscribeDormitory,
+            checked = uiState.subscribeDormitory,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
-                subscribeDormitory = it
-                settingsViewModel.sendEvent(SettingsEvent.UpdateDormSubscribe(it))
+                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDormSubscribe(it))
             }
         )
-
-        var subscribeDepartment by remember { mutableStateOf(uiState.subscribeDepartment) }
 
         SwitchPreference(
             title = stringResource(id = R.string.setting_subscribe_new_notice_department),
             summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
-            checked = subscribeDepartment,
+            checked = uiState.subscribeDepartment,
             enabled = isNotificationPermissionGranted,
             onCheckedChange = {
-                subscribeDepartment = it
-                settingsViewModel.sendEvent(SettingsEvent.UpdateDepartmentSubscribe(it))
+                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
             }
         )
 
@@ -221,7 +209,13 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             SwitchPreference(
                 title = stringResource(id = R.string.setting_dynamic_theme_title),
                 checked = isChecked,
-                onCheckedChange = { settingsViewModel.sendEvent(SettingsEvent.SetDynamicTheme(it)) }
+                onCheckedChange = {
+                    settingsViewModel.sendSideEffect(
+                        SettingsSideEffect.SetDynamicTheme(
+                            it
+                        )
+                    )
+                }
             )
         }
 
@@ -236,7 +230,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             itemValue = darkTheme,
             selectedIndex = isDarkTheme
         ) { theme ->
-            settingsViewModel.sendEvent(SettingsEvent.SetDarkTheme(theme))
+            settingsViewModel.sendSideEffect(SettingsSideEffect.SetDarkTheme(theme))
         }
     }
 }

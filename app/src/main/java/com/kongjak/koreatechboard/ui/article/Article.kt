@@ -18,7 +18,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +32,8 @@ import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +44,10 @@ fun ArticleScreen(
     department: String,
     uuid: UUID
 ) {
-    val uiState by articleViewModel.uiState.collectAsState()
+    articleViewModel.collectSideEffect {
+        articleViewModel.handleSideEffect(it)
+    }
+    val uiState by articleViewModel.collectAsState()
 
     val isLoading = uiState.isLoading
 

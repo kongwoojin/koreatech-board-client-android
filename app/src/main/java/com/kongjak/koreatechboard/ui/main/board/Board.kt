@@ -40,7 +40,6 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -72,6 +71,8 @@ import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
@@ -79,7 +80,8 @@ fun BoardScreen(
     defaultDepartment: Department?, // Default department from MainActivity.
     isOpenedFromNotification: Boolean = false
 ) {
-    val uiState by boardInitViewModel.uiState.collectAsState()
+    val uiState by boardInitViewModel.collectAsState()
+    boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
     BottomSheetScaffold(
@@ -199,17 +201,21 @@ fun BoardContent(
     isOpenedFromNotification: Boolean,
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
+    networkViewModel.collectSideEffect { networkViewModel.handleSideEffect(it) }
+
     val boardViewModel =
         hiltViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
+
+    boardViewModel.collectSideEffect { boardViewModel.handleSideEffect(it) }
 
     val pullToRefreshState = rememberPullToRefreshState()
 
     LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
-        val isCached = boardViewModel.getAPI(department.name, department.boards[page].board)
-        if (!isCached) pullToRefreshState.startRefresh()
+        boardViewModel.getAPI(department.name, department.boards[page].board)
+        pullToRefreshState.startRefresh()
     }
 
-    val uiState by boardViewModel.uiState.collectAsState()
+    val uiState by boardViewModel.collectAsState()
     val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
     if (pullToRefreshState.isRefreshing) {
@@ -218,7 +224,7 @@ fun BoardContent(
         }
     }
 
-    LaunchedEffect(key1 = lazyPostList.loadState.refresh is LoadState.Loading) {
+    LaunchedEffect(key1 = lazyPostList.loadState.append is LoadState.Loading) {
         if (lazyPostList.loadState.refresh is LoadState.Loading) return@LaunchedEffect
         pullToRefreshState.endRefresh()
     }
@@ -234,7 +240,7 @@ fun BoardContent(
             SnackbarHost(hostState = snackbarHostState)
         },
         content = { contentPadding ->
-            val networkState by networkViewModel.uiState.collectAsState()
+            val networkState by networkViewModel.collectAsState()
             val isNetworkConnected = networkState.isConnected
 
             LaunchedEffect(key1 = networkState) {
