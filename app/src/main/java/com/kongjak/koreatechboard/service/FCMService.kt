@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -24,15 +25,18 @@ class FCMService : FirebaseMessagingService() {
     @Inject
     lateinit var insertMultipleArticleUseCase: InsertMultipleArticleUseCase
     override fun onMessageReceived(message: RemoteMessage) {
-        CoroutineScope(Dispatchers.IO).launch {
-            insertMultipleArticleUseCase(
-                message.data["new_articles"]?.split(":")?.map { UUID.fromString(it) } ?: emptyList(),
-                message.data["department"] ?: "school",
-                message.data["board"] ?: "notice"
-            )
-        }
+        if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
 
-        sendNotification(message)
+            CoroutineScope(Dispatchers.IO).launch {
+                insertMultipleArticleUseCase(
+                    message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
+                        ?.map { UUID.fromString(it) } ?: emptyList(),
+                    message.data["department"] ?: "school",
+                    message.data["board"] ?: "notice"
+                )
+            }
+            sendNotification(message)
+        }
     }
 
     private fun sendNotification(message: RemoteMessage) {
