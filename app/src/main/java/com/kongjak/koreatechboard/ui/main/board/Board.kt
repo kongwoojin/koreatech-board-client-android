@@ -107,7 +107,12 @@ fun BottomSheetScaffold(
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetShape = RoundedCornerShape(16.dp),
+        sheetShape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp,
+            bottomStart = 0.dp,
+            bottomEnd = 0.dp
+        ),
         sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
