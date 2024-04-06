@@ -427,7 +427,7 @@ fun SearchFAB(department: Department, index: Int) {
     ) {
         Icon(
             imageVector = Icons.Rounded.Search,
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.content_description_search)
         )
     }
 

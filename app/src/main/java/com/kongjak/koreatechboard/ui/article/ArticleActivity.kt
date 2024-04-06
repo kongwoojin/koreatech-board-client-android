@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -104,8 +105,8 @@ fun Toolbar(
                             context.findActivity().finish()
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Back"
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(id = R.string.content_description_back)
                             )
                         }
                     },
@@ -125,7 +126,7 @@ fun Toolbar(
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_open_in_browser),
-                                contentDescription = stringResource(id = R.string.open_in_browser)
+                                contentDescription = stringResource(id = R.string.content_description_open_in_browser)
                             )
                         }
                     }

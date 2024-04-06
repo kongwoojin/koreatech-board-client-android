@@ -84,7 +84,6 @@
 
     <string name="network_unavailable">Can\'t connect network!</string>
 
-    <string name="open_in_browser">Open in browser</string>
     <string name="open_in_browser_failed">Failed to open browser!</string>
 
     <!-- Notification -->
@@ -105,5 +104,11 @@
 
     <!-- New Notice -->
     <string name="no_new_notice">No new notice!</string>
-    <string name="delete_icon">Delete</string>
+
+    <!-- Content Description -->
+    <string name="content_description_back">Back</string>
+    <string name="content_description_search">Search</string>
+    <string name="content_description_open_in_browser">Open in browser</string>
+    <string name="content_description_notification">Notification</string>
+    <string name="content_description_delete">Delete</string>
 </resources>

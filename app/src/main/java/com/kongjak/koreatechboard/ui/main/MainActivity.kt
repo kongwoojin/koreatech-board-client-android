@@ -125,7 +125,7 @@ fun AppBar() {
             }) {
                 Icon(
                     imageVector = Icons.Default.Notifications,
-                    contentDescription = stringResource(id = R.string.app_name)
+                    contentDescription = stringResource(id = R.string.content_description_notification)
                 )
             }
         }
@@ -153,7 +153,7 @@ fun BottomNavigation(navController: NavHostController) {
                 icon = {
                     Icon(
                         item.icon,
-                        contentDescription = item.name
+                        contentDescription = stringResource(id = item.stringResource)
                     )
                 },
 
