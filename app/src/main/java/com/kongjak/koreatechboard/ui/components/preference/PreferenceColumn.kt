@@ -63,13 +63,10 @@ fun PreferenceColumn(
 @Composable
 fun PreferenceColumnPreview() {
     Surface {
-        PreferenceColumn(
-        ) {
+        PreferenceColumn() {
             Preference(title = "Title") {
-
             }
             Preference(title = "Title") {
-
             }
         }
     }

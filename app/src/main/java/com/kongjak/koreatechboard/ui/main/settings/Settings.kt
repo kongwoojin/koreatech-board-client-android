@@ -81,7 +81,6 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     ) {
         val userDepartment = uiState.userDepartment
 
-
         PreferenceColumn {
             ListPreference(
                 title = stringResource(id = R.string.setting_user_department_title),

@@ -5,13 +5,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
-import com.kongjak.koreatechboard.ui.main.MainActivity
 import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +25,6 @@ class FCMService : FirebaseMessagingService() {
     lateinit var insertMultipleArticleUseCase: InsertMultipleArticleUseCase
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
-
             CoroutineScope(Dispatchers.IO).launch {
                 insertMultipleArticleUseCase(
                     message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }

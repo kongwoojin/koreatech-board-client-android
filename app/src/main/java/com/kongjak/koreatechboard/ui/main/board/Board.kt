@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.ui.main.board
 
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -53,7 +52,6 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
@@ -78,7 +76,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun BoardScreen(
     boardInitViewModel: BoardInitViewModel,
-    defaultDepartment: Department?, // Default department from MainActivity.
+    defaultDepartment: Department? // Default department from MainActivity.
 ) {
     val uiState by boardInitViewModel.collectAsState()
     val initDepartment = uiState.initDepartment
@@ -355,7 +353,7 @@ fun BoardItem(
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.boardItemTitle
         )
-        Row (modifier = Modifier.padding(top = 4.dp)) {
+        Row(modifier = Modifier.padding(top = 4.dp)) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
