@@ -2,8 +2,10 @@ package com.kongjak.koreatechboard.ui.notice
 
 import android.content.Intent
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -51,32 +54,46 @@ fun Notice(
     }
 
     val uiState by noticeViewModel.collectAsState()
-    LazyColumn(modifier = modifier) {
-        items(uiState.articles) { article ->
-            NoticeItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .selectable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() },
-                        selected = false,
-                        onClick = {
-                            val intent =
-                                Intent(context, ArticleActivity::class.java)
-                            intent.putExtra("department", article.department)
-                            intent.putExtra("uuid", article.uuid.toString())
-                            context.startActivity(intent)
-                            noticeViewModel.updateRead(article.uuid, true)
-                        }
-                    ),
-                department = article.department,
-                title = article.title,
-                writer = article.writer,
-                date = article.date,
-                read = article.read
+
+    if (uiState.articles.isEmpty()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = stringResource(id = R.string.no_new_notice)
             )
-            HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+        }
+    } else {
+        LazyColumn(modifier = modifier) {
+            items(uiState.articles) { article ->
+                NoticeItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                        .selectable(
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() },
+                            selected = false,
+                            onClick = {
+                                val intent =
+                                    Intent(context, ArticleActivity::class.java)
+                                intent.putExtra("department", article.department)
+                                intent.putExtra("uuid", article.uuid.toString())
+                                context.startActivity(intent)
+                                noticeViewModel.updateRead(article.uuid, true)
+                            }
+                        ),
+                    department = article.department,
+                    title = article.title,
+                    writer = article.writer,
+                    date = article.date,
+                    read = article.read
+                )
+                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+            }
         }
     }
 }
@@ -118,7 +135,7 @@ fun NoticeItem(
                     MaterialTheme.typography.boardItemTitle
                 }
             )
-            Row (modifier = Modifier.padding(top = 4.dp)) {
+            Row(modifier = Modifier.padding(top = 4.dp)) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -101,4 +101,7 @@
     <!-- Component -->
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_dismiss">Dismiss</string>
+
+    <!-- New Notice -->
+    <string name="no_new_notice">No new notice!</string>
 </resources>
