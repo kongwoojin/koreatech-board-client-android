@@ -3,7 +3,7 @@
 
     <!-- Department -->
     <string name="department_school">KOREATECH</string>
-    <string name="department_dorm">KOREATECH 생활관</string>
+    <string name="department_dorm">생활관</string>
     <string name="department_cse">컴퓨터공학부</string>
     <string name="department_mechanical">기계공학부</string>
     <string name="department_mechatronics">메카트로닉스공학부</string>
