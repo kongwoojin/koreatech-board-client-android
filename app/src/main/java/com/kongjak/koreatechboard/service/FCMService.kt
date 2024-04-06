@@ -12,6 +12,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
 import com.kongjak.koreatechboard.ui.main.MainActivity
+import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -40,11 +41,8 @@ class FCMService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(message: RemoteMessage) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, NoticeActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra("screen", message.data["screen"] ?: "board")
-            putExtra("department", message.data["department"])
-            putExtra("openedFromNotification", true)
         }
 
         val pendingIntent = PendingIntent.getActivity(
