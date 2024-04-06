@@ -40,7 +40,7 @@ class NoticeViewModel @Inject constructor(
                 val articles = getAllNewArticleUseCase()
                 intent {
                     reduce {
-                        state.copy(articles = articles)
+                        state.copy(articles = articles, isLoaded = true)
                     }
                 }
             }

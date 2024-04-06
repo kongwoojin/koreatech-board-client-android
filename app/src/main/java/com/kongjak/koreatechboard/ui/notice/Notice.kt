@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -55,44 +56,54 @@ fun Notice(
 
     val uiState by noticeViewModel.collectAsState()
 
-    if (uiState.articles.isEmpty()) {
+    if (!uiState.isLoaded) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = stringResource(id = R.string.no_new_notice)
-            )
+            CircularProgressIndicator()
         }
     } else {
-        LazyColumn(modifier = modifier) {
-            items(uiState.articles) { article ->
-                NoticeItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .selectable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() },
-                            selected = false,
-                            onClick = {
-                                val intent =
-                                    Intent(context, ArticleActivity::class.java)
-                                intent.putExtra("department", article.department)
-                                intent.putExtra("uuid", article.uuid.toString())
-                                context.startActivity(intent)
-                                noticeViewModel.updateRead(article.uuid, true)
-                            }
-                        ),
-                    department = article.department,
-                    title = article.title,
-                    writer = article.writer,
-                    date = article.date,
-                    read = article.read
+        if (uiState.articles.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = stringResource(id = R.string.no_new_notice)
                 )
-                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+            }
+        } else {
+            LazyColumn(modifier = modifier) {
+                items(uiState.articles) { article ->
+                    NoticeItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                            .selectable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() },
+                                selected = false,
+                                onClick = {
+                                    val intent =
+                                        Intent(context, ArticleActivity::class.java)
+                                    intent.putExtra("department", article.department)
+                                    intent.putExtra("uuid", article.uuid.toString())
+                                    context.startActivity(intent)
+                                    noticeViewModel.updateRead(article.uuid, true)
+                                }
+                            ),
+                        department = article.department,
+                        title = article.title,
+                        writer = article.writer,
+                        date = article.date,
+                        read = article.read
+                    )
+                    HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+                }
             }
         }
     }
