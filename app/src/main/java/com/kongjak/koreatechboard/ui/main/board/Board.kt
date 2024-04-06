@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
@@ -106,6 +107,7 @@ fun BottomSheetScaffold(
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
+        sheetShape = RoundedCornerShape(16.dp),
         sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
@@ -413,6 +415,7 @@ fun SearchFAB(department: Department, index: Int) {
     val context = LocalContext.current
 
     FloatingActionButton(
+        shape = RoundedCornerShape(16.dp),
         onClick = {
             showDialog = true
         }

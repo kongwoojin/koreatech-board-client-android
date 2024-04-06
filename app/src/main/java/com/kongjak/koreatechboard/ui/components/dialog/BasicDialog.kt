@@ -29,7 +29,7 @@ fun BasicDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(16)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Box(modifier = modifier.padding(16.dp)) {
                 content()
@@ -49,7 +49,7 @@ fun BasicDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(16)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
@@ -79,7 +79,7 @@ fun BasicDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(16)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
@@ -118,7 +118,7 @@ fun BasicDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(16)
+            shape = RoundedCornerShape(16.dp)
         ) {
             Column(
                 modifier = modifier.padding(vertical = 16.dp, horizontal = 32.dp)
