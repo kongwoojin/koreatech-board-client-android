@@ -118,7 +118,7 @@ fun Notice(
                                     ) {
                                         Icon(
                                             Icons.Default.Delete,
-                                            contentDescription = stringResource(id = R.string.content_description_delete),
+                                            contentDescription = stringResource(id = R.string.content_description_delete)
                                         )
                                     }
                                 }
