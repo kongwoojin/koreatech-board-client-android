@@ -23,7 +23,7 @@ import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.ui.components.preference.ListPreference
 import com.kongjak.koreatechboard.ui.components.preference.Preference
-import com.kongjak.koreatechboard.ui.components.preference.PreferenceHeader
+import com.kongjak.koreatechboard.ui.components.preference.PreferenceColumn
 import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
@@ -81,156 +81,171 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
     ) {
         val userDepartment = uiState.userDepartment
 
-        ListPreference(
-            title = stringResource(id = R.string.setting_user_department_title),
-            summary = stringResource(id = deptListString[userDepartment]),
-            itemStringResource = deptListString,
-            itemValue = deptListName,
-            selectedIndex = userDepartment
-        ) { item ->
-            val subscribe = uiState.subscribeDepartment
-            if (subscribe) {
-                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(false))
-            }
-            settingsViewModel.sendSideEffect(SettingsSideEffect.SetUserDepartment(item))
-            if (subscribe) {
-                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(true))
-            }
-        }
 
-        val initDepartment = uiState.initDepartment
-
-        val initDeptList = listOf(
-            Department.School,
-            Department.Dorm,
-            deptList[userDepartment]
-        )
-
-        ListPreference(
-            title = stringResource(id = R.string.setting_default_board_title),
-            summary = stringResource(id = initDeptList.map { it.stringResource }[initDepartment]),
-            itemStringResource = initDeptList.map { it.stringResource },
-            itemValue = initDeptList.map { it.name },
-            selectedIndex = initDepartment
-        ) { item ->
-            settingsViewModel.sendSideEffect(SettingsSideEffect.SetInitDepartment(item))
-        }
-
-        PreferenceHeader(title = stringResource(id = R.string.setting_header_notification))
-
-        val isNotificationPermissionGranted =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                isNotificationPermissionGranted()
-            } else {
-                true
-            }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
-            RequestNotificationPermission()
-        }
-        SwitchPreference(
-            title = stringResource(id = R.string.setting_subscribe_new_notice_school),
-            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
-            checked = uiState.subscribeSchool,
-            enabled = isNotificationPermissionGranted,
-            onCheckedChange = {
-                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateSchoolSubscribe(it))
-            }
-        )
-
-        SwitchPreference(
-            title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
-            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
-            checked = uiState.subscribeDormitory,
-            enabled = isNotificationPermissionGranted,
-            onCheckedChange = {
-                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDormSubscribe(it))
-            }
-        )
-
-        SwitchPreference(
-            title = stringResource(id = R.string.setting_subscribe_new_notice_department),
-            summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
-            checked = uiState.subscribeDepartment,
-            enabled = isNotificationPermissionGranted,
-            onCheckedChange = {
-                settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
-            }
-        )
-
-        PreferenceHeader(title = stringResource(id = R.string.setting_header_info))
-
-        Preference(
-            title = stringResource(id = R.string.setting_license_title)
-        ) {
-            context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
-        }
-
-        Preference(title = stringResource(id = R.string.setting_source_code_title)) {
-            val builder = CustomTabsIntent.Builder()
-            val customTabsIntent = builder.build()
-            customTabsIntent.launchUrl(
-                context,
-                Uri.parse("https://github.com/kongwoojin/koreatech_board_client_android")
-            )
-        }
-
-        Preference(title = stringResource(id = R.string.setting_enquiry_mail_title)) {
-            val mailIntent = Intent(Intent.ACTION_SENDTO)
-            mailIntent.data = Uri.parse("mailto:")
-            mailIntent.putExtra(
-                Intent.EXTRA_EMAIL,
-                arrayOf(context.getString(R.string.setting_mail_address))
-            )
-            mailIntent.putExtra(
-                Intent.EXTRA_SUBJECT,
-                context.getString(R.string.setting_mail_subject)
-            )
-            mailIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                context.getString(R.string.setting_mail_text, Build.MODEL, Build.VERSION.SDK_INT)
-            )
-            try {
-                context.startActivity(mailIntent)
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.setting_mail_app_not_found),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-        PreferenceHeader(title = stringResource(id = R.string.setting_header_theme))
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val isChecked = uiState.isDynamicTheme
-
-            SwitchPreference(
-                title = stringResource(id = R.string.setting_dynamic_theme_title),
-                checked = isChecked,
-                onCheckedChange = {
+        PreferenceColumn {
+            ListPreference(
+                title = stringResource(id = R.string.setting_user_department_title),
+                summary = stringResource(id = deptListString[userDepartment]),
+                itemStringResource = deptListString,
+                itemValue = deptListName,
+                selectedIndex = userDepartment
+            ) { item ->
+                val subscribe = uiState.subscribeDepartment
+                if (subscribe) {
                     settingsViewModel.sendSideEffect(
-                        SettingsSideEffect.SetDynamicTheme(
-                            it
+                        SettingsSideEffect.UpdateDepartmentSubscribe(
+                            false
                         )
                     )
+                }
+                settingsViewModel.sendSideEffect(SettingsSideEffect.SetUserDepartment(item))
+                if (subscribe) {
+                    settingsViewModel.sendSideEffect(
+                        SettingsSideEffect.UpdateDepartmentSubscribe(
+                            true
+                        )
+                    )
+                }
+            }
+
+            val initDepartment = uiState.initDepartment
+
+            val initDeptList = listOf(
+                Department.School,
+                Department.Dorm,
+                deptList[userDepartment]
+            )
+
+            ListPreference(
+                title = stringResource(id = R.string.setting_default_board_title),
+                summary = stringResource(id = initDeptList.map { it.stringResource }[initDepartment]),
+                itemStringResource = initDeptList.map { it.stringResource },
+                itemValue = initDeptList.map { it.name },
+                selectedIndex = initDepartment
+            ) { item ->
+                settingsViewModel.sendSideEffect(SettingsSideEffect.SetInitDepartment(item))
+            }
+        }
+
+        PreferenceColumn(title = stringResource(id = R.string.setting_header_notification)) {
+            val isNotificationPermissionGranted =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    isNotificationPermissionGranted()
+                } else {
+                    true
+                }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
+                RequestNotificationPermission()
+            }
+            SwitchPreference(
+                title = stringResource(id = R.string.setting_subscribe_new_notice_school),
+                summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_school),
+                checked = uiState.subscribeSchool,
+                enabled = isNotificationPermissionGranted,
+                onCheckedChange = {
+                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateSchoolSubscribe(it))
+                }
+            )
+
+            SwitchPreference(
+                title = stringResource(id = R.string.setting_subscribe_new_notice_dorm),
+                summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_dorm),
+                checked = uiState.subscribeDormitory,
+                enabled = isNotificationPermissionGranted,
+                onCheckedChange = {
+                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDormSubscribe(it))
+                }
+            )
+
+            SwitchPreference(
+                title = stringResource(id = R.string.setting_subscribe_new_notice_department),
+                summary = stringResource(id = R.string.setting_subscribe_new_notice_summary_department),
+                checked = uiState.subscribeDepartment,
+                enabled = isNotificationPermissionGranted,
+                onCheckedChange = {
+                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
                 }
             )
         }
 
-        val isDarkTheme = uiState.isDarkTheme
+        PreferenceColumn(title = stringResource(id = R.string.setting_header_info)) {
+            Preference(
+                title = stringResource(id = R.string.setting_license_title)
+            ) {
+                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            }
 
-        ListPreference(
-            title = stringResource(id = R.string.setting_dark_theme_title),
-            summary = stringResource(
-                id = darkThemeString[isDarkTheme]
-            ),
-            itemStringResource = darkThemeString,
-            itemValue = darkTheme,
-            selectedIndex = isDarkTheme
-        ) { theme ->
-            settingsViewModel.sendSideEffect(SettingsSideEffect.SetDarkTheme(theme))
+            Preference(title = stringResource(id = R.string.setting_source_code_title)) {
+                val builder = CustomTabsIntent.Builder()
+                val customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(
+                    context,
+                    Uri.parse("https://github.com/kongwoojin/koreatech_board_client_android")
+                )
+            }
+
+            Preference(title = stringResource(id = R.string.setting_enquiry_mail_title)) {
+                val mailIntent = Intent(Intent.ACTION_SENDTO)
+                mailIntent.data = Uri.parse("mailto:")
+                mailIntent.putExtra(
+                    Intent.EXTRA_EMAIL,
+                    arrayOf(context.getString(R.string.setting_mail_address))
+                )
+                mailIntent.putExtra(
+                    Intent.EXTRA_SUBJECT,
+                    context.getString(R.string.setting_mail_subject)
+                )
+                mailIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    context.getString(
+                        R.string.setting_mail_text,
+                        Build.MODEL,
+                        Build.VERSION.SDK_INT
+                    )
+                )
+                try {
+                    context.startActivity(mailIntent)
+                } catch (e: ActivityNotFoundException) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.setting_mail_app_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        PreferenceColumn(title = stringResource(id = R.string.setting_header_theme)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val isChecked = uiState.isDynamicTheme
+
+                SwitchPreference(
+                    title = stringResource(id = R.string.setting_dynamic_theme_title),
+                    checked = isChecked,
+                    onCheckedChange = {
+                        settingsViewModel.sendSideEffect(
+                            SettingsSideEffect.SetDynamicTheme(
+                                it
+                            )
+                        )
+                    }
+                )
+            }
+
+            val isDarkTheme = uiState.isDarkTheme
+
+            ListPreference(
+                title = stringResource(id = R.string.setting_dark_theme_title),
+                summary = stringResource(
+                    id = darkThemeString[isDarkTheme]
+                ),
+                itemStringResource = darkThemeString,
+                itemValue = darkTheme,
+                selectedIndex = isDarkTheme
+            ) { theme ->
+                settingsViewModel.sendSideEffect(SettingsSideEffect.SetDarkTheme(theme))
+            }
         }
     }
 }
