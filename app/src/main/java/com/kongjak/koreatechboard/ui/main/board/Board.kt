@@ -64,7 +64,6 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.main.settings.deptList
-import com.kongjak.koreatechboard.ui.main.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.search.SearchActivity
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
@@ -82,9 +81,16 @@ fun BoardScreen(
     val uiState by boardInitViewModel.collectAsState()
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
+
+    val departmentList = listOf(
+        Department.School,
+        Department.Dorm,
+        deptList[userDepartment]
+    )
+
     BottomSheetScaffold(
-        defaultDepartment ?: fullDeptList[initDepartment],
-        userDepartment
+        defaultDepartment ?: departmentList[initDepartment],
+        deptList[userDepartment]
     )
 }
 
@@ -92,7 +98,7 @@ fun BoardScreen(
 @Composable
 fun BottomSheetScaffold(
     initDepartment: Department,
-    userDepartment: Int
+    userDepartment: Department
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -102,7 +108,7 @@ fun BottomSheetScaffold(
     val scaffoldItemList = listOf(
         Department.School,
         Department.Dorm,
-        deptList[userDepartment]
+        userDepartment
     )
 
     BottomSheetScaffold(
