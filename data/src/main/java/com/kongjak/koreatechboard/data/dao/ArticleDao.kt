@@ -25,8 +25,8 @@ interface ArticleDao {
     @Query("UPDATE article SET read = :read WHERE uuid = :uuid")
     fun updateRead(uuid: UUID, read: Boolean)
 
-    @Delete
-    fun delete(article: Article)
+    @Query("DELETE FROM article WHERE uuid = :uuid")
+    fun delete(uuid: UUID)
 
     @Delete
     fun deleteAll(vararg articles: Article)

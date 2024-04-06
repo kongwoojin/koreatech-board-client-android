@@ -23,7 +23,7 @@ class DatabaseLocalDataSource @Inject constructor(
     }
 
     fun deleteArticle(uuid: UUID) {
-        articleDao.delete(articleDao.getArticle(uuid))
+        articleDao.delete(uuid)
     }
 
     fun deleteAllArticle() {
