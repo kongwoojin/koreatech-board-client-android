@@ -182,7 +182,7 @@ fun ArticleList(department: Department, page: Int) {
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = stringResource(R.string.error_no_data))
+                    Text(text = stringResource(R.string.error_no_article))
                 }
             } else {
                 Column {

@@ -75,9 +75,9 @@
     <string name="error_hide_detail">숨기기</string>
     <string name="error_server_down">서버가 %s 에러를 반환했습니다!\n서버 관리자에게 문의하세요.</string>
     <string name="error_retry">다시 시도</string>
+    <string name="error_no_article">게시글이 없습니다!</string>
 
     <!-- ETC -->
-    <string name="error_no_data">데이터가 없습니다!</string>
     <string name="network_unavailable">인터넷에 연결할 수 없습니다!</string>
 
     <string name="open_in_browser">브라우저에서 열기</string>

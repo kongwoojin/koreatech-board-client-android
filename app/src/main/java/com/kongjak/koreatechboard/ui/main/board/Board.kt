@@ -261,7 +261,7 @@ fun BoardContent(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = stringResource(id = R.string.error_no_data))
+                        Text(text = stringResource(id = R.string.error_no_article))
                     }
                 } else {
                     LazyColumn(
