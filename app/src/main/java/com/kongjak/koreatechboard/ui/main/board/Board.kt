@@ -222,7 +222,7 @@ fun BoardContent(
     val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = lazyPostList.loadState.refresh, key2 = pullToRefreshState.isRefreshing) {
-        if (lazyPostList.loadState.refresh is LoadState.NotLoading) {
+        if (lazyPostList.loadState.refresh is LoadState.NotLoading || lazyPostList.loadState.refresh is LoadState.Error) {
             pullToRefreshState.endRefresh()
         }
     }
