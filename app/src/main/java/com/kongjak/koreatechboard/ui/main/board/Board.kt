@@ -116,12 +116,12 @@ fun BottomSheetScaffold(
                         Text(
                             text = stringResource(id = it.stringResource),
                             modifier = Modifier
-                                .padding(16.dp)
                                 .fillMaxWidth()
                                 .clickable {
                                     department.value = it
                                     scope.launch { scaffoldState.bottomSheetState.partialExpand() }
                                 }
+                                .padding(16.dp)
                         )
                     }
                 }
