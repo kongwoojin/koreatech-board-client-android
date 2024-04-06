@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.main.board
 
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -209,33 +210,23 @@ fun BoardContent(
 
     val pullToRefreshState = rememberPullToRefreshState()
 
+    if (pullToRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            boardViewModel.getAPI(department.name, department.boards[page].board)
+        }
+    }
+
     LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
-        boardViewModel.getAPI(department.name, department.boards[page].board)
+        pullToRefreshState.startRefresh()
     }
 
     val uiState by boardViewModel.collectAsState()
     val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
-    if (pullToRefreshState.isRefreshing) {
-        LaunchedEffect(true) {
-            lazyPostList.refresh()
+    LaunchedEffect(key1 = lazyPostList.loadState.refresh, key2 = pullToRefreshState.isRefreshing) {
+        if (lazyPostList.loadState.refresh is LoadState.NotLoading) {
+            pullToRefreshState.endRefresh()
         }
-    }
-
-    LaunchedEffect(key1 = lazyPostList.loadState.append is LoadState.Loading) {
-        if (lazyPostList.loadState.append is LoadState.Loading) {
-            pullToRefreshState.startRefresh()
-            return@LaunchedEffect
-        }
-        pullToRefreshState.endRefresh()
-    }
-
-    LaunchedEffect(key1 = lazyPostList.loadState.refresh is LoadState.Loading) {
-        if (lazyPostList.loadState.refresh is LoadState.Loading) {
-            pullToRefreshState.startRefresh()
-            return@LaunchedEffect
-        }
-        pullToRefreshState.endRefresh()
     }
 
     val context = LocalContext.current
