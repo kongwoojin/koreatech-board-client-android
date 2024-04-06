@@ -104,4 +104,5 @@
 
     <!-- New Notice -->
     <string name="no_new_notice">No new notice!</string>
+    <string name="delete_icon">Delete</string>
 </resources>

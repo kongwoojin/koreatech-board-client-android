@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.ui.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.UpdateArticleReadUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NoticeViewModel @Inject constructor(
     private val getAllNewArticleUseCase: GetAllNewArticleUseCase,
-    private val updateArticleReadUseCase: UpdateArticleReadUseCase
+    private val updateArticleReadUseCase: UpdateArticleReadUseCase,
+    private val deleteArticleUseCase: DeleteArticleUseCase
 ) : ContainerHost<NoticeState, NoticeSideEffect>, ViewModel() {
     override val container = container<NoticeState, NoticeSideEffect>(NoticeState())
 
@@ -31,6 +33,13 @@ class NoticeViewModel @Inject constructor(
     fun updateRead(uuid: UUID, read: Boolean) {
         intent {
             postSideEffect(NoticeSideEffect.UpdateRead(uuid, read))
+        }
+    }
+
+    fun deleteNotice(uuid: UUID) {
+        intent {
+            postSideEffect(NoticeSideEffect.DeleteNotice(uuid))
+            postSideEffect(NoticeSideEffect.GetAllNotices)
         }
     }
 
@@ -60,6 +69,10 @@ class NoticeViewModel @Inject constructor(
                     }
                     updateArticleReadUseCase(sideEffect.uuid, sideEffect.read)
                 }
+            }
+
+            is NoticeSideEffect.DeleteNotice -> viewModelScope.launch(Dispatchers.IO) {
+                deleteArticleUseCase(sideEffect.uuid)
             }
         }
     }

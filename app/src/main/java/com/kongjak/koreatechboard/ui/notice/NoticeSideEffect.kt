@@ -5,4 +5,5 @@ import java.util.UUID
 sealed class NoticeSideEffect {
     object GetAllNotices : NoticeSideEffect()
     data class UpdateRead(val uuid: UUID, val read: Boolean) : NoticeSideEffect()
+    data class DeleteNotice(val uuid: UUID) : NoticeSideEffect()
 }

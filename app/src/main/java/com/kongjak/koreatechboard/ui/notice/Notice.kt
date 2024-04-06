@@ -1,8 +1,12 @@
 package com.kongjak.koreatechboard.ui.notice
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,11 +15,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
@@ -39,6 +51,7 @@ import com.kongjak.koreatechboard.util.routes.Department
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
+@ExperimentalMaterial3Api
 @Composable
 fun Notice(
     modifier: Modifier,
@@ -79,29 +92,63 @@ fun Notice(
         } else {
             LazyColumn(modifier = modifier) {
                 items(uiState.articles) { article ->
-                    NoticeItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                            .selectable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() },
-                                selected = false,
-                                onClick = {
-                                    val intent =
-                                        Intent(context, ArticleActivity::class.java)
-                                    intent.putExtra("department", article.department)
-                                    intent.putExtra("uuid", article.uuid.toString())
-                                    context.startActivity(intent)
-                                    noticeViewModel.updateRead(article.uuid, true)
-                                }
-                            ),
-                        department = article.department,
-                        title = article.title,
-                        writer = article.writer,
-                        date = article.date,
-                        read = article.read
+                    val dismissState = rememberSwipeToDismissBoxState(
+                        confirmValueChange = {
+                            if (it == SwipeToDismissBoxValue.EndToStart) {
+                                noticeViewModel.deleteNotice(article.uuid)
+                            }
+                            true
+                        }
                     )
+                    AnimatedVisibility(
+                        visible = true,
+                        exit = fadeOut(spring())
+                    ) {
+                        SwipeToDismissBox(
+                            state = dismissState,
+                            modifier = Modifier,
+                            enableDismissFromStartToEnd = false,
+                            backgroundContent = {
+                                if (dismissState.targetValue == SwipeToDismissBoxValue.EndToStart) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(horizontal = Dp(20f)),
+                                        contentAlignment = Alignment.CenterEnd
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = stringResource(id = R.string.delete_icon),
+                                        )
+                                    }
+                                }
+                            }
+                        ) {
+                            NoticeItem(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                                    .selectable(
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        selected = false,
+                                        onClick = {
+                                            val intent =
+                                                Intent(context, ArticleActivity::class.java)
+                                            intent.putExtra("department", article.department)
+                                            intent.putExtra("uuid", article.uuid.toString())
+                                            context.startActivity(intent)
+                                            noticeViewModel.updateRead(article.uuid, true)
+                                        }
+                                    ),
+                                department = article.department,
+                                title = article.title,
+                                writer = article.writer,
+                                date = article.date,
+                                read = article.read
+                            )
+                        }
+                    }
                     HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
                 }
             }
