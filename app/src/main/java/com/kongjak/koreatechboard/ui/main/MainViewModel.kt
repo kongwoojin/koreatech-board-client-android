@@ -29,12 +29,6 @@ class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEff
                     state.copy(defaultDepartment = sideEffect.defaultDepartment)
                 }
             }
-
-            MainSideEffect.SetOpenedFromNotification -> intent {
-                reduce {
-                    state.copy(isOpenedFromNotification = true)
-                }
-            }
         }
     }
 
@@ -47,12 +41,6 @@ class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEff
     fun setDefaultDepartment(defaultDepartment: Department) {
         intent {
             postSideEffect(MainSideEffect.SetDefaultDepartment(defaultDepartment))
-        }
-    }
-
-    fun setOpenedFromNotification() {
-        intent {
-            postSideEffect(MainSideEffect.SetOpenedFromNotification)
         }
     }
 }

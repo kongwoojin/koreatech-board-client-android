@@ -79,15 +79,13 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun BoardScreen(
     boardInitViewModel: BoardInitViewModel,
     defaultDepartment: Department?, // Default department from MainActivity.
-    isOpenedFromNotification: Boolean = false
 ) {
     val uiState by boardInitViewModel.collectAsState()
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
     BottomSheetScaffold(
         defaultDepartment ?: fullDeptList[initDepartment],
-        userDepartment,
-        isOpenedFromNotification = isOpenedFromNotification
+        userDepartment
     )
 }
 
@@ -95,8 +93,7 @@ fun BoardScreen(
 @Composable
 fun BottomSheetScaffold(
     initDepartment: Department,
-    userDepartment: Int,
-    isOpenedFromNotification: Boolean
+    userDepartment: Int
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -133,8 +130,7 @@ fun BottomSheetScaffold(
     ) { innerPadding ->
         Board(
             contentPadding = innerPadding,
-            department = department.value,
-            isOpenedFromNotification
+            department = department.value
         )
     }
 }
@@ -143,8 +139,7 @@ fun BottomSheetScaffold(
 @Composable
 fun Board(
     contentPadding: PaddingValues,
-    department: Department,
-    isOpenedFromNotification: Boolean
+    department: Department
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -186,8 +181,7 @@ fun Board(
         ) { page ->
             BoardContent(
                 department = department,
-                page = page,
-                isOpenedFromNotification = isOpenedFromNotification
+                page = page
             )
         }
     }
@@ -198,7 +192,6 @@ fun Board(
 fun BoardContent(
     department: Department,
     page: Int,
-    isOpenedFromNotification: Boolean,
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     networkViewModel.collectSideEffect { networkViewModel.handleSideEffect(it) }
@@ -300,8 +293,7 @@ fun BoardContent(
                                     title = it.title,
                                     writer = it.writer,
                                     isNew = it.isNew,
-                                    date = it.writeDate,
-                                    isOpenedFromNotification = isOpenedFromNotification
+                                    date = it.writeDate
                                 )
                                 HorizontalDivider(thickness = 0.5.dp, color = Gray)
                             }
@@ -352,11 +344,8 @@ fun BoardItem(
     title: String,
     writer: String,
     date: String,
-    isNew: Boolean,
-    isOpenedFromNotification: Boolean = false
+    isNew: Boolean
 ) {
-    val shouldSetBold = isOpenedFromNotification && isNew
-
     Column(
         modifier = modifier
     ) {
@@ -364,11 +353,7 @@ fun BoardItem(
             text = title,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = if (shouldSetBold) {
-                MaterialTheme.typography.boardItemTitle.copy(fontWeight = FontWeight.Bold)
-            } else {
-                MaterialTheme.typography.boardItemTitle
-            }
+            style = MaterialTheme.typography.boardItemTitle
         )
         Row (modifier = Modifier.padding(top = 4.dp)) {
             Text(

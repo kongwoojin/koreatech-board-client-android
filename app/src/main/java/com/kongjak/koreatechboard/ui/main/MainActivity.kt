@@ -66,11 +66,6 @@ class MainActivity : ComponentActivity() {
             mainViewModel.setDefaultDepartment(Department.valueOf(defaultDepartment))
         }
 
-        val isOpenedFromNotification = intent.getBooleanExtra("openedFromNotification", false)
-        if (isOpenedFromNotification) {
-            mainViewModel.setOpenedFromNotification()
-        }
-
         setContent {
             mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
 
@@ -188,7 +183,6 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
     val uiState by mainViewModel.collectAsState()
     val defaultScreen = uiState.defaultScreen
     val defaultDepartment = uiState.defaultDepartment
-    val isOpenedFromNotification = uiState.isOpenedFromNotification
 
     val boardInitViewModel = hiltViewModel<BoardInitViewModel>()
     boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
@@ -200,8 +194,7 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
         composable(BottomNavigationItem.Board.name) {
             BoardScreen(
                 boardInitViewModel = boardInitViewModel,
-                defaultDepartment = defaultDepartment,
-                isOpenedFromNotification = isOpenedFromNotification
+                defaultDepartment = defaultDepartment
             )
         }
         composable(BottomNavigationItem.Settings.name) {
