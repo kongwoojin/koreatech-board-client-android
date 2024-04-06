@@ -310,14 +310,14 @@ fun BoardContent(
                                     when {
                                         loadState.refresh is LoadState.Error -> {
                                             val errorMessage =
-                                                (loadState.refresh as LoadState.Error).error.localizedMessage
-                                            item { BoardError(errorMessage ?: "") }
+                                                (loadState.refresh as LoadState.Error).error.message
+                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
                                         }
 
                                         loadState.append is LoadState.Error -> {
                                             val errorMessage =
-                                                (loadState.append as LoadState.Error).error.localizedMessage
-                                            item { BoardError(errorMessage ?: "") }
+                                                (loadState.append as LoadState.Error).error.message
+                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
                                         }
                                     }
                                 }
