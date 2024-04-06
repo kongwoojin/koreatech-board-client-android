@@ -11,12 +11,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
@@ -101,16 +102,13 @@ fun NoticeItem(
                 MaterialTheme.typography.noticeDepartmentText
             }
         )
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Column {
             Text(
                 text = title,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
+                    .fillMaxWidth(),
                 style = if (read) {
                     MaterialTheme.typography.boardItemTitle.copy(
                         fontStyle = FontStyle.Italic,
@@ -120,11 +118,11 @@ fun NoticeItem(
                     MaterialTheme.typography.boardItemTitle
                 }
             )
-            Column(
-                modifier = Modifier.padding(start = 8.dp),
-                horizontalAlignment = Alignment.End
-            ) {
+            Row (modifier = Modifier.padding(top = 4.dp)) {
                 Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
                     text = writer,
                     style = if (read) {
                         MaterialTheme.typography.boardItemSubText.copy(
@@ -154,14 +152,16 @@ fun NoticeItem(
 @Preview
 @Composable
 fun NoticeItemPreview() {
-    NoticeItem(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        title = "Title",
-        writer = "Writer",
-        date = "2021-09-01",
-        department = "school",
-        read = false
-    )
+    Surface {
+        NoticeItem(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            title = "Title",
+            writer = "Writer",
+            date = "2021-09-01",
+            department = "school",
+            read = false
+        )
+    }
 }

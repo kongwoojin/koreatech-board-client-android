@@ -357,28 +357,24 @@ fun BoardItem(
 ) {
     val shouldSetBold = isOpenedFromNotification && isNew
 
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = modifier
     ) {
         Text(
             text = title,
-            maxLines = 2,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
             style = if (shouldSetBold) {
                 MaterialTheme.typography.boardItemTitle.copy(fontWeight = FontWeight.Bold)
             } else {
                 MaterialTheme.typography.boardItemTitle
             }
         )
-        Column(
-            modifier = Modifier.padding(start = 8.dp),
-            horizontalAlignment = Alignment.End
-        ) {
+        Row (modifier = Modifier.padding(top = 4.dp)) {
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 text = writer,
                 style = MaterialTheme.typography.boardItemSubText
             )
