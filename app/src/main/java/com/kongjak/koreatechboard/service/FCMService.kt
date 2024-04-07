@@ -5,9 +5,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
 import com.kongjak.koreatechboard.ui.notice.NoticeActivity
@@ -77,5 +79,11 @@ class FCMService : FirebaseMessagingService() {
         }
 
         manager.notify(0, notificationBuilder.build())
+    }
+
+    override fun onNewToken(token: String) {
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            Log.d("FCM", "Refreshed token: $token")
+        }
     }
 }

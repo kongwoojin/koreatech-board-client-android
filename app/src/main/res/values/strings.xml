@@ -85,6 +85,7 @@
     <string name="network_unavailable">Can\'t connect network!</string>
 
     <string name="open_in_browser_failed">Failed to open browser!</string>
+    <string name="firebase_token" translatable="false">Firebase token: %s</string>
 
     <!-- Notification -->
     <string name="new_notice_notification_channel_id" translatable="false">1001</string>

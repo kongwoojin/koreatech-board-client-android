@@ -1,8 +1,11 @@
 package com.kongjak.koreatechboard.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -35,6 +38,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.main.board.BoardInitViewModel
@@ -64,6 +70,10 @@ class MainActivity : ComponentActivity() {
         val defaultDepartment = intent.getStringExtra("department")
         if (defaultDepartment != null) {
             mainViewModel.setDefaultDepartment(Department.valueOf(defaultDepartment))
+        }
+
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            getFirebaseToken(this)
         }
 
         setContent {
@@ -201,4 +211,20 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
             SettingsScreen()
         }
     }
+}
+
+fun getFirebaseToken(context: Context) {
+    val tag = "FCM"
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+        if (!task.isSuccessful) {
+            Log.e(tag, "Fetching FCM registration token failed", task.exception)
+            return@OnCompleteListener
+        }
+
+        val token = task.result
+
+        val msg = context.getString(R.string.firebase_token, token)
+        Log.d(tag, msg)
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    })
 }
