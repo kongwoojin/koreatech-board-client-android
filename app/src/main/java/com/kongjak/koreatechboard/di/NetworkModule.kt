@@ -19,7 +19,7 @@ object NetworkModule {
     private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v3/"
 
     private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
-        API_DEVELOPMENT
+        API_PRODUCTION
     } else {
         API_DEVELOPMENT
     }
