@@ -215,16 +215,18 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
 
 fun getFirebaseToken(context: Context) {
     val tag = "FCM"
-    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-        if (!task.isSuccessful) {
-            Log.e(tag, "Fetching FCM registration token failed", task.exception)
-            return@OnCompleteListener
+    FirebaseMessaging.getInstance().token.addOnCompleteListener(
+        OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.e(tag, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            val token = task.result
+
+            val msg = context.getString(R.string.firebase_token, token)
+            Log.d(tag, msg)
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
-
-        val token = task.result
-
-        val msg = context.getString(R.string.firebase_token, token)
-        Log.d(tag, msg)
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-    })
+    )
 }
