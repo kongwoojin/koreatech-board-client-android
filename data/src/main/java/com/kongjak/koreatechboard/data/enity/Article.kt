@@ -8,6 +8,8 @@ import java.util.UUID
 @Entity
 data class Article(
     @PrimaryKey val uuid: UUID,
+    @ColumnInfo("num")
+    val num: Int,
     @ColumnInfo("title")
     val title: String,
     @ColumnInfo("writer")
@@ -23,5 +25,9 @@ data class Article(
     @ColumnInfo("board")
     val board: String,
     @ColumnInfo("read")
-    val read: Boolean
+    val read: Boolean,
+    @ColumnInfo("is_notice")
+    val isNotice: Boolean,
+    @ColumnInfo("received_time")
+    val receivedTime: Long
 )

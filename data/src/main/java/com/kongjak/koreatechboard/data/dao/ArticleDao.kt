@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Dao
 interface ArticleDao {
-    @Query("SELECT * FROM article ORDER BY write_date DESC")
+    @Query("SELECT * FROM article ORDER BY is_notice DESC, write_date DESC, received_time DESC, num DESC")
     fun getAll(): List<Article>
 
     @Query("SELECT * FROM article WHERE uuid = :uuid")

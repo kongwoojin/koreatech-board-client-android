@@ -8,6 +8,7 @@ fun List<Article>.mapToLocalArticle(): List<LocalArticle> {
     return this.map {
         LocalArticle(
             uuid = it.uuid,
+            num = it.num,
             title = it.title,
             writer = it.writer,
             content = it.content,
@@ -15,7 +16,9 @@ fun List<Article>.mapToLocalArticle(): List<LocalArticle> {
             articleUrl = it.articleUrl,
             department = it.department,
             board = it.board,
-            read = it.read
+            read = it.read,
+            isNotice = it.isNotice,
+            receivedTime = it.receivedTime
         )
     }
 }
@@ -24,6 +27,7 @@ fun List<LocalArticle>.mapToArticle(): List<Article> {
     return this.map {
         Article(
             uuid = it.uuid,
+            num = it.num,
             title = it.title,
             writer = it.writer,
             content = it.content,
@@ -31,7 +35,9 @@ fun List<LocalArticle>.mapToArticle(): List<Article> {
             articleUrl = it.articleUrl,
             department = it.department,
             board = it.board,
-            read = it.read
+            read = it.read,
+            isNotice = it.isNotice,
+            receivedTime = it.receivedTime
         )
     }
 }
@@ -39,6 +45,7 @@ fun List<LocalArticle>.mapToArticle(): List<Article> {
 fun LocalArticle.mapToArticle(): Article {
     return Article(
         uuid = this.uuid,
+        num = this.num,
         title = this.title,
         writer = this.writer,
         content = this.content,
@@ -46,13 +53,16 @@ fun LocalArticle.mapToArticle(): Article {
         articleUrl = this.articleUrl,
         department = this.department,
         board = this.board,
-        read = this.read
+        read = this.read,
+        isNotice = this.isNotice,
+        receivedTime = this.receivedTime
     )
 }
 
 fun Article.mapToLocalArticle(): LocalArticle {
     return LocalArticle(
         uuid = this.uuid,
+        num = this.num,
         title = this.title,
         writer = this.writer,
         content = this.content,
@@ -60,13 +70,16 @@ fun Article.mapToLocalArticle(): LocalArticle {
         articleUrl = this.articleUrl,
         department = this.department,
         board = this.board,
-        read = this.read
+        read = this.read,
+        isNotice = this.isNotice,
+        receivedTime = this.receivedTime
     )
 }
 
 fun ArticleResponse.mapToArticle(department: String, board: String): Article {
     return Article(
         uuid = this.uuid,
+        num = this.num,
         title = this.title,
         writer = this.writer,
         content = this.content,
@@ -74,6 +87,8 @@ fun ArticleResponse.mapToArticle(department: String, board: String): Article {
         articleUrl = this.articleUrl,
         department = department,
         board = board,
-        read = false
+        read = false,
+        isNotice = this.isNotice,
+        receivedTime = System.currentTimeMillis()
     )
 }

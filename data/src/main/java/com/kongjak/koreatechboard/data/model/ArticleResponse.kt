@@ -6,6 +6,8 @@ import java.util.UUID
 data class ArticleResponse(
     @SerializedName("id")
     val uuid: UUID,
+    @SerializedName("num")
+    val num: Int,
     @SerializedName("title")
     val title: String,
     @SerializedName("writer")
@@ -16,6 +18,8 @@ data class ArticleResponse(
     val date: String,
     @SerializedName("article_url")
     val articleUrl: String,
+    @SerializedName("is_notice")
+    val isNotice: Boolean,
     @SerializedName("files")
     val files: ArrayList<FilesResponse>
 )
