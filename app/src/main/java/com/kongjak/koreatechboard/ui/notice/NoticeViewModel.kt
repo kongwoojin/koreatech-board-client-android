@@ -39,7 +39,6 @@ class NoticeViewModel @Inject constructor(
     fun deleteNotice(uuid: UUID) {
         intent {
             postSideEffect(NoticeSideEffect.DeleteNotice(uuid))
-            postSideEffect(NoticeSideEffect.GetAllNotices)
         }
     }
 
@@ -73,6 +72,13 @@ class NoticeViewModel @Inject constructor(
 
             is NoticeSideEffect.DeleteNotice -> viewModelScope.launch(Dispatchers.IO) {
                 deleteArticleUseCase(sideEffect.uuid)
+                intent {
+                    reduce {
+                        state.copy(
+                            articles = state.articles.filter { it.uuid != sideEffect.uuid }
+                        )
+                    }
+                }
             }
         }
     }

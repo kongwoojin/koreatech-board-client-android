@@ -91,7 +91,10 @@ fun Notice(
             }
         } else {
             LazyColumn(modifier = modifier) {
-                items(uiState.articles) { article ->
+                items(
+                    items = uiState.articles,
+                    key = { it.uuid }
+                ) { article ->
                     val dismissState = rememberSwipeToDismissBoxState(
                         confirmValueChange = {
                             if (it == SwipeToDismissBoxValue.EndToStart) {
