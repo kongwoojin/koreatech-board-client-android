@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.data.mapper
 import com.kongjak.koreatechboard.data.enity.Article
 import com.kongjak.koreatechboard.data.model.ArticleResponse
 import com.kongjak.koreatechboard.domain.model.LocalArticle
+import java.util.concurrent.TimeUnit
 
 fun List<Article>.mapToLocalArticle(): List<LocalArticle> {
     return this.map {
@@ -89,6 +90,6 @@ fun ArticleResponse.mapToArticle(department: String, board: String): Article {
         board = board,
         read = false,
         isNotice = this.isNotice,
-        receivedTime = System.currentTimeMillis()
+        receivedTime = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis())
     )
 }
