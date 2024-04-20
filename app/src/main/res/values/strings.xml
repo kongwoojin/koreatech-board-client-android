@@ -66,6 +66,7 @@
     <string name="setting_subscribe_new_notice_summary_department">Receive notification when new department notice posted</string>
     <string name="setting_license_title">Opensource License</string>
     <string name="setting_source_code_title">Source Code</string>
+    <string name="setting_source_code_url" translatable="false">https://github.com/kongwoojin/koreatech-board-android</string>
     <string name="setting_enquiry_mail_title">Send email</string>
     <string name="setting_mail_address" translatable="false">kongjak@kongjak.com</string>
     <string name="setting_mail_subject">Koreatech Board Enquiry</string>

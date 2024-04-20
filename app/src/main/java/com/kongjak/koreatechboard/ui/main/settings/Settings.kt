@@ -166,7 +166,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(
                     context,
-                    Uri.parse("https://github.com/kongwoojin/koreatech_board_client_android")
+                    Uri.parse(context.getString(R.string.setting_source_code_url))
                 )
             }
 
