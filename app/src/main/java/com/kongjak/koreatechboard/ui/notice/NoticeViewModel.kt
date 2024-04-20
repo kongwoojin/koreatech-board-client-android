@@ -45,40 +45,21 @@ class NoticeViewModel @Inject constructor(
     fun handleSideEffect(sideEffect: NoticeSideEffect) {
         when (sideEffect) {
             NoticeSideEffect.GetAllNotices -> viewModelScope.launch(Dispatchers.IO) {
-                val articles = getAllNewArticleUseCase()
-                intent {
-                    reduce {
-                        state.copy(articles = articles, isLoaded = true)
+                getAllNewArticleUseCase().collect {
+                    intent {
+                        reduce {
+                            state.copy(articles = it, isLoaded = true)
+                        }
                     }
                 }
             }
 
             is NoticeSideEffect.UpdateRead -> viewModelScope.launch(Dispatchers.IO) {
-                intent {
-                    reduce {
-                        state.copy(
-                            articles = state.articles.map {
-                                if (it.uuid == sideEffect.uuid) {
-                                    it.copy(read = sideEffect.read)
-                                } else {
-                                    it
-                                }
-                            }
-                        )
-                    }
-                    updateArticleReadUseCase(sideEffect.uuid, sideEffect.read)
-                }
+                updateArticleReadUseCase(sideEffect.uuid, sideEffect.read)
             }
 
             is NoticeSideEffect.DeleteNotice -> viewModelScope.launch(Dispatchers.IO) {
                 deleteArticleUseCase(sideEffect.uuid)
-                intent {
-                    reduce {
-                        state.copy(
-                            articles = state.articles.filter { it.uuid != sideEffect.uuid }
-                        )
-                    }
-                }
             }
         }
     }

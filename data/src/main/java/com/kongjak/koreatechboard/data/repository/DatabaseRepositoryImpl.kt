@@ -3,8 +3,10 @@ package com.kongjak.koreatechboard.data.repository
 import com.kongjak.koreatechboard.data.datasource.local.DatabaseLocalDataSource
 import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.mapToArticle
+import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
+import kotlinx.coroutines.flow.flow
 import java.util.UUID
 import javax.inject.Inject
 
@@ -13,8 +15,10 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource
 ) :
     DatabaseRepository {
-    override suspend fun getArticleList(): List<LocalArticle> {
-        return databaseLocalDataSource.getArticleList()
+    override suspend fun getArticleList() = flow {
+        databaseLocalDataSource.getArticleList().collect {
+            emit(it.mapToLocalArticle())
+        }
     }
 
     override suspend fun getArticle(uuid: UUID): LocalArticle {

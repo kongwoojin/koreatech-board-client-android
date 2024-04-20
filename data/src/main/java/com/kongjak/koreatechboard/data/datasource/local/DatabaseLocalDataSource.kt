@@ -4,14 +4,15 @@ import com.kongjak.koreatechboard.data.dao.ArticleDao
 import com.kongjak.koreatechboard.data.enity.Article
 import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
 import com.kongjak.koreatechboard.domain.model.LocalArticle
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 import javax.inject.Inject
 
 class DatabaseLocalDataSource @Inject constructor(
     private val articleDao: ArticleDao
 ) {
-    fun getArticleList(): List<LocalArticle> {
-        return articleDao.getAll().mapToLocalArticle()
+    fun getArticleList(): Flow<List<Article>> {
+        return articleDao.getAll()
     }
 
     fun getArticle(uuid: UUID): LocalArticle {

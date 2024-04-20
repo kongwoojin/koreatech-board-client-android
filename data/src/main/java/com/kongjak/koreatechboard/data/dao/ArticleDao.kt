@@ -1,17 +1,17 @@
 package com.kongjak.koreatechboard.data.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kongjak.koreatechboard.data.enity.Article
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface ArticleDao {
     @Query("SELECT * FROM article ORDER BY is_notice DESC, write_date DESC, received_time DESC, num DESC")
-    fun getAll(): List<Article>
+    fun getAll(): Flow<List<Article>>
 
     @Query("SELECT * FROM article WHERE uuid = :uuid")
     fun getArticle(uuid: UUID): Article
