@@ -25,10 +25,12 @@
     <string name="board_pds_board">자료실</string>
 
     <!-- Navigation -->
-    <string name="bottom_nav_bar_home">홈</string>
-    <string name="bottom_nav_bar_board">게시판</string>
-    <string name="bottom_nav_bar_settings">설정</string>
     <string name="navigation_back">뒤로</string>
+
+    <!-- Routes -->
+    <string name="route_home">홈</string>
+    <string name="route_board">게시판</string>
+    <string name="route_settings">설정</string>
 
     <!-- Search -->
     <string name="search_dialog_title">검색</string>

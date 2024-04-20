@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
-import com.kongjak.koreatechboard.model.BottomNavigationItem
+import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,9 +32,9 @@ class MainViewModel @Inject constructor(
 
     fun handleSideEffect(sideEffect: MainSideEffect) {
         when (sideEffect) {
-            is MainSideEffect.SetDefaultScreen -> intent {
+            is MainSideEffect.UpdateCurrentRoute -> intent {
                 reduce {
-                    state.copy(defaultScreen = sideEffect.defaultScreen)
+                    state.copy(currentRoute = sideEffect.currentRoute.name)
                 }
             }
 
@@ -60,9 +60,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun setDefaultScreen(home: BottomNavigationItem) {
+    fun updateCurrentRoute(route: MainRoute) {
         intent {
-            postSideEffect(MainSideEffect.SetDefaultScreen(home))
+            postSideEffect(MainSideEffect.UpdateCurrentRoute(route))
         }
     }
 }

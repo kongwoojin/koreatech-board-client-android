@@ -15,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -25,8 +23,8 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -35,13 +33,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
@@ -51,6 +47,7 @@ import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
+import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -63,7 +60,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val defaultScreen = intent.getStringExtra("screen")
         if (defaultScreen != null) {
-            mainViewModel.setDefaultScreen(BottomNavigationItem.valueOf(defaultScreen))
+            mainViewModel.updateCurrentRoute(MainRoute.valueOf(defaultScreen))
         }
 
         if (BuildConfig.BUILD_TYPE == "debug") {
@@ -96,7 +93,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
+
     val context = LocalContext.current
+
+    val uiState by mainViewModel.collectAsState()
+    val currentRoute = uiState.currentRoute
+
+    LaunchedEffect(key1 = currentRoute) {
+        navController.navigate(currentRoute) {
+            navController.graph.startDestinationRoute?.let {
+                popUpTo(it) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     Scaffold(
         topBar = {
             val actionList = listOf(
@@ -110,11 +122,16 @@ fun MainScreen(mainViewModel: MainViewModel) {
                 )
             )
             KoreatechBoardAppBar(
-                actionList = actionList
+                actionList = actionList,
+                backAction = {
+                    navController.popBackStack()
+                }
             )
         },
         bottomBar = {
-            BottomNavigation(navController = navController)
+            BottomNavigation(
+                mainViewModel = mainViewModel
+            )
         },
         content = { contentPadding ->
             Box(Modifier.padding(contentPadding)) {
@@ -128,17 +145,19 @@ fun MainScreen(mainViewModel: MainViewModel) {
 }
 
 @Composable
-fun BottomNavigation(navController: NavHostController) {
+fun BottomNavigation(
+    mainViewModel: MainViewModel
+) {
     val items = listOf(
-        BottomNavigationItem.Home,
-        BottomNavigationItem.Board,
-        BottomNavigationItem.Settings
+        MainRoute.Home,
+        MainRoute.Board,
+        MainRoute.Settings
     )
 
-    NavigationBar {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+    val uiState by mainViewModel.collectAsState()
+    val currentRoute = uiState.currentRoute
 
+    NavigationBar {
         items.forEach { item ->
             NavigationBarItem(
                 label = {
@@ -157,13 +176,7 @@ fun BottomNavigation(navController: NavHostController) {
                 alwaysShowLabel = true,
 
                 onClick = {
-                    navController.navigate(item.name) {
-                        navController.graph.startDestinationRoute?.let {
-                            popUpTo(it) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    mainViewModel.updateCurrentRoute(MainRoute.valueOf(item.name))
                 },
 
                 // Control all the colors of the icon
@@ -176,21 +189,21 @@ fun BottomNavigation(navController: NavHostController) {
 @Composable
 fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewModel) {
     val uiState by mainViewModel.collectAsState()
-    val defaultScreen = uiState.defaultScreen
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
+    val currentRoute = uiState.currentRoute
 
-    NavHost(navController = navController, startDestination = defaultScreen.name) {
-        composable(BottomNavigationItem.Home.name) {
+    NavHost(navController = navController, startDestination = currentRoute) {
+        composable(MainRoute.Home.name) {
             HomeScreen()
         }
-        composable(BottomNavigationItem.Board.name) {
+        composable(MainRoute.Board.name) {
             BoardScreen(
                 initDepartment = initDepartment,
-                userDepartment = userDepartment,
+                userDepartment = userDepartment
             )
         }
-        composable(BottomNavigationItem.Settings.name) {
+        composable(MainRoute.Settings.name) {
             SettingsScreen()
         }
     }
