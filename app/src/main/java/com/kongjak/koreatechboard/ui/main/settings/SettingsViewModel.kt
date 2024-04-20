@@ -150,33 +150,18 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsSideEffect.UpdateSchoolSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeSchool = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setSchoolNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
             is SettingsSideEffect.UpdateDormSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeDormitory = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setDormNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
             is SettingsSideEffect.UpdateDepartmentSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeDepartment = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setDepartmentNoticeSubscribe(sideEffect.subscribe)
                 }
