@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.findActivity
@@ -51,20 +52,10 @@ class NoticeActivity : ComponentActivity() {
                 ) {
                     Scaffold(
                         topBar = {
-                            TopAppBar(
-                                title = {
-                                    Text(stringResource(id = R.string.app_name))
-                                },
-                                navigationIcon =
-                                {
-                                    IconButton(onClick = {
-                                        context.findActivity().finish()
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = stringResource(id = R.string.navigation_back)
-                                        )
-                                    }
+                            KoreatechBoardAppBar(
+                                canGoBack = true,
+                                backAction = {
+                                    context.findActivity().finish()
                                 }
                             )
                         }

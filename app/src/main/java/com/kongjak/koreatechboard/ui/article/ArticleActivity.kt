@@ -25,11 +25,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
@@ -90,23 +94,10 @@ fun Toolbar(
     ) {
         Scaffold(
             topBar = {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(id = R.string.app_name))
-                    },
-                    navigationIcon =
-                    {
-                        IconButton(onClick = {
-                            context.findActivity().finish()
-                        }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(id = R.string.content_description_back)
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
+                val actionList = listOf(
+                    KoreatechBoardAppBarAction(
+                        icon = ImageVector.vectorResource(R.drawable.ic_open_in_browser),
+                        action = {
                             if (articleUrl != "") {
                                 val builder = CustomTabsIntent.Builder()
                                 val customTabsIntent = builder.build()
@@ -118,13 +109,18 @@ fun Toolbar(
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_open_in_browser),
-                                contentDescription = stringResource(id = R.string.content_description_open_in_browser)
-                            )
-                        }
-                    }
+                        },
+                        contentDescription = stringResource(
+                            id = R.string.content_description_open_in_browser
+                        )
+                    )
+                )
+                KoreatechBoardAppBar(
+                    canGoBack = true,
+                    backAction = {
+                        context.findActivity().finish()
+                    },
+                    actionList = actionList
                 )
             }
         ) { contentPadding ->

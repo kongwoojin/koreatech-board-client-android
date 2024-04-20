@@ -43,6 +43,7 @@ import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
 import com.kongjak.koreatechboard.ui.main.home.HomeScreen
 import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
@@ -95,9 +96,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
+    val context = LocalContext.current
     Scaffold(
         topBar = {
-            AppBar()
+            val actionList = listOf(
+                KoreatechBoardAppBarAction(
+                    icon = Icons.Default.Notifications,
+                    action = {
+                        val intent = Intent(context, NoticeActivity::class.java)
+                        context.startActivity(intent)
+                    },
+                    contentDescription = stringResource(id = R.string.content_description_notification)
+                )
+            )
+            KoreatechBoardAppBar(
+                actionList = actionList
+            )
         },
         bottomBar = {
             BottomNavigation(navController = navController)

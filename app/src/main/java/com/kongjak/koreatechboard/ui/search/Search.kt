@@ -35,6 +35,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.main.board.BoardError
 import com.kongjak.koreatechboard.ui.main.board.BoardItem
 import com.kongjak.koreatechboard.util.findActivity
@@ -48,20 +49,11 @@ fun SearchScreen(department: String, board: String, title: String) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(id = R.string.search_result))
-                },
-                navigationIcon =
-                {
-                    IconButton(onClick = {
-                        context.findActivity().finish()
-                    }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(id = R.string.content_description_back)
-                        )
-                    }
+            KoreatechBoardAppBar(
+                title = stringResource(id = R.string.search_result),
+                canGoBack = true,
+                backAction = {
+                    context.findActivity().finish()
                 }
             )
         },
