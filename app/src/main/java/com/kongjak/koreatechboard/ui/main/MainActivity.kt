@@ -96,19 +96,6 @@ fun MainScreen(mainViewModel: MainViewModel) {
 
     val context = LocalContext.current
 
-    val uiState by mainViewModel.collectAsState()
-    val currentRoute = uiState.currentRoute
-
-    LaunchedEffect(key1 = currentRoute) {
-        navController.navigate(currentRoute) {
-            navController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-    }
-
     Scaffold(
         topBar = {
             val actionList = listOf(
@@ -192,6 +179,16 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
     val initDepartment = uiState.initDepartment
     val userDepartment = uiState.userDepartment
     val currentRoute = uiState.currentRoute
+
+    LaunchedEffect(key1 = currentRoute) {
+        navController.navigate(currentRoute) {
+            navController.graph.startDestinationRoute?.let {
+                popUpTo(it) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 
     NavHost(navController = navController, startDestination = currentRoute) {
         composable(MainRoute.Home.name) {
