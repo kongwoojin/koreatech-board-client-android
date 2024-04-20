@@ -45,20 +45,6 @@ val deptList = listOf(
 val deptListString = deptList.map { it.stringResource }
 val deptListName = deptList.map { it.name }
 
-val fullDeptList = listOf(
-    Department.School,
-    Department.Dorm,
-    Department.Cse,
-    Department.Mechanical,
-    Department.Mechatronics,
-    Department.Ite,
-    Department.Ide,
-    Department.Arch,
-    Department.Mse,
-    Department.Ace,
-    Department.Sim
-)
-
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 val darkThemeString = listOf(
     R.string.setting_dark_theme_system_default,

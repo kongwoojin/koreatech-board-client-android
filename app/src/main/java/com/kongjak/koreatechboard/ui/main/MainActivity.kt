@@ -109,10 +109,7 @@ fun MainScreen(mainViewModel: MainViewModel) {
                 )
             )
             KoreatechBoardAppBar(
-                actionList = actionList,
-                backAction = {
-                    navController.popBackStack()
-                }
+                actionList = actionList
             )
         },
         bottomBar = {

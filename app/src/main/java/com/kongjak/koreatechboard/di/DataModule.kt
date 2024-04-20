@@ -1,4 +1,5 @@
 package com.kongjak.koreatechboard.di
+
 import android.content.Context
 import com.kongjak.koreatechboard.data.dao.ArticleDao
 import com.kongjak.koreatechboard.data.datasource.local.DatabaseLocalDataSource

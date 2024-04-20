@@ -5,11 +5,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -18,22 +16,6 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
 )
 
 val Typography.preferenceTitle: TextStyle
@@ -109,17 +91,6 @@ val Typography.noticeDepartmentText: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Light,
         fontSize = 12.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
-    )
-
-val Typography.noticeItemTitleRead: TextStyle
-    get() = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Italic,
-        fontSize = 16.sp,
         platformStyle = PlatformTextStyle(
             includeFontPadding = false
         )

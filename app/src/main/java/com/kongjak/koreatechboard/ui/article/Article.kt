@@ -26,7 +26,6 @@ import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlText
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
-import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID

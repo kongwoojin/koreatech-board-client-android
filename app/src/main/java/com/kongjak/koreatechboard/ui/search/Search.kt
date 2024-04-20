@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,7 +35,6 @@ import com.kongjak.koreatechboard.util.findActivity
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(department: String, board: String, title: String) {
     val context = LocalContext.current
@@ -131,13 +129,13 @@ fun SearchContent(
                 loadState.refresh is LoadState.Error -> {
                     val errorMessage =
                         (loadState.refresh as LoadState.Error).error.localizedMessage
-                    item { BoardError(errorMessage) }
+                    item { BoardError(errorMessage ?: "") }
                 }
 
                 loadState.append is LoadState.Error -> {
                     val errorMessage =
                         (loadState.append as LoadState.Error).error.localizedMessage
-                    item { BoardError(errorMessage) }
+                    item { BoardError(errorMessage ?: "") }
                 }
 
                 loadState.refresh is LoadState.NotLoading -> {
