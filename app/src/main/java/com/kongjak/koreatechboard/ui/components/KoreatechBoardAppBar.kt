@@ -24,7 +24,7 @@ fun KoreatechBoardAppBar(
     title: String = stringResource(id = R.string.app_name),
     canGoBack: Boolean = false,
     backAction: (() -> Unit)? = null,
-    actionList: List<KoreatechBoardAppBarAction> = emptyList(),
+    actionList: List<KoreatechBoardAppBarAction> = emptyList()
 ) {
     TopAppBar(
         title = {
