@@ -22,6 +22,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
@@ -44,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.ui.theme.noticeDepartmentText
@@ -63,11 +67,14 @@ fun Notice(
         noticeViewModel.handleSideEffect(it)
     }
 
-    LaunchedEffect(key1 = Unit) {
+    val uiState by noticeViewModel.collectAsState()
+
+    val checkedList = uiState.selectedDepartment
+    val userDepartment = uiState.userDepartment
+
+    LaunchedEffect(key1 = checkedList) {
         noticeViewModel.getAllNotices()
     }
-
-    val uiState by noticeViewModel.collectAsState()
 
     if (!uiState.isLoaded) {
         Column(
@@ -78,19 +85,59 @@ fun Notice(
             CircularProgressIndicator()
         }
     } else {
-        if (uiState.articles.isEmpty()) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier.padding(16.dp),
-                    text = stringResource(id = R.string.no_new_notice)
-                )
+        LazyColumn(modifier = modifier) {
+            item {
+                Column(
+                    modifier = Modifier.fillParentMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    val options = listOf(
+                        stringResource(id = Department.School.stringResource),
+                        stringResource(id = Department.Dorm.stringResource),
+                        stringResource(id = deptList[userDepartment].stringResource)
+                    )
+
+                    MultiChoiceSegmentedButtonRow {
+                        options.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(
+                                    index = index,
+                                    count = options.size
+                                ),
+                                onCheckedChange = {
+                                    if (index in checkedList) {
+                                        noticeViewModel.removeSelectedDepartment(index)
+                                    } else {
+                                        noticeViewModel.addSelectedDepartment(index)
+                                    }
+                                },
+                                checked = index in checkedList
+                            ) {
+                                Text(
+                                    text = label,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
+                    }
+                }
             }
-        } else {
-            LazyColumn(modifier = modifier) {
+
+            if (uiState.articles.isEmpty()) {
+                item {
+                    Column(
+                        modifier = Modifier.fillParentMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(16.dp),
+                            text = stringResource(id = R.string.no_new_notice)
+                        )
+                    }
+                }
+            } else {
                 items(
                     items = uiState.articles,
                     key = { it.uuid }

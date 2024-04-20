@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAllNewArticleUseCase @Inject constructor(private val databaseRepository: DatabaseRepository) {
-    suspend operator fun invoke(): Flow<List<LocalArticle>> {
-        return databaseRepository.getArticleList()
+    suspend operator fun invoke(vararg departments: String): Flow<List<LocalArticle>> {
+        return databaseRepository.getArticleList(*departments)
     }
 }

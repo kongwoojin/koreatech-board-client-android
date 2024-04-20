@@ -5,8 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.database.DeleteArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.UpdateArticleReadUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
+import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -20,13 +24,31 @@ import javax.inject.Inject
 class NoticeViewModel @Inject constructor(
     private val getAllNewArticleUseCase: GetAllNewArticleUseCase,
     private val updateArticleReadUseCase: UpdateArticleReadUseCase,
-    private val deleteArticleUseCase: DeleteArticleUseCase
+    private val deleteArticleUseCase: DeleteArticleUseCase,
+    private val getUserDepartmentUseCase: GetUserDepartmentUseCase
 ) : ContainerHost<NoticeState, NoticeSideEffect>, ViewModel() {
     override val container = container<NoticeState, NoticeSideEffect>(NoticeState())
 
+    init {
+        viewModelScope.launch {
+            getUserDepartmentUseCase().collectLatest {
+                intent {
+                    reduce {
+                        state.copy(userDepartment = it)
+                    }
+                }
+            }
+        }
+    }
+
     fun getAllNotices() {
         intent {
-            postSideEffect(NoticeSideEffect.GetAllNotices)
+            val noticesDeptList = listOf(
+                Department.School,
+                Department.Dorm,
+                deptList[state.userDepartment]
+            )
+            postSideEffect(NoticeSideEffect.GetAllNotices(state.selectedDepartment.map { noticesDeptList[it].name }))
         }
     }
 
@@ -44,9 +66,9 @@ class NoticeViewModel @Inject constructor(
 
     fun handleSideEffect(sideEffect: NoticeSideEffect) {
         when (sideEffect) {
-            NoticeSideEffect.GetAllNotices -> viewModelScope.launch(Dispatchers.IO) {
-                getAllNewArticleUseCase().collect {
-                    intent {
+            is NoticeSideEffect.GetAllNotices -> viewModelScope.launch(Dispatchers.IO) {
+                intent {
+                    getAllNewArticleUseCase(*(sideEffect.departments.toTypedArray())).collect {
                         reduce {
                             state.copy(articles = it, isLoaded = true)
                         }
@@ -61,6 +83,28 @@ class NoticeViewModel @Inject constructor(
             is NoticeSideEffect.DeleteNotice -> viewModelScope.launch(Dispatchers.IO) {
                 deleteArticleUseCase(sideEffect.uuid)
             }
+
+            is NoticeSideEffect.AddSelectedDepartment -> intent {
+                reduce {
+                    state.copy(selectedDepartment = state.selectedDepartment + sideEffect.department)
+                }
+            }
+
+            is NoticeSideEffect.RemoveSelectedDepartment -> {
+                intent {
+                    reduce {
+                        state.copy(selectedDepartment = state.selectedDepartment - sideEffect.department)
+                    }
+                }
+            }
         }
+    }
+
+    fun addSelectedDepartment(department: Int) = intent {
+        postSideEffect(NoticeSideEffect.AddSelectedDepartment(department))
+    }
+
+    fun removeSelectedDepartment(department: Int) = intent {
+        postSideEffect(NoticeSideEffect.RemoveSelectedDepartment(department))
     }
 }

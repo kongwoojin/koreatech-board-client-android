@@ -10,8 +10,8 @@ import java.util.UUID
 
 @Dao
 interface ArticleDao {
-    @Query("SELECT * FROM article ORDER BY is_notice DESC, write_date DESC, received_time DESC, num DESC")
-    fun getAll(): Flow<List<Article>>
+    @Query("SELECT * FROM article WHERE department IN (:departments) ORDER BY is_notice DESC, write_date DESC, received_time DESC, num DESC")
+    fun getAll(vararg departments: String): Flow<List<Article>>
 
     @Query("SELECT * FROM article WHERE uuid = :uuid")
     fun getArticle(uuid: UUID): Article

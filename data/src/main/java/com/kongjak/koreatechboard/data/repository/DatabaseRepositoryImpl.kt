@@ -15,8 +15,8 @@ class DatabaseRepositoryImpl @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource
 ) :
     DatabaseRepository {
-    override suspend fun getArticleList() = flow {
-        databaseLocalDataSource.getArticleList().collect {
+    override suspend fun getArticleList(vararg departments: String) = flow {
+        databaseLocalDataSource.getArticleList(*departments).collect {
             emit(it.mapToLocalArticle())
         }
     }

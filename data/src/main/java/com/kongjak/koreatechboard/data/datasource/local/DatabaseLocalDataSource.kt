@@ -11,8 +11,8 @@ import javax.inject.Inject
 class DatabaseLocalDataSource @Inject constructor(
     private val articleDao: ArticleDao
 ) {
-    fun getArticleList(): Flow<List<Article>> {
-        return articleDao.getAll()
+    fun getArticleList(vararg departments: String): Flow<List<Article>> {
+        return articleDao.getAll(*departments)
     }
 
     fun getArticle(uuid: UUID): LocalArticle {
