@@ -127,28 +127,6 @@ fun MainScreen(mainViewModel: MainViewModel) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppBar() {
-    val context = LocalContext.current
-    TopAppBar(
-        title = {
-            Text(text = stringResource(id = R.string.app_name))
-        },
-        actions = {
-            IconButton(onClick = {
-                val intent = Intent(context, NoticeActivity::class.java)
-                context.startActivity(intent)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Notifications,
-                    contentDescription = stringResource(id = R.string.content_description_notification)
-                )
-            }
-        }
-    )
-}
-
 @Composable
 fun BottomNavigation(navController: NavHostController) {
     val items = listOf(
