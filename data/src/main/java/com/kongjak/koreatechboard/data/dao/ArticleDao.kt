@@ -28,6 +28,6 @@ interface ArticleDao {
     @Query("DELETE FROM article WHERE uuid = :uuid")
     fun delete(uuid: UUID)
 
-    @Delete
-    fun deleteAll(vararg articles: Article)
+    @Query("DELETE FROM article")
+    fun deleteAll()
 }

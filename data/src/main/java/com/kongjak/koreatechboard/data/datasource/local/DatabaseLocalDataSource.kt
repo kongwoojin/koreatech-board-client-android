@@ -27,7 +27,7 @@ class DatabaseLocalDataSource @Inject constructor(
     }
 
     fun deleteAllArticle() {
-        articleDao.deleteAll(*articleDao.getAll().toTypedArray())
+        articleDao.deleteAll()
     }
 
     fun updateRead(uuid: UUID, read: Boolean) {
