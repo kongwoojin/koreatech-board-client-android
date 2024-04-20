@@ -21,10 +21,6 @@
             android:exported="false"
             android:theme="@style/Theme.KoreatechBoard.NoActionBar" />
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/new_notice_notification_channel_id" />
-
         <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false"

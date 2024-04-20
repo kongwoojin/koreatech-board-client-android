@@ -90,8 +90,12 @@
     <string name="firebase_token" translatable="false">Firebase token: %s</string>
 
     <!-- Notification -->
-    <string name="new_notice_notification_channel_id" translatable="false">1001</string>
-    <string name="new_notice_notification_channel">New notice notification</string>
+    <string name="school_notification_channel_id" translatable="false">1001</string>
+    <string name="dorm_notification_channel_id" translatable="false">1002</string>
+    <string name="department_notification_channel_id" translatable="false">1003</string>
+    <string name="school_notification_channel_name">School notification</string>
+    <string name="dorm_notification_channel_name">Dormitory notification</string>
+    <string name="department_notification_channel_name">Department notification</string>
     <string name="new_notice_notification_title">New notice!</string>
     <string name="new_notice_notification_content">New notice posted on %s.</string>
 

@@ -51,9 +51,19 @@ class FCMService : FirebaseMessagingService() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val channelId = this.getString(R.string.new_notice_notification_channel_id)
-
         val department = Department.valueOf(message.data["department"] ?: "school")
+
+        val channelId = when (department) {
+            Department.School -> getString(R.string.school_notification_channel_id)
+            Department.Dorm -> getString(R.string.dorm_notification_channel_id)
+            else -> getString(R.string.department_notification_channel_id)
+        }
+
+        val channelName = when (department) {
+            Department.School -> getString(R.string.school_notification_channel_name)
+            Department.Dorm -> getString(R.string.dorm_notification_channel_name)
+            else -> getString(R.string.department_notification_channel_name)
+        }
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(getString(R.string.new_notice_notification_title))
@@ -72,13 +82,13 @@ class FCMService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                this.getString(R.string.new_notice_notification_channel),
+                channelName,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             manager.createNotificationChannel(channel)
         }
 
-        manager.notify(0, notificationBuilder.build())
+        manager.notify(Integer.parseInt(channelId), notificationBuilder.build())
     }
 
     override fun onNewToken(token: String) {
