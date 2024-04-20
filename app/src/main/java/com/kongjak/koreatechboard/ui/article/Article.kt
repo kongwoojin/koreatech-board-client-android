@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.article
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,9 +35,9 @@ import java.util.UUID
 @Composable
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
-    themeViewModel: ThemeViewModel,
     department: String,
-    uuid: UUID
+    uuid: UUID,
+    isDarkTheme: Boolean
 ) {
     articleViewModel.collectSideEffect {
         articleViewModel.handleSideEffect(it)
@@ -102,8 +101,6 @@ fun ArticleScreen(
                             )
                         }
                     }
-
-                    val isDarkTheme = themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme()
 
                     HtmlText(html = it.content, isDarkTheme)
 
