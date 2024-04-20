@@ -75,13 +75,9 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
-    boardInitViewModel: BoardInitViewModel,
-    defaultDepartment: Department? // Default department from MainActivity.
+    initDepartment: Int,
+    userDepartment: Int
 ) {
-    val uiState by boardInitViewModel.collectAsState()
-    val initDepartment = uiState.initDepartment
-    val userDepartment = uiState.userDepartment
-
     val departmentList = listOf(
         Department.School,
         Department.Dorm,
@@ -89,7 +85,7 @@ fun BoardScreen(
     )
 
     BottomSheetScaffold(
-        defaultDepartment ?: departmentList[initDepartment],
+        departmentList[initDepartment],
         deptList[userDepartment]
     )
 }

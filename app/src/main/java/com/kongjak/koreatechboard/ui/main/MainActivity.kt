@@ -32,7 +32,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,7 +42,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.model.BottomNavigationItem
-import com.kongjak.koreatechboard.ui.main.board.BoardInitViewModel
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.main.board.BoardScreen
 import com.kongjak.koreatechboard.ui.main.home.HomeScreen
 import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
@@ -51,7 +50,6 @@ import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
-import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -65,11 +63,6 @@ class MainActivity : ComponentActivity() {
         val defaultScreen = intent.getStringExtra("screen")
         if (defaultScreen != null) {
             mainViewModel.setDefaultScreen(BottomNavigationItem.valueOf(defaultScreen))
-        }
-
-        val defaultDepartment = intent.getStringExtra("department")
-        if (defaultDepartment != null) {
-            mainViewModel.setDefaultDepartment(Department.valueOf(defaultDepartment))
         }
 
         if (BuildConfig.BUILD_TYPE == "debug") {
@@ -192,10 +185,8 @@ fun BottomNavigation(navController: NavHostController) {
 fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewModel) {
     val uiState by mainViewModel.collectAsState()
     val defaultScreen = uiState.defaultScreen
-    val defaultDepartment = uiState.defaultDepartment
-
-    val boardInitViewModel = hiltViewModel<BoardInitViewModel>()
-    boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
+    val initDepartment = uiState.initDepartment
+    val userDepartment = uiState.userDepartment
 
     NavHost(navController = navController, startDestination = defaultScreen.name) {
         composable(BottomNavigationItem.Home.name) {
@@ -203,8 +194,8 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
         }
         composable(BottomNavigationItem.Board.name) {
             BoardScreen(
-                boardInitViewModel = boardInitViewModel,
-                defaultDepartment = defaultDepartment
+                initDepartment = initDepartment,
+                userDepartment = userDepartment,
             )
         }
         composable(BottomNavigationItem.Settings.name) {
