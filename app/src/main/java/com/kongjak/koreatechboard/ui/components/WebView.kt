@@ -143,7 +143,7 @@ class KoreatechBoardWebViewClient : WebViewClient() {
         request: WebResourceRequest?
     ): WebResourceResponse? {
 
-        if (request?.url == null) {
+        if (request?.url == null || request.url.toString().startsWith("data:")) {
             return super.shouldInterceptRequest(view, request)
         }
 
