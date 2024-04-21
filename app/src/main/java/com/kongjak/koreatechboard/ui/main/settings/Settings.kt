@@ -218,6 +218,8 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
                 )
             }
 
+            /*
+            * Disable Dark Theme Setting for now
             val isDarkTheme = uiState.isDarkTheme
 
             ListPreference(
@@ -231,6 +233,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             ) { theme ->
                 settingsViewModel.sendSideEffect(SettingsSideEffect.SetDarkTheme(theme))
             }
+            */
         }
     }
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.kongjak.koreatechboard.ui.components.FileText
-import com.kongjak.koreatechboard.ui.components.HtmlText
+import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
 import org.orbitmvi.orbit.compose.collectAsState
@@ -35,8 +35,7 @@ import java.util.UUID
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
     department: String,
-    uuid: UUID,
-    isDarkTheme: Boolean
+    uuid: UUID
 ) {
     articleViewModel.collectSideEffect {
         articleViewModel.handleSideEffect(it)
@@ -101,7 +100,10 @@ fun ArticleScreen(
                         }
                     }
 
-                    HtmlText(html = it.content, isDarkTheme)
+                    WebView(
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        html = it.content
+                    )
 
                     FileText(
                         modifier = Modifier.padding(16.dp),

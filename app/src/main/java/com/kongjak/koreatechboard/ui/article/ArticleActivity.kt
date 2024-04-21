@@ -120,8 +120,7 @@ fun ArticleMain(
                     ArticleScreen(
                         articleViewModel = articleViewModel,
                         department = department,
-                        uuid = uuid,
-                        isDarkTheme = isDarkTheme ?: isSystemInDarkTheme()
+                        uuid = uuid
                     )
                 } else {
                     Column(
