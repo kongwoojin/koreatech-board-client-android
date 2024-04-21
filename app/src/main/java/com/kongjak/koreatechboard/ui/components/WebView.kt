@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.webkit.WebResourceRequest
@@ -29,7 +28,6 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.Locale
-
 
 @Composable
 fun WebView(
@@ -79,7 +77,7 @@ fun WebView(
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
                     WebSettingsCompat.setForceDarkStrategy(
                         it.settings,
-                        WebSettingsCompat.DARK_STRATEGY_WEB_THEME_DARKENING_ONLY,
+                        WebSettingsCompat.DARK_STRATEGY_WEB_THEME_DARKENING_ONLY
                     )
                 }
             }
@@ -117,7 +115,7 @@ private fun fullHtml(width: Int, html: String): String {
         </head>
         <body>
         <style>
-            img {display: inline;height: auto;max-width: 100%;width: ${width};}
+            img {display: inline;height: auto;max-width: 100%;width: $width;}
             table {height: auto;max-width: 100%;width: auto!important;}
             h1, h2, h3, h4, h5, h6, p, span {font-size: 16px!important;}
         </style>
@@ -142,7 +140,6 @@ class KoreatechBoardWebViewClient : WebViewClient() {
         view: WebView?,
         request: WebResourceRequest?
     ): WebResourceResponse? {
-
         if (request?.url == null || request.url.toString().startsWith("data:")) {
             return super.shouldInterceptRequest(view, request)
         }
@@ -157,7 +154,7 @@ class KoreatechBoardWebViewClient : WebViewClient() {
 
         return when {
             request.url.toString().lowercase(Locale.ROOT).contains(".jpg") ||
-                    request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
+                request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
                 return WebResourceResponse(
                     "image/jpg",
                     "UTF-8",
