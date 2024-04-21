@@ -33,8 +33,11 @@ fun FileText(modifier: Modifier = Modifier, files: List<Files>) {
                 val customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(
                     context,
-                    if (url.item.startsWith("http")) Uri.parse(url.item)
-                    else Uri.parse("http://www.koreatech.ac.kr/${url.item}")
+                    if (url.item.startsWith("http")) {
+                        Uri.parse(url.item)
+                    } else {
+                        Uri.parse("http://www.koreatech.ac.kr/${url.item}")
+                    }
                 )
             }
     }
