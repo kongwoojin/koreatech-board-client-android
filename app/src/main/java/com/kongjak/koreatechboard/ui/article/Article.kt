@@ -102,7 +102,7 @@ fun ArticleScreen(
 
                     WebView(
                         modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                        html = it.content,
+                        html = it.content
                     )
 
                     FileText(

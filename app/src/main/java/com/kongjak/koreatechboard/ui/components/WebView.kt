@@ -35,7 +35,7 @@ import java.util.Locale
 @Composable
 fun WebView(
     modifier: Modifier = Modifier,
-    html: String,
+    html: String
 ) {
     AndroidView(
         factory = { context ->
@@ -77,7 +77,6 @@ fun WebView(
                     Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
                         WebSettingsCompat.setForceDark(it.settings, FORCE_DARK_OFF)
                     }
-
                 }
 
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
@@ -160,7 +159,7 @@ class KoreatechBoardWebViewClient : WebViewClient() {
 
         return when {
             request.url.toString().lowercase(Locale.ROOT).contains(".jpg") ||
-                    request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
+                request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
                 return WebResourceResponse(
                     "image/jpg",
                     "UTF-8",
