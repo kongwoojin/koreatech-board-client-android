@@ -35,8 +35,7 @@ import java.util.UUID
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
     department: String,
-    uuid: UUID,
-    isDarkTheme: Boolean
+    uuid: UUID
 ) {
     articleViewModel.collectSideEffect {
         articleViewModel.handleSideEffect(it)
@@ -104,7 +103,6 @@ fun ArticleScreen(
                     WebView(
                         modifier = Modifier.padding(16.dp).fillMaxWidth(),
                         html = it.content,
-                        isDarkTheme = isDarkTheme
                     )
 
                     FileText(

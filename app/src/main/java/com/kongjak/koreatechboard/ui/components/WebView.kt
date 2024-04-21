@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.components
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.graphics.Color
@@ -20,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebSettingsCompat.FORCE_DARK_OFF
+import androidx.webkit.WebSettingsCompat.FORCE_DARK_ON
 import androidx.webkit.WebViewFeature
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -33,7 +36,6 @@ import java.util.Locale
 fun WebView(
     modifier: Modifier = Modifier,
     html: String,
-    isDarkTheme: Boolean = false
 ) {
     AndroidView(
         factory = { context ->
@@ -57,21 +59,25 @@ fun WebView(
         modifier = modifier,
         update = {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(
-                    it.settings,
-                    isDarkTheme
-                )
+                when (it.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(it.settings, true)
+                    }
+
+                    Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(it.settings, false)
+                    }
+                }
             } else if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                if (isDarkTheme) {
-                    WebSettingsCompat.setForceDark(
-                        it.settings,
-                        WebSettingsCompat.FORCE_DARK_ON
-                    )
-                } else {
-                    WebSettingsCompat.setForceDark(
-                        it.settings,
-                        WebSettingsCompat.FORCE_DARK_OFF
-                    )
+                when (it.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        WebSettingsCompat.setForceDark(it.settings, FORCE_DARK_ON)
+                    }
+
+                    Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                        WebSettingsCompat.setForceDark(it.settings, FORCE_DARK_OFF)
+                    }
+
                 }
 
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
@@ -154,7 +160,7 @@ class KoreatechBoardWebViewClient : WebViewClient() {
 
         return when {
             request.url.toString().lowercase(Locale.ROOT).contains(".jpg") ||
-                request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
+                    request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
                 return WebResourceResponse(
                     "image/jpg",
                     "UTF-8",
