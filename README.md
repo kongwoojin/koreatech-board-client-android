@@ -15,11 +15,8 @@
 ## 이미지
 <img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/c4f37f4e-4231-449b-a8da-b872c355dbdc" width="200">
 <img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/b0a3dfea-66af-4dee-929f-a8537e856ead" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/43eca588-d482-4998-a8c8-f675c6417d09" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/71e40500-1398-412e-a3c2-3f0cfd9c645c" width="200">
 <img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/f274f4ff-ef41-4528-a06a-48a745a0f4dd" width="200">
 <img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/ee4cb5c2-0f10-479d-bd93-69d90aeef8af" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/5df6d759-e295-4bcf-9345-f8eb25ce9b95" width="200">
 <img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/02f0b0c4-5822-44fa-b004-e8c20fa47d20" width="200">
 
 ## 지원하는 게시판
