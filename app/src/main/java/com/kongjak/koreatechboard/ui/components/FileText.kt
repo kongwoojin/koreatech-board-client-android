@@ -31,7 +31,11 @@ fun FileText(modifier: Modifier = Modifier, files: List<Files>) {
             .firstOrNull()?.let { url ->
                 val builder = CustomTabsIntent.Builder()
                 val customTabsIntent = builder.build()
-                customTabsIntent.launchUrl(context, Uri.parse(url.item))
+                customTabsIntent.launchUrl(
+                    context,
+                    if (url.item.startsWith("http")) Uri.parse(url.item)
+                    else Uri.parse("http://www.koreatech.ac.kr/${url.item}")
+                )
             }
     }
 }
