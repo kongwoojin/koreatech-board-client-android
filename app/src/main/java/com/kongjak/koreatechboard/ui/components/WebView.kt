@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.webkit.WebResourceRequest
@@ -84,7 +85,7 @@ fun WebView(
             }
             val width = getScreenWidth(it.context)
             it.loadDataWithBaseURL(
-                null,
+                "https://www.koreatech.ac.kr",
                 fullHtml(width, html),
                 "text/html",
                 "UTF-8",
