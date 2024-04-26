@@ -123,6 +123,7 @@ private fun fullHtml(width: Int, html: String): String {
             img {display: inline;height: auto;max-width: 100%;width: $width;}
             table {height: auto;max-width: 100%;width: auto!important;}
             h1, h2, h3, h4, h5, h6, p, span {font-size: 16px!important;}
+            *{line-height: normal!important;}
         </style>
         $html
         </body>
