@@ -39,7 +39,8 @@ class BoardViewModel @Inject constructor(
                                 sideEffect.board
                             ).cachedIn(
                                 viewModelScope
-                            )
+                            ),
+                            isInitialized = true
                         )
                     }
                 }

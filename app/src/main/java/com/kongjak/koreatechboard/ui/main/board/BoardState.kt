@@ -8,5 +8,6 @@ import kotlinx.coroutines.flow.emptyFlow
 data class BoardState(
     val department: String = "",
     val board: String = "",
-    val boardItemsMap: Flow<PagingData<BoardData>> = emptyFlow()
+    val boardItemsMap: Flow<PagingData<BoardData>> = emptyFlow(),
+    val isInitialized: Boolean = false
 )

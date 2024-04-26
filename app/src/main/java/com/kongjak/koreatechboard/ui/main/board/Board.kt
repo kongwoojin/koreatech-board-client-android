@@ -210,9 +210,16 @@ fun BoardContent(
 
     val pullToRefreshState = rememberPullToRefreshState()
 
+    val uiState by boardViewModel.collectAsState()
+    val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
+
     if (pullToRefreshState.isRefreshing) {
         LaunchedEffect(true) {
-            boardViewModel.getAPI(department.name, department.boards[page].board)
+            if (uiState.isInitialized) {
+                lazyPostList.refresh()
+            } else {
+                boardViewModel.getAPI(department.name, department.boards[page].board)
+            }
         }
     }
 
@@ -220,8 +227,6 @@ fun BoardContent(
         pullToRefreshState.startRefresh()
     }
 
-    val uiState by boardViewModel.collectAsState()
-    val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
 
     LaunchedEffect(key1 = lazyPostList.loadState.refresh, key2 = pullToRefreshState.isRefreshing) {
         if (lazyPostList.loadState.refresh is LoadState.NotLoading || lazyPostList.loadState.refresh is LoadState.Error) {
