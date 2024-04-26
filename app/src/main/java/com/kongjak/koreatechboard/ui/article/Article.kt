@@ -109,7 +109,12 @@ fun ArticleScreen(
                             html = it.content
                         )
                     } else {
-                        HtmlText(html = it.content)
+                        HtmlText(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            html = it.content
+                        )
                     }
 
                     FileText(

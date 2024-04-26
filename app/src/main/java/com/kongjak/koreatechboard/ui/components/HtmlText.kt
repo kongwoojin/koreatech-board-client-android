@@ -2,17 +2,17 @@ package com.kongjak.koreatechboard.ui.components
 
 import android.text.Html
 import android.widget.TextView
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import com.kongjak.koreatechboard.util.HtmlImageGetter
 
 @Composable
-fun HtmlText(html: String) {
+fun HtmlText(
+    modifier: Modifier = Modifier,
+    html: String
+) {
     AndroidView(
         factory = { context ->
             TextView(context).apply {
@@ -21,9 +21,7 @@ fun HtmlText(html: String) {
                 autoLinkMask = 0x0f
             }
         },
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxSize()
+        modifier = modifier
     )
 }
 
