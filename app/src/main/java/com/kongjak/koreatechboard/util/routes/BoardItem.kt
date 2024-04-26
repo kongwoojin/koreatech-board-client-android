@@ -29,7 +29,6 @@ sealed class BoardItem(
                 else -> Notice
             }
         }
-
     }
 }
 
