@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.UUID
 import javax.inject.Inject
 
@@ -28,14 +29,16 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
-                insertMultipleArticleUseCase(
-                    message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
-                        ?.map { UUID.fromString(it) } ?: emptyList(),
-                    message.data["department"] ?: "school",
-                    message.data["board"] ?: "notice"
-                )
+                runBlocking {
+                    insertMultipleArticleUseCase(
+                        message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
+                            ?.map { UUID.fromString(it) } ?: emptyList(),
+                        message.data["department"] ?: "school",
+                        message.data["board"] ?: "notice"
+                    )
+                }
+                sendNotification(message)
             }
-            sendNotification(message)
         }
     }
 
