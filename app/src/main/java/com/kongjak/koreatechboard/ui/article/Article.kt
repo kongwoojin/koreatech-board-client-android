@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import com.kongjak.koreatechboard.ui.components.FileText
+import com.kongjak.koreatechboard.ui.components.HtmlText
 import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
@@ -100,10 +101,16 @@ fun ArticleScreen(
                         }
                     }
 
-                    WebView(
-                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                        html = it.content
-                    )
+                    if (it.content.contains("table")) {
+                        WebView(
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            html = it.content
+                        )
+                    } else {
+                        HtmlText(html = it.content)
+                    }
 
                     FileText(
                         modifier = Modifier.padding(16.dp),
