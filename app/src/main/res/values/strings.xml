@@ -112,6 +112,7 @@
 
     <!-- New Notice -->
     <string name="no_new_notice">No new notice!</string>
+    <string name="department_and_board" translatable="false">%s | %s</string>
 
     <!-- Content Description -->
     <string name="content_description_back">Back</string>

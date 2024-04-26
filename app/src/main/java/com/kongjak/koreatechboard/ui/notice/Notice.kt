@@ -51,6 +51,7 @@ import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.ui.theme.noticeDepartmentText
+import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -192,6 +193,7 @@ fun Notice(
                                         }
                                     ),
                                 department = article.department,
+                                board = article.board,
                                 title = article.title,
                                 writer = article.writer,
                                 date = article.date,
@@ -210,6 +212,7 @@ fun Notice(
 fun NoticeItem(
     modifier: Modifier,
     department: String,
+    board: String,
     title: String,
     writer: String,
     date: String,
@@ -217,7 +220,11 @@ fun NoticeItem(
 ) {
     Column(modifier = modifier) {
         Text(
-            text = stringResource(Department.valueOf(department).stringResource),
+            text = stringResource(
+                id = R.string.department_and_board,
+                stringResource(id = Department.valueOf(department).stringResource),
+                stringResource(id = BoardItem.valueOf(board).stringResource)
+            ),
             style = if (read) {
                 MaterialTheme.typography.noticeDepartmentText.copy(
                     fontStyle = FontStyle.Italic,
@@ -286,6 +293,7 @@ fun NoticeItemPreview() {
             writer = "Writer",
             date = "2021-09-01",
             department = "school",
+            board = "notice",
             read = false
         )
     }
