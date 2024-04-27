@@ -19,6 +19,7 @@ fun HtmlText(
                 htmlText = html
                 textSize = 16F
                 autoLinkMask = 0x0f
+                setTextIsSelectable(true)
             }
         },
         modifier = modifier
