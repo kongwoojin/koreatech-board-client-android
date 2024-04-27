@@ -97,8 +97,8 @@
     <string name="school_notification_channel_name">School notification</string>
     <string name="dorm_notification_channel_name">Dormitory notification</string>
     <string name="department_notification_channel_name">Department notification</string>
-    <string name="new_notice_notification_title">New notice!</string>
-    <string name="new_notice_notification_content">New notice posted on %s.</string>
+    <string name="new_notice_notification_title">New notice</string>
+    <string name="new_notice_notification_content">New notice posted on %2$s board in %1$s!</string>
 
     <!-- Permission -->
     <string name="permission_notification_request_title">Notification permission requested!</string>

@@ -13,6 +13,7 @@ import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
 import com.kongjak.koreatechboard.ui.notice.NoticeActivity
+import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +56,7 @@ class FCMService : FirebaseMessagingService() {
         )
 
         val department = Department.valueOf(message.data["department"] ?: "school")
+        val board = BoardItem.valueOf(message.data["board"] ?: "notice")
 
         val channelId = when (department) {
             Department.School -> getString(R.string.school_notification_channel_id)
@@ -73,7 +75,8 @@ class FCMService : FirebaseMessagingService() {
             .setContentText(
                 getString(
                     R.string.new_notice_notification_content,
-                    getString(department.stringResource)
+                    getString(department.stringResource),
+                    getString(board.stringResource)
                 )
             )
             .setSmallIcon(R.mipmap.ic_launcher)
