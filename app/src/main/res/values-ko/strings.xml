@@ -64,6 +64,9 @@
     <string name="setting_subscribe_new_notice_summary_dorm">새로운 생활관 공지가 올라오면 알림을 받습니다.</string>
     <string name="setting_subscribe_new_notice_department">학과 공지 구독</string>
     <string name="setting_subscribe_new_notice_summary_department">새로운 학과 공지가 올라오면 알림을 받습니다.</string>
+    <string name="setting_delete_all_new_notices_title">새 공지사항 삭제</string>
+    <string name="setting_delete_all_new_notices_summary">지금까지 받은 모든 새 공지사항을 삭제합니다.</string>
+    <string name="setting_delete_all_new_notices_confirm">지금까지 받은 모든 새 공지사항을 삭제하시겠습니까?</string>
     <string name="setting_license_title">오픈소스 라이선스</string>
     <string name="setting_source_code_title">소스코드</string>
     <string name="setting_enquiry_mail_title">메일 보내기</string>

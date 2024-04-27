@@ -64,6 +64,9 @@
     <string name="setting_subscribe_new_notice_summary_dorm">Receive notification when new dormitory notice posted</string>
     <string name="setting_subscribe_new_notice_department">Subscribe new notices of department</string>
     <string name="setting_subscribe_new_notice_summary_department">Receive notification when new department notice posted</string>
+    <string name="setting_delete_all_new_notices_title">Delete all new notices</string>
+    <string name="setting_delete_all_new_notices_summary">Delete all new notices received</string>
+    <string name="setting_delete_all_new_notices_confirm">Are you sure to delete all new notices?</string>
     <string name="setting_license_title">Opensource License</string>
     <string name="setting_source_code_title">Source Code</string>
     <string name="setting_source_code_url" translatable="false">https://github.com/kongwoojin/koreatech-board-android</string>

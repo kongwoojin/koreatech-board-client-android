@@ -21,6 +21,7 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
+import com.kongjak.koreatechboard.ui.components.preference.DialogPreference
 import com.kongjak.koreatechboard.ui.components.preference.ListPreference
 import com.kongjak.koreatechboard.ui.components.preference.Preference
 import com.kongjak.koreatechboard.ui.components.preference.PreferenceColumn
@@ -150,6 +151,19 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
                 enabled = isNotificationPermissionGranted,
                 onCheckedChange = {
                     settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
+                }
+            )
+
+            DialogPreference(
+                title = stringResource(id = R.string.setting_delete_all_new_notices_title),
+                summary = stringResource(id = R.string.setting_delete_all_new_notices_summary),
+                dialogTitle = stringResource(id = R.string.setting_delete_all_new_notices_title),
+                dialogContent = stringResource(id = R.string.setting_delete_all_new_notices_confirm),
+                onConfirm = {
+                    settingsViewModel.sendSideEffect(SettingsSideEffect.DeleteAllNewArticle)
+                },
+                onDismiss = {
+                    // Do nothing
                 }
             )
         }
