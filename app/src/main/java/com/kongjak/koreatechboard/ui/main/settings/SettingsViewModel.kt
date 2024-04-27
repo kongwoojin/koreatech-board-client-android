@@ -7,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
-import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewArticleUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewNoticesUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.SetInitDepartmentUseCase
@@ -49,7 +49,7 @@ class SettingsViewModel @Inject constructor(
     private val getDormNoticeSubscribe: GetDormNoticeSubscribe,
     private val setDepartmentNoticeSubscribe: SetDepartmentNoticeSubscribe,
     private val getDepartmentNoticeSubscribe: GetDepartmentNoticeSubscribe,
-    private val deleteAllNewArticleUseCase: DeleteAllNewArticleUseCase
+    private val deleteAllNewNoticesUseCase: DeleteAllNewNoticesUseCase
 ) : ContainerHost<SettingsState, SettingsSideEffect>, ViewModel() {
 
     override val container = container<SettingsState, SettingsSideEffect>(SettingsState())
@@ -216,7 +216,7 @@ class SettingsViewModel @Inject constructor(
             }
 
             SettingsSideEffect.DeleteAllNewArticle -> viewModelScope.launch(Dispatchers.IO) {
-                deleteAllNewArticleUseCase()
+                deleteAllNewNoticesUseCase()
             }
         }
     }

@@ -2,9 +2,9 @@ package com.kongjak.koreatechboard.ui.notice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.usecase.database.DeleteArticleUseCase
-import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewArticleUseCase
-import com.kongjak.koreatechboard.domain.usecase.database.UpdateArticleReadUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteNewNoticeUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewNoticesUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.main.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
@@ -22,9 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoticeViewModel @Inject constructor(
-    private val getAllNewArticleUseCase: GetAllNewArticleUseCase,
-    private val updateArticleReadUseCase: UpdateArticleReadUseCase,
-    private val deleteArticleUseCase: DeleteArticleUseCase,
+    private val getAllNewNoticesUseCase: GetAllNewNoticesUseCase,
+    private val updateNewNoticeReadUseCase: UpdateNewNoticeReadUseCase,
+    private val deleteNewNoticeUseCase: DeleteNewNoticeUseCase,
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase
 ) : ContainerHost<NoticeState, NoticeSideEffect>, ViewModel() {
     override val container = container<NoticeState, NoticeSideEffect>(NoticeState())
@@ -68,7 +68,7 @@ class NoticeViewModel @Inject constructor(
         when (sideEffect) {
             is NoticeSideEffect.GetAllNotices -> viewModelScope.launch(Dispatchers.IO) {
                 intent {
-                    getAllNewArticleUseCase(*(sideEffect.departments.toTypedArray())).collect {
+                    getAllNewNoticesUseCase(*(sideEffect.departments.toTypedArray())).collect {
                         reduce {
                             state.copy(articles = it, isLoaded = true)
                         }
@@ -77,11 +77,11 @@ class NoticeViewModel @Inject constructor(
             }
 
             is NoticeSideEffect.UpdateRead -> viewModelScope.launch(Dispatchers.IO) {
-                updateArticleReadUseCase(sideEffect.uuid, sideEffect.read)
+                updateNewNoticeReadUseCase(sideEffect.uuid, sideEffect.read)
             }
 
             is NoticeSideEffect.DeleteNotice -> viewModelScope.launch(Dispatchers.IO) {
-                deleteArticleUseCase(sideEffect.uuid)
+                deleteNewNoticeUseCase(sideEffect.uuid)
             }
 
             is NoticeSideEffect.AddSelectedDepartment -> intent {

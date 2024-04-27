@@ -4,7 +4,7 @@ import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
 import java.util.UUID
 import javax.inject.Inject
 
-class DeleteArticleUseCase @Inject constructor(private val databaseRepository: DatabaseRepository) {
+class DeleteNewNoticeUseCase @Inject constructor(private val databaseRepository: DatabaseRepository) {
     suspend operator fun invoke(uuid: UUID) {
         databaseRepository.deleteArticle(uuid)
     }

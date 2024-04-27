@@ -11,7 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleArticleUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleNewNoticesUseCase
 import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
@@ -26,12 +26,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FCMService : FirebaseMessagingService() {
     @Inject
-    lateinit var insertMultipleArticleUseCase: InsertMultipleArticleUseCase
+    lateinit var insertMultipleNewNoticesUseCase: InsertMultipleNewNoticesUseCase
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 runBlocking {
-                    insertMultipleArticleUseCase(
+                    insertMultipleNewNoticesUseCase(
                         message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
                             ?.map { UUID.fromString(it) } ?: emptyList(),
                         message.data["department"] ?: "school",
