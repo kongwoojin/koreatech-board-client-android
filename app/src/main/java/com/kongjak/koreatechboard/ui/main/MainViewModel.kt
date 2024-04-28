@@ -1,9 +1,13 @@
 package com.kongjak.koreatechboard.ui.main
 
 import androidx.lifecycle.ViewModel
-import com.kongjak.koreatechboard.model.BottomNavigationItem
-import com.kongjak.koreatechboard.util.routes.Department
+import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
+import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -12,47 +16,53 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ContainerHost<MainState, MainSideEffect>, ViewModel() {
+class MainViewModel @Inject constructor(
+    private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
+    private val getInitDepartmentUseCase: GetInitDepartmentUseCase
+) : ContainerHost<MainState, MainSideEffect>, ViewModel() {
 
     override val container = container<MainState, MainSideEffect>(MainState())
 
+    init {
+        intent {
+            postSideEffect(MainSideEffect.InitDepartmentUpdate)
+            postSideEffect(MainSideEffect.UserDepartmentUpdate)
+        }
+    }
+
     fun handleSideEffect(sideEffect: MainSideEffect) {
         when (sideEffect) {
-            is MainSideEffect.SetDefaultScreen -> intent {
+            is MainSideEffect.UpdateCurrentRoute -> intent {
                 reduce {
-                    state.copy(defaultScreen = sideEffect.defaultScreen)
+                    state.copy(currentRoute = sideEffect.currentRoute.name)
                 }
             }
 
-            is MainSideEffect.SetDefaultDepartment -> intent {
-                reduce {
-                    state.copy(defaultDepartment = sideEffect.defaultDepartment)
+            is MainSideEffect.InitDepartmentUpdate -> viewModelScope.launch {
+                getInitDepartmentUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(initDepartment = it)
+                        }
+                    }
                 }
             }
 
-            MainSideEffect.SetOpenedFromNotification -> intent {
-                reduce {
-                    state.copy(isOpenedFromNotification = true)
+            is MainSideEffect.UserDepartmentUpdate -> viewModelScope.launch {
+                getUserDepartmentUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(userDepartment = it)
+                        }
+                    }
                 }
             }
         }
     }
 
-    fun setDefaultScreen(home: BottomNavigationItem) {
+    fun updateCurrentRoute(route: MainRoute) {
         intent {
-            postSideEffect(MainSideEffect.SetDefaultScreen(home))
-        }
-    }
-
-    fun setDefaultDepartment(defaultDepartment: Department) {
-        intent {
-            postSideEffect(MainSideEffect.SetDefaultDepartment(defaultDepartment))
-        }
-    }
-
-    fun setOpenedFromNotification() {
-        intent {
-            postSideEffect(MainSideEffect.SetOpenedFromNotification)
+            postSideEffect(MainSideEffect.UpdateCurrentRoute(route))
         }
     }
 }

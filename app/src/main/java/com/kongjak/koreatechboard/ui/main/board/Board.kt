@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.BottomSheetScaffold
@@ -52,7 +53,6 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
@@ -64,7 +64,6 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.main.settings.deptList
-import com.kongjak.koreatechboard.ui.main.settings.fullDeptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.search.SearchActivity
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
@@ -76,27 +75,26 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BoardScreen(
-    boardInitViewModel: BoardInitViewModel = hiltViewModel(),
-    defaultDepartment: Department?, // Default department from MainActivity.
-    isOpenedFromNotification: Boolean = false
+    initDepartment: Int,
+    userDepartment: Int
 ) {
-    val uiState by boardInitViewModel.collectAsState()
-    boardInitViewModel.collectSideEffect { boardInitViewModel.handleSideEffect(it) }
-    val initDepartment = uiState.initDepartment
-    val userDepartment = uiState.userDepartment
+    val departmentList = listOf(
+        Department.School,
+        Department.Dorm,
+        deptList[userDepartment]
+    )
+
     BottomSheetScaffold(
-        defaultDepartment ?: fullDeptList[initDepartment],
-        userDepartment,
-        isOpenedFromNotification = isOpenedFromNotification
+        departmentList[initDepartment],
+        deptList[userDepartment]
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetScaffold(
-    initDepartment: Department = Department.School,
-    userDepartment: Int = 0,
-    isOpenedFromNotification: Boolean
+    initDepartment: Department,
+    userDepartment: Department
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -106,11 +104,17 @@ fun BottomSheetScaffold(
     val scaffoldItemList = listOf(
         Department.School,
         Department.Dorm,
-        deptList[userDepartment]
+        userDepartment
     )
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
+        sheetShape = RoundedCornerShape(
+            topStart = 16.dp,
+            topEnd = 16.dp,
+            bottomStart = 0.dp,
+            bottomEnd = 0.dp
+        ),
         sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
@@ -119,12 +123,12 @@ fun BottomSheetScaffold(
                         Text(
                             text = stringResource(id = it.stringResource),
                             modifier = Modifier
-                                .padding(16.dp)
                                 .fillMaxWidth()
                                 .clickable {
                                     department.value = it
                                     scope.launch { scaffoldState.bottomSheetState.partialExpand() }
                                 }
+                                .padding(16.dp)
                         )
                     }
                 }
@@ -133,8 +137,7 @@ fun BottomSheetScaffold(
     ) { innerPadding ->
         Board(
             contentPadding = innerPadding,
-            department = department.value,
-            isOpenedFromNotification
+            department = department.value
         )
     }
 }
@@ -143,8 +146,7 @@ fun BottomSheetScaffold(
 @Composable
 fun Board(
     contentPadding: PaddingValues,
-    department: Department,
-    isOpenedFromNotification: Boolean
+    department: Department
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -186,8 +188,7 @@ fun Board(
         ) { page ->
             BoardContent(
                 department = department,
-                page = page,
-                isOpenedFromNotification = isOpenedFromNotification
+                page = page
             )
         }
     }
@@ -198,7 +199,6 @@ fun Board(
 fun BoardContent(
     department: Department,
     page: Int,
-    isOpenedFromNotification: Boolean,
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     networkViewModel.collectSideEffect { networkViewModel.handleSideEffect(it) }
@@ -210,23 +210,27 @@ fun BoardContent(
 
     val pullToRefreshState = rememberPullToRefreshState()
 
-    LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
-        boardViewModel.getAPI(department.name, department.boards[page].board)
-        pullToRefreshState.startRefresh()
-    }
-
     val uiState by boardViewModel.collectAsState()
-    val lazyPostList = uiState.boardItemsMap.collectAsLazyPagingItems()
+    val lazyPostList = uiState.boardItem.collectAsLazyPagingItems()
 
     if (pullToRefreshState.isRefreshing) {
         LaunchedEffect(true) {
-            lazyPostList.refresh()
+            if (uiState.isInitialized) {
+                lazyPostList.refresh()
+            } else {
+                boardViewModel.getAPI(department.name, department.boards[page].board)
+            }
         }
     }
 
-    LaunchedEffect(key1 = lazyPostList.loadState.append is LoadState.Loading) {
-        if (lazyPostList.loadState.refresh is LoadState.Loading) return@LaunchedEffect
-        pullToRefreshState.endRefresh()
+    LaunchedEffect(key1 = department.name, key2 = department.boards[page].board) {
+        pullToRefreshState.startRefresh()
+    }
+
+    LaunchedEffect(key1 = lazyPostList.loadState.refresh, key2 = pullToRefreshState.isRefreshing) {
+        if (lazyPostList.loadState.refresh is LoadState.NotLoading || lazyPostList.loadState.refresh is LoadState.Error) {
+            pullToRefreshState.endRefresh()
+        }
     }
 
     val context = LocalContext.current
@@ -260,10 +264,10 @@ fun BoardContent(
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
-                        verticalArrangement = Arrangement.Top,
+                        verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(text = stringResource(id = R.string.error_no_data))
+                        Text(text = stringResource(id = R.string.error_no_article))
                     }
                 } else {
                     LazyColumn(
@@ -300,8 +304,7 @@ fun BoardContent(
                                     title = it.title,
                                     writer = it.writer,
                                     isNew = it.isNew,
-                                    date = it.writeDate,
-                                    isOpenedFromNotification = isOpenedFromNotification
+                                    date = it.writeDate
                                 )
                                 HorizontalDivider(thickness = 0.5.dp, color = Gray)
                             }
@@ -313,14 +316,14 @@ fun BoardContent(
                                     when {
                                         loadState.refresh is LoadState.Error -> {
                                             val errorMessage =
-                                                (loadState.refresh as LoadState.Error).error.localizedMessage
-                                            item { BoardError(errorMessage ?: "") }
+                                                (loadState.refresh as LoadState.Error).error.message
+                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
                                         }
 
                                         loadState.append is LoadState.Error -> {
                                             val errorMessage =
-                                                (loadState.append as LoadState.Error).error.localizedMessage
-                                            item { BoardError(errorMessage ?: "") }
+                                                (loadState.append as LoadState.Error).error.message
+                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
                                         }
                                     }
                                 }
@@ -352,33 +355,22 @@ fun BoardItem(
     title: String,
     writer: String,
     date: String,
-    isNew: Boolean,
-    isOpenedFromNotification: Boolean = false
+    isNew: Boolean
 ) {
-    val shouldSetBold = isOpenedFromNotification && isNew
-
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = modifier
     ) {
         Text(
             text = title,
-            maxLines = 2,
+            maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            style = if (shouldSetBold) {
-                MaterialTheme.typography.boardItemTitle.copy(fontWeight = FontWeight.Bold)
-            } else {
-                MaterialTheme.typography.boardItemTitle
-            }
+            style = MaterialTheme.typography.boardItemTitle
         )
-        Column(
-            modifier = Modifier.padding(start = 8.dp),
-            horizontalAlignment = Alignment.End
-        ) {
+        Row(modifier = Modifier.padding(top = 4.dp)) {
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 text = writer,
                 style = MaterialTheme.typography.boardItemSubText
             )
@@ -434,13 +426,14 @@ fun SearchFAB(department: Department, index: Int) {
     val context = LocalContext.current
 
     FloatingActionButton(
+        shape = RoundedCornerShape(16.dp),
         onClick = {
             showDialog = true
         }
     ) {
         Icon(
             imageVector = Icons.Rounded.Search,
-            contentDescription = null
+            contentDescription = stringResource(id = R.string.content_description_search)
         )
     }
 

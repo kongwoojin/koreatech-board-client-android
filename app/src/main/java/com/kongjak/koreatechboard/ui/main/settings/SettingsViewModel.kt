@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewNoticesUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.SetInitDepartmentUseCase
@@ -22,6 +23,7 @@ import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeU
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -46,7 +48,8 @@ class SettingsViewModel @Inject constructor(
     private val setDormNoticeSubscribe: SetDormNoticeSubscribe,
     private val getDormNoticeSubscribe: GetDormNoticeSubscribe,
     private val setDepartmentNoticeSubscribe: SetDepartmentNoticeSubscribe,
-    private val getDepartmentNoticeSubscribe: GetDepartmentNoticeSubscribe
+    private val getDepartmentNoticeSubscribe: GetDepartmentNoticeSubscribe,
+    private val deleteAllNewNoticesUseCase: DeleteAllNewNoticesUseCase
 ) : ContainerHost<SettingsState, SettingsSideEffect>, ViewModel() {
 
     override val container = container<SettingsState, SettingsSideEffect>(SettingsState())
@@ -62,7 +65,6 @@ class SettingsViewModel @Inject constructor(
             postSideEffect(SettingsSideEffect.GetSchoolSubscribe)
             postSideEffect(SettingsSideEffect.GetDormSubscribe)
             postSideEffect(SettingsSideEffect.GetDepartmentSubscribe)
-
         }
     }
 
@@ -151,33 +153,18 @@ class SettingsViewModel @Inject constructor(
             }
 
             is SettingsSideEffect.UpdateSchoolSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeSchool = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setSchoolNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
             is SettingsSideEffect.UpdateDormSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeDormitory = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setDormNoticeSubscribe(sideEffect.subscribe)
                 }
             }
 
             is SettingsSideEffect.UpdateDepartmentSubscribe -> {
-                intent {
-                    reduce {
-                        state.copy(subscribeDepartment = sideEffect.subscribe)
-                    }
-                }
                 viewModelScope.launch {
                     setDepartmentNoticeSubscribe(sideEffect.subscribe)
                 }
@@ -227,6 +214,10 @@ class SettingsViewModel @Inject constructor(
                         }
                     }
                 }
+            }
+
+            SettingsSideEffect.DeleteAllNewArticle -> viewModelScope.launch(Dispatchers.IO) {
+                deleteAllNewNoticesUseCase()
             }
         }
     }

@@ -15,11 +15,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val API_PRODUCTION = "https://api.kongjak.com/v3/"
-    private const val API_DEVELOPMENT = "https://dev.api.kongjak.com/v3/"
+    private const val API_PRODUCTION = "https://api.koreatech.kongjak.com/v3/"
+    private const val API_DEVELOPMENT = "https://dev.api.koreatech.kongjak.com/v3/"
 
     private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
-        API_DEVELOPMENT
+        API_PRODUCTION
     } else {
         API_DEVELOPMENT
     }

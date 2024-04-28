@@ -1,10 +1,9 @@
 package com.kongjak.koreatechboard.ui.main
 
-import com.kongjak.koreatechboard.model.BottomNavigationItem
-import com.kongjak.koreatechboard.util.routes.Department
+import com.kongjak.koreatechboard.util.routes.MainRoute
 
 sealed class MainSideEffect {
-    data class SetDefaultScreen(val defaultScreen: BottomNavigationItem) : MainSideEffect()
-    data class SetDefaultDepartment(val defaultDepartment: Department) : MainSideEffect()
-    data object SetOpenedFromNotification : MainSideEffect()
+    data class UpdateCurrentRoute(val currentRoute: MainRoute) : MainSideEffect()
+    data object InitDepartmentUpdate : MainSideEffect()
+    data object UserDepartmentUpdate : MainSideEffect()
 }

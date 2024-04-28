@@ -14,8 +14,22 @@ sealed class BoardItem(
     object Lecture : BoardItem(R.string.board_lecture_board, R.drawable.ic_bottom_navigation_lecture, "lecture")
     object Scholar : BoardItem(R.string.board_scholar_board, R.drawable.ic_bottom_navigation_scholar, "scholar")
     object Bachelor : BoardItem(R.string.board_bachelor_board, R.drawable.ic_bottom_navigation_bachelor, "bachelor")
-    object Covid19 : BoardItem(R.string.board_covid19_board, R.drawable.ic_bottom_navigation_covid, "covid19")
     object PDS : BoardItem(R.string.board_pds_board, R.drawable.ic_bottom_navigation_pds, "pds")
+
+    companion object {
+        fun valueOf(name: String): BoardItem {
+            return when (name.lowercase()) {
+                Notice.board -> Notice
+                Free.board -> Free
+                Job.board -> Job
+                Lecture.board -> Lecture
+                Scholar.board -> Scholar
+                Bachelor.board -> Bachelor
+                PDS.board -> PDS
+                else -> Notice
+            }
+        }
+    }
 }
 
 val cseBoards = listOf(

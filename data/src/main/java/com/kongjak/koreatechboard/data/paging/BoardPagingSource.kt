@@ -20,7 +20,7 @@ class BoardPagingSource(private val api: API, private val site: String, private 
             val response = responseRaw.body()?.boardData
 
             return LoadResult.Page(
-                data = response!!,
+                data = response ?: emptyList(),
                 prevKey = if (page <= 1) null else page - 1,
                 nextKey = if (page >= responseRaw.body()!!.lastPage) null else page + 1
             )
@@ -30,6 +30,9 @@ class BoardPagingSource(private val api: API, private val site: String, private 
     }
 
     override fun getRefreshKey(state: PagingState<Int, BoardData>): Int? {
-        return state.anchorPosition
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
     }
 }

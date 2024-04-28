@@ -21,6 +21,7 @@ class BoardViewModel @Inject constructor(
 
     fun getAPI(department: String, board: String) {
         intent {
+            if (state.department == department && state.board == board) return@intent
             postSideEffect(BoardSideEffect.FetchData(department, board))
         }
     }
@@ -33,12 +34,13 @@ class BoardViewModel @Inject constructor(
                         state.copy(
                             department = sideEffect.department,
                             board = sideEffect.board,
-                            boardItemsMap = getBoardUseCase(
+                            boardItem = getBoardUseCase(
                                 sideEffect.department,
                                 sideEffect.board
                             ).cachedIn(
                                 viewModelScope
-                            )
+                            ),
+                            isInitialized = true
                         )
                     }
                 }

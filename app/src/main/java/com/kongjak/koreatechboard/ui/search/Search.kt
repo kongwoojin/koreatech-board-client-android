@@ -9,16 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,33 +28,24 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.article.ArticleActivity
+import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.main.board.BoardError
 import com.kongjak.koreatechboard.ui.main.board.BoardItem
 import com.kongjak.koreatechboard.util.findActivity
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(department: String, board: String, title: String) {
     val context = LocalContext.current
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(id = R.string.search_result))
-                },
-                navigationIcon =
-                {
-                    IconButton(onClick = {
-                        context.findActivity().finish()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+            KoreatechBoardAppBar(
+                title = stringResource(id = R.string.search_result),
+                canGoBack = true,
+                backAction = {
+                    context.findActivity().finish()
                 }
             )
         },
@@ -144,13 +129,13 @@ fun SearchContent(
                 loadState.refresh is LoadState.Error -> {
                     val errorMessage =
                         (loadState.refresh as LoadState.Error).error.localizedMessage
-                    item { BoardError(errorMessage) }
+                    item { BoardError(errorMessage ?: "") }
                 }
 
                 loadState.append is LoadState.Error -> {
                     val errorMessage =
                         (loadState.append as LoadState.Error).error.localizedMessage
-                    item { BoardError(errorMessage) }
+                    item { BoardError(errorMessage ?: "") }
                 }
 
                 loadState.refresh is LoadState.NotLoading -> {

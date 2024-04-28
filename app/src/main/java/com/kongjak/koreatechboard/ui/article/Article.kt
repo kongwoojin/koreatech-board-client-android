@@ -31,7 +31,6 @@ import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
-import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID
@@ -40,7 +39,6 @@ import java.util.UUID
 @Composable
 fun ArticleScreen(
     articleViewModel: ArticleViewModel,
-    themeViewModel: ThemeViewModel,
     department: String,
     uuid: UUID
 ) {
@@ -112,7 +110,7 @@ fun ArticleScreen(
                             .padding(horizontal = 16.dp)
                             .fillMaxSize(),
                         html = it.content,
-                        themeViewModel.isDarkTheme.value ?: isSystemInDarkTheme(),
+                        isSystemInDarkTheme(),
                         image = { url, description ->
                             AsyncImage(
                                 modifier = Modifier
