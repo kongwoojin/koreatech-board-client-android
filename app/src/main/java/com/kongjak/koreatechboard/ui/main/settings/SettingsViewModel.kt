@@ -182,7 +182,6 @@ class SettingsViewModel @Inject constructor(
                             unsubscribeTopic(FCM_TOPIC_SCHOOL)
                         }
                     }
-
                 }
             }
 
