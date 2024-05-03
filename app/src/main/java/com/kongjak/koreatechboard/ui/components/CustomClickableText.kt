@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.ui.components
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.runtime.Composable
@@ -60,28 +61,30 @@ fun CustomClickableText(
         }
     }
 
-    BasicText(
-        text = text,
-        modifier = modifier.then(pressIndicator),
-        style = style.merge(
-            color = textColor,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            textAlign = textAlign ?: TextAlign.Unspecified,
-            lineHeight = lineHeight,
-            fontFamily = fontFamily,
-            textDecoration = textDecoration,
-            fontStyle = fontStyle,
-            letterSpacing = letterSpacing
-        ),
-        onTextLayout = {
-            layoutResult.value = it
-            onTextLayout(it)
-        },
-        overflow = overflow,
-        softWrap = softWrap,
-        maxLines = maxLines,
-        minLines = minLines,
-        inlineContent = inlineContent
-    )
+    SelectionContainer {
+        BasicText(
+            text = text,
+            modifier = modifier.then(pressIndicator),
+            style = style.merge(
+                color = textColor,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                textAlign = textAlign ?: TextAlign.Unspecified,
+                lineHeight = lineHeight,
+                fontFamily = fontFamily,
+                textDecoration = textDecoration,
+                fontStyle = fontStyle,
+                letterSpacing = letterSpacing
+            ),
+            onTextLayout = {
+                layoutResult.value = it
+                onTextLayout(it)
+            },
+            overflow = overflow,
+            softWrap = softWrap,
+            maxLines = maxLines,
+            minLines = minLines,
+            inlineContent = inlineContent
+        )
+    }
 }
