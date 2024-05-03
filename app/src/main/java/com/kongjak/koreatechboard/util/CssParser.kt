@@ -5,7 +5,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 
-private fun parseColor(value: String, isDarkMode: Boolean): Color {
+fun parseColor(value: String, isDarkMode: Boolean): Color {
     var red: Int
     var green: Int
     var blue: Int
@@ -70,7 +70,8 @@ private fun String.isNumber(): Boolean {
     }
 }
 
-fun parseSpanStyle(css: String, isDarkMode: Boolean): SpanStyle {
+fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
+    if (css == null) return SpanStyle()
     if (css.isEmpty()) return SpanStyle()
     val cssMap = css.split(";").filter { it.isNotBlank() }.map {
         val (key, value) = it.split(":")
@@ -78,6 +79,7 @@ fun parseSpanStyle(css: String, isDarkMode: Boolean): SpanStyle {
     }.toMap()
 
     var color = Color.Unspecified
+    var backgroundColor = Color.Unspecified
     var fontWeight: FontWeight? = null
     var textDecoration = TextDecoration.None
 
@@ -85,6 +87,10 @@ fun parseSpanStyle(css: String, isDarkMode: Boolean): SpanStyle {
         when (key) {
             "color" -> {
                 color = parseColor(value, isDarkMode)
+            }
+
+            "background-color" -> {
+                backgroundColor = parseColor(value, isDarkMode)
             }
 
             "font-weight" -> {
@@ -99,6 +105,7 @@ fun parseSpanStyle(css: String, isDarkMode: Boolean): SpanStyle {
 
     return SpanStyle(
         color = color,
+        background = backgroundColor,
         fontWeight = fontWeight,
         textDecoration = textDecoration
     )
