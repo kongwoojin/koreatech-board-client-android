@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.article
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
+import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
 import org.orbitmvi.orbit.compose.collectAsState
@@ -107,15 +107,11 @@ fun ArticleScreen(
 
                     HtmlView(
                         modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
                         html = it.content,
-                        isSystemInDarkTheme(),
                         image = { url, description ->
                             AsyncImage(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp)
-                                    .fillMaxSize(),
                                 model = ImageRequest.Builder(LocalContext.current)
                                     .data(url)
                                     .crossfade(true)
@@ -123,6 +119,9 @@ fun ArticleScreen(
                                 contentDescription = description,
                                 contentScale = ContentScale.FillWidth
                             )
+                        },
+                        webView = { html ->
+                            WebView(html = html)
                         }
                     )
 
