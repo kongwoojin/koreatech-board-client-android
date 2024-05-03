@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -112,6 +113,9 @@ fun ArticleScreen(
                         html = it.content,
                         image = { url, description ->
                             AsyncImage(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp),
                                 model = ImageRequest.Builder(LocalContext.current)
                                     .data(url)
                                     .crossfade(true)
@@ -121,7 +125,12 @@ fun ArticleScreen(
                             )
                         },
                         webView = { html ->
-                            WebView(html = html)
+                            WebView(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp),
+                                html = html
+                            )
                         }
                     )
 
