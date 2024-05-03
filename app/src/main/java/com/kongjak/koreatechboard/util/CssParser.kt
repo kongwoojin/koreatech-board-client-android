@@ -78,19 +78,21 @@ fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
         key.trim() to value.trim()
     }.toMap()
 
+    val hasBackgroundColor = cssMap.containsKey("background-color")
+
     var color = Color.Unspecified
-    var backgroundColor = Color.Unspecified
     var fontWeight: FontWeight? = null
     var textDecoration = TextDecoration.None
 
     for ((key, value) in cssMap) {
         when (key) {
             "color" -> {
-                color = parseColor(value, isDarkMode)
-            }
-
-            "background-color" -> {
-                backgroundColor = parseColor(value, isDarkMode)
+                /*
+                * If the background color is set, don't parse color.
+                 */
+                if (!hasBackgroundColor) {
+                    color = parseColor(value, isDarkMode)
+                }
             }
 
             "font-weight" -> {
@@ -105,7 +107,6 @@ fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
 
     return SpanStyle(
         color = color,
-        background = backgroundColor,
         fontWeight = fontWeight,
         textDecoration = textDecoration
     )
