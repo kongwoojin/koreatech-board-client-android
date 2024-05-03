@@ -78,6 +78,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.coil)
+    implementation(libs.coil.compose)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)

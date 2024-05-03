@@ -21,9 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.kongjak.koreatechboard.ui.components.FileText
-import com.kongjak.koreatechboard.ui.components.HtmlText
+import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
@@ -101,21 +105,25 @@ fun ArticleScreen(
                         }
                     }
 
-                    if (it.content.contains("table")) {
-                        WebView(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            html = it.content
-                        )
-                    } else {
-                        HtmlText(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            html = it.content
-                        )
-                    }
+                    HtmlView(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        html = it.content,
+                        image = { url, description ->
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(url)
+                                    .crossfade(true)
+                                    .build(),
+                                contentDescription = description,
+                                contentScale = ContentScale.FillWidth
+                            )
+                        },
+                        webView = { html ->
+                            WebView(html = html)
+                        }
+                    )
 
                     FileText(
                         modifier = Modifier.padding(16.dp),
