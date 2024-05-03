@@ -25,7 +25,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
@@ -112,7 +112,7 @@ fun ArticleScreen(
                             .padding(horizontal = 16.dp),
                         html = it.content,
                         image = { url, description ->
-                            AsyncImage(
+                            SubcomposeAsyncImage(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(horizontal = 16.dp),
@@ -121,7 +121,17 @@ fun ArticleScreen(
                                     .crossfade(true)
                                     .build(),
                                 contentDescription = description,
-                                contentScale = ContentScale.FillWidth
+                                contentScale = ContentScale.FillWidth,
+                                loading = {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(16.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        CircularProgressIndicator()
+                                    }
+                                }
                             )
                         },
                         webView = { html ->
