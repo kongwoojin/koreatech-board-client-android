@@ -18,7 +18,7 @@
     <string name="board_notice">공지사항</string>
     <string name="board_free_board">자유 게시판</string>
     <string name="board_job_board">취업 게시판</string>
-    <string name="board_lecture_board">강의 공지</string>
+    <string name="board_lecture_board">강의공지</string>
     <string name="board_scholar_board">장학공지</string>
     <string name="board_bachelor_board">학사공지</string>
     <string name="board_covid19_board">코로나19 공지</string>
