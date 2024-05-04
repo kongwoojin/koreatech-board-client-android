@@ -51,7 +51,8 @@
     <string name="setting_user_department_title">Department</string>
     <string name="setting_user_department_summary">Select your department</string>
     <string name="setting_default_board_title">Default board</string>
-    <string name="setting_dynamic_theme_title">Dynamic theme</string>
+    <string name="setting_dynamic_theme_title">System theme</string>
+    <string name="setting_dynamic_theme_summary">Change theme based on system theme</string>
     <string name="setting_dark_theme_title">Dark theme</string>
     <string name="setting_dark_theme_system_default">System default</string>
     <string name="setting_dark_theme_dark">Dark theme</string>

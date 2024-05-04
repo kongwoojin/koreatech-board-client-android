@@ -221,6 +221,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 
                 SwitchPreference(
                     title = stringResource(id = R.string.setting_dynamic_theme_title),
+                    summary = stringResource(id = R.string.setting_dynamic_theme_summary),
                     checked = isChecked,
                     onCheckedChange = {
                         settingsViewModel.sendSideEffect(

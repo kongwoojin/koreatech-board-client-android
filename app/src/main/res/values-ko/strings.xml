@@ -51,7 +51,8 @@
     <string name="setting_user_department_title">학과</string>
     <string name="setting_user_department_summary">학과를 선택하세요.</string>
     <string name="setting_default_board_title">기본 게시판</string>
-    <string name="setting_dynamic_theme_title">동적 테마</string>
+    <string name="setting_dynamic_theme_title">시스템 테마</string>
+    <string name="setting_dynamic_theme_summary">시스템 테마에 따라 테마를 변경합니다.</string>
     <string name="setting_dark_theme_title">어두운 테마</string>
     <string name="setting_dark_theme_system_default">시스템 기본값</string>
     <string name="setting_dark_theme_dark">어두운 테마</string>
