@@ -125,7 +125,7 @@ fun HtmlView(
                             val urlTag = "url_${Random.nextInt(0, 1000)}"
                             pushStringAnnotation(
                                 tag = urlTag,
-                                annotation = href
+                                annotation = href ?: ""
                             )
                         }
 
@@ -211,8 +211,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<table ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
 
@@ -225,8 +225,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<tr ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
 
@@ -239,8 +239,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<td ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
 
@@ -253,8 +253,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<th ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
 
@@ -267,8 +267,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<colgroup ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
 
@@ -281,8 +281,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue
                             }
                             webViewHtml += "<col ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                             }>"
                         }
                     }
@@ -390,20 +390,7 @@ fun HtmlView(
 
     var pos = 0
     while (customViewQueue.isNotEmpty()) {
-        text.subSequence(customViewPosition[pos], customViewPosition[pos + 1]).let { subText ->
-            CustomClickableText(
-                modifier = modifier,
-                text = subText,
-                onClick = { offset ->
-                    subText.getStringAnnotations(offset, offset)
-                        .firstOrNull()?.let { url ->
-                            val builder = CustomTabsIntent.Builder()
-                            val customTabsIntent = builder.build()
-                            customTabsIntent.launchUrl(context, Uri.parse(url.item))
-                        }
-                }
-            )
-        }
+        HtmlText(modifier = modifier, text = text.subSequence(customViewPosition[pos], customViewPosition[pos + 1]))
         pos++
 
         RenderCustomView(
@@ -413,20 +400,29 @@ fun HtmlView(
         )
     }
 
-    text.subSequence(customViewPosition[pos], text.length).let { subText ->
-        CustomClickableText(
-            modifier = modifier,
-            text = subText,
-            onClick = { offset ->
-                subText.getStringAnnotations(offset, offset)
-                    .firstOrNull()?.let { url ->
+    HtmlText(modifier = modifier, text = text.subSequence(customViewPosition[pos], text.length))
+}
+
+@Composable
+private fun HtmlText(
+    modifier: Modifier = Modifier,
+    text: AnnotatedString
+) {
+    val context = LocalContext.current
+    CustomClickableText(
+        modifier = modifier,
+        text = text,
+        onClick = { offset ->
+            text.getStringAnnotations(offset, offset)
+                .firstOrNull()?.let { url ->
+                    if (url.item.isNotBlank()) {
                         val builder = CustomTabsIntent.Builder()
                         val customTabsIntent = builder.build()
                         customTabsIntent.launchUrl(context, Uri.parse(url.item))
                     }
-            }
-        )
-    }
+                }
+        }
+    )
 }
 
 @Composable
