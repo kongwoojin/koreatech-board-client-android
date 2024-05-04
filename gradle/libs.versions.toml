@@ -2,6 +2,7 @@
 android-compileSdk = "34"
 android-minSdk = "25"
 android-targetSdk = "34"
+m3color = "2024.1"
 project-version-code = "1"
 project-version-name = "1.0.0"
 kotlin-compiler-extension = "1.5.10"
@@ -71,6 +72,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+m3color = { module = "com.github.Kyant0:m3color", version.ref = "m3color" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
