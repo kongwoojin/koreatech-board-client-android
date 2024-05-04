@@ -61,9 +61,11 @@ fun SwitchPreference(
                             interactionSource.emit(press)
                             interactionSource.emit(PressInteraction.Release(press))
                         }
-                    })
+                    }
+                )
             }
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,7 +94,8 @@ fun SwitchPreference(
         summary = summary,
         onClick = {
             if (enabled) onCheckedChange(!checked)
-        }, content = {
+        },
+        content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                 Switch(
                     checked = checked,
@@ -109,9 +112,11 @@ fun SwitchPreference(
                             interactionSource.emit(press)
                             interactionSource.emit(PressInteraction.Release(press))
                         }
-                    })
+                    }
+                )
             }
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,7 +145,8 @@ fun SwitchPreference(
         title = title,
         onClick = {
             if (enabled) onCheckedChange(!checked)
-        }, content = {
+        },
+        content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                 Switch(
                     checked = checked,
@@ -157,9 +163,11 @@ fun SwitchPreference(
                             interactionSource.emit(press)
                             interactionSource.emit(PressInteraction.Release(press))
                         }
-                    })
+                    }
+                )
             }
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -184,12 +192,14 @@ fun SwitchPreference(
             .onGloballyPositioned {
                 componentWidth = it.size.width
                 componentHeight = it.size.height
-            }, icon = icon,
+            },
+        icon = icon,
         title = title,
         summary = summary,
         onClick = {
             if (enabled) onCheckedChange(!checked)
-        }, content = {
+        },
+        content = {
             CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                 Switch(
                     checked = checked,
@@ -206,9 +216,11 @@ fun SwitchPreference(
                             interactionSource.emit(press)
                             interactionSource.emit(PressInteraction.Release(press))
                         }
-                    })
+                    }
+                )
             }
-        })
+        }
+    )
 }
 
 @Preview

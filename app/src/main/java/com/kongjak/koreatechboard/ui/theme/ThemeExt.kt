@@ -71,6 +71,6 @@ fun dynamicColorScheme(
         surfaceContainerHigh = Color(colors.surfaceContainerHigh().getArgb(scheme)),
         surfaceContainerHighest = Color(colors.surfaceContainerHighest().getArgb(scheme)),
         surfaceContainerLow = Color(colors.surfaceContainerLow().getArgb(scheme)),
-        surfaceContainerLowest = Color(colors.surfaceContainerLowest().getArgb(scheme)),
+        surfaceContainerLowest = Color(colors.surfaceContainerLowest().getArgb(scheme))
     )
 }

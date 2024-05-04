@@ -17,7 +17,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -177,7 +176,7 @@ class KoreatechBoardWebViewClient(private val setLoaded: (Boolean) -> Unit = {})
 
         return when {
             request.url.toString().lowercase(Locale.ROOT).contains(".jpg") ||
-                    request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
+                request.url.toString().lowercase(Locale.ROOT).contains(".jpeg") -> {
                 return WebResourceResponse(
                     "image/jpg",
                     "UTF-8",
