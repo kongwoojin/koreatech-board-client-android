@@ -308,7 +308,7 @@ fun HtmlView(
                 }
 
                 XmlPullParser.TEXT -> {
-                    if (parser.text.isNotBlank()) {
+                    if (parser.text != null && parser.text.isNotBlank()) {
                         if (isWebView) {
                             webViewHtml.append(parser.text)
                         } else {
