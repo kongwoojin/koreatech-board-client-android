@@ -32,7 +32,6 @@ fun HtmlView(
     image: @Composable (String, String) -> Unit,
     webView: @Composable (String) -> Unit
 ) {
-    val context = LocalContext.current
     val xmlPullParserFactory = XmlPullParserFactory.newInstance()
     val parser = xmlPullParserFactory.newPullParser()
     parser.setInput(html.byteInputStream(), "UTF-8")
@@ -458,7 +457,6 @@ fun RenderCustomView(
 fun AnnotatedString.Builder.appendNewLine() {
     val len = this.length
     if (len > 0 && this.toAnnotatedString().text[len - 1] != '\n') {
-        Log.d("HTML", this.toAnnotatedString().toString())
         append("\n\n")
     }
 }
