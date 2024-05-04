@@ -13,11 +13,33 @@ fun parseColor(value: String, isDarkMode: Boolean): Color {
         red = Integer.parseInt(value.substring(1, 3), 16)
         green = Integer.parseInt(value.substring(3, 5), 16)
         blue = Integer.parseInt(value.substring(5, 7), 16)
-    } else {
+    } else if (value.startsWith("rgb")) {
         val tmp = parseRGB(value)
         red = tmp[0]
         green = tmp[1]
         blue = tmp[2]
+    } else {
+        val color = when (value) {
+            "black" -> Color.Black
+            "white" -> Color.White
+            "red" -> Color.Red
+            "green" -> Color.Green
+            "blue" -> Color.Blue
+            "yellow" -> Color.Yellow
+            "cyan" -> Color.Cyan
+            "magenta" -> Color.Magenta
+            "gray" -> Color.Gray
+            "lightgray" -> Color.LightGray
+            "darkgray" -> Color.DarkGray
+            "grey" -> Color.Gray
+            "lightgrey" -> Color.LightGray
+            "darkgrey" -> Color.DarkGray
+            else -> Color.Unspecified
+        }
+
+        red = color.red.toInt()
+        green = color.green.toInt()
+        blue = color.blue.toInt()
     }
 
     if (isDarkMode) {
