@@ -40,7 +40,7 @@ fun HtmlView(
     val customViewQueue = ArrayDeque<CustomView>()
 
     var isWebView = false
-    var webViewHtml = ""
+    val webViewHtml = StringBuilder()
 
     var eventType = parser.eventType
 
@@ -72,9 +72,9 @@ fun HtmlView(
                         HTML_SPAN -> {
                             if (isWebView) {
                                 parser.getAttributeValue(null, "style")?.let { style ->
-                                    webViewHtml += "<span style=\"$style\">"
+                                    webViewHtml.append("<span style=\"$style\">")
                                 } ?: {
-                                    webViewHtml += "<span>"
+                                    webViewHtml.append("<span>")
                                 }
                             } else {
                                 val style = parser.getAttributeValue(null, "style")
@@ -217,10 +217,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<table ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<table ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
 
                         HTML_TR -> {
@@ -231,10 +233,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<tr ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<tr ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
 
                         HTML_TD -> {
@@ -245,10 +249,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<td ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<td ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
 
                         HTML_TH -> {
@@ -259,10 +265,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<th ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<th ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
 
                         HTML_COLGROUP -> {
@@ -273,10 +281,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<colgroup ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<colgroup ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
 
                         HTML_COL -> {
@@ -287,10 +297,12 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue(null, attributeName)
                                 attributeMap[attributeName] = attributeValue
                             }
-                            webViewHtml += "<col ${
-                            attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                .joinToString(" ")
-                            }>"
+                            webViewHtml.append(
+                                "<col ${
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
+                                }>"
+                            )
                         }
                     }
                 }
@@ -298,7 +310,7 @@ fun HtmlView(
                 XmlPullParser.TEXT -> {
                     if (parser.text.isNotBlank()) {
                         if (isWebView) {
-                            webViewHtml += parser.text
+                            webViewHtml.append(parser.text)
                         } else {
                             append(parser.text)
                         }
@@ -341,45 +353,45 @@ fun HtmlView(
 
                         HTML_SPAN -> {
                             if (isWebView) {
-                                webViewHtml += "</span>"
+                                webViewHtml.append("</span>")
                             } else {
                                 pop()
                             }
                         }
 
                         HTML_TABLE -> {
-                            webViewHtml += "</table>"
+                            webViewHtml.append("</table>")
                             customViewPosition.add(length)
                             customViewQueue.add(
                                 CustomView(
                                     type = CustomView.CustomViewType.WEB_VIEW,
                                     data = mapOf(
-                                        "html" to webViewHtml
+                                        "html" to webViewHtml.toString()
                                     )
                                 )
                             )
                             isWebView = false
-                            webViewHtml = ""
+                            webViewHtml.setLength(0)
                         }
 
                         HTML_TR -> {
-                            webViewHtml += "</tr>"
+                            webViewHtml.append("</tr>")
                         }
 
                         HTML_TD -> {
-                            webViewHtml += "</td>"
+                            webViewHtml.append("</td>")
                         }
 
                         HTML_TH -> {
-                            webViewHtml += "</th>"
+                            webViewHtml.append("</th>")
                         }
 
                         HTML_COLGROUP -> {
-                            webViewHtml += "</colgroup>"
+                            webViewHtml.append("</colgroup>")
                         }
 
                         HTML_COL -> {
-                            webViewHtml += "</col>"
+                            webViewHtml.append("</col>")
                         }
                     }
                 }
