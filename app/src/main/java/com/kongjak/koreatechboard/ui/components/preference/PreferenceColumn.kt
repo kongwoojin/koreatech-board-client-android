@@ -3,8 +3,6 @@ package com.kongjak.koreatechboard.ui.components.preference
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -12,24 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kongjak.koreatechboard.ui.theme.preferenceColumnTitle
 
 @Composable
 fun PreferenceColumn(
     content: @Composable () -> Unit
 ) {
-    Card(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            content()
-        }
+        content()
     }
 }
 
@@ -38,27 +29,16 @@ fun PreferenceColumn(
     title: String,
     content: @Composable () -> Unit
 ) {
-    Card(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            Text(
-                modifier = Modifier.padding(bottom = 8.dp),
-                text = title,
-                fontSize = MaterialTheme.typography.labelLarge.fontSize,
-                fontStyle = MaterialTheme.typography.labelLarge.fontStyle,
-                fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
-                color = MaterialTheme.typography.labelLarge.color
-            )
-            content()
-        }
+        Text(
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+            text = title,
+            style = MaterialTheme.typography.preferenceColumnTitle
+        )
+        content()
     }
 }
 

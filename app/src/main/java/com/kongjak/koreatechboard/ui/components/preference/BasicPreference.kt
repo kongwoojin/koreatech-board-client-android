@@ -30,7 +30,7 @@ fun BasicPreference(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(modifier = Modifier.weight(1f), text = title, style = MaterialTheme.typography.preferenceTitle)
@@ -40,7 +40,6 @@ fun BasicPreference(
                 }
             }
         }
-        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
     }
 }
 
@@ -56,7 +55,7 @@ fun BasicPreference(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -69,7 +68,6 @@ fun BasicPreference(
                 }
             }
         }
-        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
     }
 }
 
@@ -85,7 +83,7 @@ fun BasicPreference(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -100,7 +98,6 @@ fun BasicPreference(
                 }
             }
         }
-        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
     }
 }
 
@@ -117,7 +114,7 @@ fun BasicPreference(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -138,6 +135,5 @@ fun BasicPreference(
                 }
             }
         }
-        HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
     }
 }
