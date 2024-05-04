@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
 import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
@@ -106,11 +107,23 @@ fun ArticleScreen(
                         }
                     }
 
+                    var baseUrl = Regex(REGEX_BASE_URL).find(it.articleUrl)?.value
+                        ?: "https://www.koreatech.ac.kr"
+
+                    /*
+                     If baseUrl is https://koreatech.ac.kr, replace it with https://www.koreatech.ac.kr
+                     Because, if baseUrl is https://koreatech.ac.kr, okhttp will throw CLEARTEXT communication error
+                     */
+                    if (baseUrl.contains("https://koreatech.ac.kr")) {
+                        baseUrl = "https://www.koreatech.ac.kr"
+                    }
+
                     HtmlView(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(horizontal = 16.dp),
                         html = it.content,
+                        baseUrl = baseUrl,
                         image = { url, description ->
                             SubcomposeAsyncImage(
                                 modifier = Modifier
@@ -140,6 +153,7 @@ fun ArticleScreen(
                                     .fillMaxSize()
                                     .padding(horizontal = 16.dp),
                                 html = html,
+                                baseUrl = baseUrl,
                                 loading = {
                                     Box(
                                         modifier = Modifier

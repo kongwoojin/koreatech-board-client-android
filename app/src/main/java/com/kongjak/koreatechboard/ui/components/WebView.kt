@@ -41,6 +41,7 @@ import java.util.Locale
 fun WebView(
     modifier: Modifier = Modifier,
     html: String,
+    baseUrl: String,
     loading: @Composable () -> Unit = {}
 ) {
     var isWebViewLoaded by remember { mutableStateOf(false) }
@@ -104,7 +105,7 @@ fun WebView(
             }
             val width = getScreenWidth(it.context)
             it.loadDataWithBaseURL(
-                "https://www.koreatech.ac.kr",
+                baseUrl,
                 fullHtml(width, html),
                 "text/html",
                 "UTF-8",

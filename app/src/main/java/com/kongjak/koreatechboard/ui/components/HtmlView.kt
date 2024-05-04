@@ -27,6 +27,7 @@ import kotlin.random.Random
 fun HtmlView(
     modifier: Modifier = Modifier,
     html: String,
+    baseUrl: String,
     isDarkMode: Boolean = isSystemInDarkTheme(),
     image: @Composable (String, String) -> Unit,
     webView: @Composable (String) -> Unit
@@ -190,11 +191,18 @@ fun HtmlView(
                         HTML_IMG -> {
                             customViewPosition.add(length)
 
+                            var imageSrc = parser.getAttributeValue(null, "src") ?: ""
+                            imageSrc.contains("https").let {
+                                if (!it) {
+                                    imageSrc = "$baseUrl$imageSrc"
+                                }
+                            }
+
                             customViewQueue.add(
                                 CustomView(
                                     type = CustomView.CustomViewType.IMAGE,
                                     data = mapOf(
-                                        "src" to parser.getAttributeValue(null, "src"),
+                                        "src" to imageSrc,
                                         "alt" to (parser.getAttributeValue(null, "alt") ?: "")
                                     )
                                 )
