@@ -18,9 +18,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseSpanStyle
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
-import org.xmlpull.v1.XmlPullParserFactory
+import org.kobjects.ktxml.api.EventType
+import org.kobjects.ktxml.api.XmlPullParserException
+import org.kobjects.ktxml.mini.MiniXmlPullParser
 import kotlin.random.Random
 
 @Composable
@@ -32,9 +32,7 @@ fun HtmlView(
     image: @Composable (String, String) -> Unit,
     webView: @Composable (String) -> Unit
 ) {
-    val xmlPullParserFactory = XmlPullParserFactory.newInstance()
-    val parser = xmlPullParserFactory.newPullParser()
-    parser.setInput(html.byteInputStream(), "UTF-8")
+    val parser = MiniXmlPullParser(html.iterator())
 
     val customViewPosition: MutableList<Int> = mutableListOf(0)
     val customViewQueue = ArrayDeque<CustomView>()
@@ -45,9 +43,9 @@ fun HtmlView(
     var eventType = parser.eventType
 
     val text = buildAnnotatedString {
-        while (eventType != XmlPullParser.END_DOCUMENT) {
+        while (eventType != EventType.END_DOCUMENT) {
             when (eventType) {
-                XmlPullParser.START_TAG -> {
+                EventType.START_TAG -> {
                     when (parser.name) {
                         HTML_BR -> {
                             if (isWebView) {
@@ -83,13 +81,13 @@ fun HtmlView(
 
                         HTML_SPAN -> {
                             if (isWebView) {
-                                parser.getAttributeValue(null, "style")?.let { style ->
+                                parser.getAttributeValue("", "style")?.let { style ->
                                     webViewHtml.append("<span style=\"$style\">")
                                 } ?: {
                                     webViewHtml.append("<span>")
                                 }
                             } else {
-                                val style = parser.getAttributeValue(null, "style")
+                                val style = parser.getAttributeValue("", "style")
                                 pushStyle(parseSpanStyle(style, isDarkMode))
                             }
                         }
@@ -115,8 +113,8 @@ fun HtmlView(
                         }
 
                         HTML_FONT -> {
-                            val size = parser.getAttributeValue(null, "size")
-                            val color = parser.getAttributeValue(null, "color")
+                            val size = parser.getAttributeValue("", "size")
+                            val color = parser.getAttributeValue("", "color")
                             var style = SpanStyle()
                             if (size != null) {
                                 style = style.copy(fontSize = size.toInt().sp)
@@ -133,7 +131,7 @@ fun HtmlView(
                         }
 
                         HTML_A -> {
-                            val href = parser.getAttributeValue(null, "href")
+                            val href = parser.getAttributeValue("", "href")
                             val urlTag = "url_${Random.nextInt(0, 1000)}"
                             pushStringAnnotation(
                                 tag = urlTag,
@@ -202,7 +200,7 @@ fun HtmlView(
                         HTML_IMG -> {
                             customViewPosition.add(length)
 
-                            var imageSrc = parser.getAttributeValue(null, "src") ?: ""
+                            var imageSrc = parser.getAttributeValue("", "src") ?: ""
                             imageSrc.contains("https").let {
                                 if (!it) {
                                     imageSrc = "$baseUrl$imageSrc"
@@ -214,7 +212,7 @@ fun HtmlView(
                                     type = CustomView.CustomViewType.IMAGE,
                                     data = mapOf(
                                         "src" to imageSrc,
-                                        "alt" to (parser.getAttributeValue(null, "alt") ?: "")
+                                        "alt" to (parser.getAttributeValue("", "alt") ?: "")
                                     )
                                 )
                             )
@@ -226,13 +224,13 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<table ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -242,13 +240,13 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<tr ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -258,13 +256,13 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<td ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -274,13 +272,13 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<th ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -290,13 +288,13 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<colgroup ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -306,21 +304,21 @@ fun HtmlView(
 
                             for (i in 0 until parser.attributeCount) {
                                 val attributeName = parser.getAttributeName(i)
-                                val attributeValue = parser.getAttributeValue(null, attributeName)
-                                attributeMap[attributeName] = attributeValue
+                                val attributeValue = parser.getAttributeValue("", attributeName)
+                                attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
                                 "<col ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
                     }
                 }
 
-                XmlPullParser.TEXT -> {
-                    if (parser.text != null && parser.text.isNotBlank()) {
+                EventType.TEXT -> {
+                    if (parser.text.isNotBlank()) {
                         if (isWebView) {
                             webViewHtml.append(parser.text)
                         } else {
@@ -329,7 +327,7 @@ fun HtmlView(
                     }
                 }
 
-                XmlPullParser.END_TAG -> {
+                EventType.END_TAG -> {
                     when (parser.name) {
                         HTML_BR -> {}
                         HTML_P -> {
@@ -339,6 +337,7 @@ fun HtmlView(
                                 appendNewLine()
                             }
                         }
+
                         HTML_UL -> {}
                         HTML_LI -> {}
                         HTML_DIV -> {
@@ -348,6 +347,7 @@ fun HtmlView(
                                 appendNewLine()
                             }
                         }
+
                         HTML_BLOCKQUOTE -> {}
                         HTML_A,
                         HTML_STRONG,
@@ -419,6 +419,8 @@ fun HtmlView(
                         }
                     }
                 }
+
+                else -> {}
             }
 
             try {
@@ -433,7 +435,10 @@ fun HtmlView(
 
     var pos = 0
     while (customViewQueue.isNotEmpty()) {
-        HtmlText(modifier = modifier, text = text.subSequence(customViewPosition[pos], customViewPosition[pos + 1]))
+        HtmlText(
+            modifier = modifier,
+            text = text.subSequence(customViewPosition[pos], customViewPosition[pos + 1])
+        )
         pos++
 
         RenderCustomView(

@@ -97,6 +97,8 @@ dependencies {
 
     implementation(libs.m3color)
 
+    implementation(libs.ktxml)
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
