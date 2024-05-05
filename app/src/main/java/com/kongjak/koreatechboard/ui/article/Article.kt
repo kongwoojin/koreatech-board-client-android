@@ -44,6 +44,7 @@ fun ArticleScreen(
     articleViewModel: ArticleViewModel = hiltViewModel(),
     uuid: UUID,
     department: String,
+    isDarkTheme: Boolean,
     setExternalLink: (String) -> Unit
 ) {
     articleViewModel.collectSideEffect {
@@ -129,6 +130,7 @@ fun ArticleScreen(
                             .padding(horizontal = 16.dp),
                         html = it.content,
                         baseUrl = baseUrl,
+                        isDarkTheme = isDarkTheme,
                         image = { url, description ->
                             SubcomposeAsyncImage(
                                 modifier = Modifier

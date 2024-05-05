@@ -36,6 +36,7 @@ fun NavigationGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     currentRoute: String,
+    isDarkTheme: Boolean,
     setExternalLink: (String) -> Unit
 ) {
     NavHost(
@@ -73,6 +74,7 @@ fun NavigationGraph(
             ArticleScreen(
                 uuid = uuid,
                 department = department,
+                isDarkTheme = isDarkTheme,
                 setExternalLink = setExternalLink
             )
         }

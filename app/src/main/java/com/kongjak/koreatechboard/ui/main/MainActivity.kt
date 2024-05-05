@@ -83,6 +83,7 @@ class MainActivity : ComponentActivity() {
                     }
                     MainScreen(
                         startDestination = startDestination,
+                        isDarkTheme = isDarkTheme,
                         externalLink = uiState.externalLink,
                         setExternalLink = { url ->
                             mainViewModel.setExternalLink(url)
@@ -97,6 +98,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen(
     startDestination: String = MainRoute.Home.name,
+    isDarkTheme: Boolean,
     externalLink: String?,
     setExternalLink: (String) -> Unit
 ) {
@@ -168,6 +170,7 @@ fun MainScreen(
                 modifier = Modifier.padding(contentPadding),
                 navController = navController,
                 currentRoute = startDestination,
+                isDarkTheme = isDarkTheme,
                 setExternalLink = setExternalLink
             )
         }

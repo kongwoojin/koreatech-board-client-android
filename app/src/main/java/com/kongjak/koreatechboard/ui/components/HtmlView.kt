@@ -29,7 +29,7 @@ fun HtmlView(
     modifier: Modifier = Modifier,
     html: String,
     baseUrl: String,
-    isDarkMode: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean,
     image: @Composable (String, String) -> Unit,
     webView: @Composable (String) -> Unit
 ) {
@@ -83,13 +83,13 @@ fun HtmlView(
                         HTML_SPAN -> {
                             if (isWebView) {
                                 parser.getAttributeValue("", "style")?.let { style ->
-                                    webViewHtml.append("<span style=\"${parseRawStyle(style, isDarkMode)}\">")
+                                    webViewHtml.append("<span style=\"${parseRawStyle(style, isDarkTheme)}\">")
                                 } ?: {
                                     webViewHtml.append("<span>")
                                 }
                             } else {
                                 val style = parser.getAttributeValue("", "style")
-                                pushStyle(parseSpanStyle(style, isDarkMode))
+                                pushStyle(parseSpanStyle(style, isDarkTheme))
                             }
                         }
 
@@ -121,7 +121,7 @@ fun HtmlView(
                                 style = style.copy(fontSize = size.toInt().sp)
                             }
                             if (color != null) {
-                                style = style.copy(color = parseColor(color, isDarkMode))
+                                style = style.copy(color = parseColor(color, isDarkTheme))
                             }
                             pushStyle(style)
                         }
@@ -229,7 +229,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<table ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
@@ -246,7 +246,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<tr ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
@@ -263,7 +263,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<td ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
@@ -280,7 +280,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<th ${
@@ -299,7 +299,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<colgroup ${
@@ -318,7 +318,7 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<col ${
