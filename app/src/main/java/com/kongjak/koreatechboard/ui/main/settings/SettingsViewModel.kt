@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
 import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewNoticesUseCase
@@ -221,8 +222,15 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    private fun subscribeTopic(topic: String): Boolean {
+    private fun subscribeTopic(topicRaw: String): Boolean {
         var isSuccess = true
+
+        val topic = if (BuildConfig.BUILD_TYPE == "debug") {
+            "development_$topicRaw"
+        } else {
+            topicRaw
+        }
+
         Firebase.messaging.subscribeToTopic(topic)
             .addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -233,8 +241,14 @@ class SettingsViewModel @Inject constructor(
         return isSuccess
     }
 
-    private fun unsubscribeTopic(topic: String): Boolean {
+    private fun unsubscribeTopic(topicRaw: String): Boolean {
         var isSuccess = true
+
+        val topic = if (BuildConfig.BUILD_TYPE == "debug") {
+            "development_$topicRaw"
+        } else {
+            topicRaw
+        }
 
         Firebase.messaging.unsubscribeFromTopic(topic)
             .addOnCompleteListener { task ->
