@@ -74,34 +74,6 @@ fun WebView(
         },
         modifier = modifier,
         update = {
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                when (it.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(it.settings, true)
-                    }
-
-                    Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                        WebSettingsCompat.setAlgorithmicDarkeningAllowed(it.settings, false)
-                    }
-                }
-            } else if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                when (it.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                    Configuration.UI_MODE_NIGHT_YES -> {
-                        WebSettingsCompat.setForceDark(it.settings, FORCE_DARK_ON)
-                    }
-
-                    Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                        WebSettingsCompat.setForceDark(it.settings, FORCE_DARK_OFF)
-                    }
-                }
-
-                if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-                    WebSettingsCompat.setForceDarkStrategy(
-                        it.settings,
-                        WebSettingsCompat.DARK_STRATEGY_WEB_THEME_DARKENING_ONLY
-                    )
-                }
-            }
             val width = getScreenWidth(it.context)
             it.loadDataWithBaseURL(
                 baseUrl,

@@ -1,11 +1,15 @@
 package com.kongjak.koreatechboard.util
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 
-fun parseColor(value: String, isDarkMode: Boolean): Color {
+fun parseColor(value: String, isDarkMode: Boolean, isBackground: Boolean = false): Color {
     var red: Int
     var green: Int
     var blue: Int
@@ -44,10 +48,18 @@ fun parseColor(value: String, isDarkMode: Boolean): Color {
 
     if (isDarkMode) {
         val luminance = 0.299 * red + 0.587 * green + 0.114 * blue
-        if (luminance <= 186) {
-            red = 255 - red
-            green = 255 - green
-            blue = 255 - blue
+        if (!isBackground) {
+            if (luminance <= 186) {
+                red = 255 - red
+                green = 255 - green
+                blue = 255 - blue
+            }
+        } else {
+            if (luminance > 186) {
+                red = 255 - red
+                green = 255 - green
+                blue = 255 - blue
+            }
         }
     }
 
@@ -92,13 +104,45 @@ private fun String.isNumber(): Boolean {
     }
 }
 
+fun parseRawStyle(css: String?, isDarkMode: Boolean): String {
+    if (css.isNullOrEmpty()) return ""
+    val cssMap = css.split(";").filter { it.isNotBlank() }.associate {
+        val (key, value) = it.split(":")
+        key.trim() to value.trim()
+    }.toMutableMap()
+
+    for (colorKey in listOf("color", "border-color")) {
+        if (cssMap.containsKey(colorKey)) {
+            val color = parseColor(cssMap[colorKey]!!, isDarkMode)
+            if (color == Color.Unspecified) {
+                cssMap[colorKey] = if (isDarkMode) "white;" else "black;"
+            } else {
+                cssMap[colorKey] = color.toRaw()
+            }
+        } else {
+            cssMap[colorKey] = if (isDarkMode) "white;" else "black;"
+        }
+    }
+
+    for (backgroundKey in listOf("background", "background-color")) {
+        if (cssMap.containsKey(backgroundKey)) {
+            val color = parseColor(cssMap[backgroundKey]!!, isDarkMode)
+            if (color != Color.Unspecified) {
+                cssMap[backgroundKey] = color.toRaw()
+            }
+        }
+    }
+
+    return cssMap.map { (key, value) -> "$key: $value;" }.joinToString(" ")
+}
+
 fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
     if (css == null) return SpanStyle()
     if (css.isEmpty()) return SpanStyle()
-    val cssMap = css.split(";").filter { it.isNotBlank() }.map {
+    val cssMap = css.split(";").filter { it.isNotBlank() }.associate {
         val (key, value) = it.split(":")
         key.trim() to value.trim()
-    }.toMap()
+    }
 
     val hasBackgroundColor = cssMap.containsKey("background-color")
 
@@ -132,4 +176,8 @@ fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
         fontWeight = fontWeight,
         textDecoration = textDecoration
     )
+}
+
+fun Color.toRaw(): String {
+    return "rgb(${this.toArgb().red}, ${this.toArgb().green}, ${this.toArgb().blue})"
 }

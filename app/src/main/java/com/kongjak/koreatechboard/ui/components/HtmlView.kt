@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.kongjak.koreatechboard.util.parseColor
+import com.kongjak.koreatechboard.util.parseRawStyle
 import com.kongjak.koreatechboard.util.parseSpanStyle
 import org.kobjects.ktxml.api.EventType
 import org.kobjects.ktxml.api.XmlPullParserException
@@ -82,7 +83,7 @@ fun HtmlView(
                         HTML_SPAN -> {
                             if (isWebView) {
                                 parser.getAttributeValue("", "style")?.let { style ->
-                                    webViewHtml.append("<span style=\"$style\">")
+                                    webViewHtml.append("<span style=\"${parseRawStyle(style, isDarkMode)}\">")
                                 } ?: {
                                     webViewHtml.append("<span>")
                                 }
@@ -227,6 +228,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<table ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
                                     .joinToString(" ")}>"
@@ -241,6 +245,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<tr ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
                                     .joinToString(" ")}>"
@@ -255,6 +262,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<td ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
                                     .joinToString(" ")}>"
@@ -269,6 +279,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<th ${
                                 attributeMap.map { (key, value) -> "$key=\"$value\"" }
@@ -285,6 +298,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<colgroup ${
                                 attributeMap.map { (key, value) -> "$key=\"$value\"" }
@@ -301,6 +317,9 @@ fun HtmlView(
                                 val attributeValue = parser.getAttributeValue("", attributeName)
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
+
+                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkMode)
+
                             webViewHtml.append(
                                 "<col ${
                                 attributeMap.map { (key, value) -> "$key=\"$value\"" }
