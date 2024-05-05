@@ -65,14 +65,14 @@ class MainViewModel @Inject constructor(
             }
 
             MainSideEffect.GetDarkTheme -> viewModelScope.launch {
-            getDynamicThemeUseCase().collectLatest {
-                intent {
-                    reduce {
-                        state.copy(isDynamicTheme = it)
+                getDynamicThemeUseCase().collectLatest {
+                    intent {
+                        reduce {
+                            state.copy(isDynamicTheme = it)
+                        }
                     }
                 }
             }
-        }
             MainSideEffect.GetDynamicTheme -> viewModelScope.launch {
                 getDarkThemeUseCase().collectLatest {
                     intent {

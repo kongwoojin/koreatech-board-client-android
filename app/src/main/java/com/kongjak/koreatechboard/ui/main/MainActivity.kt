@@ -174,7 +174,6 @@ fun MainScreen(
     )
 }
 
-
 fun getFirebaseToken(context: Context) {
     val tag = "FCM"
     FirebaseMessaging.getInstance().token.addOnCompleteListener(

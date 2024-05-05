@@ -24,9 +24,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.board.BoardScreen
 import com.kongjak.koreatechboard.ui.home.HomeScreen
-import com.kongjak.koreatechboard.ui.settings.SettingsScreen
 import com.kongjak.koreatechboard.ui.notice.Notice
 import com.kongjak.koreatechboard.ui.search.SearchScreen
+import com.kongjak.koreatechboard.ui.settings.SettingsScreen
 import com.kongjak.koreatechboard.util.routes.MainRoute
 import java.util.UUID
 
@@ -41,7 +41,7 @@ fun NavigationGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = currentRoute,
+        startDestination = currentRoute
     ) {
         composable(MainRoute.Home.name) {
             HomeScreen(
@@ -66,7 +66,7 @@ fun NavigationGraph(
             SettingsScreen()
         }
         composableWithAnimation(
-            route = "${MainRoute.Article.name}/{uuid}/{department}",
+            route = "${MainRoute.Article.name}/{uuid}/{department}"
         ) { backStackEntry ->
             val uuid = UUID.fromString(backStackEntry.arguments?.getString("uuid")!!)
             val department = backStackEntry.arguments?.getString("department")!!
@@ -77,7 +77,7 @@ fun NavigationGraph(
             )
         }
         composableWithAnimation(
-            route = "${MainRoute.Search.name}/{department}/{board}/{title}",
+            route = "${MainRoute.Search.name}/{department}/{board}/{title}"
         ) { backStackEntry ->
             val department = backStackEntry.arguments?.getString("department")!!
             val board = backStackEntry.arguments?.getString("board")!!
@@ -150,7 +150,6 @@ fun BottomNav(
         }
     }
 }
-
 
 fun NavGraphBuilder.composableWithAnimation(
     route: String,

@@ -228,10 +228,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
-                                "<table ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
-                                }>"
+                                "<table ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")}>"
                             )
                         }
 
@@ -244,10 +242,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
-                                "<tr ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
-                                }>"
+                                "<tr ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")}>"
                             )
                         }
 
@@ -260,10 +256,8 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
                             webViewHtml.append(
-                                "<td ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
-                                }>"
+                                "<td ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")}>"
                             )
                         }
 
@@ -277,8 +271,8 @@ fun HtmlView(
                             }
                             webViewHtml.append(
                                 "<th ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -293,8 +287,8 @@ fun HtmlView(
                             }
                             webViewHtml.append(
                                 "<colgroup ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -309,8 +303,8 @@ fun HtmlView(
                             }
                             webViewHtml.append(
                                 "<col ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }

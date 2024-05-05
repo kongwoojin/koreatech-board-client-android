@@ -36,7 +36,7 @@ fun SearchScreen(
     title: String,
     onArticleClick: (UUID, String) -> Unit,
     searchViewModel: SearchViewModel = hiltViewModel()
-    ) {
+) {
     searchViewModel.collectSideEffect {
         searchViewModel.handleSideEffect(it)
     }

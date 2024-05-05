@@ -61,8 +61,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
-import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
@@ -76,7 +76,7 @@ fun BoardScreen(
     initDepartment: Int,
     userDepartment: Int,
     onArticleClick: (UUID, String) -> Unit,
-    onSearch: (String, String, String) -> Unit,
+    onSearch: (String, String, String) -> Unit
 ) {
     val departmentList = listOf(
         Department.School,
@@ -98,7 +98,7 @@ fun BottomSheetScaffold(
     initDepartment: Department,
     userDepartment: Department,
     onArticleClick: (UUID, String) -> Unit,
-    onSearch: (String, String, String) -> Unit,
+    onSearch: (String, String, String) -> Unit
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -154,7 +154,7 @@ fun Board(
     contentPadding: PaddingValues,
     department: Department,
     onArticleClick: (UUID, String) -> Unit,
-    onSearch: (String, String, String) -> Unit,
+    onSearch: (String, String, String) -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -441,7 +441,7 @@ fun NetworkUnavailable() {
 fun SearchFAB(
     department: Department,
     index: Int,
-    onSearch: (String, String, String) -> Unit,
+    onSearch: (String, String, String) -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }

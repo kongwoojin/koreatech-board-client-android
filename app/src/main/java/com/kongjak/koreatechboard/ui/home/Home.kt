@@ -35,8 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
