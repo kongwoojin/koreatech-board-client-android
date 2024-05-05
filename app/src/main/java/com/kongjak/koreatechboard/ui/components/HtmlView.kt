@@ -50,11 +50,19 @@ fun HtmlView(
                 XmlPullParser.START_TAG -> {
                     when (parser.name) {
                         HTML_BR -> {
-                            appendNewLine()
+                            if (isWebView) {
+                                webViewHtml.append("<br>")
+                            } else {
+                                appendNewLine()
+                            }
                         }
 
                         HTML_P -> {
-                            appendNewLine()
+                            if (isWebView) {
+                                webViewHtml.append("<p>")
+                            } else {
+                                appendNewLine()
+                            }
                         }
 
                         HTML_UL -> {
@@ -66,7 +74,11 @@ fun HtmlView(
                         }
 
                         HTML_DIV -> {
-                            appendNewLine()
+                            if (isWebView) {
+                                webViewHtml.append("<div>")
+                            } else {
+                                appendNewLine()
+                            }
                         }
 
                         HTML_SPAN -> {
@@ -320,10 +332,22 @@ fun HtmlView(
                 XmlPullParser.END_TAG -> {
                     when (parser.name) {
                         HTML_BR -> {}
-                        HTML_P -> {}
+                        HTML_P -> {
+                            if (isWebView) {
+                                webViewHtml.append("</p>")
+                            } else {
+                                appendNewLine()
+                            }
+                        }
                         HTML_UL -> {}
                         HTML_LI -> {}
-                        HTML_DIV -> {}
+                        HTML_DIV -> {
+                            if (isWebView) {
+                                webViewHtml.append("</div>")
+                            } else {
+                                appendNewLine()
+                            }
+                        }
                         HTML_BLOCKQUOTE -> {}
                         HTML_A,
                         HTML_STRONG,
