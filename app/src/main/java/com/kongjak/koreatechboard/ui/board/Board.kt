@@ -1,6 +1,5 @@
-package com.kongjak.koreatechboard.ui.main.board
+package com.kongjak.koreatechboard.ui.board
 
-import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -61,22 +60,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.article.ArticleActivity
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
-import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
-import com.kongjak.koreatechboard.ui.search.SearchActivity
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.UUID
 
 @Composable
 fun BoardScreen(
     initDepartment: Int,
-    userDepartment: Int
+    userDepartment: Int,
+    onArticleClick: (UUID, String) -> Unit,
+    onSearch: (String, String, String) -> Unit,
 ) {
     val departmentList = listOf(
         Department.School,
@@ -86,7 +86,9 @@ fun BoardScreen(
 
     BottomSheetScaffold(
         departmentList[initDepartment],
-        deptList[userDepartment]
+        deptList[userDepartment],
+        onArticleClick,
+        onSearch
     )
 }
 
@@ -94,7 +96,9 @@ fun BoardScreen(
 @Composable
 fun BottomSheetScaffold(
     initDepartment: Department,
-    userDepartment: Department
+    userDepartment: Department,
+    onArticleClick: (UUID, String) -> Unit,
+    onSearch: (String, String, String) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
@@ -137,7 +141,9 @@ fun BottomSheetScaffold(
     ) { innerPadding ->
         Board(
             contentPadding = innerPadding,
-            department = department.value
+            department = department.value,
+            onArticleClick = onArticleClick,
+            onSearch = onSearch
         )
     }
 }
@@ -146,7 +152,9 @@ fun BottomSheetScaffold(
 @Composable
 fun Board(
     contentPadding: PaddingValues,
-    department: Department
+    department: Department,
+    onArticleClick: (UUID, String) -> Unit,
+    onSearch: (String, String, String) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -188,7 +196,9 @@ fun Board(
         ) { page ->
             BoardContent(
                 department = department,
-                page = page
+                page = page,
+                onArticleClick = onArticleClick,
+                onSearch = onSearch
             )
         }
     }
@@ -199,6 +209,8 @@ fun Board(
 fun BoardContent(
     department: Department,
     page: Int,
+    onArticleClick: (UUID, String) -> Unit,
+    onSearch: (String, String, String) -> Unit,
     networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     networkViewModel.collectSideEffect { networkViewModel.handleSideEffect(it) }
@@ -238,7 +250,7 @@ fun BoardContent(
 
     Scaffold(
         floatingActionButton = {
-            SearchFAB(department = department, index = page)
+            SearchFAB(department = department, index = page, onSearch = onSearch)
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -294,11 +306,7 @@ fun BoardContent(
                                             interactionSource = remember { MutableInteractionSource() },
                                             selected = false,
                                             onClick = {
-                                                val intent =
-                                                    Intent(context, ArticleActivity::class.java)
-                                                intent.putExtra("department", department.name)
-                                                intent.putExtra("uuid", it.uuid.toString())
-                                                context.startActivity(intent)
+                                                onArticleClick(it.uuid, department.name)
                                             }
                                         ),
                                     title = it.title,
@@ -317,13 +325,23 @@ fun BoardContent(
                                         loadState.refresh is LoadState.Error -> {
                                             val errorMessage =
                                                 (loadState.refresh as LoadState.Error).error.message
-                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
+                                            item {
+                                                BoardError(
+                                                    errorMessage
+                                                        ?: stringResource(id = R.string.error_unknown)
+                                                )
+                                            }
                                         }
 
                                         loadState.append is LoadState.Error -> {
                                             val errorMessage =
                                                 (loadState.append as LoadState.Error).error.message
-                                            item { BoardError(errorMessage ?: stringResource(id = R.string.error_unknown)) }
+                                            item {
+                                                BoardError(
+                                                    errorMessage
+                                                        ?: stringResource(id = R.string.error_unknown)
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -420,10 +438,13 @@ fun NetworkUnavailable() {
 }
 
 @Composable
-fun SearchFAB(department: Department, index: Int) {
+fun SearchFAB(
+    department: Department,
+    index: Int,
+    onSearch: (String, String, String) -> Unit,
+) {
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
-    val context = LocalContext.current
 
     FloatingActionButton(
         shape = RoundedCornerShape(16.dp),
@@ -445,17 +466,11 @@ fun SearchFAB(department: Department, index: Int) {
             label = stringResource(id = R.string.search_dialog_hint),
             onConfirm = {
                 showDialog = false
-                val intent = Intent(context, SearchActivity::class.java)
-                intent.putExtra(
-                    "department",
-                    department.name
+                onSearch(
+                    department.name,
+                    department.boards[index].board,
+                    searchText
                 )
-                intent.putExtra(
-                    "board",
-                    department.boards[index].board
-                )
-                intent.putExtra("title", searchText)
-                context.startActivity(intent)
             },
             onDismiss = {
                 showDialog = false

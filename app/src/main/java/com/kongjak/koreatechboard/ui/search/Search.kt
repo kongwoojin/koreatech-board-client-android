@@ -1,9 +1,7 @@
 package com.kongjak.koreatechboard.ui.search
 
-import android.content.Intent
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,56 +17,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.article.ArticleActivity
-import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
-import com.kongjak.koreatechboard.ui.main.board.BoardError
-import com.kongjak.koreatechboard.ui.main.board.BoardItem
-import com.kongjak.koreatechboard.util.findActivity
+import com.kongjak.koreatechboard.ui.board.BoardError
+import com.kongjak.koreatechboard.ui.board.BoardItem
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.UUID
 
 @Composable
-fun SearchScreen(department: String, board: String, title: String) {
-    val context = LocalContext.current
-
-    Scaffold(
-        topBar = {
-            KoreatechBoardAppBar(
-                title = stringResource(id = R.string.search_result),
-                canGoBack = true,
-                backAction = {
-                    context.findActivity().finish()
-                }
-            )
-        },
-        content = { contentPadding ->
-            SearchContent(
-                contentPadding = contentPadding,
-                department = department,
-                board = board,
-                title = title
-            )
-        }
-    )
-}
-
-@Composable
-fun SearchContent(
-    searchViewModel: SearchViewModel = hiltViewModel(),
-    contentPadding: PaddingValues,
+fun SearchScreen(
     department: String,
     board: String,
-    title: String
-) {
-    val context = LocalContext.current
-
+    title: String,
+    onArticleClick: (UUID, String) -> Unit,
+    searchViewModel: SearchViewModel = hiltViewModel()
+    ) {
     searchViewModel.collectSideEffect {
         searchViewModel.handleSideEffect(it)
     }
@@ -84,8 +51,7 @@ fun SearchContent(
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(contentPadding),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -101,10 +67,7 @@ fun SearchContent(
                             interactionSource = remember { MutableInteractionSource() },
                             selected = false,
                             onClick = {
-                                val intent = Intent(context, ArticleActivity::class.java)
-                                intent.putExtra("department", department)
-                                intent.putExtra("uuid", it.uuid.toString())
-                                context.startActivity(intent)
+                                onArticleClick(it.uuid, department)
                             }
                         ),
                     title = it.title,

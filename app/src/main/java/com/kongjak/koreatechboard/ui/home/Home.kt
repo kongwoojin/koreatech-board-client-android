@@ -1,6 +1,5 @@
-package com.kongjak.koreatechboard.ui.main.home
+package com.kongjak.koreatechboard.ui.home
 
-import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,25 +29,25 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.article.ArticleActivity
-import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.UUID
 
 @Composable
 fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
-    networkViewModel: NetworkViewModel = hiltViewModel()
+    networkViewModel: NetworkViewModel = hiltViewModel(),
+    onArticleClick: (UUID, String) -> Unit
 ) {
     val networkState by networkViewModel.collectAsState()
     networkViewModel.collectSideEffect {
@@ -65,11 +64,11 @@ fun HomeScreen(
         ) {
             val homeUiState by homeViewModel.collectAsState()
             val selectedDepartmentIndex = homeUiState.department
-            BoardInHome(department = Department.School)
-            BoardInHome(department = Department.Dorm)
+            BoardInHome(department = Department.School, onArticleClick = onArticleClick)
+            BoardInHome(department = Department.Dorm, onArticleClick = onArticleClick)
 
             val selectedDepartment = deptList[selectedDepartmentIndex]
-            BoardInHome(department = selectedDepartment)
+            BoardInHome(department = selectedDepartment, onArticleClick = onArticleClick)
         }
     } else {
         Column(
@@ -85,7 +84,8 @@ fun HomeScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoardInHome(
-    department: Department
+    department: Department,
+    onArticleClick: (UUID, String) -> Unit
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0
@@ -134,16 +134,18 @@ fun BoardInHome(
                 state = pagerState,
                 verticalAlignment = Alignment.Top
             ) { page ->
-                ArticleList(department, page)
+                ArticleList(department, page, onArticleClick)
             }
         }
     }
 }
 
 @Composable
-fun ArticleList(department: Department, page: Int) {
-    val context = LocalContext.current
-
+fun ArticleList(
+    department: Department,
+    page: Int,
+    onArticleClick: (UUID, String) -> Unit
+) {
     val key by remember { mutableStateOf(department.boards[page].board) }
 
     val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
@@ -190,10 +192,7 @@ fun ArticleList(department: Department, page: Int) {
                         Box(
                             modifier = Modifier
                                 .clickable {
-                                    val intent = Intent(context, ArticleActivity::class.java)
-                                    intent.putExtra("department", department.name)
-                                    intent.putExtra("uuid", data.uuid.toString())
-                                    context.startActivity(intent)
+                                    onArticleClick(data.uuid, department.name)
                                 }
                         ) {
                             Text(

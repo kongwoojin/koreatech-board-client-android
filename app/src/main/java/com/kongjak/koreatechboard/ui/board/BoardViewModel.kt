@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.main.board
+package com.kongjak.koreatechboard.ui.board
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

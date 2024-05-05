@@ -6,7 +6,7 @@ import com.kongjak.koreatechboard.domain.usecase.database.DeleteNewNoticeUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewNoticesUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
-import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

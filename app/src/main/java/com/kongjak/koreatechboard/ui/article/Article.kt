@@ -25,6 +25,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
@@ -40,9 +41,10 @@ import java.util.UUID
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleScreen(
-    articleViewModel: ArticleViewModel,
+    articleViewModel: ArticleViewModel = hiltViewModel(),
+    uuid: UUID,
     department: String,
-    uuid: UUID
+    setExternalLink: (String) -> Unit
 ) {
     articleViewModel.collectSideEffect {
         articleViewModel.handleSideEffect(it)
@@ -76,6 +78,9 @@ fun ArticleScreen(
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             data?.let {
+                LaunchedEffect(key1 = Unit) {
+                    setExternalLink(it.articleUrl)
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

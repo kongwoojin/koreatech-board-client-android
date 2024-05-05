@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.main.settings
+package com.kongjak.koreatechboard.ui.settings
 
 sealed class SettingsSideEffect {
     object GetUserDepartment : SettingsSideEffect()

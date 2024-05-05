@@ -1,7 +1,7 @@
 package com.kongjak.koreatechboard.ui.main
 
 import android.content.Context
-import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,44 +9,37 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.compose.ui.res.vectorResource
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.ui.BottomNav
+import com.kongjak.koreatechboard.ui.NavigationGraph
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
-import com.kongjak.koreatechboard.ui.main.board.BoardScreen
-import com.kongjak.koreatechboard.ui.main.home.HomeScreen
-import com.kongjak.koreatechboard.ui.main.settings.SettingsScreen
-import com.kongjak.koreatechboard.ui.notice.NoticeActivity
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
-import com.kongjak.koreatechboard.ui.viewmodel.ThemeViewModel
 import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
@@ -55,26 +48,31 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
-    private val themeViewModel: ThemeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val defaultScreen = intent.getStringExtra("screen")
-        if (defaultScreen != null) {
-            mainViewModel.updateCurrentRoute(MainRoute.valueOf(defaultScreen))
-        }
 
         if (BuildConfig.BUILD_TYPE == "debug") {
             getFirebaseToken(this)
         }
 
         setContent {
+            var startDestination by remember { mutableStateOf(MainRoute.Home.name) }
+
+            val defaultScreen = intent.getStringExtra("screen")
+
+            if (defaultScreen != null) {
+                startDestination = MainRoute.valueOf(defaultScreen).name
+            }
+
             mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
 
-            val isDynamicColor by themeViewModel.isDynamicTheme.observeAsState(true)
-            val isDarkTheme by themeViewModel.isDarkTheme.observeAsState()
+            val uiState by mainViewModel.collectAsState()
+            val isDynamicColor = uiState.isDynamicTheme
+            val isDarkTheme = uiState.isDarkTheme ?: isSystemInDarkTheme()
+
             KoreatechBoardTheme(
                 dynamicColor = isDynamicColor,
-                darkTheme = isDarkTheme ?: isSystemInDarkTheme()
+                darkTheme = isDarkTheme
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -83,7 +81,13 @@ class MainActivity : ComponentActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         CheckNotificationPermission()
                     }
-                    MainScreen(mainViewModel)
+                    MainScreen(
+                        startDestination = startDestination,
+                        externalLink = uiState.externalLink,
+                        setExternalLink = { url ->
+                            mainViewModel.setExternalLink(url)
+                        }
+                    )
                 }
             }
         }
@@ -91,10 +95,28 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(mainViewModel: MainViewModel) {
+fun MainScreen(
+    startDestination: String = MainRoute.Home.name,
+    externalLink: String?,
+    setExternalLink: (String) -> Unit
+) {
     val navController = rememberNavController()
-
     val context = LocalContext.current
+
+    val mainScreenRoutes = listOf(
+        MainRoute.Home.name,
+        MainRoute.Board.name,
+        MainRoute.Settings.name
+    )
+
+    val currentRoute =
+        navController.currentBackStackEntryAsState().value?.destination?.route?.split("/")?.get(0)
+
+    val canGoBack = if (currentRoute == null) {
+        false
+    } else {
+        !(mainScreenRoutes.contains(currentRoute) || currentRoute == startDestination)
+    }
 
     Scaffold(
         topBar = {
@@ -102,106 +124,56 @@ fun MainScreen(mainViewModel: MainViewModel) {
                 KoreatechBoardAppBarAction(
                     icon = Icons.Default.Notifications,
                     action = {
-                        val intent = Intent(context, NoticeActivity::class.java)
-                        context.startActivity(intent)
+                        navController.navigate(MainRoute.Notice.name)
                     },
                     contentDescription = stringResource(id = R.string.content_description_notification)
                 )
             )
+
+            val externalLinkAction = listOf(
+                KoreatechBoardAppBarAction(
+                    icon = ImageVector.vectorResource(R.drawable.ic_open_in_browser),
+                    action = {
+                        if (externalLink != null) {
+                            val builder = CustomTabsIntent.Builder()
+                            val customTabsIntent = builder.build()
+                            customTabsIntent.launchUrl(context, Uri.parse(externalLink))
+                        } else {
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.open_in_browser_failed),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    contentDescription = stringResource(
+                        id = R.string.content_description_open_in_browser
+                    )
+                )
+            )
+
             KoreatechBoardAppBar(
-                actionList = actionList
+                canGoBack = canGoBack,
+                backAction = {
+                    navController.navigateUp()
+                },
+                actionList = if (currentRoute == MainRoute.Article.name) externalLinkAction else actionList
             )
         },
         bottomBar = {
-            BottomNavigation(
-                mainViewModel = mainViewModel
-            )
+            BottomNav(navController = navController)
         },
         content = { contentPadding ->
-            Box(Modifier.padding(contentPadding)) {
-                NavigationGraph(
-                    navController = navController,
-                    mainViewModel = mainViewModel
-                )
-            }
+            NavigationGraph(
+                modifier = Modifier.padding(contentPadding),
+                navController = navController,
+                currentRoute = startDestination,
+                setExternalLink = setExternalLink
+            )
         }
     )
 }
 
-@Composable
-fun BottomNavigation(
-    mainViewModel: MainViewModel
-) {
-    val items = listOf(
-        MainRoute.Home,
-        MainRoute.Board,
-        MainRoute.Settings
-    )
-
-    val uiState by mainViewModel.collectAsState()
-    val currentRoute = uiState.currentRoute
-
-    NavigationBar {
-        items.forEach { item ->
-            NavigationBarItem(
-                label = {
-                    Text(text = stringResource(id = item.stringResource))
-                },
-
-                icon = {
-                    Icon(
-                        item.icon,
-                        contentDescription = stringResource(id = item.stringResource)
-                    )
-                },
-
-                selected = currentRoute == item.name,
-
-                alwaysShowLabel = true,
-
-                onClick = {
-                    mainViewModel.updateCurrentRoute(MainRoute.valueOf(item.name))
-                },
-
-                // Control all the colors of the icon
-                colors = NavigationBarItemDefaults.colors()
-            )
-        }
-    }
-}
-
-@Composable
-fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewModel) {
-    val uiState by mainViewModel.collectAsState()
-    val initDepartment = uiState.initDepartment
-    val userDepartment = uiState.userDepartment
-    val currentRoute = uiState.currentRoute
-
-    LaunchedEffect(key1 = currentRoute) {
-        navController.navigate(currentRoute) {
-            navController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-    }
-
-    NavHost(navController = navController, startDestination = currentRoute) {
-        composable(MainRoute.Home.name) {
-            HomeScreen()
-        }
-        composable(MainRoute.Board.name) {
-            BoardScreen(
-                initDepartment = initDepartment,
-                userDepartment = userDepartment
-            )
-        }
-        composable(MainRoute.Settings.name) {
-            SettingsScreen()
-        }
-    }
-}
 
 fun getFirebaseToken(context: Context) {
     val tag = "FCM"

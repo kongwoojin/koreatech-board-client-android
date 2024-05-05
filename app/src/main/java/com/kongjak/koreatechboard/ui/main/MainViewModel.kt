@@ -2,9 +2,13 @@ package com.kongjak.koreatechboard.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
+import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
+import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
-import com.kongjak.koreatechboard.util.routes.MainRoute
+import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,7 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
-    private val getInitDepartmentUseCase: GetInitDepartmentUseCase
+    private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
+    private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
+    private val getDarkThemeUseCase: GetDarkThemeUseCase
 ) : ContainerHost<MainState, MainSideEffect>, ViewModel() {
 
     override val container = container<MainState, MainSideEffect>(MainState())
@@ -27,17 +33,17 @@ class MainViewModel @Inject constructor(
         intent {
             postSideEffect(MainSideEffect.InitDepartmentUpdate)
             postSideEffect(MainSideEffect.UserDepartmentUpdate)
+            postSideEffect(MainSideEffect.GetDynamicTheme)
+            postSideEffect(MainSideEffect.GetDarkTheme)
         }
+    }
+
+    fun setExternalLink(url: String) {
+        handleSideEffect(MainSideEffect.SetExternalLink(url))
     }
 
     fun handleSideEffect(sideEffect: MainSideEffect) {
         when (sideEffect) {
-            is MainSideEffect.UpdateCurrentRoute -> intent {
-                reduce {
-                    state.copy(currentRoute = sideEffect.currentRoute.name)
-                }
-            }
-
             is MainSideEffect.InitDepartmentUpdate -> viewModelScope.launch {
                 getInitDepartmentUseCase().collectLatest {
                     intent {
@@ -57,12 +63,47 @@ class MainViewModel @Inject constructor(
                     }
                 }
             }
-        }
-    }
 
-    fun updateCurrentRoute(route: MainRoute) {
-        intent {
-            postSideEffect(MainSideEffect.UpdateCurrentRoute(route))
+            MainSideEffect.GetDarkTheme -> viewModelScope.launch {
+            getDynamicThemeUseCase().collectLatest {
+                intent {
+                    reduce {
+                        state.copy(isDynamicTheme = it)
+                    }
+                }
+            }
+        }
+            MainSideEffect.GetDynamicTheme -> viewModelScope.launch {
+                getDarkThemeUseCase().collectLatest {
+                    intent {
+                        when (it) {
+                            DARK_THEME_SYSTEM_DEFAULT -> {
+                                reduce {
+                                    state.copy(isDarkTheme = null)
+                                }
+                            }
+                            DARK_THEME_DARK_THEME -> {
+                                reduce {
+                                    state.copy(isDarkTheme = true)
+                                }
+                            }
+                            DARK_THEME_LIGHT_THEME -> {
+                                reduce {
+                                    state.copy(isDarkTheme = false)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            is MainSideEffect.SetExternalLink -> {
+                intent {
+                    reduce {
+                        state.copy(externalLink = sideEffect.url)
+                    }
+                }
+            }
         }
     }
 }

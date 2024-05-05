@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.notice
 
-import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeOut
@@ -37,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,8 +44,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.article.ArticleActivity
-import com.kongjak.koreatechboard.ui.main.settings.deptList
+import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.ui.theme.noticeDepartmentText
@@ -55,15 +52,15 @@ import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.util.UUID
 
 @ExperimentalMaterial3Api
 @Composable
 fun Notice(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
+    onArticleClick: (UUID, String) -> Unit,
     noticeViewModel: NoticeViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-
     noticeViewModel.collectSideEffect {
         noticeViewModel.handleSideEffect(it)
     }
@@ -86,7 +83,7 @@ fun Notice(
             CircularProgressIndicator()
         }
     } else {
-        LazyColumn(modifier = modifier) {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
             item {
                 Column(
                     modifier = Modifier.fillParentMaxWidth(),
@@ -184,11 +181,7 @@ fun Notice(
                                         interactionSource = remember { MutableInteractionSource() },
                                         selected = false,
                                         onClick = {
-                                            val intent =
-                                                Intent(context, ArticleActivity::class.java)
-                                            intent.putExtra("department", article.department)
-                                            intent.putExtra("uuid", article.uuid.toString())
-                                            context.startActivity(intent)
+                                            onArticleClick(article.uuid, article.department)
                                             noticeViewModel.updateRead(article.uuid, true)
                                         }
                                     ),

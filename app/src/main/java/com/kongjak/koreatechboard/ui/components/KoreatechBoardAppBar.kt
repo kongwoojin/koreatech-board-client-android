@@ -1,5 +1,10 @@
 package com.kongjak.koreatechboard.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,9 +35,12 @@ fun KoreatechBoardAppBar(
         title = {
             Text(text = title)
         },
-        navigationIcon =
-        {
-            if (canGoBack) {
+        navigationIcon = {
+            AnimatedVisibility(
+                visible = canGoBack,
+                enter = slideInHorizontally(),
+                exit = slideOutHorizontally(),
+            ) {
                 IconButton(onClick = {
                     if (backAction != null) {
                         backAction()
