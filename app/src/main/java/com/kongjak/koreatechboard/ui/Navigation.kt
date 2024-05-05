@@ -11,6 +11,8 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NamedNavArgument
@@ -37,6 +39,8 @@ fun NavigationGraph(
     navController: NavHostController,
     currentRoute: String,
     isDarkTheme: Boolean,
+    initDepartment: Int,
+    userDepartment: Int,
     setExternalLink: (String) -> Unit
 ) {
     NavHost(
@@ -53,8 +57,8 @@ fun NavigationGraph(
         }
         composable(MainRoute.Board.name) {
             BoardScreen(
-                initDepartment = 0,
-                userDepartment = 0,
+                initDepartment = initDepartment,
+                userDepartment = userDepartment,
                 onArticleClick = { uuid, department ->
                     navController.navigate("${MainRoute.Article.name}/$uuid/$department")
                 },

@@ -69,6 +69,8 @@ class MainActivity : ComponentActivity() {
             val uiState by mainViewModel.collectAsState()
             val isDynamicColor = uiState.isDynamicTheme
             val isDarkTheme = uiState.isDarkTheme ?: isSystemInDarkTheme()
+            val initDestination = uiState.initDepartment
+            val userDestination = uiState.userDepartment
 
             KoreatechBoardTheme(
                 dynamicColor = isDynamicColor,
@@ -84,6 +86,8 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         startDestination = startDestination,
                         isDarkTheme = isDarkTheme,
+                        initDepartment = initDestination,
+                        userDepartment = userDestination,
                         externalLink = uiState.externalLink,
                         setExternalLink = { url ->
                             mainViewModel.setExternalLink(url)
@@ -99,6 +103,8 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(
     startDestination: String = MainRoute.Home.name,
     isDarkTheme: Boolean,
+    initDepartment: Int,
+    userDepartment: Int,
     externalLink: String?,
     setExternalLink: (String) -> Unit
 ) {
@@ -171,6 +177,8 @@ fun MainScreen(
                 navController = navController,
                 currentRoute = startDestination,
                 isDarkTheme = isDarkTheme,
+                initDepartment = initDepartment,
+                userDepartment = userDepartment,
                 setExternalLink = setExternalLink
             )
         }
