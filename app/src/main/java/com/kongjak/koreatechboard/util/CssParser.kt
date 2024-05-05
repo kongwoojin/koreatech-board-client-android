@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.util
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.SpanStyle
@@ -126,8 +127,10 @@ fun parseRawStyle(css: String?, isDarkMode: Boolean): String {
 
     for (backgroundKey in listOf("background", "background-color")) {
         if (cssMap.containsKey(backgroundKey)) {
-            val color = parseColor(cssMap[backgroundKey]!!, isDarkMode)
-            if (color != Color.Unspecified) {
+            val color = parseColor(cssMap[backgroundKey]!!, isDarkMode, true)
+            if (color == Color.Unspecified) {
+                cssMap[backgroundKey] = ""
+            } else {
                 cssMap[backgroundKey] = color.toRaw()
             }
         }
