@@ -22,6 +22,7 @@ fun FileText(modifier: Modifier = Modifier, files: List<Files>) {
             withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
                 append(file.fileName)
             }
+            pop()
             append("\n")
         }
     }
