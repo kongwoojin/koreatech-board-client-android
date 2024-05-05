@@ -44,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,6 +72,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BoardScreen(
     initDepartment: Int,
@@ -78,38 +80,16 @@ fun BoardScreen(
     onArticleClick: (UUID, String) -> Unit,
     onSearch: (String, String, String) -> Unit
 ) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+    val scope = rememberCoroutineScope()
+
     val departmentList = listOf(
         Department.School,
         Department.Dorm,
         deptList[userDepartment]
     )
 
-    BottomSheetScaffold(
-        departmentList[initDepartment],
-        deptList[userDepartment],
-        onArticleClick,
-        onSearch
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BottomSheetScaffold(
-    initDepartment: Department,
-    userDepartment: Department,
-    onArticleClick: (UUID, String) -> Unit,
-    onSearch: (String, String, String) -> Unit
-) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
-    val scope = rememberCoroutineScope()
-
-    val department = remember { mutableStateOf(initDepartment) }
-
-    val scaffoldItemList = listOf(
-        Department.School,
-        Department.Dorm,
-        userDepartment
-    )
+    val department = rememberSaveable { mutableStateOf(departmentList[initDepartment].name) }
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -122,14 +102,14 @@ fun BottomSheetScaffold(
         sheetPeekHeight = 64.dp,
         sheetContent = {
             LazyColumn {
-                items(scaffoldItemList) {
+                items(departmentList) {
                     Box {
                         Text(
                             text = stringResource(id = it.stringResource),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    department.value = it
+                                    department.value = it.name
                                     scope.launch { scaffoldState.bottomSheetState.partialExpand() }
                                 }
                                 .padding(16.dp)
@@ -141,7 +121,7 @@ fun BottomSheetScaffold(
     ) { innerPadding ->
         Board(
             contentPadding = innerPadding,
-            department = department.value,
+            department = Department.valueOf(department.value),
             onArticleClick = onArticleClick,
             onSearch = onSearch
         )
