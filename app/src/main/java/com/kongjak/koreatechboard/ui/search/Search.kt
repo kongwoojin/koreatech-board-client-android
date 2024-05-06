@@ -75,7 +75,11 @@ fun SearchScreen(
                     isNew = it.isNew,
                     date = it.writeDate
                 )
-                HorizontalDivider(thickness = 0.5.dp, color = Color.Gray)
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    thickness = 0.5.dp,
+                    color = Color.Gray
+                )
             }
         }
 

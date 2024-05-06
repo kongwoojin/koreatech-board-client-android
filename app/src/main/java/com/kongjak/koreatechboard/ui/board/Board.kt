@@ -294,7 +294,11 @@ fun BoardContent(
                                     isNew = it.isNew,
                                     date = it.writeDate
                                 )
-                                HorizontalDivider(thickness = 0.5.dp, color = Gray)
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = 16.dp),
+                                    thickness = 0.5.dp,
+                                    color = Gray
+                                )
                             }
                         }
 
