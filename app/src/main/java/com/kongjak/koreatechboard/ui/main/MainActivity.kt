@@ -38,7 +38,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
-import com.kongjak.koreatechboard.ui.BottomNav
+import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationBar
 import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationRail
 import com.kongjak.koreatechboard.ui.NavigationGraph
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
@@ -182,7 +182,7 @@ fun MainScreen(
         },
         bottomBar = {
             if (!isLargeScreen) {
-                BottomNav(navController = navController)
+                KoreatechBoardNavigationBar(navController = navController)
             }
         },
         content = { contentPadding ->

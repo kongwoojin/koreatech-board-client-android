@@ -114,7 +114,7 @@ fun NavigationGraph(
 }
 
 @Composable
-fun BottomNav(
+fun KoreatechBoardNavigationBar(
     navController: NavHostController
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
