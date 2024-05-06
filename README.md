@@ -11,13 +11,21 @@
 * [Hilt](https://dagger.dev/hilt/)
 * [Android Jetpack](https://developer.android.com/jetpack)
 * [Orbit-MVI](https://orbit-mvi.org/)
+* [KtXml](https://github.com/kobjects/ktxml)
+* [m3color](https://github.com/Kyant0/m3color)
+
 
 ## 이미지
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/c4f37f4e-4231-449b-a8da-b872c355dbdc" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/b0a3dfea-66af-4dee-929f-a8537e856ead" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/f274f4ff-ef41-4528-a06a-48a745a0f4dd" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/ee4cb5c2-0f10-479d-bd93-69d90aeef8af" width="200">
-<img src="https://github.com/kongwoojin/koreatech-board-android/assets/20942714/02f0b0c4-5822-44fa-b004-e8c20fa47d20" width="200">
+| |Mobile|Tablet|
+|---|---|---|
+|Home|![mobile_home](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/34613783-84c7-4a04-8adc-cfa5242d329c)|![tablet_home](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/bc039a8f-a7e4-43e2-a68b-8bb475fe539b)|
+|Board|![mobile_board](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/7c8f1fa0-46cb-409b-9ba8-f796860ae29a)|![tablet_board](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/5c9ea968-5d86-4364-8483-bf0bb1d69e8a)|
+|Settings|![mobile_settings](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/81aa0b4a-2c20-4110-b76a-c49f06f2bc5e)|![tablet_settings](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/5ed58541-c8ff-41c7-b2db-9db9c977c285)|
+|Notification Received|![mobile_notification](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/f4450614-b9b5-4d4b-a319-973516bb2d3e)|![tablet_notfication](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/d67a7839-0750-4653-a4a0-b753f3b969c7)|
+|New notices|![mobile_notification_list](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/761d9ca9-d926-46d1-a224-45c50e852137)|![tablet_notification_list](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/b30b180d-1610-4af0-912c-1db3eb7cc2c0)|
+|Article|![mobile_article](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/fef82ec8-3a4a-407d-83ec-3ec896287c95)|![tablet_article](https://github.com/kongwoojin/koreatech-board-android/assets/20942714/bb50c320-b170-437d-8f4b-20672ab54876)|
+
+
 
 ## 지원하는 게시판
 * [한국기술교육대학교](https://koreatech.ac.kr/)
