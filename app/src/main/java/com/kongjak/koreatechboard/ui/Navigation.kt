@@ -8,6 +8,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +31,12 @@ import com.kongjak.koreatechboard.ui.search.SearchScreen
 import com.kongjak.koreatechboard.ui.settings.SettingsScreen
 import com.kongjak.koreatechboard.util.routes.MainRoute
 import java.util.UUID
+
+val items = listOf(
+    MainRoute.Home,
+    MainRoute.Board,
+    MainRoute.Settings
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,12 +117,6 @@ fun NavigationGraph(
 fun BottomNav(
     navController: NavHostController
 ) {
-    val items = listOf(
-        MainRoute.Home,
-        MainRoute.Board,
-        MainRoute.Settings
-    )
-
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route?.split("/")?.get(0)
 
@@ -149,6 +151,43 @@ fun BottomNav(
 
                     // Control all the colors of the icon
                     colors = NavigationBarItemDefaults.colors()
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun KoreatechBoardNavigationRail(
+    navController: NavHostController
+) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route?.split("/")?.get(0)
+
+    if (items.contains(MainRoute.valueOf(currentRoute ?: MainRoute.Home.name))) {
+        NavigationRail {
+            items.forEach { item ->
+                NavigationRailItem(
+                    label = {
+                        Text(text = stringResource(id = item.stringResource))
+                    },
+
+                    icon = {
+                        Icon(
+                            item.icon,
+                            contentDescription = stringResource(id = item.stringResource)
+                        )
+                    },
+                    selected = currentRoute == item.name,
+                    onClick = {
+                        navController.navigate(item.name) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
             }
         }

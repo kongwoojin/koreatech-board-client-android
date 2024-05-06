@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -18,6 +19,9 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,6 +39,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.BottomNav
+import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationRail
 import com.kongjak.koreatechboard.ui.NavigationGraph
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
@@ -48,6 +53,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
+
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +63,9 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val windowSizeClass = calculateWindowSizeClass(this)
+            val isLargeScreen = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
+
             var startDestination by remember { mutableStateOf(MainRoute.Home.name) }
 
             val defaultScreen = intent.getStringExtra("screen")
@@ -86,6 +96,7 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         startDestination = startDestination,
                         isDarkTheme = isDarkTheme,
+                        isLargeScreen = isLargeScreen,
                         initDepartment = initDestination,
                         userDepartment = userDestination,
                         externalLink = uiState.externalLink,
@@ -103,6 +114,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(
     startDestination: String = MainRoute.Home.name,
     isDarkTheme: Boolean,
+    isLargeScreen: Boolean,
     initDepartment: Int,
     userDepartment: Int,
     externalLink: String?,
@@ -169,18 +181,30 @@ fun MainScreen(
             )
         },
         bottomBar = {
-            BottomNav(navController = navController)
+            if (!isLargeScreen) {
+                BottomNav(navController = navController)
+            }
         },
         content = { contentPadding ->
-            NavigationGraph(
-                modifier = Modifier.padding(contentPadding),
-                navController = navController,
-                currentRoute = startDestination,
-                isDarkTheme = isDarkTheme,
-                initDepartment = initDepartment,
-                userDepartment = userDepartment,
-                setExternalLink = setExternalLink
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+            ) {
+                if (isLargeScreen) {
+                    KoreatechBoardNavigationRail(
+                        navController = navController
+                    )
+                }
+                NavigationGraph(
+                    navController = navController,
+                    currentRoute = startDestination,
+                    isDarkTheme = isDarkTheme,
+                    initDepartment = initDepartment,
+                    userDepartment = userDepartment,
+                    setExternalLink = setExternalLink
+                )
+            }
         }
     )
 }
