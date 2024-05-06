@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.board
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -427,6 +428,8 @@ fun SearchFAB(
     index: Int,
     onSearch: (String, String, String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 
@@ -449,6 +452,10 @@ fun SearchFAB(
             onDismissString = stringResource(id = R.string.search_dialog_cancel),
             label = stringResource(id = R.string.search_dialog_hint),
             onConfirm = {
+                if (searchText.length < 3) {
+                    Toast.makeText(context, R.string.search_more_letter, Toast.LENGTH_SHORT).show()
+                    return@TextFieldDialog
+                }
                 showDialog = false
                 onSearch(
                     department.name,
