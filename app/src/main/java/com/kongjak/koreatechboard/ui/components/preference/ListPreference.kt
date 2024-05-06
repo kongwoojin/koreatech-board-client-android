@@ -3,7 +3,9 @@ package com.kongjak.koreatechboard.ui.components.preference
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -132,8 +134,13 @@ fun ListPreferenceDialog(
     selectedIndex: Int,
     onClick: (Int) -> Unit
 ) {
+    val scrollState = rememberScrollState()
     BasicDialog(onDismissRequest = { showDialog.value = false }) {
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+        ) {
             val (selectedValue, onValueSelected) = remember { mutableIntStateOf(selectedIndex) }
 
             zippedList.forEachIndexed { index, item ->
