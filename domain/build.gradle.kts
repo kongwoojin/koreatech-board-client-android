@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.koreatechboard.library)
     alias(libs.plugins.koreatechboard.hilt)
+    alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
 }
 

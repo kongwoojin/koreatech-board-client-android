@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.koreatechboard.application)
     alias(libs.plugins.koreatechboard.compose)
     alias(libs.plugins.koreatechboard.hilt)
+    alias(libs.plugins.koreatechboard.firebase)
     id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
@@ -89,6 +90,9 @@ dependencies {
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
     implementation(libs.accompanist.permissions)
 
     implementation(libs.orbit.core)
