@@ -103,6 +103,7 @@ private fun fullHtml(width: Int, html: String): String {
         </head>
         <body>
         <style>
+            body {margin: 0!important;padding: 0!important;}
             img {display: inline;height: auto;max-width: 100%;width: $width;}
             table {height: auto;max-width: 100%;width: auto!important;}
             h1, h2, h3, h4, h5, h6, p, span {font-size: 16px!important;}
