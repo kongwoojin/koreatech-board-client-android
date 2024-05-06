@@ -166,3 +166,6 @@ lint/tmp/
 **/node_modules/*
 **/.firebaserc
 */google-services.json
+
+# Release
+app/release/
