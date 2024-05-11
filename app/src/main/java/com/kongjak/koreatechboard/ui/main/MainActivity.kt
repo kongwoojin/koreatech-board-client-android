@@ -35,6 +35,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.crashlytics.setCustomKeys
 import com.google.firebase.ktx.Firebase
@@ -48,6 +50,7 @@ import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
+import com.kongjak.koreatechboard.util.KoreatechBoardAnalytics
 import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
@@ -163,6 +166,10 @@ fun MainScreen(
                     icon = ImageVector.vectorResource(R.drawable.ic_open_in_browser),
                     action = {
                         if (externalLink != null) {
+                            FirebaseAnalytics.getInstance(context)
+                                .logEvent(KoreatechBoardAnalytics.UserAction.OPEN_IN_BROWSER) {
+                                    param(KoreatechBoardAnalytics.Param.ARTICLE_URL, externalLink)
+                                }
                             val builder = CustomTabsIntent.Builder()
                             val customTabsIntent = builder.build()
                             customTabsIntent.launchUrl(context, Uri.parse(externalLink))
