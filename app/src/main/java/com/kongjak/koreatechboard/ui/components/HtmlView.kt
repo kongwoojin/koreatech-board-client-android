@@ -385,7 +385,7 @@ fun HtmlView(
                 }
 
                 EventType.TEXT -> {
-                    val text = parser.text
+                    val text = parser.text.trimIndent()
                     if (text.isNotBlank()) {
                         if (isWebView) {
                             webViewHtml.append(text)
