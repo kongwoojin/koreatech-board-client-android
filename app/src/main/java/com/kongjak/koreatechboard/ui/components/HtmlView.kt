@@ -8,9 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -276,8 +274,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<table ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -296,8 +294,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<tr ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -316,8 +314,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<td ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -336,8 +334,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<th ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -356,8 +354,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<colgroup ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -376,8 +374,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<col ${
-                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                        .joinToString(" ")
+                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                    .joinToString(" ")
                                 }>"
                             )
                         }
@@ -441,7 +439,6 @@ fun HtmlView(
                                     length + offset.last
                                 )
                             }
-
                         }
                     }
                 }
