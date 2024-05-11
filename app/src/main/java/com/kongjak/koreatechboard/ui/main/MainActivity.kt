@@ -185,7 +185,11 @@ fun MainScreen(
                 backAction = {
                     navController.navigateUp()
                 },
-                actionList = if (currentRoute == MainRoute.Article.name) externalLinkAction else actionList
+                actionList = when (currentRoute) {
+                    MainRoute.Notice.name -> emptyList()
+                    MainRoute.Article.name -> externalLinkAction
+                    else -> actionList
+                }
             )
         },
         bottomBar = {
