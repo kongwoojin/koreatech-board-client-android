@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.components
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
@@ -7,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -15,6 +18,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import com.kongjak.koreatechboard.constraint.HTML_A
+import com.kongjak.koreatechboard.constraint.HTML_B
+import com.kongjak.koreatechboard.constraint.HTML_BIG
+import com.kongjak.koreatechboard.constraint.HTML_BLOCKQUOTE
+import com.kongjak.koreatechboard.constraint.HTML_BR
+import com.kongjak.koreatechboard.constraint.HTML_CITE
+import com.kongjak.koreatechboard.constraint.HTML_COL
+import com.kongjak.koreatechboard.constraint.HTML_COLGROUP
+import com.kongjak.koreatechboard.constraint.HTML_DEL
+import com.kongjak.koreatechboard.constraint.HTML_DFN
+import com.kongjak.koreatechboard.constraint.HTML_DIV
+import com.kongjak.koreatechboard.constraint.HTML_EM
+import com.kongjak.koreatechboard.constraint.HTML_FONT
+import com.kongjak.koreatechboard.constraint.HTML_H1
+import com.kongjak.koreatechboard.constraint.HTML_H2
+import com.kongjak.koreatechboard.constraint.HTML_H3
+import com.kongjak.koreatechboard.constraint.HTML_H4
+import com.kongjak.koreatechboard.constraint.HTML_H5
+import com.kongjak.koreatechboard.constraint.HTML_H6
+import com.kongjak.koreatechboard.constraint.HTML_I
+import com.kongjak.koreatechboard.constraint.HTML_IMG
+import com.kongjak.koreatechboard.constraint.HTML_LI
+import com.kongjak.koreatechboard.constraint.HTML_P
+import com.kongjak.koreatechboard.constraint.HTML_S
+import com.kongjak.koreatechboard.constraint.HTML_SMALL
+import com.kongjak.koreatechboard.constraint.HTML_SPAN
+import com.kongjak.koreatechboard.constraint.HTML_STRIKE
+import com.kongjak.koreatechboard.constraint.HTML_STRONG
+import com.kongjak.koreatechboard.constraint.HTML_SUB
+import com.kongjak.koreatechboard.constraint.HTML_SUP
+import com.kongjak.koreatechboard.constraint.HTML_TABLE
+import com.kongjak.koreatechboard.constraint.HTML_TD
+import com.kongjak.koreatechboard.constraint.HTML_TH
+import com.kongjak.koreatechboard.constraint.HTML_TR
+import com.kongjak.koreatechboard.constraint.HTML_TT
+import com.kongjak.koreatechboard.constraint.HTML_U
+import com.kongjak.koreatechboard.constraint.HTML_UL
+import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
+import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
+import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseRawStyle
 import com.kongjak.koreatechboard.util.parseSpanStyle
@@ -228,11 +271,14 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
-                                "<table ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")}>"
+                                "<table ${
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
+                                }>"
                             )
                         }
 
@@ -245,11 +291,14 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
-                                "<tr ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")}>"
+                                "<tr ${
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
+                                }>"
                             )
                         }
 
@@ -262,11 +311,14 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
-                                "<td ${attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")}>"
+                                "<td ${
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
+                                }>"
                             )
                         }
 
@@ -279,12 +331,13 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<th ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -298,12 +351,13 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<colgroup ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -317,12 +371,13 @@ fun HtmlView(
                                 attributeMap[attributeName] = attributeValue ?: ""
                             }
 
-                            attributeMap["style"] = parseRawStyle(attributeMap["style"], isDarkTheme)
+                            attributeMap["style"] =
+                                parseRawStyle(attributeMap["style"], isDarkTheme)
 
                             webViewHtml.append(
                                 "<col ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -330,11 +385,63 @@ fun HtmlView(
                 }
 
                 EventType.TEXT -> {
-                    if (parser.text.isNotBlank()) {
+                    val text = parser.text
+                    if (text.isNotBlank()) {
                         if (isWebView) {
-                            webViewHtml.append(parser.text)
+                            webViewHtml.append(text)
                         } else {
-                            append(parser.text)
+                            val length = this.length
+                            append(text)
+
+                            val urlOffsets = extractAllURLOffsets(text)
+
+                            for (offset in urlOffsets) {
+                                val urlTag = "$ANNOTATION_URL_PREFIX${Random.nextInt(0, 1000)}"
+                                addStringAnnotation(
+                                    tag = urlTag,
+                                    annotation = text.substring(offset.first, offset.last),
+                                    start = length + offset.first,
+                                    end = length + offset.last
+                                )
+                                addStyle(
+                                    SpanStyle(
+                                        textDecoration = TextDecoration.Underline
+                                    ),
+                                    length + offset.first,
+                                    length + offset.last
+                                )
+                            }
+
+                            val phoneNumberOffsets = extractAllPhoneNumberOffsets(text)
+
+                            for (offset in phoneNumberOffsets) {
+                                val phoneNumberTag = "$ANNOTATION_PHONE_NUMBER_PREFIX${Random.nextInt(0, 1000)}"
+                                addStringAnnotation(
+                                    tag = phoneNumberTag,
+                                    annotation = text.substring(offset.first, offset.last),
+                                    start = length + offset.first,
+                                    end = length + offset.last
+                                )
+                            }
+                            val emailOffsets = extractAllEmailOffsets(text)
+
+                            for (offset in emailOffsets) {
+                                val emailTag = "$ANNOTATION_EMAIL_PREFIX${Random.nextInt(0, 1000)}"
+                                addStringAnnotation(
+                                    tag = emailTag,
+                                    annotation = text.substring(offset.first, offset.last),
+                                    start = length + offset.first,
+                                    end = length + offset.last
+                                )
+                                addStyle(
+                                    SpanStyle(
+                                        textDecoration = TextDecoration.Underline
+                                    ),
+                                    length + offset.first,
+                                    length + offset.last
+                                )
+                            }
+
                         }
                     }
                 }
@@ -476,9 +583,20 @@ private fun HtmlText(
             text.getStringAnnotations(offset, offset)
                 .firstOrNull()?.let { url ->
                     if (url.item.isNotBlank()) {
-                        val builder = CustomTabsIntent.Builder()
-                        val customTabsIntent = builder.build()
-                        customTabsIntent.launchUrl(context, Uri.parse(url.item))
+                        if (url.tag.startsWith(ANNOTATION_PHONE_NUMBER_PREFIX)) {
+                            val phoneNumber = url.item
+                            val intent = Uri.parse("tel:$phoneNumber")
+                            context.startActivity(Intent(Intent.ACTION_DIAL, intent))
+                        } else if (url.tag.startsWith(ANNOTATION_URL_PREFIX)) {
+                            val builder = CustomTabsIntent.Builder()
+                            val customTabsIntent = builder.build()
+                            customTabsIntent.launchUrl(context, Uri.parse(url.item))
+                        } else if (url.tag.startsWith(ANNOTATION_EMAIL_PREFIX)) {
+                            val email = url.item
+                            val intent = Intent(Intent.ACTION_SENDTO)
+                            intent.data = Uri.parse("mailto:$email")
+                            context.startActivity(intent)
+                        }
                     }
                 }
         }
@@ -514,44 +632,6 @@ fun AnnotatedString.Builder.appendNewLine() {
     }
 }
 
-const val HTML_BR = "br"
-const val HTML_P = "p"
-const val HTML_UL = "ul"
-const val HTML_LI = "li"
-const val HTML_DIV = "div"
-const val HTML_SPAN = "span"
-const val HTML_STRONG = "strong"
-const val HTML_B = "b"
-const val HTML_EM = "em"
-const val HTML_CITE = "cite"
-const val HTML_DFN = "dfn"
-const val HTML_I = "i"
-const val HTML_BIG = "big"
-const val HTML_SMALL = "small"
-const val HTML_FONT = "font"
-const val HTML_BLOCKQUOTE = "blockquote"
-const val HTML_TT = "tt"
-const val HTML_A = "a"
-const val HTML_U = "u"
-const val HTML_DEL = "del"
-const val HTML_S = "s"
-const val HTML_STRIKE = "strike"
-const val HTML_SUP = "sup"
-const val HTML_SUB = "sub"
-const val HTML_H1 = "h1"
-const val HTML_H2 = "h2"
-const val HTML_H3 = "h3"
-const val HTML_H4 = "h4"
-const val HTML_H5 = "h5"
-const val HTML_H6 = "h6"
-const val HTML_IMG = "img"
-const val HTML_TABLE = "table"
-const val HTML_TR = "tr"
-const val HTML_TD = "td"
-const val HTML_TH = "th"
-const val HTML_COLGROUP = "colgroup"
-const val HTML_COL = "col"
-
 data class CustomView(
     val type: CustomViewType,
     val data: Map<String, Any>
@@ -565,3 +645,25 @@ data class CustomView(
         WEB_VIEW
     }
 }
+
+private fun extractAllURLOffsets(text: String): List<IntRange> {
+    val urlRegex = Regex(REGEX_HTTP_HTTPS)
+    val matches = urlRegex.findAll(text)
+    return matches.map { it.range.first..it.range.last + 1 }.toList()
+}
+
+private fun extractAllPhoneNumberOffsets(text: String): List<IntRange> {
+    val phoneNumberRegex = Regex(REGEX_PHONE_NUMBER)
+    val matches = phoneNumberRegex.findAll(text)
+    return matches.map { it.range.first..it.range.last + 1 }.toList()
+}
+
+private fun extractAllEmailOffsets(text: String): List<IntRange> {
+    val emailRegex = Regex(REGEX_EMAIL)
+    val matches = emailRegex.findAll(text)
+    return matches.map { it.range.first..it.range.last + 1 }.toList()
+}
+
+const val ANNOTATION_URL_PREFIX = "url_"
+const val ANNOTATION_PHONE_NUMBER_PREFIX = "phone_number_"
+const val ANNOTATION_EMAIL_PREFIX = "email_"
