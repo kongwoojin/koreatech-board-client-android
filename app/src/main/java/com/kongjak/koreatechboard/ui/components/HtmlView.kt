@@ -73,7 +73,7 @@ fun HtmlView(
     image: @Composable (String, String) -> Unit,
     webView: @Composable (String) -> Unit
 ) {
-    val parser = MiniXmlPullParser(html.iterator())
+    val parser = MiniXmlPullParser(source = html.iterator(), relaxed = true)
 
     val customViewPosition: MutableList<Int> = mutableListOf(0)
     val customViewQueue = ArrayDeque<CustomView>()
