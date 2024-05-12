@@ -231,7 +231,7 @@ fun BoardContent(
 
     Scaffold(
         floatingActionButton = {
-            SearchFAB(department = department, index = page, onSearch = onSearch)
+            SearchFAB(department = department, index = page, snackbarHostState = snackbarHostState, onSearch = onSearch)
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -426,12 +426,15 @@ fun NetworkUnavailable() {
 fun SearchFAB(
     department: Department,
     index: Int,
+    snackbarHostState: SnackbarHostState,
     onSearch: (String, String, String) -> Unit
 ) {
     val context = LocalContext.current
 
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
+
+    val coroutineScope = rememberCoroutineScope()
 
     FloatingActionButton(
         shape = RoundedCornerShape(16.dp),
@@ -453,7 +456,10 @@ fun SearchFAB(
             label = stringResource(id = R.string.search_dialog_hint),
             onConfirm = {
                 if (searchText.length < 3) {
-                    Toast.makeText(context, R.string.search_more_letter, Toast.LENGTH_SHORT).show()
+                    showDialog = false
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(context.getString(R.string.search_more_letter))
+                    }
                     return@TextFieldDialog
                 }
                 showDialog = false
