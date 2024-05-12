@@ -1,11 +1,13 @@
 package com.kongjak.koreatechboard.di
 
-import com.kongjak.koreatechboard.data.BuildConfig
+import android.os.Build
+import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.data.api.API
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,8 +29,19 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
+        val userAgentInterceptor = { chain: Interceptor.Chain ->
+            val request = chain.request().newBuilder()
+                .addHeader(
+                    "User-Agent",
+                    "Koreatech-Board/${BuildConfig.VERSION_NAME} Android/${Build.VERSION.SDK_INT}"
+                )
+                .build()
+            chain.proceed(request)
+        }
+
         return if (BuildConfig.BUILD_TYPE == "release") {
             OkHttpClient.Builder()
+                .addInterceptor(userAgentInterceptor)
                 .build()
         } else {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -36,6 +49,7 @@ object NetworkModule {
 
             OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(userAgentInterceptor)
                 .build()
         }
     }
