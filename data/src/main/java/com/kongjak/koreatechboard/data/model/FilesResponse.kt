@@ -1,10 +1,12 @@
 package com.kongjak.koreatechboard.data.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class FilesResponse(
-    @SerializedName("file_name")
+    @SerialName("file_name")
     val fileName: String,
-    @SerializedName("file_url")
+    @SerialName("file_url")
     val fileUrl: String
 )

@@ -2,7 +2,7 @@ package com.kongjak.koreatechboard.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.base.ResponseResult
+import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardMinimumUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -58,7 +58,7 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                         getBoardMinimumUseCase(sideEffect.department, sideEffect.board)
                     }.onSuccess {
                         when (it) {
-                            is ResponseResult.Success -> {
+                            is APIResult.Success -> {
                                 intent {
                                     reduce {
                                         state.copy(
@@ -84,7 +84,7 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
                                 }
                             }
 
-                            is ResponseResult.Error -> {
+                            is APIResult.Error -> {
                                 intent {
                                     reduce {
                                         state.copy(

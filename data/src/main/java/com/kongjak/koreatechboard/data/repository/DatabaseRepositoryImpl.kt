@@ -4,8 +4,10 @@ import com.kongjak.koreatechboard.data.datasource.local.DatabaseLocalDataSource
 import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.mapToArticle
 import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
+import com.kongjak.koreatechboard.data.model.ArticleResponse
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
+import io.ktor.client.call.*
 import kotlinx.coroutines.flow.flow
 import java.util.UUID
 import javax.inject.Inject
@@ -35,7 +37,8 @@ class DatabaseRepositoryImpl @Inject constructor(
     ) {
         localArticleList.map { uuid ->
             val response = articleRemoteDataSource.getArticle(uuid)
-            response.body()?.mapToArticle(department, board)?.let {
+            val data: ArticleResponse = response.body()
+            data.mapToArticle(department, board).let {
                 databaseLocalDataSource.insertArticle(it)
             }
         }

@@ -3,9 +3,12 @@ package com.kongjak.koreatechboard.data.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kongjak.koreatechboard.data.api.API
+import com.kongjak.koreatechboard.data.model.BoardResponse
 import com.kongjak.koreatechboard.domain.model.BoardData
+import io.ktor.client.call.*
 
-class BoardPagingSource(private val api: API, private val site: String, private val board: String) : PagingSource<Int, BoardData>() {
+class BoardPagingSource(private val api: API, private val site: String, private val board: String) :
+    PagingSource<Int, BoardData>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BoardData> {
         try {
             val page = params.key ?: 1
@@ -13,16 +16,16 @@ class BoardPagingSource(private val api: API, private val site: String, private 
 
             val responseRaw = api.getBoard(site, board, page)
 
-            if (responseRaw.code() != 200) {
-                throw Exception("${responseRaw.code()}")
+            if (responseRaw.status.value != 200) {
+                throw Exception("${responseRaw.status.value}")
             }
 
-            val response = responseRaw.body()?.boardData
+            val response = responseRaw.body<BoardResponse>()
 
             return LoadResult.Page(
-                data = response ?: emptyList(),
+                data = response.boardData ?: emptyList(),
                 prevKey = if (page <= 1) null else page - 1,
-                nextKey = if (page >= responseRaw.body()!!.lastPage) null else page + 1
+                nextKey = if (page >= response.lastPage) null else page + 1
             )
         } catch (e: Exception) {
             return LoadResult.Error(e)

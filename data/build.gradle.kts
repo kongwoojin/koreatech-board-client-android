@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -22,7 +23,7 @@ android {
             )
         }
         getByName("debug") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -45,10 +46,10 @@ dependencies {
     implementation(libs.androidx.room.paging)
     kapt(libs.androidx.room.compiler)
 
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.negotiation)
+    implementation(libs.ktor.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization)
 
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)

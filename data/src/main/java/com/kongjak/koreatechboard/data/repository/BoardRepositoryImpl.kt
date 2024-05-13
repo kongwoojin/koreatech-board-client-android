@@ -5,17 +5,22 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kongjak.koreatechboard.data.api.API
 import com.kongjak.koreatechboard.data.datasource.remote.BoardRemoteDataSource
-import com.kongjak.koreatechboard.data.mapper.BoardMapper
+import com.kongjak.koreatechboard.data.mapper.mapToBoard
+import com.kongjak.koreatechboard.data.model.BoardResponse
 import com.kongjak.koreatechboard.data.paging.BoardPagingSource
 import com.kongjak.koreatechboard.data.paging.SearchTitlePagingSource
-import com.kongjak.koreatechboard.domain.base.ResponseResult
+import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.repository.BoardRepository
+import io.ktor.client.call.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource: BoardRemoteDataSource, private val api: API) :
+class BoardRepositoryImpl @Inject constructor(
+    private val boardRemoteDataSource: BoardRemoteDataSource,
+    private val api: API
+) :
     BoardRepository {
     override fun getBoard(department: String, board: String): Flow<PagingData<BoardData>> {
         return Pager(
@@ -27,9 +32,10 @@ class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource:
         ).flow
     }
 
-    override suspend fun getBoardMinimum(department: String, board: String): ResponseResult<Board> {
+    override suspend fun getBoardMinimum(department: String, board: String): APIResult<Board> {
         val response = boardRemoteDataSource.getBoardMinimum(department, board)
-        return BoardMapper.mapToBoard(response.body(), response.code())
+        val data: BoardResponse = response.body()
+        return data.mapToBoard()
     }
 
     override fun searchTitle(

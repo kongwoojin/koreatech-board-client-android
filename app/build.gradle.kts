@@ -14,6 +14,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.serialization)
     kotlin("plugin.parcelize")
 }
 
@@ -48,7 +49,7 @@ android {
             )
         }
         getByName("debug") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -80,10 +81,12 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.coil.compose)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.negotiation)
+    implementation(libs.ktor.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization)
 
     implementation(libs.material)
     implementation(libs.oss.licenses)

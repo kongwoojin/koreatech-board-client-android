@@ -1,32 +1,40 @@
 package com.kongjak.koreatechboard.data.model
 
-import com.google.gson.annotations.SerializedName
-import com.kongjak.koreatechboard.domain.model.Board
+import com.kongjak.koreatechboard.data.util.UUIDSerializer
 import com.kongjak.koreatechboard.domain.model.BoardData
-import java.util.UUID
+import kotlinx.serialization.SerialName
+import java.util.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BoardResponse(
-    @SerializedName("last_page")
-    override val lastPage: Int,
-    @SerializedName("status_code")
-    override val statusCode: Int,
-    @SerializedName("posts")
-    override val boardData: List<BoardResponseData>?
-) : Board
+    @SerialName("last_page")
+    val lastPage: Int,
+    @SerialName("status_code")
+    val statusCode: Int,
+    @SerialName("posts")
+    val boardData: List<BoardResponseData>?,
+    @SerialName("error")
+    val error: String
+)
 
+@Serializable
 data class BoardResponseData(
-    @SerializedName("id")
+    @Serializable(with = UUIDSerializer::class)
+    @SerialName("id")
     override val uuid: UUID,
-    @SerializedName("title")
+    @SerialName("title")
     override val title: String,
-    @SerializedName("num")
-    override val num: String,
-    @SerializedName("writer")
+    @SerialName("num")
+    override val num: Int,
+    @SerialName("writer")
     override val writer: String,
-    @SerializedName("write_date")
+    @SerialName("write_date")
     override val writeDate: String,
-    @SerializedName("read_count")
+    @SerialName("read_count")
     override val read: Int,
-    @SerializedName("is_new")
-    override val isNew: Boolean
+    @SerialName("is_new")
+    override val isNew: Boolean,
+    @SerialName("is_notice")
+    override val isNotice: Boolean
 ) : BoardData

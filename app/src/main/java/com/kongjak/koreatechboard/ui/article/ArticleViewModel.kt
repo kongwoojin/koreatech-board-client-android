@@ -2,7 +2,7 @@ package com.kongjak.koreatechboard.ui.article
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kongjak.koreatechboard.domain.base.ResponseResult
+import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -43,7 +43,7 @@ class ArticleViewModel @Inject constructor(
                         getArticleUseCase(sideEffect.uuid)
                     }.onSuccess {
                         when (it) {
-                            is ResponseResult.Success -> {
+                            is APIResult.Success -> {
                                 intent {
                                     reduce {
                                         state.copy(
@@ -57,7 +57,7 @@ class ArticleViewModel @Inject constructor(
                                 }
                             }
 
-                            is ResponseResult.Error -> {
+                            is APIResult.Error -> {
                                 intent {
                                     reduce {
                                         state.copy(

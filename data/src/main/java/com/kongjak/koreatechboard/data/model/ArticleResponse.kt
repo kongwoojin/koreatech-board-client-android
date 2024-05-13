@@ -1,25 +1,33 @@
 package com.kongjak.koreatechboard.data.model
 
-import com.google.gson.annotations.SerializedName
+import com.kongjak.koreatechboard.data.util.UUIDSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
+@Serializable
 data class ArticleResponse(
-    @SerializedName("id")
+    @SerialName("status_code")
+    val statusCode: Int,
+    @Serializable(with = UUIDSerializer::class)
+    @SerialName("id")
     val uuid: UUID,
-    @SerializedName("num")
+    @SerialName("num")
     val num: Int,
-    @SerializedName("title")
+    @SerialName("title")
     val title: String,
-    @SerializedName("writer")
+    @SerialName("writer")
     val writer: String,
-    @SerializedName("content")
+    @SerialName("content")
     val content: String,
-    @SerializedName("write_date")
+    @SerialName("write_date")
     val date: String,
-    @SerializedName("article_url")
+    @SerialName("article_url")
     val articleUrl: String,
-    @SerializedName("is_notice")
+    @SerialName("is_notice")
     val isNotice: Boolean,
-    @SerializedName("files")
-    val files: ArrayList<FilesResponse>
+    @SerialName("files")
+    val files: ArrayList<FilesResponse>,
+    @SerialName("error")
+    val error: String
 )

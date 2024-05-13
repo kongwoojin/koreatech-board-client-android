@@ -2,39 +2,37 @@ package com.kongjak.koreatechboard.data.mapper
 
 import com.kongjak.koreatechboard.data.model.ArticleResponse
 import com.kongjak.koreatechboard.domain.base.ErrorType
-import com.kongjak.koreatechboard.domain.base.ResponseResult
+import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.model.Files
 
-object ArticleMapper {
-    fun mapToArticle(articleResponse: ArticleResponse?, code: Int): ResponseResult<Article> {
-        val mappedFileList = ArrayList<Files>()
+fun ArticleResponse.mapToArticle(statusCode: Int): APIResult<Article> {
+    val mappedFileList = ArrayList<Files>()
 
-        if (articleResponse?.files != null) {
-            for (files in articleResponse.files) {
-                mappedFileList.add(
-                    Files(
-                        fileName = files.fileName,
-                        fileUrl = files.fileUrl
-                    )
-                )
-            }
-        }
-
-        return if (code == 200) {
-            ResponseResult.Success(
-                Article(
-                    statusCode = code,
-                    title = articleResponse!!.title,
-                    writer = articleResponse.writer,
-                    content = articleResponse.content,
-                    date = articleResponse.date,
-                    articleUrl = articleResponse.articleUrl,
-                    files = mappedFileList
+    if (this.files.isNotEmpty()) {
+        for (files in this.files) {
+            mappedFileList.add(
+                Files(
+                    fileName = files.fileName,
+                    fileUrl = files.fileUrl
                 )
             )
-        } else {
-            ResponseResult.Error(ErrorType(code))
         }
+    }
+
+    return if (statusCode == 200) {
+        APIResult.Success(
+            Article(
+                statusCode = statusCode,
+                title = this.title,
+                writer = this.writer,
+                content = this.content,
+                date = this.date,
+                articleUrl = this.articleUrl,
+                files = mappedFileList
+            )
+        )
+    } else {
+        APIResult.Error(ErrorType(statusCode, this.error))
     }
 }

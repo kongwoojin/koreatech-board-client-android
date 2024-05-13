@@ -1,17 +1,20 @@
 package com.kongjak.koreatechboard.data.repository
 
 import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
-import com.kongjak.koreatechboard.data.mapper.ArticleMapper
-import com.kongjak.koreatechboard.domain.base.ResponseResult
+import com.kongjak.koreatechboard.data.mapper.mapToArticle
+import com.kongjak.koreatechboard.data.model.ArticleResponse
+import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.repository.ArticleRepository
-import java.util.UUID
+import io.ktor.client.call.*
+import java.util.*
 import javax.inject.Inject
 
 class ArticleRepositoryImpl @Inject constructor(private val articleRemoteDataSource: ArticleRemoteDataSource) :
     ArticleRepository {
-    override suspend fun getArticle(uuid: UUID): ResponseResult<Article> {
+    override suspend fun getArticle(uuid: UUID): APIResult<Article> {
         val response = articleRemoteDataSource.getArticle(uuid)
-        return ArticleMapper.mapToArticle(response.body(), response.code())
+        val data: ArticleResponse = response.body()
+        return data.mapToArticle(response.status.value)
     }
 }
