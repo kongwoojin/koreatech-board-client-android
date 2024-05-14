@@ -19,15 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.board.BoardError
 import com.kongjak.koreatechboard.ui.board.BoardItem
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.UUID
+import java.util.*
 
 @Composable
 fun SearchScreen(
@@ -35,7 +35,7 @@ fun SearchScreen(
     board: String,
     title: String,
     onArticleClick: (UUID, String) -> Unit,
-    searchViewModel: SearchViewModel = hiltViewModel()
+    searchViewModel: SearchViewModel = koinViewModel()
 ) {
     searchViewModel.collectSideEffect {
         searchViewModel.handleSideEffect(it)

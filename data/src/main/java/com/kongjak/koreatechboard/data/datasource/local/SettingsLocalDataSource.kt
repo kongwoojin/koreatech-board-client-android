@@ -10,9 +10,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class SettingsLocalDataSource @Inject constructor(
+class SettingsLocalDataSource(
     private val context: Context
 ) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

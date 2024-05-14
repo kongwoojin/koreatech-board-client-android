@@ -1,7 +1,19 @@
 package com.kongjak.koreatechboard
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.kongjak.koreatechboard.di.appModule
+import com.kongjak.koreatechboard.di.databaseModule
+import com.kongjak.koreatechboard.di.networkModule
+import com.kongjak.koreatechboard.di.useCaseModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
-class MainApplication : Application()
+class MainApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidContext(this@MainApplication)
+            modules(appModule(), useCaseModule(), networkModule(), databaseModule())
+        }
+    }
+}

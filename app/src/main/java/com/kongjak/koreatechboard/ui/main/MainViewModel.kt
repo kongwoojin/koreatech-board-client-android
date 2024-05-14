@@ -9,7 +9,6 @@ import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepa
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -19,7 +18,6 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-@HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
     private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
@@ -73,6 +71,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
             }
+
             MainSideEffect.GetDynamicTheme -> viewModelScope.launch {
                 getDarkThemeUseCase().collectLatest {
                     intent {
@@ -82,11 +81,13 @@ class MainViewModel @Inject constructor(
                                     state.copy(isDarkTheme = null)
                                 }
                             }
+
                             DARK_THEME_DARK_THEME -> {
                                 reduce {
                                     state.copy(isDarkTheme = true)
                                 }
                             }
+
                             DARK_THEME_LIGHT_THEME -> {
                                 reduce {
                                     state.copy(isDarkTheme = false)

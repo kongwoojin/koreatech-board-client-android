@@ -9,10 +9,9 @@ import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
 import io.ktor.client.call.*
 import kotlinx.coroutines.flow.flow
-import java.util.UUID
-import javax.inject.Inject
+import java.util.*
 
-class DatabaseRepositoryImpl @Inject constructor(
+class DatabaseRepositoryImpl(
     private val databaseLocalDataSource: DatabaseLocalDataSource,
     private val articleRemoteDataSource: ArticleRemoteDataSource
 ) :

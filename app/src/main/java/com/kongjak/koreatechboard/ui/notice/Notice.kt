@@ -42,7 +42,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
@@ -50,16 +49,17 @@ import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.ui.theme.noticeDepartmentText
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.UUID
+import java.util.*
 
 @ExperimentalMaterial3Api
 @Composable
 fun Notice(
     modifier: Modifier = Modifier,
     onArticleClick: (UUID, String) -> Unit,
-    noticeViewModel: NoticeViewModel = hiltViewModel()
+    noticeViewModel: NoticeViewModel = koinViewModel()
 ) {
     noticeViewModel.collectSideEffect {
         noticeViewModel.handleSideEffect(it)

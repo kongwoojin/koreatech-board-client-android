@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
@@ -52,13 +51,12 @@ import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.util.KoreatechBoardAnalytics
 import com.kongjak.koreatechboard.util.routes.MainRoute
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModel()
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

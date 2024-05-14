@@ -1,15 +1,12 @@
 package com.kongjak.koreatechboard.data.api
 
 import io.ktor.client.*
-import io.ktor.client.call.body
-import io.ktor.client.request.get
-import io.ktor.client.request.parameter
-import io.ktor.client.request.url
-import io.ktor.client.statement.HttpResponse
-import java.util.UUID
-import javax.inject.Inject
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import java.util.*
 
-class APIImpl @Inject constructor(private val httpClient: HttpClient) : API {
+class APIImpl(private val httpClient: HttpClient) : API {
     override suspend fun getBoard(site: String, board: String, page: Int, numOfItems: Int): HttpResponse {
         val response = httpClient.get {
             url("$site/$board")
@@ -27,7 +24,8 @@ class APIImpl @Inject constructor(private val httpClient: HttpClient) : API {
             parameter("num_of_items", numOfItems)
         }
 
-        return response.body()    }
+        return response.body()
+    }
 
     override suspend fun getArticle(uuid: UUID): HttpResponse {
         val response = httpClient.get {

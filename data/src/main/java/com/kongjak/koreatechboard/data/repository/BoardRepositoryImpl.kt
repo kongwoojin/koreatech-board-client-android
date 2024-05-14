@@ -15,9 +15,8 @@ import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.repository.BoardRepository
 import io.ktor.client.call.*
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class BoardRepositoryImpl @Inject constructor(
+class BoardRepositoryImpl(
     private val boardRemoteDataSource: BoardRemoteDataSource,
     private val api: API
 ) :

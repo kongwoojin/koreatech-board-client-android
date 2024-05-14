@@ -15,18 +15,15 @@ import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleNewNotic
 import com.kongjak.koreatechboard.ui.main.MainActivity
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import java.util.UUID
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class FCMService : FirebaseMessagingService() {
-    @Inject
-    lateinit var insertMultipleNewNoticesUseCase: InsertMultipleNewNoticesUseCase
+    val insertMultipleNewNoticesUseCase: InsertMultipleNewNoticesUseCase by inject()
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {

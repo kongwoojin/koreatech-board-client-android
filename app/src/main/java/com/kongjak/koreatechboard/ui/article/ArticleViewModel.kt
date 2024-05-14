@@ -4,17 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
-@HiltViewModel
 class ArticleViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
 ) : ContainerHost<ArticleState, ArticleSideEffect>, ViewModel() {

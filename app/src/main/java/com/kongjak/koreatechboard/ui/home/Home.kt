@@ -33,20 +33,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.UUID
+import java.util.*
 
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    networkViewModel: NetworkViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = koinViewModel(),
+    networkViewModel: NetworkViewModel = koinViewModel(),
     onArticleClick: (UUID, String) -> Unit
 ) {
     val networkState by networkViewModel.collectAsState()
@@ -148,7 +148,7 @@ fun ArticleList(
 ) {
     val key by remember { mutableStateOf(department.boards[page].board) }
 
-    val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
+    val homeBoardViewModel: HomeBoardViewModel = koinViewModel(key = department.name)
 
     homeBoardViewModel.collectSideEffect {
         homeBoardViewModel.handleSideEffect(it)

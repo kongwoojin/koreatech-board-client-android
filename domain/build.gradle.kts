@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.koreatechboard.library)
-    alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
 }
@@ -39,6 +38,8 @@ dependencies {
     implementation(libs.androidx.paging.common)
 
     implementation(libs.coroutine.android)
+
+    implementation(libs.koin.core)
 
     testImplementation(libs.junit)
 

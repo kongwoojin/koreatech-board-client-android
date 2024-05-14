@@ -19,11 +19,9 @@ androidx-compose-bom = "2024.03.00"
 androidx-datastore = "1.0.0"
 compose = "1.6.4"
 firebase-crashlytics = "2.9.9"
-hilt-compose = "1.2.0"
 coil = "2.6.0"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
-hilt = "2.51"
 material = "1.11.0"
 oss-licenses = "17.0.1"
 oss-licenses-plugin = "0.10.6"
@@ -46,6 +44,7 @@ ktor = "2.3.11"
 kotlinx = "1.6.2"
 androidx-navigation = "2.7.0-alpha03"
 androidx-lifecycle = "2.8.0-rc01"
+koin = "3.5.3"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -61,7 +60,6 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
-androidx-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-compose" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging" }
@@ -75,13 +73,15 @@ coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
 m3color = { module = "com.github.Kyant0:m3color", version.ref = "m3color" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 oss-licenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "oss-licenses" }
 oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "oss-licenses-plugin" }
@@ -115,7 +115,6 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics"}
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
@@ -123,7 +122,6 @@ serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref 
 koreatechboard-compose = { id = "com.kongjak.koreatechboard.plugin.compose", version = "unspecified" }
 koreatechboard-application = { id = "com.kongjak.koreatechboard.plugin.application", version = "unspecified" }
 koreatechboard-library = { id = "com.kongjak.koreatechboard.plugin.library", version = "unspecified" }
-koreatechboard-hilt = { id = "com.kongjak.koreatechboard.plugin.hilt", version = "unspecified" }
 koreatechboard-firebase = { id = "com.kongjak.koreatechboard.plugin.firebase", version = "unspecified" }
 
 [bundles]

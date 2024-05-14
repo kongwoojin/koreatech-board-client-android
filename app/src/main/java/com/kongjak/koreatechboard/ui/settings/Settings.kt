@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
@@ -29,6 +28,7 @@ import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.routes.Department
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -54,7 +54,7 @@ val darkThemeString = listOf(
 )
 
 @Composable
-fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(settingsViewModel: SettingsViewModel = koinViewModel()) {
     val context = LocalContext.current
     val uiState = settingsViewModel.collectAsState().value
 

@@ -57,7 +57,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
@@ -68,9 +67,10 @@ import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.UUID
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -191,12 +191,12 @@ fun BoardContent(
     page: Int,
     onArticleClick: (UUID, String) -> Unit,
     onSearch: (String, String, String) -> Unit,
-    networkViewModel: NetworkViewModel = hiltViewModel()
+    networkViewModel: NetworkViewModel = koinViewModel()
 ) {
     networkViewModel.collectSideEffect { networkViewModel.handleSideEffect(it) }
 
     val boardViewModel =
-        hiltViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
+        koinViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
 
     boardViewModel.collectSideEffect { boardViewModel.handleSideEffect(it) }
 

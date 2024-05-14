@@ -25,7 +25,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
@@ -34,14 +33,15 @@ import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
+import org.koin.androidx.compose.koinViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.UUID
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleScreen(
-    articleViewModel: ArticleViewModel = hiltViewModel(),
+    articleViewModel: ArticleViewModel = koinViewModel(),
     uuid: UUID,
     department: String,
     isDarkTheme: Boolean,

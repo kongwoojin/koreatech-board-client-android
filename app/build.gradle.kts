@@ -9,13 +9,13 @@ val localKeyPassword: String = gradleLocalProperties(rootDir).getProperty("local
 plugins {
     alias(libs.plugins.koreatechboard.application)
     alias(libs.plugins.koreatechboard.compose)
-    alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.koreatechboard.firebase)
     id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
     alias(libs.plugins.serialization)
     kotlin("plugin.parcelize")
+    kotlin("kapt")
 }
 
 android {
@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.hilt.compose)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.room.runtime)
@@ -104,6 +103,10 @@ dependencies {
     implementation(libs.m3color)
 
     implementation(libs.ktxml)
+
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)

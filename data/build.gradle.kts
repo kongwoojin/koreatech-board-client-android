@@ -1,10 +1,10 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.koreatechboard.library)
-    alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
+    kotlin("kapt")
 }
 
 android {
@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.ktor.negotiation)
     implementation(libs.ktor.kotlinx.serialization)
     implementation(libs.kotlinx.serialization)
+
+    implementation(libs.koin.core)
 
     implementation(libs.coroutine.core)
     implementation(libs.coroutine.android)

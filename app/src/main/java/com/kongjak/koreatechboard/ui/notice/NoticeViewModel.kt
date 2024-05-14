@@ -8,7 +8,6 @@ import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUse
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -17,10 +16,9 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
-@HiltViewModel
 class NoticeViewModel @Inject constructor(
     private val getAllNewNoticesUseCase: GetAllNewNoticesUseCase,
     private val updateNewNoticeReadUseCase: UpdateNewNoticeReadUseCase,

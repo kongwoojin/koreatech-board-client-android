@@ -23,7 +23,6 @@ import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseC
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDynamicThemeUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,7 +33,6 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-@HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
     private val setUserDepartmentUseCase: SetUserDepartmentUseCase,
