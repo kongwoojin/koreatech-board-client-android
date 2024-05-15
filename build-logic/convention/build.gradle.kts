@@ -36,10 +36,6 @@ gradlePlugin {
             id = "com.kongjak.koreatechboard.plugin.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
-        register("androidHilt") {
-            id = "com.kongjak.koreatechboard.plugin.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
         register("firebase") {
             id = "com.kongjak.koreatechboard.plugin.firebase"
             implementationClass = "FirebaseConventionPlugin"
