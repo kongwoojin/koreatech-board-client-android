@@ -39,13 +39,13 @@ orbit = "7.0.1"
 room = "2.6.1"
 webkit = "1.10.0"
 ktxml = "0.2.3"
-m3color = "2024.1"
 ktor = "2.3.11"
 kotlinx = "1.6.2"
 androidx-navigation = "2.7.0-alpha03"
 androidx-lifecycle = "2.8.0-rc01"
 koin = "3.5.3"
 sqldelight = "2.0.2"
+material-kolor = "1.5.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
@@ -79,7 +79,7 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
-m3color = { module = "com.github.Kyant0:m3color", version.ref = "m3color" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }

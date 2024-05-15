@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.core.view.WindowCompat
+import com.materialkolor.rememberDynamicColorScheme
 
 private val LightColorScheme = lightColorScheme(
     primary = primaryLight,
@@ -98,7 +99,7 @@ fun KoreatechBoardTheme(
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            dynamicColorScheme(colorResource(id = android.R.color.system_accent1_500), darkTheme)
+            rememberDynamicColorScheme(colorResource(id = android.R.color.system_accent1_500), darkTheme)
         }
         darkTheme -> DarkColorScheme
         else -> LightColorScheme

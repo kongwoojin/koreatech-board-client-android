@@ -97,7 +97,7 @@ dependencies {
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.compose)
 
-    implementation(libs.m3color)
+    implementation(libs.materialKolor)
 
     implementation(libs.ktxml)
 
