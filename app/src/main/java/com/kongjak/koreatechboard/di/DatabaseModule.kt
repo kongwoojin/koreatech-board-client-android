@@ -1,15 +1,18 @@
 package com.kongjak.koreatechboard.di
 
 import android.content.Context
-import androidx.room.Room
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import com.kongjak.koreatechboard.data.AppDatabase
 import com.kongjak.koreatechboard.data.dao.ArticleDao
-import com.kongjak.koreatechboard.data.database.AppDatabase
+import com.kongjak.koreatechboard.data.dao.ArticleDaoImpl
 
 
-fun provideArticleDao(appDatabase: AppDatabase): ArticleDao = appDatabase.articleDao()
+fun provideArticleDao(appDatabase: AppDatabase): ArticleDao = ArticleDaoImpl(appDatabase)
 
 fun provideAppDatabase(
     context: Context
-): AppDatabase = Room
-    .databaseBuilder(context, AppDatabase::class.java, "koreatech_board_article.db")
-    .build()
+): AppDatabase {
+    val driver: SqlDriver = AndroidSqliteDriver(AppDatabase.Schema, context, "notice")
+    return AppDatabase(driver)
+}

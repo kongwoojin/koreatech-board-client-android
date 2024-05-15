@@ -70,9 +70,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.paging)
     implementation(libs.androidx.webkit)
     implementation(libs.androidx.navigation.compose)
     kapt(libs.androidx.room.compiler)
@@ -103,6 +100,9 @@ dependencies {
     implementation(libs.m3color)
 
     implementation(libs.ktxml)
+
+    implementation(libs.sqldelight.coroutines.extensions)
+    implementation (libs.sqldelight.android.driver)
 
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.android)

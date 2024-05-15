@@ -25,6 +25,7 @@ import java.util.UUID
 class FCMService : FirebaseMessagingService() {
     val insertMultipleNewNoticesUseCase: InsertMultipleNewNoticesUseCase by inject()
     override fun onMessageReceived(message: RemoteMessage) {
+        Log.d("FCM", "!!!!!!")
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
                 runBlocking {

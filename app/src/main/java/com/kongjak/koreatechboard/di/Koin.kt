@@ -90,7 +90,23 @@ fun appModule() = module {
         NetworkViewModel(get())
     }
     factory {
-        SettingsViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get())
+        SettingsViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
     }
     factory {
         NoticeViewModel(get(), get(), get(), get())
