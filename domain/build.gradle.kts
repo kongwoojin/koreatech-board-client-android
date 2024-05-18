@@ -1,13 +1,39 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.koreatechboard.library)
-    alias(libs.plugins.koreatechboard.firebase)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.ktlint)
 }
 
+kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+
+    sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.paging.common)
+            implementation(libs.coroutine.android)
+        }
+
+        commonMain.dependencies {
+            implementation(libs.koin.core)
+            implementation("com.benasher44:uuid:0.8.4")
+        }
+    }
+}
+
 android {
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
     defaultConfig {
-        targetSdk = 34
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -29,20 +55,13 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
     namespace = "com.kongjak.koreatechboard.domain"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.paging.common)
-
-    implementation(libs.coroutine.android)
-
-    implementation(libs.koin.core)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.esspresso)
-    androidTestImplementation(libs.junit.test)
 }

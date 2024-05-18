@@ -15,7 +15,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Koreatech Board"
+rootProject.name = "Koreatech_Board"
 include(":app")
 include(":domain")
 include(":data")
+
+gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))

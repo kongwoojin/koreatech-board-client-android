@@ -1,0 +1,151 @@
+package com.kongjak.koreatechboard.ui.components.dialog
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.dialog_confirm
+import koreatech_board.app.generated.resources.dialog_dismiss
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismissRequest) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Box(modifier = modifier.padding(24.dp)) {
+                content()
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onDismissRequest: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismissRequest) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = modifier.padding(24.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Box {
+                    content()
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onActionString: String,
+    onAction: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onAction) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 16.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                content()
+                CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = { onAction() }) {
+                            Text(text = onActionString)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@Composable
+fun BasicDialog(
+    modifier: Modifier = Modifier,
+    title: String,
+    onConfirmString: String = stringResource(Res.string.dialog_confirm),
+    onDismissString: String = stringResource(Res.string.dialog_dismiss),
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = modifier.padding(top = 24.dp, start = 24.dp, end = 24.dp, bottom = 16.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                content()
+                CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(onClick = { onDismiss() }) {
+                            Text(text = onDismissString)
+                        }
+
+                        TextButton(onClick = { onConfirm() }) {
+                            Text(text = onConfirmString)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
