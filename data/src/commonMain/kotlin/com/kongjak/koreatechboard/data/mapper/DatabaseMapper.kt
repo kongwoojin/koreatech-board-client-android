@@ -93,4 +93,3 @@ fun ArticleResponse.mapToArticle(department: String, board: String): Article {
         receivedTime = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis())
     )
 }
-

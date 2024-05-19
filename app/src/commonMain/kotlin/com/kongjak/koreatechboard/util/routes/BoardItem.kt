@@ -1,10 +1,20 @@
 package com.kongjak.koreatechboard.util.routes
 
-import koreatech_board.app.generated.resources.*
 import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.board_bachelor_board
 import koreatech_board.app.generated.resources.board_free_board
+import koreatech_board.app.generated.resources.board_job_board
+import koreatech_board.app.generated.resources.board_lecture_board
 import koreatech_board.app.generated.resources.board_notice
+import koreatech_board.app.generated.resources.board_pds_board
+import koreatech_board.app.generated.resources.board_scholar_board
+import koreatech_board.app.generated.resources.ic_bottom_navigation_bachelor
+import koreatech_board.app.generated.resources.ic_bottom_navigation_freeboard
+import koreatech_board.app.generated.resources.ic_bottom_navigation_jobboard
+import koreatech_board.app.generated.resources.ic_bottom_navigation_lecture
 import koreatech_board.app.generated.resources.ic_bottom_navigation_notice
+import koreatech_board.app.generated.resources.ic_bottom_navigation_pds
+import koreatech_board.app.generated.resources.ic_bottom_navigation_scholar
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource

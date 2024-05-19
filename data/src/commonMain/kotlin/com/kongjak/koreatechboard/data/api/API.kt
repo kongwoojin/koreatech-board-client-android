@@ -1,7 +1,7 @@
 package com.kongjak.koreatechboard.data.api
 
 import com.benasher44.uuid.Uuid
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
 
 interface API {
     suspend fun getBoard(

@@ -2,15 +2,30 @@ package com.kongjak.koreatechboard.ui.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,18 +35,19 @@ import androidx.compose.ui.unit.sp
 import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department
-import koreatech_board.app.generated.resources.*
+import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.error_no_article
+import koreatech_board.app.generated.resources.error_retry
+import koreatech_board.app.generated.resources.error_server_down
+import koreatech_board.app.generated.resources.network_unavailable
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
+import org.koin.compose.koinInject
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = koinViewModel(),
+    homeViewModel: HomeViewModel = koinInject(),
     onArticleClick: (Uuid, String) -> Unit
 ) {
     homeViewModel.collectSideEffect {
@@ -130,7 +146,7 @@ fun ArticleList(
 ) {
     val key by remember { mutableStateOf(department.boards[page].board) }
 
-    val homeBoardViewModel: HomeBoardViewModel = koinViewModel(key = department.name)
+    val homeBoardViewModel: HomeBoardViewModel = koinInject()
 
     homeBoardViewModel.collectSideEffect {
         homeBoardViewModel.handleSideEffect(it)

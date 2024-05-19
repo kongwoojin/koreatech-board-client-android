@@ -7,10 +7,12 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
-import koreatech_board.app.generated.resources.*
 import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.route_article
 import koreatech_board.app.generated.resources.route_board
 import koreatech_board.app.generated.resources.route_home
+import koreatech_board.app.generated.resources.route_new_notice
+import koreatech_board.app.generated.resources.route_search
 import koreatech_board.app.generated.resources.route_settings
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource

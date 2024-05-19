@@ -1,25 +1,20 @@
 package com.kongjak.koreatechboard.ui.article
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
+import com.kongjak.koreatechboard.util.ViewModelExt
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
-import java.util.*
-import javax.inject.Inject
 
-class ArticleViewModel @Inject constructor(
+class ArticleViewModel(
     private val getArticleUseCase: GetArticleUseCase
-) : ContainerHost<ArticleState, ArticleSideEffect>, ViewModel() {
+) : ViewModelExt<ArticleState, ArticleSideEffect>(ArticleState()) {
 
-    override val container = container<ArticleState, ArticleSideEffect>(ArticleState())
-
-    fun getArticleData(department: String, uuid: UUID) {
+    fun getArticleData(department: String, uuid: Uuid) {
         intent {
             postSideEffect(ArticleSideEffect.FetchData(department, uuid))
         }

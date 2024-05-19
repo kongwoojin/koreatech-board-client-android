@@ -24,8 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.kongjak.koreatechboard.ui.components.dialog.BasicDialog
-import koreatech_board.app.generated.resources.Res
-import koreatech_board.app.generated.resources.app_name
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource

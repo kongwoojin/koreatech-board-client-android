@@ -1,32 +1,27 @@
 package com.kongjak.koreatechboard.ui.board
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardUseCase
-import org.orbitmvi.orbit.ContainerHost
+import com.kongjak.koreatechboard.util.ViewModelExt
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
-import javax.inject.Inject
 
-class BoardViewModel @Inject constructor(
+class BoardViewModel(
     private val getBoardUseCase: GetBoardUseCase
-) : ContainerHost<BoardState, BoardSideEffect>, ViewModel() {
-
-    override val container = container<BoardState, BoardSideEffect>(BoardState())
+) : ViewModelExt<BoardState, BoardEvent>(BoardState()) {
 
     fun getAPI(department: String, board: String) {
         intent {
             if (state.department == department && state.board == board) return@intent
-            postSideEffect(BoardSideEffect.FetchData(department, board))
+            postSideEffect(BoardEvent.FetchData(department, board))
         }
     }
 
-    fun handleSideEffect(sideEffect: BoardSideEffect) {
+    fun handleSideEffect(sideEffect: BoardEvent) {
         when (sideEffect) {
-            is BoardSideEffect.FetchData -> {
+            is BoardEvent.FetchData -> {
                 intent {
                     reduce {
                         state.copy(

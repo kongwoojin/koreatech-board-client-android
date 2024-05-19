@@ -1,31 +1,27 @@
 package com.kongjak.koreatechboard.ui.notice
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.usecase.database.DeleteNewNoticeUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewNoticesUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.ui.settings.deptList
+import com.kongjak.koreatechboard.util.ViewModelExt
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
 import java.util.*
-import javax.inject.Inject
 
-class NoticeViewModel @Inject constructor(
+class NoticeViewModel(
     private val getAllNewNoticesUseCase: GetAllNewNoticesUseCase,
     private val updateNewNoticeReadUseCase: UpdateNewNoticeReadUseCase,
     private val deleteNewNoticeUseCase: DeleteNewNoticeUseCase,
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase
-) : ContainerHost<NoticeState, NoticeSideEffect>, ViewModel() {
-    override val container = container<NoticeState, NoticeSideEffect>(NoticeState())
+) : ViewModelExt<NoticeState, NoticeSideEffect>(NoticeState()) {
 
     init {
         viewModelScope.launch {

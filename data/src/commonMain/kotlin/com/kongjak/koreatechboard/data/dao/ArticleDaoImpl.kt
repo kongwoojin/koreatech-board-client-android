@@ -2,11 +2,11 @@ package com.kongjak.koreatechboard.data.dao
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.data.AppDatabase
 import com.kongjak.koreatechboard.data.enity.Article
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import com.benasher44.uuid.Uuid
 
 class ArticleDaoImpl(
     db: AppDatabase

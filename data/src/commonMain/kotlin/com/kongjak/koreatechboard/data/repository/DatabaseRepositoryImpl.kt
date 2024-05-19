@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.data.repository
 
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.data.datasource.local.DatabaseLocalDataSource
 import com.kongjak.koreatechboard.data.datasource.remote.ArticleRemoteDataSource
 import com.kongjak.koreatechboard.data.mapper.mapToArticle
@@ -7,9 +8,8 @@ import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
 import com.kongjak.koreatechboard.data.model.ArticleResponse
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
-import io.ktor.client.call.*
+import io.ktor.client.call.body
 import kotlinx.coroutines.flow.flow
-import java.util.*
 
 class DatabaseRepositoryImpl(
     private val databaseLocalDataSource: DatabaseLocalDataSource,
@@ -22,7 +22,7 @@ class DatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun getArticle(uuid: UUID): LocalArticle {
+    override suspend fun getArticle(uuid: Uuid): LocalArticle {
         return databaseLocalDataSource.getArticle(uuid)
     }
 
@@ -30,7 +30,7 @@ class DatabaseRepositoryImpl(
     }
 
     override suspend fun insertArticleList(
-        localArticleList: List<UUID>,
+        localArticleList: List<Uuid>,
         department: String,
         board: String
     ) {
@@ -43,7 +43,7 @@ class DatabaseRepositoryImpl(
         }
     }
 
-    override suspend fun deleteArticle(uuid: UUID) {
+    override suspend fun deleteArticle(uuid: Uuid) {
         databaseLocalDataSource.deleteArticle(uuid)
     }
 
@@ -51,7 +51,7 @@ class DatabaseRepositoryImpl(
         databaseLocalDataSource.deleteAllArticle()
     }
 
-    override suspend fun updateRead(uuid: UUID, read: Boolean) {
+    override suspend fun updateRead(uuid: Uuid, read: Boolean) {
         databaseLocalDataSource.updateRead(uuid, read)
     }
 }

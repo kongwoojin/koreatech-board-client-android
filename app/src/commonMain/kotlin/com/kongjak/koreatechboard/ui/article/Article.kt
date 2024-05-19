@@ -23,26 +23,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
+import coil3.compose.LocalPlatformContext
+import coil3.compose.SubcomposeAsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
 import com.kongjak.koreatechboard.ui.components.FileText
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.*
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleScreen(
-    articleViewModel: ArticleViewModel = koinViewModel(),
-    uuid: UUID,
+    articleViewModel: ArticleViewModel = koinInject(),
+    uuid: Uuid,
     department: String,
     isDarkTheme: Boolean,
     setExternalLink: (String) -> Unit
@@ -136,7 +135,7 @@ fun ArticleScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(horizontal = 16.dp),
-                                model = ImageRequest.Builder(LocalContext.current)
+                                model = ImageRequest.Builder(LocalPlatformContext.current)
                                     .data(url)
                                     .crossfade(true)
                                     .build(),

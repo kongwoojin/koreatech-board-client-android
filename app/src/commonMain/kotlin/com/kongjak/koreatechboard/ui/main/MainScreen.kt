@@ -1,29 +1,38 @@
 package com.kongjak.koreatechboard.ui.main
 
-import android.net.Uri
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kongjak.koreatechboard.R
+import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationBar
 import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationRail
 import com.kongjak.koreatechboard.ui.NavigationGraph
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBar
 import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
+import com.kongjak.koreatechboard.util.getPlatformInfo
+import com.kongjak.koreatechboard.util.openUrl
 import com.kongjak.koreatechboard.util.routes.MainRoute
+import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.content_description_notification
+import koreatech_board.app.generated.resources.content_description_open_in_browser
+import koreatech_board.app.generated.resources.ic_open_in_browser
+import koreatech_board.app.generated.resources.open_in_browser_failed
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun MainScreen(
@@ -36,7 +45,6 @@ fun MainScreen(
     setExternalLink: (String) -> Unit
 ) {
     val navController = rememberNavController()
-    val context = LocalContext.current
 
     val mainScreenRoutes = listOf(
         MainRoute.Home.name,
@@ -53,6 +61,9 @@ fun MainScreen(
         !(mainScreenRoutes.contains(currentRoute) || currentRoute == startDestination)
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         topBar = {
             val actionList = listOf(
@@ -61,28 +72,34 @@ fun MainScreen(
                     action = {
                         navController.navigate(MainRoute.Notice.name)
                     },
-                    contentDescription = stringResource(id = R.string.content_description_notification)
+                    contentDescription = stringResource(Res.string.content_description_notification)
                 )
             )
+            val uriHandler = LocalUriHandler.current
+            val context = LocalPlatformContext.current
+            val openInBrowserFailedString = stringResource(Res.string.open_in_browser_failed)
 
             val externalLinkAction = listOf(
                 KoreatechBoardAppBarAction(
-                    icon = ImageVector.vectorResource(R.drawable.ic_open_in_browser),
+                    icon = vectorResource(Res.drawable.ic_open_in_browser),
                     action = {
                         if (externalLink != null) {
-                            val builder = CustomTabsIntent.Builder()
-                            val customTabsIntent = builder.build()
-                            customTabsIntent.launchUrl(context, Uri.parse(externalLink))
+                            openUrl(
+                                context = context,
+                                uriHandler = uriHandler,
+                                url = externalLink
+                            )
                         } else {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.open_in_browser_failed),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = openInBrowserFailedString,
+                                    duration = SnackbarDuration.Short
+                                )
+                            }
                         }
                     },
                     contentDescription = stringResource(
-                        id = R.string.content_description_open_in_browser
+                        Res.string.content_description_open_in_browser
                     )
                 )
             )
@@ -95,7 +112,7 @@ fun MainScreen(
                 actionList = when (currentRoute) {
                     MainRoute.Notice.name -> emptyList()
                     MainRoute.Article.name -> externalLinkAction
-                    else -> actionList
+                    else -> if (getPlatformInfo().isFirebaseSupported) actionList else emptyList()
                 }
             )
         },
@@ -103,6 +120,9 @@ fun MainScreen(
             if (!isLargeScreen) {
                 KoreatechBoardNavigationBar(navController = navController)
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
         content = { contentPadding ->
             Row(

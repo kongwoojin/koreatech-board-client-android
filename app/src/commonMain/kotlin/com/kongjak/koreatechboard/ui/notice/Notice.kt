@@ -24,7 +24,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -40,6 +39,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
@@ -50,19 +50,15 @@ import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.content_description_delete
 import koreatech_board.app.generated.resources.department_and_board
 import koreatech_board.app.generated.resources.no_new_notice
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.*
+import org.koin.compose.koinInject
 
 @ExperimentalMaterial3Api
 @Composable
 fun Notice(
     modifier: Modifier = Modifier,
-    onArticleClick: (UUID, String) -> Unit,
-    noticeViewModel: NoticeViewModel = koinViewModel()
+    onArticleClick: (Uuid, String) -> Unit,
+    noticeViewModel: NoticeViewModel = koinInject()
 ) {
     noticeViewModel.collectSideEffect {
         noticeViewModel.handleSideEffect(it)

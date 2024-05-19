@@ -1,8 +1,8 @@
 package com.kongjak.koreatechboard.data.mapper
 
 import com.kongjak.koreatechboard.data.model.ArticleResponse
-import com.kongjak.koreatechboard.domain.base.ErrorType
 import com.kongjak.koreatechboard.domain.base.APIResult
+import com.kongjak.koreatechboard.domain.base.ErrorType
 import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.domain.model.Files
 

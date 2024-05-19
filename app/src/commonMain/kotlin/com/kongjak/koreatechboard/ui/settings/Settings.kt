@@ -1,32 +1,60 @@
 package com.kongjak.koreatechboard.ui.settings
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import androidx.compose.ui.platform.LocalUriHandler
+import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
-import com.kongjak.koreatechboard.ui.components.preference.*
+import com.kongjak.koreatechboard.ui.components.preference.DialogPreference
+import com.kongjak.koreatechboard.ui.components.preference.ListPreference
+import com.kongjak.koreatechboard.ui.components.preference.Preference
+import com.kongjak.koreatechboard.ui.components.preference.PreferenceColumn
+import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
+import com.kongjak.koreatechboard.util.getPlatformInfo
+import com.kongjak.koreatechboard.util.openMail
+import com.kongjak.koreatechboard.util.openUrl
 import com.kongjak.koreatechboard.util.routes.Department
-import koreatech_board.app.generated.resources.*
+import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.setting_dark_theme_dark
+import koreatech_board.app.generated.resources.setting_dark_theme_light
+import koreatech_board.app.generated.resources.setting_dark_theme_system_default
+import koreatech_board.app.generated.resources.setting_dark_theme_title
+import koreatech_board.app.generated.resources.setting_default_board_title
+import koreatech_board.app.generated.resources.setting_delete_all_new_notices_confirm
+import koreatech_board.app.generated.resources.setting_delete_all_new_notices_summary
+import koreatech_board.app.generated.resources.setting_delete_all_new_notices_title
+import koreatech_board.app.generated.resources.setting_dynamic_theme_summary
+import koreatech_board.app.generated.resources.setting_dynamic_theme_title
+import koreatech_board.app.generated.resources.setting_enquiry_mail_title
+import koreatech_board.app.generated.resources.setting_header_info
+import koreatech_board.app.generated.resources.setting_header_notification
+import koreatech_board.app.generated.resources.setting_header_theme
+import koreatech_board.app.generated.resources.setting_license_title
+import koreatech_board.app.generated.resources.setting_mail_address
+import koreatech_board.app.generated.resources.setting_mail_app_not_found
+import koreatech_board.app.generated.resources.setting_mail_subject
+import koreatech_board.app.generated.resources.setting_mail_text
+import koreatech_board.app.generated.resources.setting_source_code_title
+import koreatech_board.app.generated.resources.setting_source_code_url
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_department
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_dorm
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_school
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_department
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_dorm
+import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_school
+import koreatech_board.app.generated.resources.setting_user_department_title
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
+import org.koin.compose.koinInject
 
 val deptList = listOf(
     Department.Cse,
@@ -40,24 +68,22 @@ val deptList = listOf(
     Department.Sim
 )
 
-@OptIn(ExperimentalResourceApi::class)
 val deptListString = deptList.map { it.stringResource }
 val deptListName = deptList.map { it.name }
 
 val darkTheme = listOf(DARK_THEME_SYSTEM_DEFAULT, DARK_THEME_LIGHT_THEME, DARK_THEME_DARK_THEME)
 
-@OptIn(ExperimentalResourceApi::class)
 val darkThemeString = listOf(
     Res.string.setting_dark_theme_system_default,
     Res.string.setting_dark_theme_light,
     Res.string.setting_dark_theme_dark
 )
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-fun SettingsScreen(settingsViewModel: SettingsViewModel = koinViewModel()) {
-    val context = LocalContext.current
-    val uiState = settingsViewModel.collectAsState().value
+fun SettingsScreen(settingsViewModel: SettingsViewModel = koinInject()) {
+    val context = LocalPlatformContext.current
+    val uriHandler = LocalUriHandler.current
+    val uiState by settingsViewModel.collectAsState()
 
     settingsViewModel.collectSideEffect { settingsViewModel.handleSideEffect(it) }
     val scrollState = rememberScrollState()
@@ -114,67 +140,65 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = koinViewModel()) {
             }
         }
 
-        PreferenceColumn(title = stringResource(Res.string.setting_header_notification)) {
-            val isNotificationPermissionGranted =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    isNotificationPermissionGranted()
-                } else {
-                    true
-                }
+        if (getPlatformInfo().isFirebaseSupported) {
+            PreferenceColumn(title = stringResource(Res.string.setting_header_notification)) {
+                val isNotificationPermissionGranted = isNotificationPermissionGranted()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !isNotificationPermissionGranted) {
-                RequestNotificationPermission()
+                if (!isNotificationPermissionGranted) {
+                    RequestNotificationPermission()
+                }
+                SwitchPreference(
+                    title = stringResource(Res.string.setting_subscribe_new_notice_school),
+                    summary = stringResource(Res.string.setting_subscribe_new_notice_summary_school),
+                    checked = uiState.subscribeSchool,
+                    enabled = isNotificationPermissionGranted,
+                    onCheckedChange = {
+                        settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateSchoolSubscribe(it))
+                    }
+                )
+
+                SwitchPreference(
+                    title = stringResource(Res.string.setting_subscribe_new_notice_dorm),
+                    summary = stringResource(Res.string.setting_subscribe_new_notice_summary_dorm),
+                    checked = uiState.subscribeDormitory,
+                    enabled = isNotificationPermissionGranted,
+                    onCheckedChange = {
+                        settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDormSubscribe(it))
+                    }
+                )
+
+                SwitchPreference(
+                    title = stringResource(Res.string.setting_subscribe_new_notice_department),
+                    summary = stringResource(Res.string.setting_subscribe_new_notice_summary_department),
+                    checked = uiState.subscribeDepartment,
+                    enabled = isNotificationPermissionGranted,
+                    onCheckedChange = {
+                        settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
+                    }
+                )
+
+                DialogPreference(
+                    title = stringResource(Res.string.setting_delete_all_new_notices_title),
+                    summary = stringResource(Res.string.setting_delete_all_new_notices_summary),
+                    dialogTitle = stringResource(Res.string.setting_delete_all_new_notices_title),
+                    dialogContent = stringResource(Res.string.setting_delete_all_new_notices_confirm),
+                    onConfirm = {
+                        settingsViewModel.sendSideEffect(SettingsSideEffect.DeleteAllNewArticle)
+                    },
+                    onDismiss = {
+                        // Do nothing
+                    }
+                )
             }
-            SwitchPreference(
-                title = stringResource(Res.string.setting_subscribe_new_notice_school),
-                summary = stringResource(Res.string.setting_subscribe_new_notice_summary_school),
-                checked = uiState.subscribeSchool,
-                enabled = isNotificationPermissionGranted,
-                onCheckedChange = {
-                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateSchoolSubscribe(it))
-                }
-            )
-
-            SwitchPreference(
-                title = stringResource(Res.string.setting_subscribe_new_notice_dorm),
-                summary = stringResource(Res.string.setting_subscribe_new_notice_summary_dorm),
-                checked = uiState.subscribeDormitory,
-                enabled = isNotificationPermissionGranted,
-                onCheckedChange = {
-                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDormSubscribe(it))
-                }
-            )
-
-            SwitchPreference(
-                title = stringResource(Res.string.setting_subscribe_new_notice_department),
-                summary = stringResource(Res.string.setting_subscribe_new_notice_summary_department),
-                checked = uiState.subscribeDepartment,
-                enabled = isNotificationPermissionGranted,
-                onCheckedChange = {
-                    settingsViewModel.sendSideEffect(SettingsSideEffect.UpdateDepartmentSubscribe(it))
-                }
-            )
-
-            DialogPreference(
-                title = stringResource(Res.string.setting_delete_all_new_notices_title),
-                summary = stringResource(Res.string.setting_delete_all_new_notices_summary),
-                dialogTitle = stringResource(Res.string.setting_delete_all_new_notices_title),
-                dialogContent = stringResource(Res.string.setting_delete_all_new_notices_confirm),
-                onConfirm = {
-                    settingsViewModel.sendSideEffect(SettingsSideEffect.DeleteAllNewArticle)
-                },
-                onDismiss = {
-                    // Do nothing
-                }
-            )
         }
 
         val sourceCodeUrl = stringResource(Res.string.setting_source_code_url)
         val mailAddress = stringResource(Res.string.setting_mail_address)
         val mailSubject = stringResource(Res.string.setting_mail_subject)
         val mailText = stringResource(
-            Res.string.setting_mail_text, Build.MODEL,
-            Build.VERSION.SDK_INT
+            Res.string.setting_mail_text,
+            "",
+            ""
         )
         val mailAppNotFound = stringResource(Res.string.setting_mail_app_not_found)
 
@@ -182,47 +206,29 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = koinViewModel()) {
             Preference(
                 title = stringResource(Res.string.setting_license_title)
             ) {
-                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                //TODO: Add license
             }
 
             Preference(title = stringResource(Res.string.setting_source_code_title)) {
-                val builder = CustomTabsIntent.Builder()
-                val customTabsIntent = builder.build()
-                customTabsIntent.launchUrl(
-                    context,
-                    Uri.parse(sourceCodeUrl)
+                openUrl(
+                    context = context,
+                    uriHandler = uriHandler,
+                    url = sourceCodeUrl
                 )
             }
 
             Preference(title = stringResource(Res.string.setting_enquiry_mail_title)) {
-                val mailIntent = Intent(Intent.ACTION_SENDTO)
-                mailIntent.data = Uri.parse("mailto:")
-                mailIntent.putExtra(
-                    Intent.EXTRA_EMAIL,
-                    arrayOf(mailAddress)
-                )
-                mailIntent.putExtra(
-                    Intent.EXTRA_SUBJECT,
-                    mailSubject
-                )
-                mailIntent.putExtra(
-                    Intent.EXTRA_TEXT,
+                openMail(
+                    context,
+                    mailAddress,
+                    mailSubject,
                     mailText
                 )
-                try {
-                    context.startActivity(mailIntent)
-                } catch (e: ActivityNotFoundException) {
-                    Toast.makeText(
-                        context,
-                        mailAppNotFound,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
             }
         }
 
         PreferenceColumn(title = stringResource(Res.string.setting_header_theme)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (getPlatformInfo().isDynamicThemeSupported) {
                 val isChecked = uiState.isDynamicTheme
 
                 SwitchPreference(

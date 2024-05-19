@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 val localStoreFile: String = gradleLocalProperties(rootDir).getProperty("localStoreFile")
 val localStorePassword: String = gradleLocalProperties(rootDir).getProperty("localStorePassword")
@@ -11,7 +13,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.koreatechboard.firebase)
-    id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
     alias(libs.plugins.serialization)
@@ -20,6 +21,11 @@ plugins {
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -28,29 +34,26 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     sourceSets {
+        val desktopMain by getting
+
         androidMain.dependencies {
 
+            implementation(libs.accompanist.permissions)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.browser)
-            implementation(libs.androidx.core.ktx)
-            implementation(libs.androidx.paging.compose)
-            implementation(libs.androidx.paging.runtime)
-            implementation(libs.androidx.webkit)
-
-            implementation(libs.material)
-            implementation(libs.oss.licenses)
-
+            implementation(libs.firebase.analytics)
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.messaging)
             implementation(libs.firebase.crashlytics)
-            implementation(libs.firebase.analytics)
-
-            implementation(libs.accompanist.permissions)
-
-            implementation(libs.koin.androidx.compose)
             implementation(libs.koin.android)
-            implementation(libs.koin.androidx.navigation)
+            implementation(libs.material)
+            implementation(libs.paging.androidx.compose)
+            implementation(libs.paging.androidx.runtime)
+            implementation(libs.sqldelight.android.driver)
+
             implementation("androidx.compose.material:material-ripple:1.7.0-alpha05")
         }
 
@@ -65,33 +68,40 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.animation)
             implementation(compose.components.resources)
+
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
-
+            implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.coil)
             implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
+            implementation(libs.coroutine.core)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.kotlinx.serialization)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.negotiation)
             implementation(libs.ktor.kotlinx.serialization)
-            implementation(libs.kotlinx.serialization)
-
-            implementation(libs.koin.core)
-
-            implementation(libs.orbit.core)
-            implementation(libs.orbit.viewmodel)
-            implementation(libs.orbit.compose)
-
-            implementation(libs.materialKolor)
-
             implementation(libs.ktxml)
-
+            implementation(libs.material.kolor)
+            implementation(libs.material3.window.size.multiplatform)
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.orbit.core)
+            implementation(libs.paging.common)
+            implementation(libs.paging.compose.common)
             implementation(libs.sqldelight.coroutines.extensions)
-            implementation (libs.sqldelight.android.driver)
+            implementation(libs.uuid)
+        }
 
-            implementation("com.benasher44:uuid:0.8.4")
-            implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.5.0")
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+
+            implementation(libs.compose.material3.desktop)
+            implementation(libs.ktor.engine.cio)
+            implementation(libs.sqldelight.sqlite.driver)
         }
     }
 }
@@ -146,6 +156,18 @@ android {
     }
     namespace = "com.kongjak.koreatechboard"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+}
+
+compose.desktop {
+    application {
+        mainClass = "com.kongjak.koreatechboard.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.kongjak.koreatechboard"
+            packageVersion = "1.0.0"
+        }
+    }
 }
 
 dependencies {

@@ -1,11 +1,6 @@
 package com.kongjak.koreatechboard.ui.settings
 
-import android.os.Build
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
-import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_DORM
 import com.kongjak.koreatechboard.constraint.FCM_TOPIC_SCHOOL
 import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewNoticesUseCase
@@ -23,17 +18,18 @@ import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseC
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDynamicThemeUseCase
+import com.kongjak.koreatechboard.util.ViewModelExt
+import com.kongjak.koreatechboard.util.getPlatformInfo
+import com.kongjak.koreatechboard.util.subscribeFirebaseTopic
+import com.kongjak.koreatechboard.util.unsubscribeFirebaseTopic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
-import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(
+class SettingsViewModel(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
     private val setUserDepartmentUseCase: SetUserDepartmentUseCase,
     private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
@@ -49,15 +45,13 @@ class SettingsViewModel @Inject constructor(
     private val setDepartmentNoticeSubscribe: SetDepartmentNoticeSubscribe,
     private val getDepartmentNoticeSubscribe: GetDepartmentNoticeSubscribe,
     private val deleteAllNewNoticesUseCase: DeleteAllNewNoticesUseCase
-) : ContainerHost<SettingsState, SettingsSideEffect>, ViewModel() {
-
-    override val container = container<SettingsState, SettingsSideEffect>(SettingsState())
+) : ViewModelExt<SettingsState, SettingsSideEffect>(SettingsState()) {
 
     init {
         intent {
             postSideEffect(SettingsSideEffect.GetUserDepartment)
             postSideEffect(SettingsSideEffect.GetInitDepartment)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (getPlatformInfo().isDynamicThemeSupported) {
                 postSideEffect(SettingsSideEffect.GetDynamicTheme)
             }
             postSideEffect(SettingsSideEffect.GetDarkTheme)
@@ -176,9 +170,9 @@ class SettingsViewModel @Inject constructor(
                             state.copy(subscribeSchool = it)
                         }
                         if (it) {
-                            subscribeTopic(FCM_TOPIC_SCHOOL)
+                            subscribeFirebaseTopic(FCM_TOPIC_SCHOOL)
                         } else {
-                            unsubscribeTopic(FCM_TOPIC_SCHOOL)
+                            unsubscribeFirebaseTopic(FCM_TOPIC_SCHOOL)
                         }
                     }
                 }
@@ -191,9 +185,9 @@ class SettingsViewModel @Inject constructor(
                             state.copy(subscribeDepartment = it)
                         }
                         if (it) {
-                            subscribeTopic(deptList[state.userDepartment].name)
+                            subscribeFirebaseTopic(deptList[state.userDepartment].name)
                         } else {
-                            unsubscribeTopic(deptList[state.userDepartment].name)
+                            unsubscribeFirebaseTopic(deptList[state.userDepartment].name)
                         }
                     }
                 }
@@ -206,9 +200,9 @@ class SettingsViewModel @Inject constructor(
                             state.copy(subscribeDormitory = it)
                         }
                         if (it) {
-                            subscribeTopic(FCM_TOPIC_DORM)
+                            subscribeFirebaseTopic(FCM_TOPIC_DORM)
                         } else {
-                            unsubscribeTopic(FCM_TOPIC_DORM)
+                            unsubscribeFirebaseTopic(FCM_TOPIC_DORM)
                         }
                     }
                 }
@@ -218,42 +212,5 @@ class SettingsViewModel @Inject constructor(
                 deleteAllNewNoticesUseCase()
             }
         }
-    }
-
-    private fun subscribeTopic(topicRaw: String): Boolean {
-        var isSuccess = true
-
-        val topic = if (BuildConfig.BUILD_TYPE == "debug") {
-            "development_$topicRaw"
-        } else {
-            topicRaw
-        }
-
-        Firebase.messaging.subscribeToTopic(topic)
-            .addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    isSuccess = false
-                }
-            }
-
-        return isSuccess
-    }
-
-    private fun unsubscribeTopic(topicRaw: String): Boolean {
-        var isSuccess = true
-
-        val topic = if (BuildConfig.BUILD_TYPE == "debug") {
-            "development_$topicRaw"
-        } else {
-            topicRaw
-        }
-
-        Firebase.messaging.unsubscribeFromTopic(topic)
-            .addOnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    isSuccess = false
-                }
-            }
-        return isSuccess
     }
 }

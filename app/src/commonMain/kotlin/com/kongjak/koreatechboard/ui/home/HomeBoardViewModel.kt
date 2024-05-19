@@ -1,23 +1,18 @@
 package com.kongjak.koreatechboard.ui.home
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardMinimumUseCase
+import com.kongjak.koreatechboard.util.ViewModelExt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.inject.Inject
 
-class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) :
-    ContainerHost<HomeBoardState, HomeBoardSideEffect>, ViewModel() {
-
-    override val container = container<HomeBoardState, HomeBoardSideEffect>(HomeBoardState())
+class HomeBoardViewModel(private val getBoardMinimumUseCase: GetBoardMinimumUseCase) :
+    ViewModelExt<HomeBoardState, HomeBoardEvent>(HomeBoardState()) {
 
     private val isFetching = AtomicBoolean(false)
 
@@ -27,13 +22,13 @@ class HomeBoardViewModel @Inject constructor(private val getBoardMinimumUseCase:
         }
         intent {
             if (board in state.boardData && state.boardData[board]?.boardData!!.isNotEmpty()) return@intent
-            postSideEffect(HomeBoardSideEffect.FetchData(department, board))
+            postSideEffect(HomeBoardEvent.FetchData(department, board))
         }
     }
 
-    fun handleSideEffect(sideEffect: HomeBoardSideEffect) {
+    fun handleSideEffect(sideEffect: HomeBoardEvent) {
         when (sideEffect) {
-            is HomeBoardSideEffect.FetchData -> {
+            is HomeBoardEvent.FetchData -> {
                 viewModelScope.launch {
                     isFetching.set(true)
                     intent {

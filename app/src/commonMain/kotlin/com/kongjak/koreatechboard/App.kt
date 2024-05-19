@@ -14,12 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.kongjak.koreatechboard.ui.main.MainScreen
 import com.kongjak.koreatechboard.ui.main.MainViewModel
-import com.kongjak.koreatechboard.ui.settings.darkTheme
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.util.routes.MainRoute
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
+import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -28,7 +25,7 @@ fun App() {
     val isLargeScreen = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
     val startDestination by remember { mutableStateOf(MainRoute.Home.name) }
 
-    val mainViewModel: MainViewModel = koinViewModel()
+    val mainViewModel: MainViewModel = koinInject()
     mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
 
     val uiState by mainViewModel.collectAsState()

@@ -4,81 +4,85 @@ android-minSdk = "25"
 android-targetSdk = "34"
 project-version-code = "1"
 project-version-name = "1.0.0"
-kotlin-compiler-extension = "1.5.10"
 
 agp = "8.1.4"
-kotlin = "1.9.23"
-google-service = "4.4.1"
 androidx-activity-compose = "1.9.0"
 androidx-browser = "1.8.0"
-androidx-core-ktx = "1.13.1"
-androidx-paging = "3.3.0"
-androidx-datastore = "1.1.1"
+androidx-lifecycle = "2.8.0-rc03"
+androidx-navigation = "2.8.0-alpha02"
+coil = "3.0.0-alpha06"
+compose-plugin = "1.6.10-rc03"
+coroutine = "1.8.0"
+firebase-bom = "33.0.0"
 firebase-crashlytics = "2.9.9"
-coil = "2.6.0"
+google-service = "4.4.1"
+koin = "3.5.3"
+koin-compose = "1.2.0-Beta4"
+ktlint = "11.5.1"
+kotlin = "1.9.23"
+kotlinx = "1.6.3"
+ktor = "2.3.11"
+ktxml = "0.2.3"
 material = "1.12.0"
+material-kolor = "1.5.0"
+multiplatform-settings = "1.1.1"
+orbit = "7.0.1"
 oss-licenses = "17.0.1"
 oss-licenses-plugin = "0.10.6"
-firebase-bom = "33.0.0"
+paging-androidx = "3.3.0"
+paging-multiplatform = "3.3.0-alpha02-0.5.1"
 permissions = "0.30.1"
-coroutine = "1.8.0"
-ktlint = "11.5.1"
-orbit = "7.0.1"
-webkit = "1.11.0"
-ktxml = "0.2.3"
-ktor = "2.3.11"
-kotlinx = "1.6.3"
-androidx-navigation = "2.8.0-alpha02"
-androidx-lifecycle = "2.8.0-rc03"
-koin = "3.5.3"
 sqldelight = "2.0.2"
-material-kolor = "1.5.0"
-compose-plugin = "1.6.10-beta02"
+uuid = "0.8.4"
+webview = "1.9.7"
+window-size = "0.5.0"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "permissions" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
-androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging" }
-androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging" }
-
-androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
-coil = { module = "io.coil-kt:coil", version.ref = "coil" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koin" }
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
-materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
-orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
-orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
-orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
-oss-licenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "oss-licenses" }
-oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "oss-licenses-plugin" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "permissions" }
+androidx-lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
+compose-material3-desktop = { module = "org.jetbrains.compose.material3:material3-desktop", version.ref = "compose-plugin" }
+compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-multiplatform", version.ref = "webview" }
 coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine" }
 coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx" }
-
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-engine-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-kotlinx-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-
-androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
-androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
-
-sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
+material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "window-size" }
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
+multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
+orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
+oss-licenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "oss-licenses" }
+oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "oss-licenses-plugin" }
+paging-androidx-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging-androidx" }
+paging-androidx-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-androidx" }
+paging-common = { module = "app.cash.paging:paging-common", version.ref = "paging-multiplatform" }
+paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "paging-multiplatform" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+uuid = { module = "com.benasher44:uuid", version.ref = "uuid" }
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -87,12 +91,12 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics"}
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-service" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 koreatechboard-firebase = { id = "com.kongjak.koreatechboard.plugin.firebase", version = "unspecified" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]

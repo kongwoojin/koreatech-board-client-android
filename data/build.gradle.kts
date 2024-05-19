@@ -18,28 +18,30 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     sourceSets {
         androidMain.dependencies {
 
-            implementation(libs.androidx.core.ktx)
-            implementation(libs.androidx.datastore.preferences)
-            implementation(libs.androidx.paging.common)
+            implementation(libs.paging.androidx.compose)
         }
 
         commonMain.dependencies {
             api(project(":domain"))
 
+            api(libs.compose.webview.multiplatform)
+
+            implementation(libs.coroutine.core)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.serialization)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.negotiation)
             implementation(libs.ktor.kotlinx.serialization)
-            implementation(libs.kotlinx.serialization)
-
-            implementation(libs.koin.core)
-
-            implementation(libs.coroutine.core)
-            implementation(libs.coroutine.android)
-
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.paging.common)
             implementation(libs.sqldelight.coroutines.extensions)
+
 
             implementation("com.benasher44:uuid:0.8.4")
         }

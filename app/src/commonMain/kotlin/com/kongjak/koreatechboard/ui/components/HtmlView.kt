@@ -1,12 +1,8 @@
 package com.kongjak.koreatechboard.ui.components
 
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -16,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.constraint.HTML_A
 import com.kongjak.koreatechboard.constraint.HTML_B
 import com.kongjak.koreatechboard.constraint.HTML_BIG
@@ -56,6 +53,7 @@ import com.kongjak.koreatechboard.constraint.HTML_UL
 import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
 import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
+import com.kongjak.koreatechboard.util.openUrl
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseRawStyle
 import com.kongjak.koreatechboard.util.parseSpanStyle
@@ -542,9 +540,9 @@ fun HtmlView(
             try {
                 eventType = parser.next()
             } catch (e: XmlPullParserException) {
-                e.message?.let { Log.e("Exception", it) }
+                // e.message?.let { Log.e("Exception", it) }
             } catch (e: ArrayIndexOutOfBoundsException) {
-                e.message?.let { Log.e("Exception", it) }
+                // e.message?.let { Log.e("Exception", it) }
             }
         }
     }
@@ -572,7 +570,9 @@ private fun HtmlText(
     modifier: Modifier = Modifier,
     text: AnnotatedString
 ) {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
+    val context = LocalPlatformContext.current
+
     CustomClickableText(
         modifier = modifier,
         text = text,
@@ -582,17 +582,12 @@ private fun HtmlText(
                     if (url.item.isNotBlank()) {
                         if (url.tag.startsWith(ANNOTATION_PHONE_NUMBER_PREFIX)) {
                             val phoneNumber = url.item
-                            val intent = Uri.parse("tel:$phoneNumber")
-                            context.startActivity(Intent(Intent.ACTION_DIAL, intent))
+                            openUrl(context, uriHandler, "tel:$phoneNumber")
                         } else if (url.tag.startsWith(ANNOTATION_URL_PREFIX)) {
-                            val builder = CustomTabsIntent.Builder()
-                            val customTabsIntent = builder.build()
-                            customTabsIntent.launchUrl(context, Uri.parse(url.item))
+                            openUrl(context, uriHandler, url.item)
                         } else if (url.tag.startsWith(ANNOTATION_EMAIL_PREFIX)) {
                             val email = url.item
-                            val intent = Intent(Intent.ACTION_SENDTO)
-                            intent.data = Uri.parse("mailto:$email")
-                            context.startActivity(intent)
+                            openUrl(context, uriHandler, "mailto:$email")
                         }
                     }
                 }

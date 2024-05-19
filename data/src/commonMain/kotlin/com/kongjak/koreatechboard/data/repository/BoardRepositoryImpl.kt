@@ -13,7 +13,7 @@ import com.kongjak.koreatechboard.domain.base.APIResult
 import com.kongjak.koreatechboard.domain.model.Board
 import com.kongjak.koreatechboard.domain.model.BoardData
 import com.kongjak.koreatechboard.domain.repository.BoardRepository
-import io.ktor.client.call.*
+import io.ktor.client.call.body
 import kotlinx.coroutines.flow.Flow
 
 class BoardRepositoryImpl(

@@ -1,17 +1,13 @@
 package com.kongjak.koreatechboard.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.colorResource
-import androidx.core.view.WindowCompat
+import androidx.compose.ui.graphics.Color
+import com.kongjak.koreatechboard.util.getPlatformInfo
 import com.materialkolor.rememberDynamicColorScheme
 
 private val LightColorScheme = lightColorScheme(
@@ -97,21 +93,15 @@ fun KoreatechBoardTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val seedColor = getSeedColor()
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            rememberDynamicColorScheme(colorResource(id = android.R.color.system_accent1_500), darkTheme)
+        dynamicColor && getPlatformInfo().isDynamicThemeSupported -> {
+            rememberDynamicColorScheme(seedColor, darkTheme)
         }
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        }
-    }
+    PlatformSpecificTheme(colorScheme, darkTheme)
 
     MaterialTheme(
         colorScheme = colorScheme,
@@ -119,3 +109,9 @@ fun KoreatechBoardTheme(
         content = content
     )
 }
+
+@Composable
+expect fun getSeedColor(): Color
+
+@Composable
+expect fun PlatformSpecificTheme(colorScheme: ColorScheme, isDarkTheme: Boolean)

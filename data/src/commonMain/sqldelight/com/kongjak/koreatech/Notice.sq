@@ -1,4 +1,4 @@
-CREATE TABLE Article (
+CREATE TABLE IF NOT EXISTS  Article (
     uuid TEXT NOT NULL,
     num INTEGER NOT NULL,
     title TEXT NOT NULL,

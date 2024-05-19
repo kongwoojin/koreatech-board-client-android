@@ -1,10 +1,17 @@
 package com.kongjak.koreatechboard.util.routes
 
-import koreatech_board.app.generated.resources.*
 import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.department_ace
+import koreatech_board.app.generated.resources.department_arch
 import koreatech_board.app.generated.resources.department_cse
 import koreatech_board.app.generated.resources.department_dorm
+import koreatech_board.app.generated.resources.department_ide
+import koreatech_board.app.generated.resources.department_ite
+import koreatech_board.app.generated.resources.department_mechanical
+import koreatech_board.app.generated.resources.department_mechatronics
+import koreatech_board.app.generated.resources.department_mse
 import koreatech_board.app.generated.resources.department_school
+import koreatech_board.app.generated.resources.department_sim
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 

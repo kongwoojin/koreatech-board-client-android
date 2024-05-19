@@ -3,7 +3,16 @@ package com.kongjak.koreatechboard.ui.board
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
@@ -12,10 +21,23 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.*
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,8 +51,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -42,21 +62,28 @@ import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
-import koreatech_board.app.generated.resources.*
+import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.content_description_search
+import koreatech_board.app.generated.resources.error_hide_detail
+import koreatech_board.app.generated.resources.error_minimum_message
+import koreatech_board.app.generated.resources.error_no_article
+import koreatech_board.app.generated.resources.error_show_detail
+import koreatech_board.app.generated.resources.error_unknown
+import koreatech_board.app.generated.resources.search_dialog_cancel
+import koreatech_board.app.generated.resources.search_dialog_hint
+import koreatech_board.app.generated.resources.search_dialog_search
+import koreatech_board.app.generated.resources.search_dialog_title
+import koreatech_board.app.generated.resources.search_more_letter
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
-import org.koin.androidx.compose.koinViewModel
-import org.orbitmvi.orbit.compose.collectAsState
-import org.orbitmvi.orbit.compose.collectSideEffect
-import java.util.*
+import org.koin.compose.koinInject
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BoardScreen(
     initDepartment: Int,
     userDepartment: Int,
-    onArticleClick: (UUID, String) -> Unit,
+    onArticleClick: (Uuid, String) -> Unit,
     onSearch: (String, String, String) -> Unit
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
@@ -107,12 +134,12 @@ fun BoardScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Board(
     contentPadding: PaddingValues,
     department: Department,
-    onArticleClick: (UUID, String) -> Unit,
+    onArticleClick: (Uuid, String) -> Unit,
     onSearch: (String, String, String) -> Unit
 ) {
     val pagerState = rememberPagerState(
@@ -163,16 +190,16 @@ fun Board(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BoardContent(
     department: Department,
     page: Int,
-    onArticleClick: (UUID, String) -> Unit,
-    onSearch: (String, String, String) -> Unit,
+    onArticleClick: (Uuid, String) -> Unit,
+    onSearch: (String, String, String) -> Unit
 ) {
     val boardViewModel =
-        koinViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
+        koinInject<BoardViewModel>()
 
     boardViewModel.collectSideEffect { boardViewModel.handleSideEffect(it) }
 
@@ -201,7 +228,6 @@ fun BoardContent(
         }
     }
 
-    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -343,7 +369,6 @@ fun BoardItem(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BoardError(errorMessage: String) {
     val (showDetailError, setShowDetailError) = remember { mutableStateOf(false) }
@@ -370,19 +395,6 @@ fun BoardError(errorMessage: String) {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-fun NetworkUnavailable() {
-    Text(
-        text = stringResource(Res.string.network_unavailable),
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    )
-}
-
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SearchFAB(
     department: Department,
@@ -390,8 +402,6 @@ fun SearchFAB(
     snackbarHostState: SnackbarHostState,
     onSearch: (String, String, String) -> Unit
 ) {
-    val context = LocalContext.current
-
     var showDialog by remember { mutableStateOf(false) }
     var searchText by remember { mutableStateOf("") }
 

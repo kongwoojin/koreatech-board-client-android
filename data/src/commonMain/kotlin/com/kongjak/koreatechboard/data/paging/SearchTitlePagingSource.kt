@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.kongjak.koreatechboard.data.api.API
 import com.kongjak.koreatechboard.data.model.BoardResponse
 import com.kongjak.koreatechboard.domain.model.BoardData
-import io.ktor.client.call.*
+import io.ktor.client.call.body
 
 class SearchTitlePagingSource(
     private val api: API,

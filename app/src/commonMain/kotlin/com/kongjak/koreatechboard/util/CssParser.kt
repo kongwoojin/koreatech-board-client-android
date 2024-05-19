@@ -1,13 +1,11 @@
 package com.kongjak.koreatechboard.util
 
+import androidx.annotation.ColorInt
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.core.graphics.blue
-import androidx.core.graphics.green
-import androidx.core.graphics.red
 
 fun parseColor(value: String, isDarkMode: Boolean, isBackground: Boolean = false): Color {
     var red: Int
@@ -183,3 +181,7 @@ fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
 fun Color.toRaw(): String {
     return "rgb(${this.toArgb().red}, ${this.toArgb().green}, ${this.toArgb().blue})"
 }
+
+inline val @receiver:ColorInt Int.red: Int get() = (this shr 16) and 0xff
+inline val @receiver:ColorInt Int.green: Int get() = (this shr 8) and 0xff
+inline val @receiver:ColorInt Int.blue: Int get() = this and 0xff

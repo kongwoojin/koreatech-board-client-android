@@ -1,20 +1,15 @@
 package com.kongjak.koreatechboard.ui.search
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.kongjak.koreatechboard.domain.usecase.api.SearchBoardWithTitleUseCase
-import org.orbitmvi.orbit.ContainerHost
+import com.kongjak.koreatechboard.util.ViewModelExt
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
-import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val searchBoardWithTitleUseCase: SearchBoardWithTitleUseCase) :
-    ContainerHost<SearchState, SearchSideEffect>, ViewModel() {
-
-    override val container = container<SearchState, SearchSideEffect>(SearchState())
+class SearchViewModel(private val searchBoardWithTitleUseCase: SearchBoardWithTitleUseCase) :
+    ViewModelExt<SearchState, SearchSideEffect>(SearchState()) {
 
     fun getAPI(department: String, board: String, title: String) {
         intent {

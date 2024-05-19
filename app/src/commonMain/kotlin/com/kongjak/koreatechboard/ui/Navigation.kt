@@ -143,8 +143,10 @@ fun KoreatechBoardNavigationBar(
 
                     onClick = {
                         navController.navigate(item.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
+                            navController.graph.startDestinationRoute?.let {
+                                popUpTo(it) {
+                                    saveState = true
+                                }
                             }
                             launchSingleTop = true
                             restoreState = true
@@ -184,8 +186,10 @@ fun KoreatechBoardNavigationRail(
                     selected = currentRoute == item.name,
                     onClick = {
                         navController.navigate(item.name) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
+                            navController.graph.startDestinationRoute?.let {
+                                popUpTo(it) {
+                                    saveState = true
+                                }
                             }
                             launchSingleTop = true
                             restoreState = true

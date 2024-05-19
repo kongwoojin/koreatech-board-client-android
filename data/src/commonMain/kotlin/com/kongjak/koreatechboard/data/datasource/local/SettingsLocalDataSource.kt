@@ -1,116 +1,65 @@
 package com.kongjak.koreatechboard.data.datasource.local
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.ObservableSettings
+import com.russhwolf.settings.coroutines.getBooleanFlow
+import com.russhwolf.settings.coroutines.getIntFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
+@OptIn(ExperimentalSettingsApi::class)
 class SettingsLocalDataSource(
-    private val context: Context
+    private val settings: ObservableSettings
 ) {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-
-    private val userDepartmentKey = intPreferencesKey("user_department")
-    private val initDepartmentKey = intPreferencesKey("init_department")
-    private val dynamicThemeKey = booleanPreferencesKey("dynamic_theme")
-    private val darkThemeKey = intPreferencesKey("dark_theme")
-    private val schoolNoticeSubscribe = booleanPreferencesKey("school_notice_subscribe")
-    private val dormNoticeSubscribe = booleanPreferencesKey("dorm_notice_subscribe")
-    private val departmentNoticeSubscribe = booleanPreferencesKey("department_notice_subscribe")
-
-    suspend fun setUserDepartment(newIndex: Int) {
-        context.dataStore.edit { preferences ->
-            preferences[userDepartmentKey] = newIndex
-        }
+    fun setUserDepartment(index: Int) {
+        settings.putInt(USER_DEPARTMENT_KEY, index)
     }
 
-    fun getUserDepartment(): Flow<Int> {
-        val departmentFlow: Flow<Int> = context.dataStore.data
-            .map { preferences ->
-                preferences[userDepartmentKey] ?: 0
-            }
+    fun getUserDepartment(): Flow<Int> = settings.getIntFlow(USER_DEPARTMENT_KEY, 0)
 
-        return departmentFlow
+    fun setInitDepartment(index: Int) {
+        settings.putInt(INIT_DEPARTMENT_KEY, index)
     }
 
-    suspend fun setInitDepartment(newIndex: Int) {
-        context.dataStore.edit { preferences ->
-            preferences[initDepartmentKey] = newIndex
-        }
+    fun getInitDepartment(): Flow<Int> = settings.getIntFlow(INIT_DEPARTMENT_KEY, 0)
+
+    fun setDynamicTheme(newState: Boolean) {
+        settings.putBoolean(DYNAMIC_THEME_KEY, newState)
     }
 
-    fun getInitDepartment(): Flow<Int> {
-        val departmentFlow: Flow<Int> = context.dataStore.data
-            .map { preferences ->
-                preferences[initDepartmentKey] ?: 0
-            }
+    fun getDynamicTheme(): Flow<Boolean> = settings.getBooleanFlow(DYNAMIC_THEME_KEY, true)
 
-        return departmentFlow
+    fun setDarkTheme(newTheme: Int) {
+        settings.putInt(DARK_THEME_KEY, newTheme)
     }
 
-    suspend fun setDynamicTheme(newState: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[dynamicThemeKey] = newState
-        }
+    fun getDarkTheme(): Flow<Int> = settings.getIntFlow(DARK_THEME_KEY, DARK_THEME_SYSTEM_DEFAULT)
+
+    fun setSchoolNoticeSubscribe(state: Boolean) {
+        settings.putBoolean(SCHOOL_NOTICE_SUBSCRIBE_KEY, state)
     }
 
-    fun getDynamicTheme(): Flow<Boolean> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[dynamicThemeKey] ?: true
-            }
+    fun getSchoolNoticeSubscribe(): Flow<Boolean> = settings.getBooleanFlow(SCHOOL_NOTICE_SUBSCRIBE_KEY, false)
 
-    suspend fun setDarkTheme(newTheme: Int) {
-        context.dataStore.edit { preferences ->
-            preferences[darkThemeKey] = newTheme
-        }
+    fun setDormNoticeSubscribe(state: Boolean) {
+        settings.putBoolean(DORM_NOTICE_SUBSCRIBE_KEY, state)
     }
 
-    fun getDarkTheme(): Flow<Int> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[darkThemeKey] ?: DARK_THEME_SYSTEM_DEFAULT
-            }
+    fun getDormNoticeSubscribe(): Flow<Boolean> = settings.getBooleanFlow(DORM_NOTICE_SUBSCRIBE_KEY, false)
 
-    suspend fun setSchoolNoticeSubscribe(state: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[schoolNoticeSubscribe] = state
-        }
+    fun setDepartmentNoticeSubscribe(state: Boolean) {
+        settings.putBoolean(DEPARTMENT_NOTICE_SUBSCRIBE_KEY, state)
     }
 
-    fun getSchoolNoticeSubscribe(): Flow<Boolean> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[schoolNoticeSubscribe] ?: false
-            }
+    fun getDepartmentNoticeSubscribe(): Flow<Boolean> = settings.getBooleanFlow(DEPARTMENT_NOTICE_SUBSCRIBE_KEY, false)
 
-    suspend fun setDormNoticeSubscribe(state: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[dormNoticeSubscribe] = state
-        }
+    companion object {
+        const val USER_DEPARTMENT_KEY = "user_department"
+        const val INIT_DEPARTMENT_KEY = "init_department"
+        const val DYNAMIC_THEME_KEY = "dynamic_theme"
+        const val DARK_THEME_KEY = "dark_theme"
+        const val SCHOOL_NOTICE_SUBSCRIBE_KEY = "school_notice_subscribe"
+        const val DORM_NOTICE_SUBSCRIBE_KEY = "dorm_notice_subscribe"
+        const val DEPARTMENT_NOTICE_SUBSCRIBE_KEY = "department_notice_subscribe"
     }
-
-    fun getDormNoticeSubscribe(): Flow<Boolean> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[dormNoticeSubscribe] ?: false
-            }
-
-    suspend fun setDepartmentNoticeSubscribe(state: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[departmentNoticeSubscribe] = state
-        }
-    }
-
-    fun getDepartmentNoticeSubscribe(): Flow<Boolean> =
-        context.dataStore.data
-            .map { preferences ->
-                preferences[departmentNoticeSubscribe] ?: false
-            }
 }

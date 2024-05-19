@@ -1,6 +1,5 @@
 package com.kongjak.koreatechboard.ui.main
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
@@ -9,23 +8,19 @@ import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepa
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
+import com.kongjak.koreatechboard.util.ViewModelExt
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import org.orbitmvi.orbit.viewmodel.container
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
     private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
     private val getDarkThemeUseCase: GetDarkThemeUseCase
-) : ContainerHost<MainState, MainSideEffect>, ViewModel() {
-
-    override val container = container<MainState, MainSideEffect>(MainState())
+) : ViewModelExt<MainState, MainSideEffect>(MainState()) {
 
     init {
         intent {

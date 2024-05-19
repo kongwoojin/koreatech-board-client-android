@@ -2,7 +2,7 @@ package com.kongjak.koreatechboard.domain.model
 
 import com.benasher44.uuid.Uuid
 
-data class Board (
+data class Board(
     val lastPage: Int,
     val statusCode: Int,
     val boardData: List<BoardData>?

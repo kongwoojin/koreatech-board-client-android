@@ -4,7 +4,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -27,10 +26,7 @@ val Typography.preferenceColumnTitle: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
-        letterSpacing = 0.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.sp
     )
 
 val Typography.preferenceTitle: TextStyle
@@ -38,10 +34,8 @@ val Typography.preferenceTitle: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.sp
+
     )
 
 val Typography.preferenceSummary: TextStyle
@@ -50,10 +44,8 @@ val Typography.preferenceSummary: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        letterSpacing = 0.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.sp
+
     )
 
 val Typography.articleTitle: TextStyle
@@ -61,10 +53,8 @@ val Typography.articleTitle: TextStyle
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
-        letterSpacing = 0.5.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.5.sp
+
     )
 
 val Typography.articleSubText: TextStyle
@@ -73,20 +63,16 @@ val Typography.articleSubText: TextStyle
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 4.sp,
-        letterSpacing = 0.5.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.5.sp
+
     )
 
 val Typography.boardItemTitle: TextStyle
     get() = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        fontSize = 16.sp
+
     )
 
 val Typography.boardItemSubText: TextStyle
@@ -95,18 +81,14 @@ val Typography.boardItemSubText: TextStyle
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 4.sp,
-        letterSpacing = 0.5.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        letterSpacing = 0.5.sp
+
     )
 
 val Typography.noticeDepartmentText: TextStyle
     get() = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Light,
-        fontSize = 12.sp,
-        platformStyle = PlatformTextStyle(
-            includeFontPadding = false
-        )
+        fontSize = 12.sp
+
     )

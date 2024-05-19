@@ -14,16 +14,18 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.androidx.core.ktx)
-            implementation(libs.androidx.paging.common)
             implementation(libs.coroutine.android)
+            implementation(libs.paging.androidx.compose)
         }
 
         commonMain.dependencies {
             implementation(libs.koin.core)
-            implementation("com.benasher44:uuid:0.8.4")
+            implementation(libs.paging.common)
+            implementation(libs.uuid)
         }
     }
 }

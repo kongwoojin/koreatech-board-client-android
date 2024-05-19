@@ -18,12 +18,21 @@ import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardMinimumUseCase
 import com.kongjak.koreatechboard.domain.usecase.api.GetBoardUseCase
 import com.kongjak.koreatechboard.domain.usecase.api.SearchBoardWithTitleUseCase
-import com.kongjak.koreatechboard.domain.usecase.database.*
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteAllNewNoticesUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.DeleteNewNoticeUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewNoticesUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleNewNoticesUseCase
+import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.SetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.SetUserDepartmentUseCase
-import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.*
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.GetDepartmentNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.GetDormNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.GetSchoolNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetDepartmentNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetDormNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetSchoolNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
@@ -36,7 +45,7 @@ import com.kongjak.koreatechboard.ui.main.MainViewModel
 import com.kongjak.koreatechboard.ui.notice.NoticeViewModel
 import com.kongjak.koreatechboard.ui.search.SearchViewModel
 import com.kongjak.koreatechboard.ui.settings.SettingsViewModel
-import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 fun appModule() = module {
@@ -60,7 +69,7 @@ fun appModule() = module {
     }
     factory {
         HomeBoardViewModel(
-            getBoardMinimumUseCase = get(),
+            getBoardMinimumUseCase = get()
         )
     }
     factory {
@@ -68,7 +77,7 @@ fun appModule() = module {
     }
     factory {
         ArticleViewModel(
-            getArticleUseCase = get(),
+            getArticleUseCase = get()
         )
     }
     factory {
@@ -132,7 +141,6 @@ fun networkModule() = module {
     single { provideHttpClient() }
 }
 
-fun databaseModule() = module {
-    single { provideAppDatabase(androidContext()) }
-    single { provideArticleDao(get()) }
-}
+expect fun databaseModule(): Module
+
+expect fun platformModule(): Module
