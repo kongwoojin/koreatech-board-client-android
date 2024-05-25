@@ -16,6 +16,8 @@ sealed class MainRoute(val name: String, val stringResource: Int, val icon: Imag
     data object Article : MainRoute("Article", R.string.route_article, Icons.AutoMirrored.Filled.List)
     data object Search : MainRoute("Search", R.string.route_search, Icons.Filled.Search)
     data object Notice : MainRoute("Notice", R.string.route_new_notice, Icons.Filled.Notifications)
+    data object Licenses : MainRoute("Licenses", R.string.route_licenses, Icons.AutoMirrored.Filled.List)
+
 
     companion object {
         fun valueOf(name: String): MainRoute {
@@ -26,6 +28,7 @@ sealed class MainRoute(val name: String, val stringResource: Int, val icon: Imag
                 Article.name.lowercase() -> Article
                 Search.name.lowercase() -> Search
                 Notice.name.lowercase() -> Notice
+                Licenses.name.lowercase() -> Licenses
                 else -> Home
             }
         }

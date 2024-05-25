@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
@@ -54,7 +53,7 @@ val darkThemeString = listOf(
 )
 
 @Composable
-fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel(), openLicenses: () -> Unit) {
     val context = LocalContext.current
     val uiState = settingsViewModel.collectAsState().value
 
@@ -172,7 +171,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
             Preference(
                 title = stringResource(id = R.string.setting_license_title)
             ) {
-                context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                openLicenses()
             }
 
             Preference(title = stringResource(id = R.string.setting_source_code_title)) {
@@ -253,5 +252,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = hiltViewModel()) {
 @Preview
 @Composable
 fun SettingsPreview() {
-    SettingsScreen()
+    SettingsScreen(
+        openLicenses = {}
+    )
 }

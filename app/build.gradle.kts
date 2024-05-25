@@ -11,9 +11,9 @@ plugins {
     alias(libs.plugins.koreatechboard.compose)
     alias(libs.plugins.koreatechboard.hilt)
     alias(libs.plugins.koreatechboard.firebase)
-    id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.licenses)
     kotlin("plugin.parcelize")
 }
 
@@ -86,7 +86,6 @@ dependencies {
     implementation(libs.retrofit.gson)
 
     implementation(libs.material)
-    implementation(libs.oss.licenses)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
@@ -112,4 +111,17 @@ dependencies {
     androidTestImplementation(libs.esspresso)
     androidTestImplementation(libs.junit.test)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+}
+
+licenseReport {
+    generateCsvReport = false
+    generateHtmlReport = false
+    generateJsonReport = false
+    generateTextReport = true
+
+    copyCsvReportToAssets = false
+    copyHtmlReportToAssets = false
+    copyJsonReportToAssets = false
+    copyTextReportToAssets = true
+    useVariantSpecificAssetDirs = false
 }
