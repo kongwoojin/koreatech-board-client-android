@@ -2,7 +2,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
     id("app.cash.sqldelight") version "2.0.2"
