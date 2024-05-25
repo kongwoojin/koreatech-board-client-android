@@ -24,12 +24,11 @@ kotlin = "1.9.23"
 kotlinx = "1.6.3"
 ktor = "2.3.11"
 ktxml = "0.2.3"
+licenses-plugin = "0.9.7"
 material = "1.12.0"
 material-kolor = "1.5.0"
 multiplatform-settings = "1.1.1"
 orbit = "7.0.1"
-oss-licenses = "17.0.1"
-oss-licenses-plugin = "0.10.6"
 paging-androidx = "3.3.0"
 paging-multiplatform = "3.3.0-alpha02-0.5.1"
 permissions = "0.30.1"
@@ -76,8 +75,6 @@ material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:mater
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
 orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
-oss-licenses = { module = "com.google.android.gms:play-services-oss-licenses", version.ref = "oss-licenses" }
-oss-licenses-plugin = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "oss-licenses-plugin" }
 paging-androidx-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging-androidx" }
 paging-androidx-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-androidx" }
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "paging-multiplatform" }
@@ -100,6 +97,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 koreatechboard-firebase = { id = "com.kongjak.koreatechboard.plugin.firebase", version = "unspecified" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+licenses = { id = "com.jaredsburrows.license", version.ref = "licenses-plugin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]

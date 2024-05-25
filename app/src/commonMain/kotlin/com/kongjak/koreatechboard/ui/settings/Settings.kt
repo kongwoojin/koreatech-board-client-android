@@ -79,7 +79,10 @@ val darkThemeString = listOf(
 )
 
 @Composable
-fun SettingsScreen(settingsViewModel: SettingsViewModel = koinInject()) {
+fun SettingsScreen(
+    settingsViewModel: SettingsViewModel = koinInject(),
+    openLicenses: () -> Unit
+) {
     val context = LocalPlatformContext.current
     val uriHandler = LocalUriHandler.current
     val uiState by settingsViewModel.collectAsState()
@@ -205,7 +208,7 @@ fun SettingsScreen(settingsViewModel: SettingsViewModel = koinInject()) {
             Preference(
                 title = stringResource(Res.string.setting_license_title)
             ) {
-                //TODO: Add license
+                openLicenses()
             }
 
             Preference(title = stringResource(Res.string.setting_source_code_title)) {

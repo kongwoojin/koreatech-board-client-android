@@ -26,6 +26,7 @@ import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.ui.article.ArticleScreen
 import com.kongjak.koreatechboard.ui.board.BoardScreen
 import com.kongjak.koreatechboard.ui.home.HomeScreen
+import com.kongjak.koreatechboard.ui.licenses.LicenseScreen
 import com.kongjak.koreatechboard.ui.notice.Notice
 import com.kongjak.koreatechboard.ui.search.SearchScreen
 import com.kongjak.koreatechboard.ui.settings.SettingsScreen
@@ -74,7 +75,11 @@ fun NavigationGraph(
             )
         }
         composable(MainRoute.Settings.name) {
-            SettingsScreen()
+            SettingsScreen(
+                openLicenses = {
+                    navController.navigate(MainRoute.Licenses.name)
+                }
+            )
         }
         composableWithAnimation(
             route = "${MainRoute.Article.name}/{uuid}/{department}"
@@ -109,6 +114,9 @@ fun NavigationGraph(
                     navController.navigate("${MainRoute.Article.name}/$uuid/$department")
                 }
             )
+        }
+        composable(MainRoute.Licenses.name) {
+            LicenseScreen()
         }
     }
 }

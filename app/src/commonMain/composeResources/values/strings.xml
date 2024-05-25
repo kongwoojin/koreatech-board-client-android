@@ -34,6 +34,7 @@
     <string name="route_new_notice">New notice</string>
     <string name="route_search">Search</string>
     <string name="route_article">Article</string>
+    <string name="route_licenses">Licenses</string>
 
     <!-- Search -->
     <string name="search_dialog_title">Search</string>

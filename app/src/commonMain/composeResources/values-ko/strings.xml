@@ -34,6 +34,7 @@
     <string name="route_new_notice">새 공지사항</string>
     <string name="route_search">Search</string>
     <string name="route_article">게시글</string>
+    <string name="route_licenses">라이선스</string>
 
     <!-- Search -->
     <string name="search_dialog_title">검색</string>

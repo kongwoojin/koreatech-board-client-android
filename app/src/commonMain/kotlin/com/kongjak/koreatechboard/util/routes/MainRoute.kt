@@ -11,6 +11,7 @@ import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.route_article
 import koreatech_board.app.generated.resources.route_board
 import koreatech_board.app.generated.resources.route_home
+import koreatech_board.app.generated.resources.route_licenses
 import koreatech_board.app.generated.resources.route_new_notice
 import koreatech_board.app.generated.resources.route_search
 import koreatech_board.app.generated.resources.route_settings
@@ -23,6 +24,7 @@ sealed class MainRoute(val name: String, val stringResource: StringResource, val
     data object Article : MainRoute("Article", Res.string.route_article, Icons.AutoMirrored.Filled.List)
     data object Search : MainRoute("Search", Res.string.route_search, Icons.Filled.Search)
     data object Notice : MainRoute("Notice", Res.string.route_new_notice, Icons.Filled.Notifications)
+    data object Licenses : MainRoute("Licenses", Res.string.route_licenses, Icons.AutoMirrored.Filled.List)
 
     companion object {
         fun valueOf(name: String): MainRoute {
@@ -33,6 +35,7 @@ sealed class MainRoute(val name: String, val stringResource: StringResource, val
                 Article.name.lowercase() -> Article
                 Search.name.lowercase() -> Search
                 Notice.name.lowercase() -> Notice
+                Licenses.name.lowercase() -> Licenses
                 else -> Home
             }
         }

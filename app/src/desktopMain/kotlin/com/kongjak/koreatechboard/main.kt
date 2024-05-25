@@ -45,7 +45,8 @@ fun main() = application {
             var restartRequired by remember { mutableStateOf(false) }
             var downloading by remember { mutableStateOf(0F) }
             var initialized by remember { mutableStateOf(false) }
-            val bundleLocation = System.getProperty("compose.application.resources.dir")?.let { File(it) } ?: File(".")
+            val bundleLocation =
+                System.getProperty("compose.application.resources.dir")?.let { File(it) } ?: File(".")
 
             LaunchedEffect(Unit) {
                 withContext(Dispatchers.IO) {
@@ -115,3 +116,4 @@ fun main() = application {
         }
     }
 }
+
