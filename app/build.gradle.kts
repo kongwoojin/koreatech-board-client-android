@@ -44,6 +44,7 @@ kotlin {
             implementation(libs.accompanist.permissions)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.browser)
+            implementation(libs.androidx.webkit)
             implementation(libs.firebase.analytics)
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.messaging)
@@ -100,6 +101,8 @@ kotlin {
             implementation(compose.desktop.currentOs)
 
             implementation(libs.compose.material3.desktop)
+            implementation(libs.coroutine.swing)
+            implementation(libs.kcef)
             implementation(libs.ktor.engine.cio)
             implementation(libs.sqldelight.sqlite.driver)
         }
@@ -170,5 +173,17 @@ compose.desktop {
     }
 }
 
-dependencies {
+afterEvaluate {
+    tasks.withType<JavaExec> {
+        jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+        jvmArgs(
+            "--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED"
+        )
+
+        if (System.getProperty("os.name").contains("Mac")) {
+            jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
+        }
+    }
 }

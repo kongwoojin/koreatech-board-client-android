@@ -24,11 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.kongjak.koreatechboard.ui.components.dialog.BasicDialog
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ListPreference(
     modifier: Modifier = Modifier,
@@ -55,7 +53,6 @@ fun ListPreference(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ListPreference(
     modifier: Modifier = Modifier,
@@ -83,7 +80,6 @@ fun ListPreference(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ListPreference(
     modifier: Modifier = Modifier,
@@ -111,7 +107,6 @@ fun ListPreference(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ListPreference(
     modifier: Modifier = Modifier,
@@ -140,7 +135,7 @@ fun ListPreference(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListPreferenceDialog(
     zippedList: List<Pair<StringResource, Any>>,

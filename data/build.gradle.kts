@@ -29,8 +29,6 @@ kotlin {
         commonMain.dependencies {
             api(project(":domain"))
 
-            api(libs.compose.webview.multiplatform)
-
             implementation(libs.coroutine.core)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.serialization)
@@ -42,8 +40,7 @@ kotlin {
             implementation(libs.paging.common)
             implementation(libs.sqldelight.coroutines.extensions)
 
-
-            implementation("com.benasher44:uuid:0.8.4")
+            implementation(libs.uuid)
         }
     }
 }

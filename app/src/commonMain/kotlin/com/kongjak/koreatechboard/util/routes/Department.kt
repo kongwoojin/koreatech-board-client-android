@@ -12,10 +12,8 @@ import koreatech_board.app.generated.resources.department_mechatronics
 import koreatech_board.app.generated.resources.department_mse
 import koreatech_board.app.generated.resources.department_school
 import koreatech_board.app.generated.resources.department_sim
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 
-@OptIn(ExperimentalResourceApi::class)
 sealed class Department(val name: String, val stringResource: StringResource, val boards: List<BoardItem>) {
     object School : Department("school", Res.string.department_school, schoolBoards)
     object Dorm : Department("dorm", Res.string.department_dorm, dormBoards)

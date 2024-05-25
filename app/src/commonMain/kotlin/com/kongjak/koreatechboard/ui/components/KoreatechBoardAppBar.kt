@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.app_name
 import koreatech_board.app.generated.resources.content_description_back
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
 data class KoreatechBoardAppBarAction(
@@ -24,7 +23,7 @@ data class KoreatechBoardAppBarAction(
     val contentDescription: String
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KoreatechBoardAppBar(
     title: String = stringResource(Res.string.app_name),

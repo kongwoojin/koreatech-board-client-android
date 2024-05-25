@@ -14,10 +14,8 @@ import koreatech_board.app.generated.resources.route_home
 import koreatech_board.app.generated.resources.route_new_notice
 import koreatech_board.app.generated.resources.route_search
 import koreatech_board.app.generated.resources.route_settings
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 
-@OptIn(ExperimentalResourceApi::class)
 sealed class MainRoute(val name: String, val stringResource: StringResource, val icon: ImageVector) {
     data object Home : MainRoute("Home", Res.string.route_home, Icons.Filled.Home)
     data object Board : MainRoute("Board", Res.string.route_board, Icons.AutoMirrored.Filled.List)

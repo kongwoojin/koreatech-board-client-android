@@ -16,10 +16,8 @@ import koreatech_board.app.generated.resources.ic_bottom_navigation_notice
 import koreatech_board.app.generated.resources.ic_bottom_navigation_pds
 import koreatech_board.app.generated.resources.ic_bottom_navigation_scholar
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
 
-@OptIn(ExperimentalResourceApi::class)
 sealed class BoardItem(
     val stringResource: StringResource,
     val painterResource: DrawableResource,

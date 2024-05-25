@@ -30,7 +30,6 @@ import com.kongjak.koreatechboard.ui.notice.Notice
 import com.kongjak.koreatechboard.ui.search.SearchScreen
 import com.kongjak.koreatechboard.ui.settings.SettingsScreen
 import com.kongjak.koreatechboard.util.routes.MainRoute
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
 val items = listOf(
@@ -114,7 +113,6 @@ fun NavigationGraph(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun KoreatechBoardNavigationBar(
     navController: NavHostController
@@ -161,7 +159,6 @@ fun KoreatechBoardNavigationBar(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun KoreatechBoardNavigationRail(
     navController: NavHostController

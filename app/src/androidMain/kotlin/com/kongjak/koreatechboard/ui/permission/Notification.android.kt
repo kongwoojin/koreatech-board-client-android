@@ -23,7 +23,6 @@ import koreatech_board.app.generated.resources.permission_notification_denied
 import koreatech_board.app.generated.resources.permission_notification_request_content
 import koreatech_board.app.generated.resources.permission_notification_request_rationale_content
 import koreatech_board.app.generated.resources.permission_notification_request_title
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -61,7 +60,6 @@ actual fun isNotificationPermissionGranted(): Boolean {
     return rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS).status.isGranted
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun RationaleDialog() {
     val context = LocalContext.current
@@ -85,7 +83,6 @@ private fun RationaleDialog() {
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun PermissionDialog(content: () -> Unit) {
     val context = LocalContext.current

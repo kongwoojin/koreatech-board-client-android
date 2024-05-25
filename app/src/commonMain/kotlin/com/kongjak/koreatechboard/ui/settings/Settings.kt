@@ -52,7 +52,6 @@ import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summ
 import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_dorm
 import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_school
 import koreatech_board.app.generated.resources.setting_user_department_title
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 

@@ -2,30 +2,16 @@ package com.kongjak.koreatechboard.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.multiplatform.webview.web.rememberWebViewStateWithHTMLData
 
 @Composable
-fun WebView(
+expect fun WebView(
     modifier: Modifier = Modifier,
     html: String,
     baseUrl: String,
     loading: @Composable () -> Unit = {}
-) {
-    val webViewState = rememberWebViewStateWithHTMLData(
-        data = html
-    )
+)
 
-    if (webViewState.isLoading) {
-        loading()
-    }
-
-    com.multiplatform.webview.web.WebView(
-        state = webViewState,
-        modifier = modifier
-    )
-}
-
-private fun fullHtml(html: String): String {
+fun fullHtml(html: String): String {
     return """
         <html>
         <head>

@@ -41,7 +41,6 @@ import koreatech_board.app.generated.resources.error_retry
 import koreatech_board.app.generated.resources.error_server_down
 import koreatech_board.app.generated.resources.network_unavailable
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
@@ -78,7 +77,7 @@ fun HomeScreen(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BoardInHome(
     department: Department,
@@ -137,7 +136,6 @@ fun BoardInHome(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ArticleList(
     department: Department,

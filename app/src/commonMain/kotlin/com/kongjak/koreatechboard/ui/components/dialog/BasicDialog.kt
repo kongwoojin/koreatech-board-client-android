@@ -21,7 +21,6 @@ import androidx.compose.ui.window.Dialog
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.dialog_confirm
 import koreatech_board.app.generated.resources.dialog_dismiss
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -113,7 +112,7 @@ fun BasicDialog(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BasicDialog(
     modifier: Modifier = Modifier,

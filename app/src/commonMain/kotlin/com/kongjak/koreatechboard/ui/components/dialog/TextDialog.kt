@@ -6,10 +6,8 @@ import androidx.compose.runtime.Composable
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.dialog_confirm
 import koreatech_board.app.generated.resources.dialog_dismiss
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun TextDialog(
     title: String,
