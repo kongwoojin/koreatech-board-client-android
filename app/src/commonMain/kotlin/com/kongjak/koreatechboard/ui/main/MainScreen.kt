@@ -141,7 +141,15 @@ fun MainScreen(
                     isDarkTheme = isDarkTheme,
                     initDepartment = initDepartment,
                     userDepartment = userDepartment,
-                    setExternalLink = setExternalLink
+                    setExternalLink = setExternalLink,
+                    showSnackbar = { message ->
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = message,
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
                 )
             }
         }

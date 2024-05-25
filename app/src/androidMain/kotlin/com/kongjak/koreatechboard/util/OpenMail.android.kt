@@ -1,10 +1,11 @@
 package com.kongjak.koreatechboard.util
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-actual fun openMail(context: Any, address: String, subject: String, body: String) {
+actual fun openMail(context: Any, address: String, subject: String, body: String, exception: (message: String) -> Unit) {
     val appContext = context as Context
 
     val mailIntent = Intent(Intent.ACTION_SENDTO)
@@ -21,5 +22,9 @@ actual fun openMail(context: Any, address: String, subject: String, body: String
         Intent.EXTRA_TEXT,
         body
     )
-    appContext.startActivity(mailIntent)
+    try {
+        appContext.startActivity(mailIntent)
+    } catch (e: ActivityNotFoundException) {
+        exception("Error opening mail client: ${e.message}")
+    }
 }

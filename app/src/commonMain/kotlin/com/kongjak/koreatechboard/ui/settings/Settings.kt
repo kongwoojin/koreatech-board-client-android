@@ -83,7 +83,8 @@ val darkThemeString = listOf(
 @Composable
 fun SettingsScreen(
     settingsViewModel: SettingsViewModel = koinViewModel(),
-    openLicenses: () -> Unit
+    openLicenses: () -> Unit,
+    showSnackbar: (message: String) -> Unit
 ) {
     val context = LocalPlatformContext.current
     val uriHandler = LocalUriHandler.current
@@ -223,10 +224,13 @@ fun SettingsScreen(
 
             Preference(title = stringResource(Res.string.setting_enquiry_mail_title)) {
                 openMail(
-                    context,
-                    mailAddress,
-                    mailSubject,
-                    mailText
+                    context = context,
+                    address = mailAddress,
+                    subject = mailSubject,
+                    body = mailText,
+                    exception = { message ->
+                        showSnackbar(message)
+                    }
                 )
             }
         }

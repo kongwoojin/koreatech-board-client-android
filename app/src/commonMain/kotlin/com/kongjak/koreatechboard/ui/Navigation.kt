@@ -48,7 +48,8 @@ fun NavigationGraph(
     isDarkTheme: Boolean,
     initDepartment: Int,
     userDepartment: Int,
-    setExternalLink: (String) -> Unit
+    setExternalLink: (String) -> Unit,
+    showSnackbar: (message: String) -> Unit
 ) {
     NavHost(
         modifier = modifier,
@@ -78,7 +79,8 @@ fun NavigationGraph(
             SettingsScreen(
                 openLicenses = {
                     navController.navigate(MainRoute.Licenses.name)
-                }
+                },
+                showSnackbar = showSnackbar
             )
         }
         composableWithAnimation(

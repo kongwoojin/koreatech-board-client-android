@@ -6,7 +6,7 @@ import java.net.URI
 import java.net.URISyntaxException
 import java.net.URLEncoder
 
-actual fun openMail(context: Any, address: String, subject: String, body: String) {
+actual fun openMail(context: Any, address: String, subject: String, body: String, exception: (message: String) -> Unit) {
     val encodedSubject = URLEncoder.encode(subject, "UTF-8").replace("+", "%20")
     val encodedBody = URLEncoder.encode(body, "UTF-8").replace("+", "%20")
     val mailto = "mailto:$address?subject=$encodedSubject&body=$encodedBody"
@@ -16,13 +16,12 @@ actual fun openMail(context: Any, address: String, subject: String, body: String
         try {
             val mailtoURI = URI(mailto)
             Desktop.getDesktop().mail(mailtoURI)
-            println("Mail client opened successfully.")
         } catch (e: URISyntaxException) {
-            println("Error opening mail client: ${e.message}")
+            exception("Error opening mail client: ${e.message}")
         } catch (e: IOException) {
-            println("Error opening mail client: ${e.message}")
+            exception("Error opening mail client: ${e.message}")
         }
     } else {
-        println("Desktop or mail action is not supported on this platform.")
+        exception("Desktop or mail action is not supported on this platform.")
     }
 }
