@@ -17,11 +17,6 @@ kotlin {
     jvm("desktop")
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.coroutine.android)
-            implementation(libs.paging.androidx.compose)
-        }
-
         commonMain.dependencies {
             implementation(libs.koin.core)
             implementation(libs.paging.common)
