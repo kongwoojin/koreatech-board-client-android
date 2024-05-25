@@ -207,25 +207,25 @@ fun NavGraphBuilder.composableWithAnimation(
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(700)
+                animationSpec = tween(300)
             )
         },
         exitTransition = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(700)
+                animationSpec = tween(300)
             )
         },
         popEnterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(700)
+                animationSpec = tween(300)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(700)
+                animationSpec = tween(300)
             )
         },
         content = content
