@@ -25,6 +25,7 @@ import com.kongjak.koreatechboard.di.databaseModule
 import com.kongjak.koreatechboard.di.networkModule
 import com.kongjak.koreatechboard.di.platformModule
 import com.kongjak.koreatechboard.di.useCaseModule
+import com.kongjak.koreatechboard.di.viewModelModule
 import dev.datlag.kcef.KCEF
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -37,7 +38,7 @@ fun main() = application {
 
     Window(onCloseRequest = ::exitApplication, state = windowState, title = "Koreatech Board") {
         KoinApplication(application = {
-            modules(appModule(), useCaseModule(), networkModule(), platformModule(), databaseModule())
+            modules(appModule(), useCaseModule(), networkModule(), platformModule(), databaseModule(), viewModelModule())
         }) {
             val screenWidth = windowState.size.width.value.dp
             val padding = screenWidth / 16

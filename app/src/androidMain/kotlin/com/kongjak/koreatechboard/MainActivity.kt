@@ -8,6 +8,7 @@ import com.kongjak.koreatechboard.di.databaseModule
 import com.kongjak.koreatechboard.di.networkModule
 import com.kongjak.koreatechboard.di.platformModule
 import com.kongjak.koreatechboard.di.useCaseModule
+import com.kongjak.koreatechboard.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 import org.koin.core.context.stopKoin
@@ -20,7 +21,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             KoinApplication(application = {
-                modules(appModule(), useCaseModule(), networkModule(), platformModule(), databaseModule(), module { androidContext(this@MainActivity) })
+                modules(
+                    appModule(),
+                    useCaseModule(),
+                    networkModule(),
+                    platformModule(),
+                    databaseModule(),
+                    viewModelModule(),
+                    module { androidContext(this@MainActivity) })
             }) {
                 App()
             }

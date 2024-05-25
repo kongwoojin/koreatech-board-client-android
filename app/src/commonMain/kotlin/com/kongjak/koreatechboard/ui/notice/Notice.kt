@@ -51,14 +51,16 @@ import koreatech_board.app.generated.resources.content_description_delete
 import koreatech_board.app.generated.resources.department_and_board
 import koreatech_board.app.generated.resources.no_new_notice
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @ExperimentalMaterial3Api
 @Composable
 fun Notice(
     modifier: Modifier = Modifier,
     onArticleClick: (Uuid, String) -> Unit,
-    noticeViewModel: NoticeViewModel = koinInject()
+    noticeViewModel: NoticeViewModel = koinViewModel()
 ) {
     noticeViewModel.collectSideEffect {
         noticeViewModel.handleSideEffect(it)

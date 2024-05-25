@@ -16,16 +16,17 @@ import com.kongjak.koreatechboard.ui.main.MainScreen
 import com.kongjak.koreatechboard.ui.main.MainViewModel
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.util.routes.MainRoute
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, KoinExperimentalAPI::class)
 @Composable
 fun App() {
     val windowSizeClass = calculateWindowSizeClass()
     val isLargeScreen = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
     val startDestination by remember { mutableStateOf(MainRoute.Home.name) }
 
-    val mainViewModel: MainViewModel = koinInject()
+    val mainViewModel: MainViewModel = koinViewModel()
     mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
 
     val uiState by mainViewModel.collectAsState()

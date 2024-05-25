@@ -45,6 +45,7 @@ import com.kongjak.koreatechboard.ui.main.MainViewModel
 import com.kongjak.koreatechboard.ui.notice.NoticeViewModel
 import com.kongjak.koreatechboard.ui.search.SearchViewModel
 import com.kongjak.koreatechboard.ui.settings.SettingsViewModel
+import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -58,56 +59,6 @@ fun appModule() = module {
     single<ArticleRepository> { ArticleRepositoryImpl(get()) }
     single<SettingsRepository> { SettingsRepositoryImpl(get()) }
     single<DatabaseRepository> { DatabaseRepositoryImpl(get(), get()) }
-
-    factory {
-        MainViewModel(
-            getUserDepartmentUseCase = get(),
-            getInitDepartmentUseCase = get(),
-            getDynamicThemeUseCase = get(),
-            getDarkThemeUseCase = get()
-        )
-    }
-    factory {
-        HomeBoardViewModel(
-            getBoardMinimumUseCase = get()
-        )
-    }
-    factory {
-        HomeViewModel(get())
-    }
-    factory {
-        ArticleViewModel(
-            getArticleUseCase = get()
-        )
-    }
-    factory {
-        BoardViewModel(get())
-    }
-    factory {
-        SettingsViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
-        )
-    }
-    factory {
-        NoticeViewModel(get(), get(), get(), get())
-    }
-    factory {
-        SearchViewModel(get())
-    }
 }
 
 fun useCaseModule() = module {
@@ -139,6 +90,17 @@ fun useCaseModule() = module {
 fun networkModule() = module {
     single<API> { APIImpl(get()) }
     single { provideHttpClient() }
+}
+
+fun viewModelModule() = module {
+    viewModelOf(::MainViewModel)
+    viewModelOf(::HomeBoardViewModel)
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::ArticleViewModel)
+    viewModelOf(::BoardViewModel)
+    viewModelOf(::SettingsViewModel)
+    viewModelOf(::NoticeViewModel)
+    viewModelOf(::SearchViewModel)
 }
 
 expect fun databaseModule(): Module

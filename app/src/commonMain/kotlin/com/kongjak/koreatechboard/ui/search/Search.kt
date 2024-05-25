@@ -26,15 +26,17 @@ import com.kongjak.koreatechboard.ui.board.BoardItem
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.search_no_result
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun SearchScreen(
     department: String,
     board: String,
     title: String,
     onArticleClick: (Uuid, String) -> Unit,
-    searchViewModel: SearchViewModel = koinInject()
+    searchViewModel: SearchViewModel = koinViewModel()
 ) {
     searchViewModel.collectSideEffect {
         searchViewModel.handleSideEffect(it)

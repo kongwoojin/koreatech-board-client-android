@@ -42,11 +42,13 @@ import koreatech_board.app.generated.resources.error_server_down
 import koreatech_board.app.generated.resources.network_unavailable
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel = koinInject(),
+    homeViewModel: HomeViewModel = koinViewModel(),
     onArticleClick: (Uuid, String) -> Unit
 ) {
     homeViewModel.collectSideEffect {
@@ -136,6 +138,7 @@ fun BoardInHome(
     }
 }
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun ArticleList(
     department: Department,
@@ -144,7 +147,7 @@ fun ArticleList(
 ) {
     val key by remember { mutableStateOf(department.boards[page].board) }
 
-    val homeBoardViewModel: HomeBoardViewModel = koinInject()
+    val homeBoardViewModel = koinViewModel<HomeBoardViewModel>(key = department.name)
 
     homeBoardViewModel.collectSideEffect {
         homeBoardViewModel.handleSideEffect(it)

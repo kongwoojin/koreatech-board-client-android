@@ -76,7 +76,8 @@ import koreatech_board.app.generated.resources.search_dialog_title
 import koreatech_board.app.generated.resources.search_more_letter
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -190,7 +191,7 @@ fun Board(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, KoinExperimentalAPI::class)
 @Composable
 fun BoardContent(
     department: Department,
@@ -198,8 +199,7 @@ fun BoardContent(
     onArticleClick: (Uuid, String) -> Unit,
     onSearch: (String, String, String) -> Unit
 ) {
-    val boardViewModel =
-        koinInject<BoardViewModel>()
+    val boardViewModel = koinViewModel<BoardViewModel>(key = "${department.name}:${department.boards[page].board}")
 
     boardViewModel.collectSideEffect { boardViewModel.handleSideEffect(it) }
 

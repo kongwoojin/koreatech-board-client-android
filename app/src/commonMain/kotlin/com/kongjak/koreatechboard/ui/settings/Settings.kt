@@ -53,7 +53,8 @@ import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summ
 import koreatech_board.app.generated.resources.setting_subscribe_new_notice_summary_school
 import koreatech_board.app.generated.resources.setting_user_department_title
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
 val deptList = listOf(
     Department.Cse,
@@ -78,9 +79,10 @@ val darkThemeString = listOf(
     Res.string.setting_dark_theme_dark
 )
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun SettingsScreen(
-    settingsViewModel: SettingsViewModel = koinInject(),
+    settingsViewModel: SettingsViewModel = koinViewModel(),
     openLicenses: () -> Unit
 ) {
     val context = LocalPlatformContext.current
