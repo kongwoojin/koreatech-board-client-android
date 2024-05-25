@@ -2,11 +2,12 @@ package com.kongjak.koreatechboard.util
 
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
+import com.kongjak.koreatechboard.BuildConfig
 
 actual fun subscribeFirebaseTopic(topic: String): Boolean {
     var isSuccess = true
 
-    val newTopic = if (true) {
+    val newTopic = if (BuildConfig.BUILD_TYPE == "debug") {
         "development_$topic"
     } else {
         topic
@@ -26,7 +27,7 @@ actual fun subscribeFirebaseTopic(topic: String): Boolean {
 actual fun unsubscribeFirebaseTopic(topic: String): Boolean {
     var isSuccess = true
 
-    val newTopic = if (true) {
+    val newTopic = if (BuildConfig.BUILD_TYPE == "debug") {
         "development_$topic"
     } else {
         topic
