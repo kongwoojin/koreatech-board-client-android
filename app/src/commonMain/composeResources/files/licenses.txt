@@ -65,18 +65,6 @@ Android Graphics Path (1.0.0-beta02) - The Apache Software License, Version 2.0
 Query segment data for android.graphics.Path objects
 https://developer.android.com/jetpack/androidx/releases/graphics#1.0.0-beta02
 
-Android Lifecycle Kotlin Extensions (2.6.2) - The Apache Software License, Version 2.0
-Kotlin extensions for 'lifecycle' artifact
-https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.2
-
-Android Lifecycle Runtime (2.6.2) - The Apache Software License, Version 2.0
-Android Lifecycle Runtime
-https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.2
-
-Android Lifecycle-Common (2.6.2) - The Apache Software License, Version 2.0
-Android Lifecycle-Common
-https://developer.android.com/jetpack/androidx/releases/lifecycle#2.6.2
-
 Android Preferences DataStore (1.0.0) - The Apache Software License, Version 2.0
 Android Preferences DataStore
 https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0
@@ -132,10 +120,6 @@ http://developer.android.com/tools/extras/support-library.html
 Android Support Library Drawer Layout (1.1.1) - The Apache Software License, Version 2.0
 The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.
 https://developer.android.com/jetpack/androidx
-
-Android Support Library fragment (1.6.2) - The Apache Software License, Version 2.0
-The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.
-https://developer.android.com/jetpack/androidx/releases/fragment#1.6.2
 
 Android Support Library Interpolators (1.0.0) - The Apache Software License, Version 2.0
 The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.
@@ -416,9 +400,13 @@ firebase-messaging-ktx (24.0.0) - The Apache Software License, Version 2.0
 
 firebase-sessions (2.0.0) - The Apache Software License, Version 2.0
 
-Fragment Kotlin Extensions (1.6.2) - The Apache Software License, Version 2.0
+fragment (1.7.1) - The Apache Software License, Version 2.0
+The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later.
+https://developer.android.com/jetpack/androidx/releases/fragment#1.7.1
+
+Fragment Kotlin Extensions (1.7.1) - The Apache Software License, Version 2.0
 Kotlin extensions for 'fragment' artifact
-https://developer.android.com/jetpack/androidx/releases/fragment#1.6.2
+https://developer.android.com/jetpack/androidx/releases/fragment#1.7.1
 
       Guava InternalFutureFailureAccess and InternalFutures (1.0.1) - Apache 2.0
       Contains
@@ -475,11 +463,15 @@ Koin (3.6.0-Beta4) - The Apache Software License, Version 2.0
 KOIN - Kotlin simple Dependency Injection Framework
 https://insert-koin.io/
 
+Koin (3.6.0-Beta4) - The Apache Software License, Version 2.0
+KOIN - Kotlin simple Dependency Injection Framework
+https://insert-koin.io/
+
 Koin (1.2.0-Beta4) - The Apache Software License, Version 2.0
 KOIN - Kotlin simple Dependency Injection Framework
 https://insert-koin.io/
 
-koin-android (3.5.3) - The Apache Software License, Version 2.0
+Koin (1.2.0-Beta4) - The Apache Software License, Version 2.0
 KOIN - Kotlin simple Dependency Injection Framework
 https://insert-koin.io/
 
@@ -491,7 +483,7 @@ Kotlin Stdlib (1.9.24) - The Apache License, Version 2.0
 Kotlin Standard Library
 https://kotlinlang.org/
 
-Kotlin Stdlib Jdk7 (1.9.21) - The Apache License, Version 2.0
+Kotlin Stdlib Jdk7 (1.9.10) - The Apache License, Version 2.0
 Kotlin Standard Library JDK 7 extension
 https://kotlinlang.org/
 
@@ -607,8 +599,16 @@ Lifecycle Runtime (2.8.0) - The Apache Software License, Version 2.0
 Android Lifecycle Runtime
 https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0
 
+Lifecycle Runtime (2.8.0) - The Apache Software License, Version 2.0
+Android Lifecycle Runtime
+https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0
+
 Lifecycle Runtime Compose (2.8.0) - The Apache Software License, Version 2.0
 Compose integration with Lifecycle
+https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0
+
+Lifecycle ViewModel (2.8.0) - The Apache Software License, Version 2.0
+Android Lifecycle ViewModel
 https://developer.android.com/jetpack/androidx/releases/lifecycle#2.8.0
 
 Lifecycle ViewModel (2.8.0) - The Apache Software License, Version 2.0
