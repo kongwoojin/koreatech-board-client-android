@@ -167,6 +167,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            modules("java.sql")
             packageName = "com.kongjak.koreatechboard"
             packageVersion = "1.0.0"
         }
