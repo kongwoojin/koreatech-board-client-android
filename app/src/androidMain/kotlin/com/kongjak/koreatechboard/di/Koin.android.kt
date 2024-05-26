@@ -6,6 +6,7 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.kongjak.koreatechboard.data.AppDatabase
 import com.kongjak.koreatechboard.data.dao.ArticleDao
 import com.kongjak.koreatechboard.data.dao.ArticleDaoImpl
+import com.kongjak.koreatechboard.service.FCMService
 import com.russhwolf.settings.ObservableSettings
 import com.russhwolf.settings.SharedPreferencesSettings
 import org.koin.android.ext.koin.androidContext
@@ -23,6 +24,7 @@ actual fun databaseModule() = module {
 
 actual fun platformModule() = module {
     single { createObservableSettings(get()) }
+    single { FCMService() }
 }
 
 private fun createObservableSettings(context: Context): ObservableSettings {

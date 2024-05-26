@@ -9,8 +9,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.kongjak.koreatechboard.ui.main.MainScreen
 import com.kongjak.koreatechboard.ui.main.MainViewModel
@@ -21,10 +19,11 @@ import org.koin.core.annotation.KoinExperimentalAPI
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, KoinExperimentalAPI::class)
 @Composable
-fun App() {
+fun App(
+    startDestination: String = MainRoute.Home.name
+) {
     val windowSizeClass = calculateWindowSizeClass()
     val isLargeScreen = windowSizeClass.widthSizeClass > WindowWidthSizeClass.Compact
-    val startDestination by remember { mutableStateOf(MainRoute.Home.name) }
 
     val mainViewModel: MainViewModel = koinViewModel()
     mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }

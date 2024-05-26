@@ -6,16 +6,7 @@ import androidx.activity.compose.setContent
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.crashlytics.setCustomKeys
 import com.google.firebase.ktx.Firebase
-import com.kongjak.koreatechboard.di.appModule
-import com.kongjak.koreatechboard.di.databaseModule
-import com.kongjak.koreatechboard.di.networkModule
-import com.kongjak.koreatechboard.di.platformModule
-import com.kongjak.koreatechboard.di.useCaseModule
-import com.kongjak.koreatechboard.di.viewModelModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.compose.KoinApplication
-import org.koin.core.context.stopKoin
-import org.koin.dsl.module
+import com.kongjak.koreatechboard.util.routes.MainRoute
 
 class MainActivity : ComponentActivity() {
 
@@ -27,24 +18,16 @@ class MainActivity : ComponentActivity() {
             key("build_type", BuildConfig.BUILD_TYPE)
         }
 
-        setContent {
-            KoinApplication(application = {
-                modules(
-                    appModule(),
-                    useCaseModule(),
-                    networkModule(),
-                    platformModule(),
-                    databaseModule(),
-                    viewModelModule(),
-                    module { androidContext(this@MainActivity) })
-            }) {
-                App()
-            }
-        }
-    }
+        val defaultScreen = intent.getStringExtra("screen")
 
-    override fun onDestroy() {
-        super.onDestroy()
-        stopKoin()
+        setContent {
+            App(
+                startDestination = if (defaultScreen != null) {
+                    MainRoute.valueOf(defaultScreen).name
+                } else {
+                    MainRoute.Home.name
+                }
+            )
+        }
     }
 }
