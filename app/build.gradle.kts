@@ -170,8 +170,20 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             modules("java.sql")
-            packageName = "com.kongjak.koreatechboard"
-            packageVersion = "1.0.0"
+            packageName = "Koreatech Board"
+            packageVersion = libs.versions.project.version.name.get()
+            appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
+            includeAllModules = true
+
+            macOS {
+                iconFile.set(project.file("icon.icns"))
+            }
+            windows {
+                iconFile.set(project.file("icon.ico"))
+            }
+            linux {
+                iconFile.set(project.file("icon.png"))
+            }
         }
     }
 }
