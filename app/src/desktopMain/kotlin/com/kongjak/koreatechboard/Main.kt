@@ -31,7 +31,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.compose.KoinApplication
 import java.io.File
-import java.nio.file.Files
 import kotlin.math.max
 
 fun main() = application {
@@ -68,10 +67,10 @@ fun main() = application {
                             cachePath = File(bundleLocation, "cache").absolutePath
                         }
                     }, onError = {
-                        errorMessage = it?.message ?: "Unknown error"
-                    }, onRestartRequired = {
-                        restartRequired = true
-                    })
+                            errorMessage = it?.message ?: "Unknown error"
+                        }, onRestartRequired = {
+                            restartRequired = true
+                        })
                 }
             }
 
@@ -94,7 +93,7 @@ fun main() = application {
                     ) {
                         LinearProgressIndicator(
                             progress = { downloading / 100 },
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth()
                         )
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
@@ -119,4 +118,3 @@ fun main() = application {
         }
     }
 }
-

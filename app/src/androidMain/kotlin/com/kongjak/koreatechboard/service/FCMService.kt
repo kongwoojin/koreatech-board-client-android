@@ -21,7 +21,6 @@ import koreatech_board.app.generated.resources.department_notification_channel_i
 import koreatech_board.app.generated.resources.department_notification_channel_name
 import koreatech_board.app.generated.resources.dorm_notification_channel_id
 import koreatech_board.app.generated.resources.dorm_notification_channel_name
-import koreatech_board.app.generated.resources.new_notice_notification_content
 import koreatech_board.app.generated.resources.new_notice_notification_title
 import koreatech_board.app.generated.resources.school_notification_channel_id
 import koreatech_board.app.generated.resources.school_notification_channel_name

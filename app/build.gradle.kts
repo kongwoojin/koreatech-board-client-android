@@ -199,7 +199,8 @@ afterEvaluate {
     tasks.withType<JavaExec> {
         jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
         jvmArgs(
-            "--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED"
+            "--add-opens",
+            "java.desktop/java.awt.peer=ALL-UNNAMED"
         )
 
         if (System.getProperty("os.name").contains("Mac")) {
@@ -221,4 +222,12 @@ licenseReport {
     copyJsonReportToAssets = false
     copyTextReportToAssets = false
     useVariantSpecificAssetDirs = false
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
+        }
+    }
 }

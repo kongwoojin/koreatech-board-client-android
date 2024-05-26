@@ -89,3 +89,11 @@ sqldelight {
         }
     }
 }
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
+        }
+    }
+}

@@ -20,7 +20,6 @@ actual fun subscribeFirebaseTopic(topic: String): Boolean {
             }
         }
 
-
     return isSuccess
 }
 
