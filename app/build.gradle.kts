@@ -172,17 +172,24 @@ compose.desktop {
             modules("java.sql")
             packageName = "Koreatech Board"
             packageVersion = libs.versions.project.version.name.get()
+            description = "A desktop client of Koreatech Board"
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
             includeAllModules = true
+            licenseFile.set(rootProject.file("LICENSE"))
 
             macOS {
                 iconFile.set(project.file("icon.icns"))
             }
             windows {
                 iconFile.set(project.file("icon.ico"))
+                perUserInstall = true
+                shortcut = true
+                // See: https://wixtoolset.org/docs/v3/howtos/general/generate_guids/
+                upgradeUuid = "d9530008-389b-40e5-85d3-89cbfb59eaf1"
             }
             linux {
                 iconFile.set(project.file("icon.png"))
+                shortcut = true
             }
         }
     }
