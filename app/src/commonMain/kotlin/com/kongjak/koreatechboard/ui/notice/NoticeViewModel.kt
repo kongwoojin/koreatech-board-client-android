@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.notice
 
 import androidx.lifecycle.viewModelScope
+import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.domain.usecase.database.DeleteNewNoticeUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.GetAllNewNoticesUseCase
 import com.kongjak.koreatechboard.domain.usecase.database.UpdateNewNoticeReadUseCase
@@ -14,7 +15,6 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
-import java.util.*
 
 class NoticeViewModel(
     private val getAllNewNoticesUseCase: GetAllNewNoticesUseCase,
@@ -46,13 +46,13 @@ class NoticeViewModel(
         }
     }
 
-    fun updateRead(uuid: UUID, read: Boolean) {
+    fun updateRead(uuid: Uuid, read: Boolean) {
         intent {
             postSideEffect(NoticeSideEffect.UpdateRead(uuid, read))
         }
     }
 
-    fun deleteNotice(uuid: UUID) {
+    fun deleteNotice(uuid: Uuid) {
         intent {
             postSideEffect(NoticeSideEffect.DeleteNotice(uuid))
         }
