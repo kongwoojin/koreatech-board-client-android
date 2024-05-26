@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.compose.KoinApplication
 import java.io.File
+import java.nio.file.Files
 import kotlin.math.max
 
 fun main() = application {
@@ -46,6 +47,7 @@ fun main() = application {
             var restartRequired by remember { mutableStateOf(false) }
             var downloading by remember { mutableStateOf(0F) }
             var initialized by remember { mutableStateOf(false) }
+            var errorMessage by remember { mutableStateOf("") }
             val bundleLocation =
                 System.getProperty("compose.application.resources.dir")?.let { File(it) } ?: File(".")
 
@@ -63,10 +65,10 @@ fun main() = application {
                         }
                         release("jbr-release-17.0.10b1087.23")
                         settings {
-                            cachePath = File("cache").absolutePath
+                            cachePath = File(bundleLocation, "cache").absolutePath
                         }
                     }, onError = {
-                        it?.printStackTrace()
+                        errorMessage = it?.message ?: "Unknown error"
                     }, onRestartRequired = {
                         restartRequired = true
                     })
@@ -79,7 +81,7 @@ fun main() = application {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Restart required.")
+                    Text(text = errorMessage)
                 }
             } else {
                 if (initialized) {
