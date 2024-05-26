@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.benasher44.uuid.Uuid
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.BuildConfig
@@ -15,22 +16,14 @@ import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleNewNoticesUseCase
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
-import koreatech_board.app.generated.resources.Res
+import koreatech_board.app.generated.resources.*
 import koreatech_board.app.generated.resources.Res.string
-import koreatech_board.app.generated.resources.department_notification_channel_id
-import koreatech_board.app.generated.resources.department_notification_channel_name
-import koreatech_board.app.generated.resources.dorm_notification_channel_id
-import koreatech_board.app.generated.resources.dorm_notification_channel_name
-import koreatech_board.app.generated.resources.new_notice_notification_title
-import koreatech_board.app.generated.resources.school_notification_channel_id
-import koreatech_board.app.generated.resources.school_notification_channel_name
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.StringResource
 import org.koin.android.ext.android.inject
-import java.util.UUID
 
 class FCMService : FirebaseMessagingService() {
     val insertMultipleNewNoticesUseCase: InsertMultipleNewNoticesUseCase by inject()
@@ -40,7 +33,7 @@ class FCMService : FirebaseMessagingService() {
                 runBlocking {
                     insertMultipleNewNoticesUseCase(
                         message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
-                            ?.map { UUID.fromString(it) } ?: emptyList(),
+                            ?.map { Uuid.fromString(it) } ?: emptyList(),
                         message.data["department"] ?: "school",
                         message.data["board"] ?: "notice"
                     )
@@ -68,20 +61,24 @@ class FCMService : FirebaseMessagingService() {
 
         val channelId = when (department) {
             Department.School -> getString(string.school_notification_channel_id)
-            Department.Dorm -> getString(Res.string.dorm_notification_channel_id)
-            else -> getString(Res.string.department_notification_channel_id)
+            Department.Dorm -> getString(string.dorm_notification_channel_id)
+            else -> getString(string.department_notification_channel_id)
         }
 
         val channelName = when (department) {
-            Department.School -> getString(Res.string.school_notification_channel_name)
-            Department.Dorm -> getString(Res.string.dorm_notification_channel_name)
-            else -> getString(Res.string.department_notification_channel_name)
+            Department.School -> getString(string.school_notification_channel_name)
+            Department.Dorm -> getString(string.dorm_notification_channel_name)
+            else -> getString(string.department_notification_channel_name)
         }
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(getString(Res.string.new_notice_notification_title))
+            .setContentTitle(getString(string.new_notice_notification_title))
             .setContentText(
-                ""
+                getString(
+                    string.new_notice_notification_content,
+                    getString(department.stringResource),
+                    getString(board.stringResource)
+                )
             )
             .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
@@ -109,5 +106,5 @@ class FCMService : FirebaseMessagingService() {
 }
 
 fun getString(resourceId: StringResource, vararg formatArgs: Any): String = runBlocking {
-    org.jetbrains.compose.resources.getString(resourceId, formatArgs)
+    org.jetbrains.compose.resources.getString(resourceId, *formatArgs)
 }
