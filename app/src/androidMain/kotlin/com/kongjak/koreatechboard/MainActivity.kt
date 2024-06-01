@@ -20,6 +20,12 @@ class MainActivity : ComponentActivity() {
             key("build_type", BuildConfig.BUILD_TYPE)
         }
 
+        if (BuildConfig.DEBUG) {
+            crashlytics.setCrashlyticsCollectionEnabled(false)
+        } else {
+            crashlytics.setCrashlyticsCollectionEnabled(true)
+        }
+
         Napier.base(DebugAntilog())
 
         val defaultScreen = intent.getStringExtra("screen")
