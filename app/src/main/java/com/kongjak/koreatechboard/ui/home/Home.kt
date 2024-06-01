@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -150,8 +151,12 @@ fun ArticleList(
 
     val homeBoardViewModel: HomeBoardViewModel = hiltViewModel(key = department.name)
 
+    val context = LocalContext.current
+
     homeBoardViewModel.collectSideEffect {
-        homeBoardViewModel.handleSideEffect(it)
+        homeBoardViewModel.handleSideEffect(it) { stringId ->
+            context.getString(stringId)
+        }
     }
 
     LaunchedEffect(key1 = department.name, key2 = key) {

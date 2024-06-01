@@ -70,6 +70,7 @@ import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import java.net.UnknownHostException
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -230,7 +231,12 @@ fun BoardContent(
 
     Scaffold(
         floatingActionButton = {
-            SearchFAB(department = department, index = page, snackbarHostState = snackbarHostState, onSearch = onSearch)
+            SearchFAB(
+                department = department,
+                index = page,
+                snackbarHostState = snackbarHostState,
+                onSearch = onSearch
+            )
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
@@ -306,25 +312,36 @@ fun BoardContent(
                             when (isNetworkConnected) {
                                 true -> {
                                     when {
-                                        loadState.refresh is LoadState.Error -> {
-                                            val errorMessage =
-                                                (loadState.refresh as LoadState.Error).error.message
-                                            item {
-                                                BoardError(
-                                                    errorMessage
-                                                        ?: stringResource(id = R.string.error_unknown)
-                                                )
+                                        loadState.refresh is LoadState.Error ->
+                                            (loadState.refresh as LoadState.Error).error.let {
+                                                val errorMessage = when (it) {
+                                                    is java.net.SocketTimeoutException,
+                                                    is UnknownHostException -> {
+                                                        context.getString(R.string.error_timeout)
+                                                    }
+
+                                                    else -> (loadState.refresh as LoadState.Error).error.message
+                                                        ?: context.getString(R.string.error_unknown)
+                                                }
+                                                item {
+                                                    BoardError(errorMessage)
+                                                }
                                             }
-                                        }
 
                                         loadState.append is LoadState.Error -> {
-                                            val errorMessage =
-                                                (loadState.append as LoadState.Error).error.message
-                                            item {
-                                                BoardError(
-                                                    errorMessage
-                                                        ?: stringResource(id = R.string.error_unknown)
-                                                )
+                                            (loadState.append as LoadState.Error).error.let {
+                                                val errorMessage = when (it) {
+                                                    is java.net.SocketTimeoutException,
+                                                    is UnknownHostException -> {
+                                                        context.getString(R.string.error_timeout)
+                                                    }
+
+                                                    else -> (loadState.refresh as LoadState.Error).error.message
+                                                        ?: context.getString(R.string.error_unknown)
+                                                }
+                                                item {
+                                                    BoardError(errorMessage)
+                                                }
                                             }
                                         }
                                     }

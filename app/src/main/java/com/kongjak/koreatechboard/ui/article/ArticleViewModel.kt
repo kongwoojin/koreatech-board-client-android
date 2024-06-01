@@ -2,6 +2,7 @@ package com.kongjak.koreatechboard.ui.article
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.usecase.api.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import java.net.UnknownHostException
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,7 +29,7 @@ class ArticleViewModel @Inject constructor(
         }
     }
 
-    fun handleSideEffect(sideEffect: ArticleSideEffect) {
+    fun handleSideEffect(sideEffect: ArticleSideEffect, getString: (Int) -> String) {
         when (sideEffect) {
             is ArticleSideEffect.FetchData -> {
                 viewModelScope.launch {
@@ -71,12 +73,20 @@ class ArticleViewModel @Inject constructor(
                             }
                         }
                     }.onFailure {
+                        val errorMessage = when (it) {
+                            is java.net.SocketTimeoutException,
+                            is UnknownHostException -> {
+                                getString(R.string.error_timeout)
+                            }
+
+                            else -> it.message ?: getString(R.string.error_unknown)
+                        }
                         intent {
                             reduce {
                                 state.copy(
                                     isSuccess = false,
                                     isLoading = false,
-                                    error = it.localizedMessage ?: "",
+                                    error = errorMessage,
                                     isLoaded = true
                                 )
                             }

@@ -7,6 +7,7 @@ import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
 
@@ -31,12 +32,19 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun insertArticleList(
         localArticleList: List<UUID>,
         department: String,
-        board: String
+        board: String,
+        retryCount: Int
     ) {
         localArticleList.map { uuid ->
-            val response = articleRemoteDataSource.getArticle(uuid)
-            response.body()?.mapToArticle(department, board)?.let {
-                databaseLocalDataSource.insertArticle(it)
+            if (retryCount > 3) return
+            try {
+                val response = articleRemoteDataSource.getArticle(uuid)
+                response.body()?.mapToArticle(department, board)?.let {
+                    databaseLocalDataSource.insertArticle(it)
+
+                }
+            } catch (e: IOException) {
+                insertArticleList(localArticleList, department, board, retryCount + 1)
             }
         }
     }

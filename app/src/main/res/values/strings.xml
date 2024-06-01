@@ -88,6 +88,7 @@
     <string name="error_retry">Retry</string>
     <string name="error_no_article">No article!</string>
     <string name="error_unknown">Unknown error!</string>
+    <string name="error_timeout">Cannot fetch data because network is unstable</string>
 
     <!-- ETC -->
     <string name="article_title" translatable="false">%s | %s</string>
