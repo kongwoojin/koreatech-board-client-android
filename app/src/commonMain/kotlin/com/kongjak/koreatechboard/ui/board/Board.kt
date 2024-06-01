@@ -62,12 +62,14 @@ import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.ui.theme.boardItemSubText
 import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.content_description_search
 import koreatech_board.app.generated.resources.error_hide_detail
 import koreatech_board.app.generated.resources.error_minimum_message
 import koreatech_board.app.generated.resources.error_no_article
 import koreatech_board.app.generated.resources.error_show_detail
+import koreatech_board.app.generated.resources.error_timeout
 import koreatech_board.app.generated.resources.error_unknown
 import koreatech_board.app.generated.resources.search_dialog_cancel
 import koreatech_board.app.generated.resources.search_dialog_hint
@@ -75,9 +77,12 @@ import koreatech_board.app.generated.resources.search_dialog_search
 import koreatech_board.app.generated.resources.search_dialog_title
 import koreatech_board.app.generated.resources.search_more_letter
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.getString
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
+import java.net.UnknownHostException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -295,27 +300,39 @@ fun BoardContent(
 
                         lazyPostList.apply {
                             when {
-                                loadState.refresh is LoadState.Error -> {
-                                    val errorMessage =
-                                        (loadState.refresh as LoadState.Error).error.message
-                                    item {
-                                        BoardError(
-                                            errorMessage
-                                                ?: stringResource(Res.string.error_unknown)
-                                        )
-                                    }
-                                }
+                                loadState.refresh is LoadState.Error ->
+                                    (loadState.refresh as LoadState.Error).error.let {
+                                        val errorMessage = when (it.cause) {
+                                            is java.net.SocketTimeoutException,
+                                            is UnknownHostException,
+                                            is HttpRequestTimeoutException -> runBlocking {
+                                                getString(Res.string.error_timeout)
+                                            }
 
-                                loadState.append is LoadState.Error -> {
-                                    val errorMessage =
-                                        (loadState.append as LoadState.Error).error.message
-                                    item {
-                                        BoardError(
-                                            errorMessage
-                                                ?: stringResource(Res.string.error_unknown)
-                                        )
+                                            else -> (loadState.refresh as LoadState.Error).error.message
+                                                ?: runBlocking { getString(Res.string.error_unknown) }
+                                        }
+                                        item {
+                                            BoardError(errorMessage)
+                                        }
                                     }
-                                }
+
+                                loadState.append is LoadState.Error ->
+                                    (loadState.append as LoadState.Error).error.let {
+                                        val errorMessage = when (it.cause) {
+                                            is java.net.SocketTimeoutException,
+                                            is UnknownHostException,
+                                            is HttpRequestTimeoutException -> runBlocking {
+                                                getString(Res.string.error_timeout)
+                                            }
+
+                                            else -> (loadState.append as LoadState.Error).error.message
+                                                ?: runBlocking { getString(Res.string.error_unknown) }
+                                        }
+                                        item {
+                                            BoardError(errorMessage)
+                                        }
+                                    }
                             }
                         }
                     }

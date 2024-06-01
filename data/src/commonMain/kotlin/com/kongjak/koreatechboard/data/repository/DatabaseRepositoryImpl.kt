@@ -9,6 +9,7 @@ import com.kongjak.koreatechboard.data.model.ArticleResponse
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
 import io.ktor.client.call.body
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import kotlinx.coroutines.flow.flow
 
 class DatabaseRepositoryImpl(
@@ -32,13 +33,19 @@ class DatabaseRepositoryImpl(
     override suspend fun insertArticleList(
         localArticleList: List<Uuid>,
         department: String,
-        board: String
+        board: String,
+        retryCount: Int
     ) {
         localArticleList.map { uuid ->
-            val response = articleRemoteDataSource.getArticle(uuid)
-            val data: ArticleResponse = response.body()
-            data.mapToArticle(department, board).let {
-                databaseLocalDataSource.insertArticle(it)
+            if (retryCount > 3) return
+            try {
+                val response = articleRemoteDataSource.getArticle(uuid)
+                val data: ArticleResponse = response.body()
+                data.mapToArticle(department, board).let {
+                    databaseLocalDataSource.insertArticle(it)
+                }
+            } catch (e: HttpRequestTimeoutException) {
+                insertArticleList(localArticleList, department, board, retryCount + 1)
             }
         }
     }

@@ -72,117 +72,128 @@ fun ArticleScreen(
     LaunchedEffect(key1 = Unit) {
         pullToRefreshState.startRefresh()
     }
-
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            data?.let {
-                LaunchedEffect(key1 = Unit) {
-                    setExternalLink(it.articleUrl)
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Text(
-                        text = it.title,
-                        style = MaterialTheme.typography.articleTitle,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp),
-                            horizontalAlignment = Alignment.End
-                        ) {
-                            Text(
-                                text = it.writer,
-                                style = MaterialTheme.typography.articleSubText
-                            )
-                            Text(
-                                text = it.date,
-                                style = MaterialTheme.typography.articleSubText
-                            )
-                        }
+        if (uiState.isSuccess) {
+
+            Column(modifier = Modifier.fillMaxSize()) {
+                data?.let {
+                    LaunchedEffect(key1 = Unit) {
+                        setExternalLink(it.articleUrl)
                     }
-
-                    var baseUrl = Regex(REGEX_BASE_URL).find(it.articleUrl)?.value
-                        ?: "https://www.koreatech.ac.kr"
-
-                    /*
-                     If baseUrl is https://koreatech.ac.kr, replace it with https://www.koreatech.ac.kr
-                     Because, if baseUrl is https://koreatech.ac.kr, okhttp will throw CLEARTEXT communication error
-                     */
-                    if (baseUrl.contains("https://koreatech.ac.kr")) {
-                        baseUrl = "https://www.koreatech.ac.kr"
-                    }
-
-                    HtmlView(
+                    Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(horizontal = 16.dp),
-                        html = it.content,
-                        baseUrl = baseUrl,
-                        isDarkTheme = isDarkTheme,
-                        image = { url, description ->
-                            SubcomposeAsyncImage(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = 16.dp),
-                                model = ImageRequest.Builder(LocalPlatformContext.current)
-                                    .data(url)
-                                    .crossfade(true)
-                                    .build(),
-                                contentDescription = description,
-                                contentScale = ContentScale.FillWidth,
-                                loading = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        CircularProgressIndicator()
-                                    }
-                                }
-                            )
-                        },
-                        webView = { html ->
-                            WebView(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = 16.dp),
-                                html = html,
-                                baseUrl = baseUrl,
-                                loading = {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        CircularProgressIndicator()
-                                    }
-                                }
-                            )
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Text(
+                            text = it.title,
+                            style = MaterialTheme.typography.articleTitle,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                horizontalAlignment = Alignment.End
+                            ) {
+                                Text(
+                                    text = it.writer,
+                                    style = MaterialTheme.typography.articleSubText
+                                )
+                                Text(
+                                    text = it.date,
+                                    style = MaterialTheme.typography.articleSubText
+                                )
+                            }
                         }
-                    )
 
-                    FileText(
-                        modifier = Modifier.padding(16.dp),
-                        files = it.files
-                    )
+                        var baseUrl = Regex(REGEX_BASE_URL).find(it.articleUrl)?.value
+                            ?: "https://www.koreatech.ac.kr"
+
+                        /*
+                         If baseUrl is https://koreatech.ac.kr, replace it with https://www.koreatech.ac.kr
+                         Because, if baseUrl is https://koreatech.ac.kr, okhttp will throw CLEARTEXT communication error
+                         */
+                        if (baseUrl.contains("https://koreatech.ac.kr")) {
+                            baseUrl = "https://www.koreatech.ac.kr"
+                        }
+
+                        HtmlView(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp),
+                            html = it.content,
+                            baseUrl = baseUrl,
+                            isDarkTheme = isDarkTheme,
+                            image = { url, description ->
+                                SubcomposeAsyncImage(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = 16.dp),
+                                    model = ImageRequest.Builder(LocalPlatformContext.current)
+                                        .data(url)
+                                        .crossfade(true)
+                                        .build(),
+                                    contentDescription = description,
+                                    contentScale = ContentScale.FillWidth,
+                                    loading = {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(16.dp),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            CircularProgressIndicator()
+                                        }
+                                    }
+                                )
+                            },
+                            webView = { html ->
+                                WebView(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(horizontal = 16.dp),
+                                    html = html,
+                                    baseUrl = baseUrl,
+                                    loading = {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(16.dp),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            CircularProgressIndicator()
+                                        }
+                                    }
+                                )
+                            }
+                        )
+
+                        FileText(
+                            modifier = Modifier.padding(16.dp),
+                            files = it.files
+                        )
+                    }
                 }
             }
-        }
 
+
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = uiState.error)
+            }
+        }
         PullToRefreshContainer(
             modifier = Modifier.align(Alignment.TopCenter),
             state = pullToRefreshState,
