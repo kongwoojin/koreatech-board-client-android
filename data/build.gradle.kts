@@ -36,6 +36,7 @@ kotlin {
             implementation(libs.ktor.kotlinx.serialization)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.napier)
             implementation(libs.paging.common)
             implementation(libs.sqldelight.coroutines.extensions)
 

@@ -19,6 +19,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.core)
+            implementation(libs.napier)
             implementation(libs.paging.common)
             implementation(libs.uuid)
         }

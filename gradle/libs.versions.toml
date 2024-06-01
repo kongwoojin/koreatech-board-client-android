@@ -2,6 +2,7 @@
 android-compileSdk = "34"
 android-minSdk = "25"
 android-targetSdk = "34"
+napier = "2.7.1"
 project-version-code = "1"
 project-version-name = "1.0.0"
 
@@ -75,6 +76,7 @@ material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "m
 material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "window-size" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
 paging-androidx-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging-androidx" }
 paging-androidx-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-androidx" }

@@ -7,6 +7,8 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.crashlytics.setCustomKeys
 import com.google.firebase.ktx.Firebase
 import com.kongjak.koreatechboard.util.routes.MainRoute
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 
 class MainActivity : ComponentActivity() {
 
@@ -17,6 +19,8 @@ class MainActivity : ComponentActivity() {
         crashlytics.setCustomKeys {
             key("build_type", BuildConfig.BUILD_TYPE)
         }
+
+        Napier.base(DebugAntilog())
 
         val defaultScreen = intent.getStringExtra("screen")
 

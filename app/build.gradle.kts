@@ -92,6 +92,7 @@ kotlin {
             implementation(libs.material3.window.size.multiplatform)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.napier)
             implementation(libs.orbit.core)
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)
