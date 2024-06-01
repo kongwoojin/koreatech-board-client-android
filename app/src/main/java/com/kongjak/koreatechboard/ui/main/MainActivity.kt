@@ -64,13 +64,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (BuildConfig.BUILD_TYPE == "debug") {
-            getFirebaseToken(this)
-        }
-
         val crashlytics = Firebase.crashlytics
         crashlytics.setCustomKeys {
             key("build_type", BuildConfig.BUILD_TYPE)
+        }
+
+        if (BuildConfig.DEBUG) {
+            getFirebaseToken(this)
+            crashlytics.setCrashlyticsCollectionEnabled(false)
+        } else {
+            crashlytics.setCrashlyticsCollectionEnabled(true)
         }
 
         setContent {
