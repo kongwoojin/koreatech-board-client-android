@@ -77,7 +77,6 @@ fun ArticleScreen(
         modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
         if (uiState.isSuccess) {
-
             Column(modifier = Modifier.fillMaxSize()) {
                 data?.let {
                     LaunchedEffect(key1 = Unit) {
@@ -183,8 +182,6 @@ fun ArticleScreen(
                     }
                 }
             }
-
-
         } else {
             Column(
                 modifier = Modifier.fillMaxSize(),
