@@ -98,6 +98,8 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+koreatechboard-application = { id = "com.kongjak.koreatechboard.plugin.application", version = "unspecified" }
+koreatechboard-library = { id = "com.kongjak.koreatechboard.plugin.library", version = "unspecified" }
 koreatechboard-firebase = { id = "com.kongjak.koreatechboard.plugin.firebase", version = "unspecified" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 licenses = { id = "com.jaredsburrows.license", version.ref = "licenses-plugin" }

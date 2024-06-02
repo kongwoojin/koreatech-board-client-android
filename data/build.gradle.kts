@@ -1,11 +1,9 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.koreatechboard.library)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.serialization)
     id("app.cash.sqldelight") version "2.0.2"
-    kotlin("kapt")
 }
 
 kotlin {
@@ -48,13 +46,6 @@ kotlin {
 android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
-    defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
@@ -72,12 +63,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     namespace = "com.kongjak.koreatechboard.data"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }
 
 dependencies {

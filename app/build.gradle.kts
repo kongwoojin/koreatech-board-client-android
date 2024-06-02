@@ -9,16 +9,13 @@ val localKeyPassword: String = gradleLocalProperties(rootDir).getProperty("local
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.koreatechboard.application)
     alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.google.services)
     alias(libs.plugins.serialization)
     alias(libs.plugins.licenses)
     kotlin("plugin.parcelize")
-    kotlin("kapt")
 }
 
 kotlin {
@@ -119,7 +116,6 @@ android {
 
     defaultConfig {
         applicationId = "com.kongjak.koreatechboard"
-        minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = libs.versions.project.version.code.get().toInt()
         versionName = libs.versions.project.version.name.get().toString()
@@ -156,12 +152,7 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     namespace = "com.kongjak.koreatechboard"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }
 
 compose.desktop {
