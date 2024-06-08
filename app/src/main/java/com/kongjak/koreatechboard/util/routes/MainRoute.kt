@@ -18,7 +18,6 @@ sealed class MainRoute(val name: String, val stringResource: Int, val icon: Imag
     data object Notice : MainRoute("Notice", R.string.route_new_notice, Icons.Filled.Notifications)
     data object Licenses : MainRoute("Licenses", R.string.route_licenses, Icons.AutoMirrored.Filled.List)
 
-
     companion object {
         fun valueOf(name: String): MainRoute {
             return when (name.lowercase()) {
