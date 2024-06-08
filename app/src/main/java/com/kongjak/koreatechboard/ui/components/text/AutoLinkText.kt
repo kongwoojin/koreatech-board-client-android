@@ -120,7 +120,6 @@ fun AutoLinkText(
     }
 }
 
-
 sealed class AutoLinkType {
     data object WEB : AutoLinkType()
     data object PHONE : AutoLinkType()
