@@ -424,6 +424,14 @@ fun HtmlView(
                                     start = length + offset.first,
                                     end = length + offset.last
                                 )
+                                addStyle(
+                                    SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
+                                        textDecoration = TextDecoration.Underline
+                                    ),
+                                    length + offset.first,
+                                    length + offset.last
+                                )
                             }
                             val emailOffsets = extractAllEmailOffsets(text)
 
