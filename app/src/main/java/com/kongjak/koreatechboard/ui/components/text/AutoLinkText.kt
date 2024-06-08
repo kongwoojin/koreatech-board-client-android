@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.components.text
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
@@ -8,6 +9,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
 import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
+import com.kongjak.koreatechboard.ui.theme.koreatechColorPalette
 
 @Composable
 fun AutoLinkText(
@@ -56,6 +58,7 @@ fun AutoLinkText(
                 )
                 addStyle(
                     SpanStyle(
+                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                         textDecoration = TextDecoration.Underline
                     ),
                     offset.first,
@@ -76,6 +79,7 @@ fun AutoLinkText(
                 )
                 addStyle(
                     SpanStyle(
+                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                         textDecoration = TextDecoration.Underline
                     ),
                     offset.first,
@@ -95,6 +99,7 @@ fun AutoLinkText(
                 )
                 addStyle(
                     SpanStyle(
+                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                         textDecoration = TextDecoration.Underline
                     ),
                     offset.first,

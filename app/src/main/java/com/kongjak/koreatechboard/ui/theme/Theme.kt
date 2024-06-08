@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -89,6 +91,14 @@ private val DarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark
 )
 
+val KoreatechBoardLightColorScheme = KoreatechBoardColorPalette(
+    hyperLink = hyperlinkLight
+)
+
+val KoreatechBoardDarkColorScheme = KoreatechBoardColorPalette(
+    hyperLink = hyperlinkDark
+)
+
 @Composable
 fun KoreatechBoardTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -103,6 +113,9 @@ fun KoreatechBoardTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+    val koreatechBoardColorScheme = if (darkTheme) KoreatechBoardDarkColorScheme else KoreatechBoardLightColorScheme
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -112,9 +125,18 @@ fun KoreatechBoardTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalKoreatechBoardColorPalette provides koreatechBoardColorScheme
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }
+
+val MaterialTheme.koreatechColorPalette: KoreatechBoardColorPalette
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalKoreatechBoardColorPalette.current

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -57,6 +58,7 @@ import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
 import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
 import com.kongjak.koreatechboard.ui.components.text.CustomClickableText
+import com.kongjak.koreatechboard.ui.theme.koreatechColorPalette
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseRawStyle
 import com.kongjak.koreatechboard.util.parseSpanStyle
@@ -404,6 +406,7 @@ fun HtmlView(
                                 )
                                 addStyle(
                                     SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                                         textDecoration = TextDecoration.Underline
                                     ),
                                     length + offset.first,
@@ -434,6 +437,7 @@ fun HtmlView(
                                 )
                                 addStyle(
                                     SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                                         textDecoration = TextDecoration.Underline
                                     ),
                                     length + offset.first,
