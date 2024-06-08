@@ -56,6 +56,7 @@ import com.kongjak.koreatechboard.constraint.HTML_UL
 import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
 import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
+import com.kongjak.koreatechboard.ui.components.text.CustomClickableText
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseRawStyle
 import com.kongjak.koreatechboard.util.parseSpanStyle

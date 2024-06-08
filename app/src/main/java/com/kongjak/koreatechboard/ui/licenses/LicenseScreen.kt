@@ -14,7 +14,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
-import com.kongjak.koreatechboard.ui.components.CustomClickableText
+import com.kongjak.koreatechboard.ui.components.text.CustomClickableText
 import kotlin.random.Random
 
 @Composable
