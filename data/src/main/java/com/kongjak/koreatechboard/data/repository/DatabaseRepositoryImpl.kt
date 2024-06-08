@@ -41,7 +41,6 @@ class DatabaseRepositoryImpl @Inject constructor(
                 val response = articleRemoteDataSource.getArticle(uuid)
                 response.body()?.mapToArticle(department, board)?.let {
                     databaseLocalDataSource.insertArticle(it)
-
                 }
             } catch (e: IOException) {
                 insertArticleList(localArticleList, department, board, retryCount + 1)
