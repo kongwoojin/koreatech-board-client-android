@@ -9,17 +9,17 @@ Accompanist Permissions (0.30.1) - The Apache Software License, Version 2.0
 Utilities for Jetpack Compose
 https://github.com/google/accompanist/
 
-Activity (1.8.2) - The Apache Software License, Version 2.0
+Activity (1.9.0) - The Apache Software License, Version 2.0
 Provides the base Activity subclass and the relevant hooks to build a composable structure on top.
-https://developer.android.com/jetpack/androidx/releases/activity#1.8.2
+https://developer.android.com/jetpack/androidx/releases/activity#1.9.0
 
-Activity Compose (1.8.2) - The Apache Software License, Version 2.0
+Activity Compose (1.9.0) - The Apache Software License, Version 2.0
 Compose integration with Activity
-https://developer.android.com/jetpack/androidx/releases/activity#1.8.2
+https://developer.android.com/jetpack/androidx/releases/activity#1.9.0
 
-Activity Kotlin Extensions (1.8.2) - The Apache Software License, Version 2.0
+Activity Kotlin Extensions (1.9.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'activity' artifact
-https://developer.android.com/jetpack/androidx/releases/activity#1.8.2
+https://developer.android.com/jetpack/androidx/releases/activity#1.9.0
 
 Android App Startup Runtime (1.1.1) - The Apache Software License, Version 2.0
 Android App Startup Runtime
@@ -60,10 +60,6 @@ https://developer.android.com/jetpack/androidx/releases/emoji2#1.3.0
 Android Emoji2 Compat view helpers (1.3.0) - The Apache Software License, Version 2.0
 View helpers for Emoji2
 https://developer.android.com/jetpack/androidx/releases/emoji2#1.3.0
-
-Android Preferences DataStore (1.0.0) - The Apache Software License, Version 2.0
-Android Preferences DataStore
-https://developer.android.com/jetpack/androidx/releases/datastore#1.0.0
 
 Android Preferences DataStore Core (1.0.0) - The Apache Software License, Version 2.0
 Android Preferences DataStore without the Android Dependencies
@@ -153,10 +149,6 @@ Android Tracing (1.0.0) - The Apache Software License, Version 2.0
 Android Tracing
 https://developer.android.com/jetpack/androidx/releases/tracing#1.0.0
 
-Android Transition Support Library (1.2.0) - The Apache Software License, Version 2.0
-Android Transition Support Library
-https://developer.android.com/jetpack/androidx
-
 AndroidX Autofill (1.0.0) - The Apache Software License, Version 2.0
 AndroidX Autofill
 https://developer.android.com/jetpack/androidx
@@ -185,9 +177,9 @@ androidx.profileinstaller:profileinstaller (1.3.1) - The Apache Software License
 Allows libraries to prepopulate ahead of time compilation traces to be read by ART
 https://developer.android.com/jetpack/androidx/releases/profileinstaller#1.3.1
 
-Annotation (1.7.1) - The Apache Software License, Version 2.0
+Annotation (1.8.0) - The Apache Software License, Version 2.0
 Provides source annotations for tooling and readability.
-https://developer.android.com/jetpack/androidx/releases/annotation#1.7.1
+https://developer.android.com/jetpack/androidx/releases/annotation#1.8.0
 
 Browser (1.8.0) - The Apache Software License, Version 2.0
 Provides support for embedding Custom Tabs in an app.
@@ -222,57 +214,57 @@ Collections Kotlin Extensions (1.4.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'collection' artifact
 https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
 
-Compose Animation (1.6.4) - The Apache Software License, Version 2.0
+Compose Animation (1.6.7) - The Apache Software License, Version 2.0
 Compose animation library
-https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.7
 
-Compose Animation (1.6.4) - The Apache Software License, Version 2.0
+Compose Animation (1.6.7) - The Apache Software License, Version 2.0
 Compose animation library
-https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.7
 
-Compose Animation Core (1.6.4) - The Apache Software License, Version 2.0
+Compose Animation Core (1.6.7) - The Apache Software License, Version 2.0
 Animation engine and animation primitives that are the building blocks of the Compose animation library
-https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.7
 
-Compose Animation Core (1.6.4) - The Apache Software License, Version 2.0
+Compose Animation Core (1.6.7) - The Apache Software License, Version 2.0
 Animation engine and animation primitives that are the building blocks of the Compose animation library
-https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.7
 
-Compose Foundation (1.6.4) - The Apache Software License, Version 2.0
+Compose Foundation (1.6.7) - The Apache Software License, Version 2.0
 Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers
-https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.7
 
-Compose Foundation (1.6.4) - The Apache Software License, Version 2.0
+Compose Foundation (1.6.7) - The Apache Software License, Version 2.0
 Higher level abstractions of the Compose UI primitives. This library is design system agnostic, providing the high-level building blocks for both application and design-system developers
-https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.7
 
-Compose Geometry (1.6.4) - The Apache Software License, Version 2.0
+Compose Geometry (1.6.7) - The Apache Software License, Version 2.0
 Compose classes related to dimensions without units
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Geometry (1.6.4) - The Apache Software License, Version 2.0
+Compose Geometry (1.6.7) - The Apache Software License, Version 2.0
 Compose classes related to dimensions without units
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Graphics (1.6.4) - The Apache Software License, Version 2.0
+Compose Graphics (1.6.7) - The Apache Software License, Version 2.0
 Compose graphics
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Graphics (1.6.4) - The Apache Software License, Version 2.0
+Compose Graphics (1.6.7) - The Apache Software License, Version 2.0
 Compose graphics
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Layouts (1.6.4) - The Apache Software License, Version 2.0
+Compose Layouts (1.6.7) - The Apache Software License, Version 2.0
 Compose layout implementations
-https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.7
 
-Compose Layouts (1.6.4) - The Apache Software License, Version 2.0
+Compose Layouts (1.6.7) - The Apache Software License, Version 2.0
 Compose layout implementations
-https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-foundation#1.6.7
 
-Compose LiveData integration (1.6.4) - The Apache Software License, Version 2.0
+Compose LiveData integration (1.6.7) - The Apache Software License, Version 2.0
 Compose integration with LiveData
-https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.7
 
 Compose Material 3 Window Size Class (1.2.1) - The Apache Software License, Version 2.0
 Provides window size classes for building responsive UIs
@@ -282,21 +274,21 @@ Compose Material 3 Window Size Class (1.2.1) - The Apache Software License, Vers
 Provides window size classes for building responsive UIs
 https://developer.android.com/jetpack/androidx/releases/compose-material3#1.2.1
 
-Compose Material Icons Core (1.6.4) - The Apache Software License, Version 2.0
+Compose Material Icons Core (1.6.7) - The Apache Software License, Version 2.0
 Compose Material Design core icons. This module contains the most commonly used set of Material icons.
-https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.7
 
-Compose Material Icons Core (1.6.4) - The Apache Software License, Version 2.0
+Compose Material Icons Core (1.6.7) - The Apache Software License, Version 2.0
 Compose Material Design core icons. This module contains the most commonly used set of Material icons.
-https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.7
 
-Compose Material Ripple (1.6.4) - The Apache Software License, Version 2.0
+Compose Material Ripple (1.6.7) - The Apache Software License, Version 2.0
 Material ripple used to build interactive components
-https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.7
 
-Compose Material Ripple (1.6.4) - The Apache Software License, Version 2.0
+Compose Material Ripple (1.6.7) - The Apache Software License, Version 2.0
 Material ripple used to build interactive components
-https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-material#1.6.7
 
 Compose Material3 Components (1.2.1) - The Apache Software License, Version 2.0
 Compose Material You Design Components library
@@ -310,73 +302,73 @@ Compose Navigation (2.7.7) - The Apache Software License, Version 2.0
 Compose integration with Navigation
 https://developer.android.com/jetpack/androidx/releases/navigation#2.7.7
 
-Compose Runtime (1.6.4) - The Apache Software License, Version 2.0
+Compose Runtime (1.6.7) - The Apache Software License, Version 2.0
 Tree composition support for code generated by the Compose compiler plugin and corresponding public API
-https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.7
 
-Compose Runtime (1.6.4) - The Apache Software License, Version 2.0
+Compose Runtime (1.6.7) - The Apache Software License, Version 2.0
 Tree composition support for code generated by the Compose compiler plugin and corresponding public API
-https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.7
 
-Compose Saveable (1.6.4) - The Apache Software License, Version 2.0
+Compose Saveable (1.6.7) - The Apache Software License, Version 2.0
 Compose components that allow saving and restoring the local ui state
-https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.7
 
-Compose Saveable (1.6.4) - The Apache Software License, Version 2.0
+Compose Saveable (1.6.7) - The Apache Software License, Version 2.0
 Compose components that allow saving and restoring the local ui state
-https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-runtime#1.6.7
 
-Compose UI (1.6.4) - The Apache Software License, Version 2.0
+Compose UI (1.6.7) - The Apache Software License, Version 2.0
 Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose UI (1.6.4) - The Apache Software License, Version 2.0
+Compose UI (1.6.7) - The Apache Software License, Version 2.0
 Compose UI primitives. This library contains the primitives that form the Compose UI Toolkit, such as drawing, measurement and layout.
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose UI Preview Tooling (1.6.4) - The Apache Software License, Version 2.0
+Compose UI Preview Tooling (1.6.7) - The Apache Software License, Version 2.0
 Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose UI Preview Tooling (1.6.4) - The Apache Software License, Version 2.0
+Compose UI Preview Tooling (1.6.7) - The Apache Software License, Version 2.0
 Compose tooling library API. This library provides the API required to declare @Preview composables in user apps.
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose UI Text (1.6.4) - The Apache Software License, Version 2.0
+Compose UI Text (1.6.7) - The Apache Software License, Version 2.0
 Compose Text primitives and utilities
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose UI Text (1.6.4) - The Apache Software License, Version 2.0
+Compose UI Text (1.6.7) - The Apache Software License, Version 2.0
 Compose Text primitives and utilities
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Unit (1.6.4) - The Apache Software License, Version 2.0
+Compose Unit (1.6.7) - The Apache Software License, Version 2.0
 Compose classes for simple units
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Unit (1.6.4) - The Apache Software License, Version 2.0
+Compose Unit (1.6.7) - The Apache Software License, Version 2.0
 Compose classes for simple units
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Util (1.6.4) - The Apache Software License, Version 2.0
+Compose Util (1.6.7) - The Apache Software License, Version 2.0
 Internal Compose utilities used by other modules
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
-Compose Util (1.6.4) - The Apache Software License, Version 2.0
+Compose Util (1.6.7) - The Apache Software License, Version 2.0
 Internal Compose utilities used by other modules
-https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.4
+https://developer.android.com/jetpack/androidx/releases/compose-ui#1.6.7
 
 Converter: Gson (2.9.0) - The Apache Software License, Version 2.0
 A Retrofit Converter which uses Gson for serialization.
 https://github.com/square/retrofit
 
-Core (1.12.0) - The Apache Software License, Version 2.0
+Core (1.13.1) - The Apache Software License, Version 2.0
 Provides backward-compatible implementations of Android platform APIs and features.
-https://developer.android.com/jetpack/androidx/releases/core#1.12.0
+https://developer.android.com/jetpack/androidx/releases/core#1.13.1
 
-Core Kotlin Extensions (1.12.0) - The Apache Software License, Version 2.0
+Core Kotlin Extensions (1.13.1) - The Apache Software License, Version 2.0
 Kotlin extensions for 'core' artifact
-https://developer.android.com/jetpack/androidx/releases/core#1.12.0
+https://developer.android.com/jetpack/androidx/releases/core#1.13.1
 
 Dagger (2.51) - Apache 2.0
 A fast dependency injector for Android and Java.
@@ -386,7 +378,19 @@ Dagger Lint Rules AAR Distribution (2.51) - Apache 2.0
 A fast dependency injector for Android and Java.
 https://github.com/google/dagger
 
-error-prone annotations (26.0-android) - Apache 2.0
+DataStore (1.1.1) - The Apache Software License, Version 2.0
+Android DataStore - contains the underlying store used by each serialization method along with components that require an Android dependency
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
+
+DataStore Core (1.1.1) - The Apache Software License, Version 2.0
+Android DataStore Core - contains the underlying store used by each serialization method
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
+
+DataStore Core Okio (1.1.1) - The Apache Software License, Version 2.0
+Android DataStore Core Okio- contains APIs to use datastore-core in multiplatform via okio
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
+
+error-prone annotations (2.26.0) - Apache 2.0
 
 Experimental annotation (1.4.0) - The Apache Software License, Version 2.0
 Java annotation for use on unstable Android API surfaces. When used in conjunction with the Experimental annotation lint checks, this annotation provides functional parity with Kotlin's Experimental annotation.
@@ -396,21 +400,21 @@ FindBugs-jsr305 (3.0.2) - The Apache Software License, Version 2.0
 JSR305 Annotations for Findbugs
 http://findbugs.sourceforge.net/
 
-firebase-analytics (21.6.1) - Android Software Development Kit License
+firebase-analytics (22.0.1) - Android Software Development Kit License
 
 firebase-annotations (16.2.0) - The Apache Software License, Version 2.0
 
-firebase-common (20.4.3) - The Apache Software License, Version 2.0
+firebase-common (21.0.0) - The Apache Software License, Version 2.0
 
-firebase-common-ktx (20.4.3) - The Apache Software License, Version 2.0
+firebase-common-ktx (21.0.0) - The Apache Software License, Version 2.0
 
-firebase-components (17.1.5) - The Apache Software License, Version 2.0
+firebase-components (18.0.0) - The Apache Software License, Version 2.0
 
 firebase-config-interop (16.0.0) - The Apache Software License, Version 2.0
 
-firebase-crashlytics (18.6.3) - The Apache Software License, Version 2.0
+firebase-crashlytics (19.0.1) - The Apache Software License, Version 2.0
 
-firebase-datatransport (18.1.8) - The Apache Software License, Version 2.0
+firebase-datatransport (18.2.0) - The Apache Software License, Version 2.0
 
 firebase-encoders (17.0.0) - The Apache Software License, Version 2.0
 
@@ -420,21 +424,21 @@ firebase-encoders-proto (16.0.0) - The Apache Software License, Version 2.0
 
 firebase-iid-interop (17.1.0) - Android Software Development Kit License
 
-firebase-installations (17.2.0) - The Apache Software License, Version 2.0
+firebase-installations (18.0.0) - The Apache Software License, Version 2.0
 
 firebase-installations-interop (17.1.1) - The Apache Software License, Version 2.0
 
-firebase-measurement-connector (19.0.0) - Android Software Development Kit License
+firebase-measurement-connector (20.0.1) - Android Software Development Kit License
 
-firebase-messaging (23.4.1) - The Apache Software License, Version 2.0
+firebase-messaging (24.0.0) - The Apache Software License, Version 2.0
 
-firebase-messaging-ktx (23.4.1) - The Apache Software License, Version 2.0
+firebase-messaging-ktx (24.0.0) - The Apache Software License, Version 2.0
 
-firebase-sessions (1.2.3) - The Apache Software License, Version 2.0
+firebase-sessions (2.0.1) - The Apache Software License, Version 2.0
 
-Gson (26.0-android) - The Apache Software License, Version 2.0
+Gson (2.26.0) - Apache 2.0
 
-      Guava InternalFutureFailureAccess and InternalFutures (1.0.1) - The Apache Software License, Version 2.0
+      Guava InternalFutureFailureAccess and InternalFutures (1.0.1) - Apache 2.0
       Contains
 com.google.common.util.concurrent.internal.InternalFutureFailureAccess and
 InternalFutures. Most users will never need to use this artifact. Its
@@ -443,7 +447,7 @@ artifact so that Android libraries can use them without pulling in all of
 Guava (just as they can use ListenableFuture by depending on the
 listenablefuture artifact).
 
-      Guava ListenableFuture only (9999.0-empty-to-avoid-conflict-with-guava) - The Apache Software License, Version 2.0
+      Guava ListenableFuture only (9999.0-empty-to-avoid-conflict-with-guava) - Apache 2.0
       An empty artifact that Guava depends on to signal that it is providing
 ListenableFuture -- but is also available in a second "version" that
 contains com.google.common.util.concurrent.ListenableFuture class, without
@@ -462,7 +466,7 @@ may see class conflicts. If so, they can solve them by manually excluding
 the listenablefuture artifact or manually forcing their build systems to
 use 9999.0-....
 
-      Guava: Google Core Libraries for Java (26.0-android) - The Apache Software License, Version 2.0
+      Guava: Google Core Libraries for Java (2.26.0) - Apache 2.0
       Guava is a suite of core and expanded libraries that include
 utility classes, Google's collections, I/O classes, and
 much more.
@@ -493,11 +497,11 @@ Jetpack WindowManager Library (1.0.0) - The Apache Software License, Version 2.0
 WindowManager Jetpack library. Currently only provides additional functionality on foldable devices.
 https://developer.android.com/jetpack/androidx/releases/window#1.0.0
 
-Kotlin Android Extensions Runtime (1.9.22) - The Apache License, Version 2.0
+Kotlin Android Extensions Runtime (1.9.23) - The Apache License, Version 2.0
 Kotlin Android Extensions Runtime
 https://kotlinlang.org/
 
-Kotlin Stdlib (1.9.22) - The Apache License, Version 2.0
+Kotlin Stdlib (1.9.23) - The Apache License, Version 2.0
 Kotlin Standard Library
 https://kotlinlang.org/
 
@@ -509,15 +513,15 @@ Kotlin Stdlib Jdk8 (1.9.0) - The Apache License, Version 2.0
 Kotlin Standard Library JDK 8 extension
 https://kotlinlang.org/
 
-kotlinx-coroutines-android (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-android (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-core (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-core (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-play-services (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-play-services (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
@@ -589,7 +593,7 @@ LiveData Kotlin Extensions (2.7.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'livedata' artifact
 https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0
 
-Material Components for Android (1.11.0) - The Apache Software License, Version 2.0
+Material Components for Android (1.12.0) - The Apache Software License, Version 2.0
 Material Components for Android is a static library that you can add to your Android application in order to use APIs that provide implementations of the Material Design specification. Compatible on devices running API 14 or later.
 https://github.com/material-components/material-components-android
 
@@ -649,23 +653,27 @@ org.orbit-mvi:orbit-viewmodel (7.0.1) - The Apache Software License, Version 2.0
 A simple MVI framework for Kotlin Multiplatform and Android
 https://github.com/orbit-mvi/orbit-mvi
 
-Paging-Common (3.2.1) - The Apache Software License, Version 2.0
+Paging-Common (3.3.0) - The Apache Software License, Version 2.0
 Android Paging-Common
-https://developer.android.com/jetpack/androidx/releases/paging#3.2.1
+https://developer.android.com/jetpack/androidx/releases/paging#3.3.0
 
-Paging-Common Kotlin Extensions (3.2.1) - The Apache Software License, Version 2.0
+Paging-Common (3.3.0) - The Apache Software License, Version 2.0
+Android Paging-Common
+https://developer.android.com/jetpack/androidx/releases/paging#3.3.0
+
+Paging-Common Kotlin Extensions (3.3.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'paging-common' artifact
-https://developer.android.com/jetpack/androidx/releases/paging#3.2.1
+https://developer.android.com/jetpack/androidx/releases/paging#3.3.0
 
-Paging-Compose (3.2.1) - The Apache Software License, Version 2.0
+Paging-Compose (3.3.0) - The Apache Software License, Version 2.0
 Compose integration with Paging
-https://developer.android.com/jetpack/androidx/releases/paging#3.2.1
+https://developer.android.com/jetpack/androidx/releases/paging#3.3.0
 
-Paging-Runtime (3.2.1) - The Apache Software License, Version 2.0
+Paging-Runtime (3.3.0) - The Apache Software License, Version 2.0
 Android Paging-Runtime
-https://developer.android.com/jetpack/androidx/releases/paging#3.2.1
+https://developer.android.com/jetpack/androidx/releases/paging#3.3.0
 
-Parcelize Runtime (1.9.22) - The Apache License, Version 2.0
+Parcelize Runtime (1.9.23) - The Apache License, Version 2.0
 Runtime library for the Parcelize compiler plugin
 https://kotlinlang.org/
 
@@ -675,23 +683,35 @@ play-services-base (18.0.1) - Android Software Development Kit License
 
 play-services-basement (18.3.0) - Android Software Development Kit License
 
-play-services-cloud-messaging (17.1.0) - Android Software Development Kit License
+play-services-cloud-messaging (17.2.0) - Android Software Development Kit License
 
-play-services-measurement (21.6.1) - Android Software Development Kit License
+play-services-measurement (22.0.1) - Android Software Development Kit License
 
-play-services-measurement-api (21.6.1) - Android Software Development Kit License
+play-services-measurement-api (22.0.1) - Android Software Development Kit License
 
-play-services-measurement-base (21.6.1) - Android Software Development Kit License
+play-services-measurement-base (22.0.1) - Android Software Development Kit License
 
-play-services-measurement-impl (21.6.1) - Android Software Development Kit License
+play-services-measurement-impl (22.0.1) - Android Software Development Kit License
 
-play-services-measurement-sdk (21.6.1) - Android Software Development Kit License
+play-services-measurement-sdk (22.0.1) - Android Software Development Kit License
 
-play-services-measurement-sdk-api (21.6.1) - Android Software Development Kit License
+play-services-measurement-sdk-api (22.0.1) - Android Software Development Kit License
 
 play-services-stats (17.0.2) - Android Software Development Kit License
 
 play-services-tasks (18.1.0) - Android Software Development Kit License
+
+Preferences DataStore (1.1.1) - The Apache Software License, Version 2.0
+Android Preferences DataStore
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
+
+Preferences DataStore (1.1.1) - The Apache Software License, Version 2.0
+Android Preferences DataStore
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
+
+Preferences DataStore Core (1.1.1) - The Apache Software License, Version 2.0
+Android Preferences DataStore without the Android Dependencies
+https://developer.android.com/jetpack/androidx/releases/datastore#1.1.1
 
 Privacy Sandbox for Ad Services (1.0.0-beta05) - The Apache Software License, Version 2.0
 This library enables integration with Privacy Preserving APIs, which are part of Privacy Sandbox on Android.
@@ -733,6 +753,10 @@ SQLite Framework Integration (2.4.0) - The Apache Software License, Version 2.0
 The implementation of Support SQLite library using the framework code.
 https://developer.android.com/jetpack/androidx/releases/sqlite#2.4.0
 
+Transition (1.5.0) - The Apache Software License, Version 2.0
+Android Transition Support Library
+https://developer.android.com/jetpack/androidx/releases/transition#1.5.0
+
 transport-api (3.1.0) - The Apache Software License, Version 2.0
 
 transport-backend-cct (3.1.9) - The Apache Software License, Version 2.0
@@ -743,6 +767,6 @@ VersionedParcelable (1.1.1) - The Apache Software License, Version 2.0
 Provides a stable but relatively compact binary serialization format that can be passed across processes or persisted safely.
 http://developer.android.com/tools/extras/support-library.html
 
-WebKit (1.10.0) - The Apache Software License, Version 2.0
+WebKit (1.11.0) - The Apache Software License, Version 2.0
 The WebKit Support Library is a static library you can add to your Android application in order to use android.webkit APIs that are not available for older platform versions.
-https://developer.android.com/jetpack/androidx/releases/webkit#1.10.0
+https://developer.android.com/jetpack/androidx/releases/webkit#1.11.0
