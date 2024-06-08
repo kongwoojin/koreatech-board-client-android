@@ -15,7 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Koreatech Board"
 include(":app")
 include(":domain")
 include(":data")
