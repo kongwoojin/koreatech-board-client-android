@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.kongjak.koreatechboard.BuildConfig
@@ -30,15 +31,16 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
-                runBlocking {
+                runCatching {
                     insertMultipleNewNoticesUseCase(
                         message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
                             ?.map { UUID.fromString(it) } ?: emptyList(),
                         message.data["department"] ?: "school",
                         message.data["board"] ?: "notice"
                     )
+                }.onSuccess {
+                    sendNotification(message)
                 }
-                sendNotification(message)
             }
         }
     }

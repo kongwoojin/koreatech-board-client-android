@@ -36,7 +36,7 @@ class DatabaseRepositoryImpl @Inject constructor(
         retryCount: Int
     ) {
         localArticleList.map { uuid ->
-            if (retryCount > 3) return
+            if (retryCount > 3) throw IOException("Failed to get article from API server.")
             try {
                 val response = articleRemoteDataSource.getArticle(uuid)
                 response.body()?.mapToArticle(department, board)?.let {
