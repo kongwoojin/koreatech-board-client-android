@@ -95,7 +95,9 @@ fun Notice(
                         stringResource(id = deptList[userDepartment].stringResource)
                     )
 
-                    MultiChoiceSegmentedButtonRow {
+                    MultiChoiceSegmentedButtonRow(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    ) {
                         options.forEachIndexed { index, label ->
                             SegmentedButton(
                                 shape = SegmentedButtonDefaults.itemShape(
