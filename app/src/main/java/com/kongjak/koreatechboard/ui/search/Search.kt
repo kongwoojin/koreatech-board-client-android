@@ -24,7 +24,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.ui.board.BoardError
-import com.kongjak.koreatechboard.ui.board.BoardItem
+import com.kongjak.koreatechboard.ui.components.BoardItem
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import java.util.UUID
@@ -60,8 +60,6 @@ fun SearchScreen(
             boardItem?.let {
                 BoardItem(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
                         .selectable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() },

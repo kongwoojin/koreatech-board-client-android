@@ -55,18 +55,16 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.kongjak.koreatechboard.R
+import com.kongjak.koreatechboard.ui.components.BoardItem
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.network.NetworkViewModel
 import com.kongjak.koreatechboard.ui.settings.deptList
-import com.kongjak.koreatechboard.ui.theme.boardItemSubText
-import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -287,8 +285,6 @@ fun BoardContent(
                             boardItem?.let {
                                 BoardItem(
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
                                         .selectable(
                                             indication = null,
                                             interactionSource = remember { MutableInteractionSource() },
@@ -299,7 +295,6 @@ fun BoardContent(
                                         ),
                                     title = it.title,
                                     writer = it.writer,
-                                    isNew = it.isNew,
                                     date = it.writeDate
                                 )
                                 HorizontalDivider(
@@ -368,39 +363,6 @@ fun BoardContent(
             }
         }
     )
-}
-
-@Composable
-fun BoardItem(
-    modifier: Modifier,
-    title: String,
-    writer: String,
-    date: String,
-    isNew: Boolean
-) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = title,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.boardItemTitle
-        )
-        Row(modifier = Modifier.padding(top = 4.dp)) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                text = writer,
-                style = MaterialTheme.typography.boardItemSubText
-            )
-            Text(
-                text = date,
-                style = MaterialTheme.typography.boardItemSubText
-            )
-        }
-    }
 }
 
 @Composable

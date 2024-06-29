@@ -101,7 +101,7 @@ val Typography.boardItemSubText: TextStyle
         )
     )
 
-val Typography.noticeDepartmentText: TextStyle
+val Typography.boardItemAboveText: TextStyle
     get() = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Light,
