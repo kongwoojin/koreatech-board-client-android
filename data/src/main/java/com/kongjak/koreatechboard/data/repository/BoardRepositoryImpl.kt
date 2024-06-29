@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kongjak.koreatechboard.data.api.API
 import com.kongjak.koreatechboard.data.datasource.remote.BoardRemoteDataSource
-import com.kongjak.koreatechboard.data.mapper.BoardMapper
+import com.kongjak.koreatechboard.data.mapper.mapToBoard
 import com.kongjak.koreatechboard.data.paging.BoardPagingSource
 import com.kongjak.koreatechboard.data.paging.SearchTitlePagingSource
 import com.kongjak.koreatechboard.domain.base.ResponseResult
@@ -29,7 +29,7 @@ class BoardRepositoryImpl @Inject constructor(private val boardRemoteDataSource:
 
     override suspend fun getBoardMinimum(department: String, board: String): ResponseResult<Board> {
         val response = boardRemoteDataSource.getBoardMinimum(department, board)
-        return BoardMapper.mapToBoard(response.body(), response.code())
+        return response.body().mapToBoard(response.code())
     }
 
     override fun searchTitle(

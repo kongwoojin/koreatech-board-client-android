@@ -5,18 +5,25 @@ import com.kongjak.koreatechboard.domain.base.ErrorType
 import com.kongjak.koreatechboard.domain.base.ResponseResult
 import com.kongjak.koreatechboard.domain.model.Board
 
-object BoardMapper {
-    fun mapToBoard(boardResponse: BoardResponse?, code: Int): ResponseResult<Board> {
-        return if (code == 200) {
-            ResponseResult.Success(
-                BoardResponse(
-                    lastPage = boardResponse!!.lastPage,
-                    statusCode = code,
-                    boardData = boardResponse.boardData
-                )
+fun BoardResponse?.mapToBoard(code: Int): ResponseResult<Board> {
+    if (this == null) {
+        return ResponseResult.Success(
+            BoardResponse(
+                lastPage = 1,
+                statusCode = 404,
+                boardData = emptyList()
             )
-        } else {
-            ResponseResult.Error(ErrorType(code))
-        }
+        )
+    }
+    return if (code == 200) {
+        ResponseResult.Success(
+            BoardResponse(
+                lastPage = this.lastPage,
+                statusCode = code,
+                boardData = this.boardData
+            )
+        )
+    } else {
+        ResponseResult.Error(ErrorType(code))
     }
 }
