@@ -27,7 +27,7 @@ data class ArticleResponse(
     @SerialName("is_notice")
     val isNotice: Boolean,
     @SerialName("files")
-    val files: ArrayList<FilesResponse>,
+    val files: List<FilesResponse>,
     @SerialName("error")
     val error: String
 )
