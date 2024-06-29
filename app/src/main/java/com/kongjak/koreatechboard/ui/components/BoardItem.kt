@@ -30,11 +30,13 @@ fun BoardItem(
     writer: String,
     date: String,
     isNew: Boolean = false,
-    isRead: Boolean = false,
+    isRead: Boolean = false
 ) {
-    Column(modifier = modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         if (aboveText != null) {
             Text(
                 text = aboveText,
