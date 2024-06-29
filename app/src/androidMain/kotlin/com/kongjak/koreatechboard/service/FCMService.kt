@@ -37,15 +37,16 @@ class FCMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.data["new_articles"] != null && message.data["new_articles"]!!.isNotEmpty()) {
             CoroutineScope(Dispatchers.IO).launch {
-                runBlocking {
+                runCatching {
                     insertMultipleNewNoticesUseCase(
                         message.data["new_articles"]?.split(":")?.takeIf { it.isNotEmpty() }
                             ?.map { Uuid.fromString(it) } ?: emptyList(),
                         message.data["department"] ?: "school",
                         message.data["board"] ?: "notice"
                     )
+                }.onSuccess {
+                    sendNotification(message)
                 }
-                sendNotification(message)
             }
         }
     }

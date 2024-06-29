@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.components
+package com.kongjak.koreatechboard.ui.components.text
 
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme

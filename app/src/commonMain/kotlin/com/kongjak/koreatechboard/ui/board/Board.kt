@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,16 +52,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.kongjak.koreatechboard.ui.components.BoardItem
 import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.settings.deptList
-import com.kongjak.koreatechboard.ui.theme.boardItemSubText
-import com.kongjak.koreatechboard.ui.theme.boardItemTitle
 import com.kongjak.koreatechboard.util.routes.Department
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import koreatech_board.app.generated.resources.Res
@@ -236,6 +235,7 @@ fun BoardContent(
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
+        contentWindowInsets = WindowInsets(0.dp),
         floatingActionButton = {
             SearchFAB(department = department, index = page, snackbarHostState = snackbarHostState, onSearch = onSearch)
         },
@@ -275,8 +275,6 @@ fun BoardContent(
                             boardItem?.let {
                                 BoardItem(
                                     modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(16.dp)
                                         .selectable(
                                             indication = null,
                                             interactionSource = remember { MutableInteractionSource() },
@@ -287,7 +285,6 @@ fun BoardContent(
                                         ),
                                     title = it.title,
                                     writer = it.writer,
-                                    isNew = it.isNew,
                                     date = it.writeDate
                                 )
                                 HorizontalDivider(
@@ -351,39 +348,6 @@ fun BoardContent(
             }
         }
     )
-}
-
-@Composable
-fun BoardItem(
-    modifier: Modifier,
-    title: String,
-    writer: String,
-    date: String,
-    isNew: Boolean
-) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = title,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.boardItemTitle
-        )
-        Row(modifier = Modifier.padding(top = 4.dp)) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                text = writer,
-                style = MaterialTheme.typography.boardItemSubText
-            )
-            Text(
-                text = date,
-                style = MaterialTheme.typography.boardItemSubText
-            )
-        }
-    }
 }
 
 @Composable

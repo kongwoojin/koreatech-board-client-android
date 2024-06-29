@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -53,6 +54,8 @@ import com.kongjak.koreatechboard.constraint.HTML_UL
 import com.kongjak.koreatechboard.constraint.REGEX_EMAIL
 import com.kongjak.koreatechboard.constraint.REGEX_HTTP_HTTPS
 import com.kongjak.koreatechboard.constraint.REGEX_PHONE_NUMBER
+import com.kongjak.koreatechboard.ui.components.text.CustomClickableText
+import com.kongjak.koreatechboard.ui.theme.koreatechColorPalette
 import com.kongjak.koreatechboard.util.openUrl
 import com.kongjak.koreatechboard.util.parseColor
 import com.kongjak.koreatechboard.util.parseRawStyle
@@ -401,6 +404,7 @@ fun HtmlView(
                                 )
                                 addStyle(
                                     SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                                         textDecoration = TextDecoration.Underline
                                     ),
                                     length + offset.first,
@@ -418,6 +422,14 @@ fun HtmlView(
                                     start = length + offset.first,
                                     end = length + offset.last
                                 )
+                                addStyle(
+                                    SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
+                                        textDecoration = TextDecoration.Underline
+                                    ),
+                                    length + offset.first,
+                                    length + offset.last
+                                )
                             }
                             val emailOffsets = extractAllEmailOffsets(text)
 
@@ -431,6 +443,7 @@ fun HtmlView(
                                 )
                                 addStyle(
                                     SpanStyle(
+                                        color = MaterialTheme.koreatechColorPalette.hyperLink,
                                         textDecoration = TextDecoration.Underline
                                     ),
                                     length + offset.first,

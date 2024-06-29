@@ -3,7 +3,6 @@ package com.kongjak.koreatechboard.ui.search
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectable
@@ -22,7 +21,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.ui.board.BoardError
-import com.kongjak.koreatechboard.ui.board.BoardItem
+import com.kongjak.koreatechboard.ui.components.BoardItem
 import koreatech_board.app.generated.resources.Res
 import koreatech_board.app.generated.resources.search_no_result
 import org.jetbrains.compose.resources.stringResource
@@ -61,8 +60,6 @@ fun SearchScreen(
             boardItem?.let {
                 BoardItem(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
                         .selectable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() },

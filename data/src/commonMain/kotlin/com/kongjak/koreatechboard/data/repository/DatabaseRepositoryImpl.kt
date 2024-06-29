@@ -11,6 +11,7 @@ import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
 import io.ktor.client.call.body
 import io.ktor.client.plugins.HttpRequestTimeoutException
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 
 class DatabaseRepositoryImpl(
     private val databaseLocalDataSource: DatabaseLocalDataSource,
@@ -37,7 +38,7 @@ class DatabaseRepositoryImpl(
         retryCount: Int
     ) {
         localArticleList.map { uuid ->
-            if (retryCount > 3) return
+            if (retryCount > 3) throw IOException("Failed to get article from API server.")
             try {
                 val response = articleRemoteDataSource.getArticle(uuid)
                 val data: ArticleResponse = response.body()

@@ -1,4 +1,4 @@
-package com.kongjak.koreatechboard.ui.components
+package com.kongjak.koreatechboard.ui.components.text
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.text.BasicText
