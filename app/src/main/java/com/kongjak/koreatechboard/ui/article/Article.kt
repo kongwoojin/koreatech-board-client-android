@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.article
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,9 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -31,6 +35,7 @@ import coil.request.ImageRequest
 import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
+import com.kongjak.koreatechboard.ui.components.dialog.ImageDialog
 import com.kongjak.koreatechboard.ui.components.text.FileText
 import com.kongjak.koreatechboard.ui.theme.articleSubText
 import com.kongjak.koreatechboard.ui.theme.articleTitle
@@ -126,6 +131,9 @@ fun ArticleScreen(
                             baseUrl = "https://www.koreatech.ac.kr"
                         }
 
+                        var showImageDialog by remember { mutableStateOf(false) }
+                        var imageUri by remember { mutableStateOf("") }
+
                         HtmlView(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -137,7 +145,11 @@ fun ArticleScreen(
                                 SubcomposeAsyncImage(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .padding(horizontal = 16.dp),
+                                        .padding(horizontal = 16.dp)
+                                        .clickable {
+                                            imageUri = url
+                                            showImageDialog = true
+                                        },
                                     model = ImageRequest.Builder(LocalContext.current)
                                         .data(url)
                                         .crossfade(true)
@@ -176,6 +188,13 @@ fun ArticleScreen(
                                 )
                             }
                         )
+
+                        if (showImageDialog) {
+                            ImageDialog(
+                                imageUrl = imageUri,
+                                onDismissRequest = { showImageDialog = false }
+                            )
+                        }
 
                         FileText(
                             modifier = Modifier.padding(16.dp),
