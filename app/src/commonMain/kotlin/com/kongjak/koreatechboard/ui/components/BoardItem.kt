@@ -25,7 +25,7 @@ fun BoardItem(
     writer: String,
     date: String,
     isNew: Boolean = false,
-    isRead: Boolean = false,
+    isRead: Boolean = false
 ) {
     Column(
         modifier = modifier

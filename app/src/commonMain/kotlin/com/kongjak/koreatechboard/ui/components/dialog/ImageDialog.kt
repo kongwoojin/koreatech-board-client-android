@@ -66,7 +66,7 @@ fun ImageDialog(
                     scaleX = scale,
                     scaleY = scale,
                     translationX = offset.x,
-                    translationY = offset.y,
+                    translationY = offset.y
                 )
                 .transformable(state = state),
             contentAlignment = Alignment.Center
