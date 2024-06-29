@@ -7,5 +7,5 @@ data class Article(
     val content: String,
     val date: String,
     val articleUrl: String,
-    val files: ArrayList<Files>
+    val files: List<Files>
 )

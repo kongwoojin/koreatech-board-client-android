@@ -21,5 +21,5 @@ data class ArticleResponse(
     @SerializedName("is_notice")
     val isNotice: Boolean,
     @SerializedName("files")
-    val files: ArrayList<FilesResponse>
+    val files: List<FilesResponse>
 )
