@@ -34,6 +34,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.benasher44.uuid.Uuid
 import com.kongjak.koreatechboard.constraint.REGEX_BASE_URL
+import com.kongjak.koreatechboard.domain.model.Article
 import com.kongjak.koreatechboard.ui.components.HtmlView
 import com.kongjak.koreatechboard.ui.components.WebView
 import com.kongjak.koreatechboard.ui.components.dialog.ImageDialog
@@ -81,133 +82,25 @@ fun ArticleScreen(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
-        if (uiState.isSuccess) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                data?.let {
-                    LaunchedEffect(key1 = Unit) {
-                        setExternalLink(it.articleUrl)
-                    }
+        with(uiState) {
+            when {
+                isLoaded && isSuccess -> {
+                    ArticleView(
+                        data = data,
+                        isDarkTheme = isDarkTheme,
+                        setExternalLink = setExternalLink
+                    )
+                }
+
+                isLoaded && !isSuccess -> {
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
+                        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            text = it.title,
-                            style = MaterialTheme.typography.articleTitle,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        )
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp),
-                                horizontalAlignment = Alignment.End
-                            ) {
-                                Text(
-                                    text = it.writer,
-                                    style = MaterialTheme.typography.articleSubText
-                                )
-                                Text(
-                                    text = it.date,
-                                    style = MaterialTheme.typography.articleSubText
-                                )
-                            }
-                        }
-
-                        var baseUrl = Regex(REGEX_BASE_URL).find(it.articleUrl)?.value
-                            ?: "https://www.koreatech.ac.kr"
-
-                        /*
-                         If baseUrl is https://koreatech.ac.kr, replace it with https://www.koreatech.ac.kr
-                         Because, if baseUrl is https://koreatech.ac.kr, okhttp will throw CLEARTEXT communication error
-                         */
-                        if (baseUrl.contains("https://koreatech.ac.kr")) {
-                            baseUrl = "https://www.koreatech.ac.kr"
-                        }
-
-                        var showImageDialog by remember { mutableStateOf(false) }
-                        var imageUri by remember { mutableStateOf("") }
-
-                        HtmlView(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 16.dp),
-                            html = it.content,
-                            baseUrl = baseUrl,
-                            isDarkTheme = isDarkTheme,
-                            image = { url, description ->
-                                SubcomposeAsyncImage(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(horizontal = 16.dp)
-                                        .clickable {
-                                            imageUri = url
-                                            showImageDialog = true
-                                        },
-                                    model = ImageRequest.Builder(LocalPlatformContext.current)
-                                        .data(url)
-                                        .crossfade(true)
-                                        .build(),
-                                    contentDescription = description,
-                                    contentScale = ContentScale.FillWidth,
-                                    loading = {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(16.dp),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            CircularProgressIndicator()
-                                        }
-                                    }
-                                )
-                            },
-                            webView = { html ->
-                                WebView(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(horizontal = 16.dp),
-                                    html = html,
-                                    baseUrl = baseUrl,
-                                    loading = {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(16.dp),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            CircularProgressIndicator()
-                                        }
-                                    }
-                                )
-                            }
-                        )
-
-                        if (showImageDialog) {
-                            ImageDialog(
-                                imageUrl = imageUri,
-                                onDismissRequest = { showImageDialog = false }
-                            )
-                        }
-
-                        FileText(
-                            modifier = Modifier.padding(16.dp),
-                            files = it.files
-                        )
+                        Text(text = uiState.error)
                     }
                 }
-            }
-        } else {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = uiState.error)
             }
         }
         PullToRefreshContainer(
@@ -220,5 +113,132 @@ fun ArticleScreen(
                 )
             }
         )
+    }
+}
+
+@Composable
+fun ArticleView(
+    data: Article?,
+    isDarkTheme: Boolean,
+    setExternalLink: (articleUrl: String) -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        data?.let {
+            LaunchedEffect(key1 = Unit) {
+                setExternalLink(it.articleUrl)
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = it.title,
+                    style = MaterialTheme.typography.articleTitle,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Text(
+                            text = it.writer,
+                            style = MaterialTheme.typography.articleSubText
+                        )
+                        Text(
+                            text = it.date,
+                            style = MaterialTheme.typography.articleSubText
+                        )
+                    }
+                }
+
+                var baseUrl = Regex(REGEX_BASE_URL).find(it.articleUrl)?.value
+                    ?: "https://www.koreatech.ac.kr"
+
+                /*
+                     If baseUrl is https://koreatech.ac.kr, replace it with https://www.koreatech.ac.kr
+                     Because, if baseUrl is https://koreatech.ac.kr, okhttp will throw CLEARTEXT communication error
+                     */
+                if (baseUrl.contains("https://koreatech.ac.kr")) {
+                    baseUrl = "https://www.koreatech.ac.kr"
+                }
+
+                var showImageDialog by remember { mutableStateOf(false) }
+                var imageUri by remember { mutableStateOf("") }
+
+                HtmlView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    html = it.content,
+                    baseUrl = baseUrl,
+                    isDarkTheme = isDarkTheme,
+                    image = { url, description ->
+                        SubcomposeAsyncImage(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp)
+                                .clickable {
+                                    imageUri = url
+                                    showImageDialog = true
+                                },
+                            model = ImageRequest.Builder(LocalPlatformContext.current)
+                                .data(url)
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = description,
+                            contentScale = ContentScale.FillWidth,
+                            loading = {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                        )
+                    },
+                    webView = { html ->
+                        WebView(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp),
+                            html = html,
+                            baseUrl = baseUrl,
+                            loading = {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                        )
+                    }
+                )
+
+                if (showImageDialog) {
+                    ImageDialog(
+                        imageUrl = imageUri,
+                        onDismissRequest = { showImageDialog = false }
+                    )
+                }
+
+                FileText(
+                    modifier = Modifier.padding(16.dp),
+                    files = it.files
+                )
+            }
+        }
     }
 }
