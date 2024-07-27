@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard
 
+import android.app.NotificationManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,14 +33,20 @@ class MainActivity : ComponentActivity() {
         Napier.base(DebugAntilog())
 
         val defaultScreen = intent.getStringExtra("screen")
+        val startDestination = if (defaultScreen != null) {
+            MainRoute.valueOf(defaultScreen).name
+        } else {
+            MainRoute.Home.name
+        }
+
+        if (startDestination == MainRoute.Notice.name) {
+            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            manager.cancelAll()
+        }
 
         setContent {
             App(
-                startDestination = if (defaultScreen != null) {
-                    MainRoute.valueOf(defaultScreen).name
-                } else {
-                    MainRoute.Home.name
-                }
+                startDestination = startDestination
             )
         }
     }
