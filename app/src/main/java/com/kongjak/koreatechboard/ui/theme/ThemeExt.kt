@@ -1,76 +1,75 @@
 package com.kongjak.koreatechboard.ui.theme
 
-import androidx.compose.material3.ColorScheme
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import com.kyant.m3color.dynamiccolor.MaterialDynamicColors
-import com.kyant.m3color.hct.Hct
-import com.kyant.m3color.scheme.SchemeContent
-import com.kyant.m3color.scheme.SchemeExpressive
-import com.kyant.m3color.scheme.SchemeFidelity
-import com.kyant.m3color.scheme.SchemeFruitSalad
-import com.kyant.m3color.scheme.SchemeMonochrome
-import com.kyant.m3color.scheme.SchemeNeutral
-import com.kyant.m3color.scheme.SchemeRainbow
-import com.kyant.m3color.scheme.SchemeTonalSpot
-import com.kyant.m3color.scheme.SchemeVibrant
 
-fun dynamicColorScheme(
-    keyColor: Color,
-    isDark: Boolean,
-    style: PaletteStyle = PaletteStyle.TonalSpot,
-    contrastLevel: Double = 0.0
-): ColorScheme {
-    val hct = Hct.fromInt(keyColor.toArgb())
-    val colors = MaterialDynamicColors()
-    val scheme = when (style) {
-        PaletteStyle.TonalSpot -> SchemeTonalSpot(hct, isDark, contrastLevel)
-        PaletteStyle.Neutral -> SchemeNeutral(hct, isDark, contrastLevel)
-        PaletteStyle.Vibrant -> SchemeVibrant(hct, isDark, contrastLevel)
-        PaletteStyle.Expressive -> SchemeExpressive(hct, isDark, contrastLevel)
-        PaletteStyle.Rainbow -> SchemeRainbow(hct, isDark, contrastLevel)
-        PaletteStyle.FruitSalad -> SchemeFruitSalad(hct, isDark, contrastLevel)
-        PaletteStyle.Monochrome -> SchemeMonochrome(hct, isDark, contrastLevel)
-        PaletteStyle.Fidelity -> SchemeFidelity(hct, isDark, contrastLevel)
-        PaletteStyle.Content -> SchemeContent(hct, isDark, contrastLevel)
-    }
+/*
+ * Fixed dynamic color scheme
+ * Issue: https://github.com/material-components/material-components-android/issues/3924
+ * Based on https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md
+ */
 
-    return ColorScheme(
-        primary = Color(colors.primary().getArgb(scheme)),
-        onPrimary = Color(colors.onPrimary().getArgb(scheme)),
-        primaryContainer = Color(colors.primaryContainer().getArgb(scheme)),
-        onPrimaryContainer = Color(colors.onPrimaryContainer().getArgb(scheme)),
-        inversePrimary = Color(colors.inversePrimary().getArgb(scheme)),
-        secondary = Color(colors.secondary().getArgb(scheme)),
-        onSecondary = Color(colors.onSecondary().getArgb(scheme)),
-        secondaryContainer = Color(colors.secondaryContainer().getArgb(scheme)),
-        onSecondaryContainer = Color(colors.onSecondaryContainer().getArgb(scheme)),
-        tertiary = Color(colors.tertiary().getArgb(scheme)),
-        onTertiary = Color(colors.onTertiary().getArgb(scheme)),
-        tertiaryContainer = Color(colors.tertiaryContainer().getArgb(scheme)),
-        onTertiaryContainer = Color(colors.onTertiaryContainer().getArgb(scheme)),
-        background = Color(colors.background().getArgb(scheme)),
-        onBackground = Color(colors.onBackground().getArgb(scheme)),
-        surface = Color(colors.surface().getArgb(scheme)),
-        onSurface = Color(colors.onSurface().getArgb(scheme)),
-        surfaceVariant = Color(colors.surfaceVariant().getArgb(scheme)),
-        onSurfaceVariant = Color(colors.onSurfaceVariant().getArgb(scheme)),
-        surfaceTint = Color(colors.surfaceTint().getArgb(scheme)),
-        inverseSurface = Color(colors.inverseSurface().getArgb(scheme)),
-        inverseOnSurface = Color(colors.inverseOnSurface().getArgb(scheme)),
-        error = Color(colors.error().getArgb(scheme)),
-        onError = Color(colors.onError().getArgb(scheme)),
-        errorContainer = Color(colors.errorContainer().getArgb(scheme)),
-        onErrorContainer = Color(colors.onErrorContainer().getArgb(scheme)),
-        outline = Color(colors.outline().getArgb(scheme)),
-        outlineVariant = Color(colors.outlineVariant().getArgb(scheme)),
-        scrim = Color(colors.scrim().getArgb(scheme)),
-        surfaceBright = Color(colors.surfaceBright().getArgb(scheme)),
-        surfaceDim = Color(colors.surfaceDim().getArgb(scheme)),
-        surfaceContainer = Color(colors.surfaceContainer().getArgb(scheme)),
-        surfaceContainerHigh = Color(colors.surfaceContainerHigh().getArgb(scheme)),
-        surfaceContainerHighest = Color(colors.surfaceContainerHighest().getArgb(scheme)),
-        surfaceContainerLow = Color(colors.surfaceContainerLow().getArgb(scheme)),
-        surfaceContainerLowest = Color(colors.surfaceContainerLowest().getArgb(scheme))
-    )
+@RequiresApi(Build.VERSION_CODES.S)
+fun fixedDynamicLightColorScheme(
+    context: Context
+) = lightColorScheme(
+    primary = getColor(context, android.R.color.system_accent1_600),
+    onPrimary = getColor(context, android.R.color.system_accent1_0),
+    primaryContainer = getColor(context, android.R.color.system_accent1_100),
+    onPrimaryContainer = getColor(context, android.R.color.system_accent1_900),
+    inversePrimary = getColor(context, android.R.color.system_accent1_200),
+    secondary = getColor(context, android.R.color.system_accent2_600),
+    onSecondary = getColor(context, android.R.color.system_accent2_0),
+    secondaryContainer = getColor(context, android.R.color.system_accent2_100),
+    onSecondaryContainer = getColor(context, android.R.color.system_accent2_900),
+    tertiary = getColor(context, android.R.color.system_accent3_600),
+    onTertiary = getColor(context, android.R.color.system_accent3_0),
+    tertiaryContainer = getColor(context, android.R.color.system_accent3_100),
+    onTertiaryContainer = getColor(context, android.R.color.system_accent3_900),
+    onBackground = getColor(context, android.R.color.system_neutral1_900),
+    onSurface = getColor(context, android.R.color.system_neutral1_900),
+    surfaceVariant = getColor(context, android.R.color.system_neutral2_100),
+    onSurfaceVariant = getColor(context, android.R.color.system_neutral2_700),
+    inverseSurface = getColor(context, android.R.color.system_neutral1_800),
+    inverseOnSurface = getColor(context, android.R.color.system_neutral1_50),
+    outline = getColor(context, android.R.color.system_neutral2_500),
+    outlineVariant = getColor(context, android.R.color.system_neutral2_200),
+    surfaceContainerLowest = getColor(context, android.R.color.system_neutral2_0),
+    surfaceContainerHighest = getColor(context, android.R.color.system_neutral2_100)
+)
+
+@RequiresApi(Build.VERSION_CODES.S)
+fun fixedDynamicDarkColorScheme(
+    context: Context
+) = darkColorScheme(
+    primary = getColor(context, android.R.color.system_accent1_200),
+    onPrimary = getColor(context, android.R.color.system_accent1_800),
+    primaryContainer = getColor(context, android.R.color.system_accent1_700),
+    onPrimaryContainer = getColor(context, android.R.color.system_accent1_100),
+    inversePrimary = getColor(context, android.R.color.system_accent1_600),
+    secondary = getColor(context, android.R.color.system_accent2_200),
+    onSecondary = getColor(context, android.R.color.system_accent2_800),
+    secondaryContainer = getColor(context, android.R.color.system_accent2_700),
+    onSecondaryContainer = getColor(context, android.R.color.system_accent2_100),
+    tertiary = getColor(context, android.R.color.system_accent3_200),
+    onTertiary = getColor(context, android.R.color.system_accent3_800),
+    tertiaryContainer = getColor(context, android.R.color.system_accent3_700),
+    onTertiaryContainer = getColor(context, android.R.color.system_accent3_100),
+    onBackground = getColor(context, android.R.color.system_neutral1_100),
+    onSurface = getColor(context, android.R.color.system_neutral1_100),
+    surfaceVariant = getColor(context, android.R.color.system_neutral2_700),
+    onSurfaceVariant = getColor(context, android.R.color.system_neutral2_200),
+    inverseSurface = getColor(context, android.R.color.system_neutral1_100),
+    inverseOnSurface = getColor(context, android.R.color.system_neutral1_800),
+    outline = getColor(context, android.R.color.system_neutral2_400),
+    outlineVariant = getColor(context, android.R.color.system_neutral2_700),
+    surfaceContainerLow = getColor(context, android.R.color.system_neutral2_900)
+)
+
+internal fun getColor(context: Context, resId: Int): Color {
+    return Color(context.getColor(resId))
 }
