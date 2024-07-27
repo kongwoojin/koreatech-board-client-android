@@ -118,7 +118,6 @@ fun ArticleScreen(
     }
 }
 
-
 @Composable
 fun ArticleView(
     data: Article?,
