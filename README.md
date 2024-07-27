@@ -12,7 +12,6 @@
 * [Android Jetpack](https://developer.android.com/jetpack)
 * [Orbit-MVI](https://orbit-mvi.org/)
 * [KtXml](https://github.com/kobjects/ktxml)
-* [m3color](https://github.com/Kyant0/m3color)
 
 
 ## 이미지

@@ -533,10 +533,6 @@ ktxml (0.2.3) - Apache-2.0
 KtXml Kotlin XML 'pull' parser library
 https://github.com/kobjects/ktxml
 
-Kyant0/m3color (2024.1) - Apache License 2.0
-Material 3 color Java library
-https://github.com/Kyant0/m3color
-
 Lifecycle Kotlin Extensions (2.7.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'lifecycle' artifact
 https://developer.android.com/jetpack/androidx/releases/lifecycle#2.7.0

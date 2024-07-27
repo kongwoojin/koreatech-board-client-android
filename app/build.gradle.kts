@@ -98,8 +98,6 @@ dependencies {
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.compose)
 
-    implementation(libs.m3color)
-
     implementation(libs.ktxml)
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
