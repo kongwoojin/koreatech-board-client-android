@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.ui.main
 
+import android.app.NotificationManager
 import android.content.Context
 import android.net.Uri
 import android.os.Build
@@ -89,6 +90,11 @@ class MainActivity : ComponentActivity() {
 
             if (defaultScreen != null) {
                 startDestination = MainRoute.valueOf(defaultScreen).name
+            }
+
+            if (startDestination == MainRoute.Notice.name) {
+                val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                manager.cancelAll()
             }
 
             mainViewModel.collectSideEffect { mainViewModel.handleSideEffect(it) }
