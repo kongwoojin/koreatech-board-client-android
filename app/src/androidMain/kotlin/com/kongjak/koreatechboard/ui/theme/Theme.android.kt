@@ -12,11 +12,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.core.view.WindowCompat
 
 @Composable
-actual fun getSeedColor(): Color {
-    return colorResource(id = android.R.color.system_accent1_500)
-}
-
-@Composable
 actual fun PlatformSpecificTheme(colorScheme: ColorScheme, isDarkTheme: Boolean) {
     val view = LocalView.current
     if (!view.isInEditMode) {

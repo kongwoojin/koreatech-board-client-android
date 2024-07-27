@@ -8,9 +8,8 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.ui.graphics.Color
+import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.util.getPlatformInfo
-import com.materialkolor.rememberDynamicColorScheme
 
 private val LightColorScheme = lightColorScheme(
     primary = primaryLight,
@@ -103,17 +102,21 @@ fun KoreatechBoardTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val seedColor = getSeedColor()
+    val context = LocalPlatformContext.current
     val colorScheme = when {
         dynamicColor && getPlatformInfo().isDynamicThemeSupported -> {
-            rememberDynamicColorScheme(seedColor, darkTheme)
+            if (darkTheme) fixedDynamicDarkColorScheme(context) else fixedDynamicLightColorScheme(
+                context
+            )
         }
+
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
     PlatformSpecificTheme(colorScheme, darkTheme)
 
-    val koreatechBoardColorScheme = if (darkTheme) KoreatechBoardDarkColorScheme else KoreatechBoardLightColorScheme
+    val koreatechBoardColorScheme =
+        if (darkTheme) KoreatechBoardDarkColorScheme else KoreatechBoardLightColorScheme
 
     CompositionLocalProvider(
         LocalKoreatechBoardColorPalette provides koreatechBoardColorScheme
@@ -130,9 +133,6 @@ val MaterialTheme.koreatechColorPalette: KoreatechBoardColorPalette
     @Composable
     @ReadOnlyComposable
     get() = LocalKoreatechBoardColorPalette.current
-
-@Composable
-expect fun getSeedColor(): Color
 
 @Composable
 expect fun PlatformSpecificTheme(colorScheme: ColorScheme, isDarkTheme: Boolean)
