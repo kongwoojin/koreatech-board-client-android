@@ -6,4 +6,5 @@ sealed class MainSideEffect {
     data object GetDynamicTheme : MainSideEffect()
     data object GetDarkTheme : MainSideEffect()
     data class SetExternalLink(val url: String) : MainSideEffect()
+    data class SetSubscribe(val subscribe: Boolean) : MainSideEffect()
 }

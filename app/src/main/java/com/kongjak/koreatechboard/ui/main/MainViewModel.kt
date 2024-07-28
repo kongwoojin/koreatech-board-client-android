@@ -7,6 +7,9 @@ import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetInitDepartmentUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.department.GetUserDepartmentUseCase
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetDepartmentNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetDormNoticeSubscribe
+import com.kongjak.koreatechboard.domain.usecase.settings.subscribe.SetSchoolNoticeSubscribe
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +27,10 @@ class MainViewModel @Inject constructor(
     private val getUserDepartmentUseCase: GetUserDepartmentUseCase,
     private val getInitDepartmentUseCase: GetInitDepartmentUseCase,
     private val getDynamicThemeUseCase: GetDynamicThemeUseCase,
-    private val getDarkThemeUseCase: GetDarkThemeUseCase
+    private val getDarkThemeUseCase: GetDarkThemeUseCase,
+    private val setSchoolNoticeSubscribe: SetSchoolNoticeSubscribe,
+    private val setDormNoticeSubscribe: SetDormNoticeSubscribe,
+    private val setDepartmentNoticeSubscribe: SetDepartmentNoticeSubscribe
 ) : ContainerHost<MainState, MainSideEffect>, ViewModel() {
 
     override val container = container<MainState, MainSideEffect>(MainState())
@@ -40,6 +46,12 @@ class MainViewModel @Inject constructor(
 
     fun setExternalLink(url: String) {
         handleSideEffect(MainSideEffect.SetExternalLink(url))
+    }
+
+    fun sendSideEffect(sideEffect: MainSideEffect) {
+        intent {
+            postSideEffect(sideEffect)
+        }
     }
 
     fun handleSideEffect(sideEffect: MainSideEffect) {
@@ -103,6 +115,12 @@ class MainViewModel @Inject constructor(
                         state.copy(externalLink = sideEffect.url)
                     }
                 }
+            }
+
+            is MainSideEffect.SetSubscribe -> viewModelScope.launch {
+                setSchoolNoticeSubscribe(sideEffect.subscribe)
+                setDormNoticeSubscribe(sideEffect.subscribe)
+                setDepartmentNoticeSubscribe(sideEffect.subscribe)
             }
         }
     }

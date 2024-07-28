@@ -114,7 +114,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        CheckNotificationPermission()
+                        CheckNotificationPermission(
+                            onPermissionGranted = {
+                                mainViewModel.sendSideEffect(MainSideEffect.SetSubscribe(true))
+                            }
+                        )
                     }
                     MainScreen(
                         startDestination = startDestination,

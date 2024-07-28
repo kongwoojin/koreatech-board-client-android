@@ -23,11 +23,15 @@ import com.kongjak.koreatechboard.ui.components.dialog.TextDialog
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun CheckNotificationPermission() {
+fun CheckNotificationPermission(
+    onPermissionGranted: () -> Unit
+) {
     val isPermissionGranted = isNotificationPermissionGranted()
 
     if (!isPermissionGranted) {
         RequestNotificationPermission()
+    } else {
+        onPermissionGranted()
     }
 }
 
