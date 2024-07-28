@@ -3,7 +3,9 @@ package com.kongjak.koreatechboard.ui.permission
 import androidx.compose.runtime.Composable
 
 @Composable
-expect fun CheckNotificationPermission()
+expect fun CheckNotificationPermission(
+    onPermissionGranted: () -> Unit
+)
 
 @Composable
 expect fun RequestNotificationPermission()

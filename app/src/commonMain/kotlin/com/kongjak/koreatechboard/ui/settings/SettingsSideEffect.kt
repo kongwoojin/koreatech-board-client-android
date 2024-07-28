@@ -16,4 +16,5 @@ sealed class SettingsSideEffect {
     object GetSchoolSubscribe : SettingsSideEffect()
     object GetDormSubscribe : SettingsSideEffect()
     object GetDepartmentSubscribe : SettingsSideEffect()
+    data class SetSubscribe(val subscribe: Boolean) : SettingsSideEffect()
 }

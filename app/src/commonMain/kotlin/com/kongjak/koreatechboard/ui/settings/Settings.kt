@@ -6,6 +6,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import coil3.compose.LocalPlatformContext
@@ -17,6 +20,7 @@ import com.kongjak.koreatechboard.ui.components.preference.ListPreference
 import com.kongjak.koreatechboard.ui.components.preference.Preference
 import com.kongjak.koreatechboard.ui.components.preference.PreferenceColumn
 import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
+import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
 import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.getPlatformInfo
@@ -147,11 +151,13 @@ fun SettingsScreen(
 
         if (getPlatformInfo().isFirebaseSupported) {
             PreferenceColumn(title = stringResource(Res.string.setting_header_notification)) {
-                val isNotificationPermissionGranted = isNotificationPermissionGranted()
-
-                if (!isNotificationPermissionGranted) {
-                    RequestNotificationPermission()
-                }
+                var isNotificationPermissionGranted by remember { mutableStateOf(false)}
+                CheckNotificationPermission(
+                    onPermissionGranted = {
+                        settingsViewModel.sendSideEffect(SettingsSideEffect.SetSubscribe(true))
+                        isNotificationPermissionGranted = true
+                    }
+                )
                 SwitchPreference(
                     title = stringResource(Res.string.setting_subscribe_new_notice_school),
                     summary = stringResource(Res.string.setting_subscribe_new_notice_summary_school),
