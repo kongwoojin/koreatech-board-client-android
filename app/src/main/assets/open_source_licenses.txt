@@ -766,3 +766,7 @@ http://developer.android.com/tools/extras/support-library.html
 WebKit (1.11.0) - The Apache Software License, Version 2.0
 The WebKit Support Library is a static library you can add to your Android application in order to use android.webkit APIs that are not available for older platform versions.
 https://developer.android.com/jetpack/androidx/releases/webkit#1.11.0
+
+zoomable (1.6.1) - The Apache Software License, Version 2.0
+An android library for Jetpack Compose that enables contents zoomable.
+https://github.com/usuiat/Zoomable

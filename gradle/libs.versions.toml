@@ -37,6 +37,7 @@ permissions = "0.30.1"
 retrofit = "2.9.0"
 room = "2.6.1"
 webkit = "1.11.0"
+zoomable = "1.6.1"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "permissions" }
@@ -94,6 +95,7 @@ junit-test = { module = "androidx.test.ext:junit", version.ref = "junit-test" }
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+zoomable = { module = "net.engawapg.lib:zoomable", version.ref = "zoomable" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
