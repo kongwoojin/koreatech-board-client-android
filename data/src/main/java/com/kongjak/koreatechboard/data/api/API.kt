@@ -16,12 +16,10 @@ interface API {
         @Query("page") page: Int
     ): Response<BoardResponse>
 
-    @GET(APIConstraints.V3.BOARD)
+    @GET(APIConstraints.V3.BOARD_WIDGET)
     suspend fun getBoardMinimum(
         @Path("site") site: String,
-        @Path("board") board: String,
-        @Query("page") page: Int = 1,
-        @Query("num_of_items") numOfItems: Int = 5
+        @Path("board") board: String
     ): Response<BoardResponse>
 
     @GET(APIConstraints.V3.SEARCH_WITH_TITLE)
