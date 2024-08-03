@@ -6,7 +6,8 @@ import com.kongjak.koreatechboard.data.mapper.mapToArticle
 import com.kongjak.koreatechboard.data.mapper.mapToLocalArticle
 import com.kongjak.koreatechboard.domain.model.LocalArticle
 import com.kongjak.koreatechboard.domain.repository.DatabaseRepository
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.util.UUID
 import javax.inject.Inject
@@ -14,13 +15,11 @@ import javax.inject.Inject
 class DatabaseRepositoryImpl @Inject constructor(
     private val databaseLocalDataSource: DatabaseLocalDataSource,
     private val articleRemoteDataSource: ArticleRemoteDataSource
-) :
-    DatabaseRepository {
-    override suspend fun getArticleList(vararg departments: String) = flow {
-        databaseLocalDataSource.getArticleList(*departments).collect {
-            emit(it.mapToLocalArticle())
+) : DatabaseRepository {
+    override suspend fun getArticleList(vararg departments: String): Flow<List<LocalArticle>> =
+        databaseLocalDataSource.getArticleList(*departments).map { list ->
+            list.map { it.mapToLocalArticle() }
         }
-    }
 
     override suspend fun getArticle(uuid: UUID): LocalArticle {
         return databaseLocalDataSource.getArticle(uuid)

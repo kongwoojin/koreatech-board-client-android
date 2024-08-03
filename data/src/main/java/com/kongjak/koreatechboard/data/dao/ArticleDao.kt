@@ -4,12 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.kongjak.koreatechboard.data.enity.Article
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface ArticleDao {
+    @Transaction
     @Query("SELECT * FROM article WHERE department IN (:departments) ORDER BY received_time DESC, write_date DESC, num DESC")
     fun getAll(vararg departments: String): Flow<List<Article>>
 
