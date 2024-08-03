@@ -13,7 +13,6 @@
 * [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
 * [Ktor](https://ktor.io/)
 * [KtXml](https://github.com/kobjects/ktxml)
-* [m3color](https://github.com/jordond/MaterialKolor)
 * [Multiplatform Paging](https://github.com/cashapp/multiplatform-paging)
 * [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings)
 * [Orbit-MVI](https://orbit-mvi.org/)

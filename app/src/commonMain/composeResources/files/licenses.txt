@@ -222,10 +222,6 @@ Collections Kotlin Extensions (1.4.0) - The Apache Software License, Version 2.0
 Kotlin extensions for 'collection' artifact
 https://developer.android.com/jetpack/androidx/releases/collection#1.4.0
 
-Colormath (3.5.0) - The MIT License
-Multiplatform color space conversions for Kotlin
-https://github.com/ajalt/colormath/
-
 Compose Animation (1.6.0) - The Apache Software License, Version 2.0
 Compose animation library
 https://developer.android.com/jetpack/androidx/releases/compose-animation#1.6.0
@@ -491,23 +487,23 @@ Kotlin Stdlib Jdk8 (1.9.10) - The Apache License, Version 2.0
 Kotlin Standard Library JDK 8 extension
 https://kotlinlang.org/
 
-kotlinx-coroutines-android (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-android (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-core (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-core (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-jdk8 (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-jdk8 (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-play-services (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-play-services (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
-kotlinx-coroutines-slf4j (1.8.0) - The Apache Software License, Version 2.0
+kotlinx-coroutines-slf4j (1.8.1) - The Apache Software License, Version 2.0
 Coroutines support libraries for Kotlin
 https://github.com/Kotlin/kotlinx.coroutines
 
@@ -651,14 +647,6 @@ Material Components for Android (1.12.0) - The Apache Software License, Version 
 Material Components for Android is a static library that you can add to your Android application in order to use APIs that provide implementations of the Material Design specification. Compatible on devices running API 14 or later.
 https://github.com/material-components/material-components-android
 
-MaterialKolor (1.5.0) - The MIT License
-A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.
-https://github.com/jordond/materialkolor
-
-MaterialKolor (1.5.0) - The MIT License
-A Compose multiplatform library for generating dynamic Material3 color schemes from a seed color.
-https://github.com/jordond/materialkolor
-
 Multiplatform Settings (1.1.1) - The Apache Software License, Version 2.0
 A Kotlin Multiplatform library for saving simple key-value data
 https://github.com/russhwolf/multiplatform-settings
@@ -671,7 +659,7 @@ napier (1.4.1) - The Apache Software License, Version 2.0
 Kotlin Multiplatform libraries that show logs in common module.
 https://github.com/aakira/Napier
 
-napier (1.4.1) - The Apache Software License, Version 2.0
+napier (2.7.1) - The Apache Software License, Version 2.0
 Kotlin Multiplatform libraries that show logs in common module.
 https://github.com/aakira/Napier
 
@@ -759,15 +747,11 @@ play-services-stats (17.0.2) - Android Software Development Kit License
 
 play-services-tasks (18.1.0) - Android Software Development Kit License
 
-Poko Annotations (0.15.2) - The Apache Software License, Version 2.0
-A Kotlin compiler plugin for generating equals, hashCode, and toString for plain old Kotlin objects.
-https://github.com/drewhamilton/Poko
-
 Privacy Sandbox for Ad Services (1.0.0-beta05) - The Apache Software License, Version 2.0
 This library enables integration with Privacy Preserving APIs, which are part of Privacy Sandbox on Android.
 https://developer.android.com/jetpack/androidx/releases/privacysandbox-ads#1.0.0-beta05
 
-Resources for Compose JB (1.6.10-rc03) - The Apache Software License, Version 2.0
+Resources for Compose JB (1.6.10) - The Apache Software License, Version 2.0
 Resources for Compose JB
 https://github.com/JetBrains/compose-jb
 
@@ -833,9 +817,9 @@ VersionedParcelable (1.1.1) - The Apache Software License, Version 2.0
 Provides a stable but relatively compact binary serialization format that can be passed across processes or persisted safely.
 http://developer.android.com/tools/extras/support-library.html
 
-WebKit (1.10.0) - The Apache Software License, Version 2.0
+WebKit (1.11.0) - The Apache Software License, Version 2.0
 The WebKit Support Library is a static library you can add to your Android application in order to use android.webkit APIs that are not available for older platform versions.
-https://developer.android.com/jetpack/androidx/releases/webkit#1.10.0
+https://developer.android.com/jetpack/androidx/releases/webkit#1.11.0
 
 WindowManager (1.2.0) - The Apache Software License, Version 2.0
 WindowManager Jetpack library. Currently only provides additional functionality on foldable devices.
