@@ -13,9 +13,7 @@ interface API {
 
     suspend fun getBoardMinimum(
         site: String,
-        board: String,
-        page: Int = 1,
-        numOfItems: Int = 5
+        board: String
     ): HttpResponse
 
     suspend fun getArticle(

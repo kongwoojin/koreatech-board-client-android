@@ -19,11 +19,9 @@ class APIImpl(private val httpClient: HttpClient) : API {
         return response.body()
     }
 
-    override suspend fun getBoardMinimum(site: String, board: String, page: Int, numOfItems: Int): HttpResponse {
+    override suspend fun getBoardMinimum(site: String, board: String): HttpResponse {
         val response = httpClient.get {
-            url("$site/$board")
-            parameter("page", page)
-            parameter("num_of_items", numOfItems)
+            url("$site/$board/widget")
         }
 
         return response.body()
