@@ -18,7 +18,6 @@ import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDarkThemeUseC
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.GetDynamicThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDarkThemeUseCase
 import com.kongjak.koreatechboard.domain.usecase.settings.theme.SetDynamicThemeUseCase
-import com.kongjak.koreatechboard.ui.main.MainSideEffect
 import com.kongjak.koreatechboard.util.ViewModelExt
 import com.kongjak.koreatechboard.util.getPlatformInfo
 import com.kongjak.koreatechboard.util.subscribeFirebaseTopic

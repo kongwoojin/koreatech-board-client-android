@@ -6,10 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
-import com.kongjak.koreatechboard.util.ContextUtil
 import com.kongjak.koreatechboard.util.ContextUtil.getApplicationContext
-import org.koin.compose.getKoin
-import org.koin.compose.koinInject
 
 @RequiresApi(Build.VERSION_CODES.S)
 actual fun fixedDynamicLightColorScheme() = lightColorScheme(

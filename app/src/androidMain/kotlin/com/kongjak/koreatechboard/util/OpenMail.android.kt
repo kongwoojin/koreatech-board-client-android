@@ -1,7 +1,6 @@
 package com.kongjak.koreatechboard.util
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.kongjak.koreatechboard.util.ContextUtil.getApplicationContext

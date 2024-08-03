@@ -56,8 +56,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.kongjak.koreatechboard.ui.components.BoardItem
 import com.benasher44.uuid.Uuid
+import com.kongjak.koreatechboard.ui.components.BoardItem
 import com.kongjak.koreatechboard.ui.components.dialog.TextFieldDialog
 import com.kongjak.koreatechboard.ui.settings.deptList
 import com.kongjak.koreatechboard.util.routes.Department

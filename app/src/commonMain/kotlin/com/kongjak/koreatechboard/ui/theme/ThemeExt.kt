@@ -11,4 +11,3 @@ import androidx.compose.material3.ColorScheme
 expect fun fixedDynamicLightColorScheme(): ColorScheme
 
 expect fun fixedDynamicDarkColorScheme(): ColorScheme
-

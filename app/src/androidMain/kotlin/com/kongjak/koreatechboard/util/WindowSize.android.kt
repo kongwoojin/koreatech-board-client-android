@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 actual fun getScreenWidth(): Int {
     return LocalConfiguration.current.screenWidthDp
 }
+
 @Composable
 actual fun getScreenHeight(): Int {
     return LocalConfiguration.current.screenHeightDp
