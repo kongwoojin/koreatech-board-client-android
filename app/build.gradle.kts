@@ -85,7 +85,6 @@ kotlin {
             implementation(libs.ktor.negotiation)
             implementation(libs.ktor.kotlinx.serialization)
             implementation(libs.ktxml)
-            implementation(libs.material.kolor)
             implementation(libs.material3.window.size.multiplatform)
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
