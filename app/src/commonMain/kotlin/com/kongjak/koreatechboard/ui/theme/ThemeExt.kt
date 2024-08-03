@@ -8,11 +8,7 @@ import androidx.compose.material3.ColorScheme
  * Based on https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md
  */
 
-expect fun fixedDynamicLightColorScheme(
-    context: Any
-): ColorScheme
+expect fun fixedDynamicLightColorScheme(): ColorScheme
 
-expect fun fixedDynamicDarkColorScheme(
-    context: Any
-): ColorScheme
+expect fun fixedDynamicDarkColorScheme(): ColorScheme
 

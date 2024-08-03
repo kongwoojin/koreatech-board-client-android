@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.domain.DARK_THEME_DARK_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_LIGHT_THEME
 import com.kongjak.koreatechboard.domain.DARK_THEME_SYSTEM_DEFAULT
@@ -21,8 +20,6 @@ import com.kongjak.koreatechboard.ui.components.preference.Preference
 import com.kongjak.koreatechboard.ui.components.preference.PreferenceColumn
 import com.kongjak.koreatechboard.ui.components.preference.SwitchPreference
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
-import com.kongjak.koreatechboard.ui.permission.RequestNotificationPermission
-import com.kongjak.koreatechboard.ui.permission.isNotificationPermissionGranted
 import com.kongjak.koreatechboard.util.getPlatformInfo
 import com.kongjak.koreatechboard.util.openMail
 import com.kongjak.koreatechboard.util.openUrl
@@ -90,7 +87,6 @@ fun SettingsScreen(
     openLicenses: () -> Unit,
     showSnackbar: (message: String) -> Unit
 ) {
-    val context = LocalPlatformContext.current
     val uriHandler = LocalUriHandler.current
     val uiState by settingsViewModel.collectAsState()
 
@@ -151,7 +147,7 @@ fun SettingsScreen(
 
         if (getPlatformInfo().isFirebaseSupported) {
             PreferenceColumn(title = stringResource(Res.string.setting_header_notification)) {
-                var isNotificationPermissionGranted by remember { mutableStateOf(false)}
+                var isNotificationPermissionGranted by remember { mutableStateOf(false) }
                 CheckNotificationPermission(
                     onPermissionGranted = {
                         settingsViewModel.sendSideEffect(SettingsSideEffect.SetSubscribe(true))
@@ -222,7 +218,6 @@ fun SettingsScreen(
 
             Preference(title = stringResource(Res.string.setting_source_code_title)) {
                 openUrl(
-                    context = context,
                     uriHandler = uriHandler,
                     url = sourceCodeUrl
                 )
@@ -230,7 +225,6 @@ fun SettingsScreen(
 
             Preference(title = stringResource(Res.string.setting_enquiry_mail_title)) {
                 openMail(
-                    context = context,
                     address = mailAddress,
                     subject = mailSubject,
                     body = mailText,

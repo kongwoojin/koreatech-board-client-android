@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationBar
 import com.kongjak.koreatechboard.ui.KoreatechBoardNavigationRail
 import com.kongjak.koreatechboard.ui.NavigationGraph
@@ -76,7 +75,6 @@ fun MainScreen(
                 )
             )
             val uriHandler = LocalUriHandler.current
-            val context = LocalPlatformContext.current
             val openInBrowserFailedString = stringResource(Res.string.open_in_browser_failed)
 
             val externalLinkAction = listOf(
@@ -85,7 +83,6 @@ fun MainScreen(
                     action = {
                         if (externalLink != null) {
                             openUrl(
-                                context = context,
                                 uriHandler = uriHandler,
                                 url = externalLink
                             )

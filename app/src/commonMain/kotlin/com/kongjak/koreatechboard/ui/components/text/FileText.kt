@@ -8,7 +8,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.domain.model.Files
 import com.kongjak.koreatechboard.util.openUrl
 
@@ -26,13 +25,11 @@ fun FileText(modifier: Modifier = Modifier, files: List<Files>) {
     }
 
     val uriHandler = LocalUriHandler.current
-    val context = LocalPlatformContext.current
 
     ClickableText(modifier = modifier, text = annotatedString) { offset ->
         annotatedString.getStringAnnotations(offset, offset)
             .firstOrNull()?.let { url ->
                 openUrl(
-                    context = context,
                     uriHandler = uriHandler,
                     url = if (url.item.startsWith("http")) {
                         url.item

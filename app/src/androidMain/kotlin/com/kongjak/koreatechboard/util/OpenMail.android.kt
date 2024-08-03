@@ -4,9 +4,10 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.kongjak.koreatechboard.util.ContextUtil.getApplicationContext
 
-actual fun openMail(context: Any, address: String, subject: String, body: String, exception: (message: String) -> Unit) {
-    val appContext = context as Context
+actual fun openMail(address: String, subject: String, body: String, exception: (message: String) -> Unit) {
+    val context = getApplicationContext()
 
     val mailIntent = Intent(Intent.ACTION_SENDTO)
     mailIntent.data = Uri.parse("mailto:")
@@ -23,7 +24,8 @@ actual fun openMail(context: Any, address: String, subject: String, body: String
         body
     )
     try {
-        appContext.startActivity(mailIntent)
+        mailIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(mailIntent)
     } catch (e: ActivityNotFoundException) {
         exception("Error opening mail client: ${e.message}")
     }

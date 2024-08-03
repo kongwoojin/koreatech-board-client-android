@@ -8,7 +8,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.util.getPlatformInfo
 
 private val LightColorScheme = lightColorScheme(
@@ -102,12 +101,9 @@ fun KoreatechBoardTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val context = LocalPlatformContext.current
     val colorScheme = when {
         dynamicColor && getPlatformInfo().isDynamicThemeSupported -> {
-            if (darkTheme) fixedDynamicDarkColorScheme(context) else fixedDynamicLightColorScheme(
-                context
-            )
+            if (darkTheme) fixedDynamicDarkColorScheme() else fixedDynamicLightColorScheme()
         }
 
         darkTheme -> DarkColorScheme

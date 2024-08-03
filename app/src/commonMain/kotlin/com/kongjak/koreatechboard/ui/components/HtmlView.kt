@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
-import coil3.compose.LocalPlatformContext
 import com.kongjak.koreatechboard.constraint.HTML_A
 import com.kongjak.koreatechboard.constraint.HTML_B
 import com.kongjak.koreatechboard.constraint.HTML_BIG
@@ -275,8 +274,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<table ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -295,8 +294,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<tr ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -315,8 +314,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<td ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -335,8 +334,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<th ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -355,8 +354,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<colgroup ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -375,8 +374,8 @@ fun HtmlView(
 
                             webViewHtml.append(
                                 "<col ${
-                                attributeMap.map { (key, value) -> "$key=\"$value\"" }
-                                    .joinToString(" ")
+                                    attributeMap.map { (key, value) -> "$key=\"$value\"" }
+                                        .joinToString(" ")
                                 }>"
                             )
                         }
@@ -584,7 +583,6 @@ private fun HtmlText(
     text: AnnotatedString
 ) {
     val uriHandler = LocalUriHandler.current
-    val context = LocalPlatformContext.current
 
     CustomClickableText(
         modifier = modifier,
@@ -595,12 +593,12 @@ private fun HtmlText(
                     if (url.item.isNotBlank()) {
                         if (url.tag.startsWith(ANNOTATION_PHONE_NUMBER_PREFIX)) {
                             val phoneNumber = url.item
-                            openUrl(context, uriHandler, "tel:$phoneNumber")
+                            openUrl(uriHandler, "tel:$phoneNumber")
                         } else if (url.tag.startsWith(ANNOTATION_URL_PREFIX)) {
-                            openUrl(context, uriHandler, url.item)
+                            openUrl(uriHandler, url.item)
                         } else if (url.tag.startsWith(ANNOTATION_EMAIL_PREFIX)) {
                             val email = url.item
-                            openUrl(context, uriHandler, "mailto:$email")
+                            openUrl(uriHandler, "mailto:$email")
                         }
                     }
                 }

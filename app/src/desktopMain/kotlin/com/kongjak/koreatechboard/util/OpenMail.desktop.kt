@@ -6,7 +6,7 @@ import java.net.URI
 import java.net.URISyntaxException
 import java.net.URLEncoder
 
-actual fun openMail(context: Any, address: String, subject: String, body: String, exception: (message: String) -> Unit) {
+actual fun openMail(address: String, subject: String, body: String, exception: (message: String) -> Unit) {
     val encodedSubject = URLEncoder.encode(subject, "UTF-8").replace("+", "%20")
     val encodedBody = URLEncoder.encode(body, "UTF-8").replace("+", "%20")
     val mailto = "mailto:$address?subject=$encodedSubject&body=$encodedBody"
