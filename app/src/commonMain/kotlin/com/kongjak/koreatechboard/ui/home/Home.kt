@@ -62,11 +62,11 @@ fun HomeScreen(
         ) {
             val homeUiState by homeViewModel.collectAsState()
             val selectedDepartmentIndex = homeUiState.department
-            BoardInHome(department = Department.School, onArticleClick = onArticleClick)
-            BoardInHome(department = Department.Dorm, onArticleClick = onArticleClick)
+            BoardWidget(department = Department.School, onArticleClick = onArticleClick)
+            BoardWidget(department = Department.Dorm, onArticleClick = onArticleClick)
 
             val selectedDepartment = deptList[selectedDepartmentIndex]
-            BoardInHome(department = selectedDepartment, onArticleClick = onArticleClick)
+            BoardWidget(department = selectedDepartment, onArticleClick = onArticleClick)
         }
     } else {
         Column(
@@ -81,7 +81,7 @@ fun HomeScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun BoardInHome(
+fun BoardWidget(
     department: Department,
     onArticleClick: (Uuid, String) -> Unit
 ) {
