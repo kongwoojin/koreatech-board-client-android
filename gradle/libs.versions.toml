@@ -27,7 +27,6 @@ ktor = "2.3.11"
 ktxml = "0.2.3"
 licenses-plugin = "0.9.7"
 material = "1.12.0"
-material-kolor = "1.5.0"
 multiplatform-settings = "1.1.1"
 orbit = "7.0.1"
 paging-androidx = "3.3.0"
@@ -72,7 +71,6 @@ ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version
 ktor-kotlinx-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
-material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 material3-window-size-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "window-size" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 multiplatform-settings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatform-settings" }
