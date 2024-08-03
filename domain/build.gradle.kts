@@ -1,17 +1,31 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.koreatechboard.library)
-    alias(libs.plugins.koreatechboard.hilt)
-    alias(libs.plugins.koreatechboard.firebase)
-    alias(libs.plugins.ktlint)
+}
+
+kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+
+    jvm("desktop")
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.koin.core)
+            implementation(libs.napier)
+            implementation(libs.paging.common)
+            implementation(libs.uuid)
+        }
+    }
 }
 
 android {
-    defaultConfig {
-        targetSdk = 34
-
-        consumerProguardFiles("consumer-rules.pro")
-    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     buildTypes {
         getByName("release") {
@@ -34,14 +48,4 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.paging.common)
-
-    implementation(libs.coroutine.android)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.esspresso)
-    androidTestImplementation(libs.junit.test)
 }

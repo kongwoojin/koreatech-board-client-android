@@ -2,18 +2,26 @@
 비공식 한국기술교육대학교 공지사항, 게시판 클라이언트 애플리케이션
 
 ## 사용된 기술 스택
-* [Jetpack Compose](https://developer.android.com/jetpack/compose)
+* [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
 
 ## 사용된 라이브러리
-* [Retrofit2](https://square.github.io/retrofit/)
-* [Coil](https://coil-kt.github.io/coil/)
 * [AndroidX](https://developer.android.com/jetpack/androidx)
-* [Hilt](https://dagger.dev/hilt/)
-* [Android Jetpack](https://developer.android.com/jetpack)
-* [Orbit-MVI](https://orbit-mvi.org/)
+* [Coil](https://coil-kt.github.io/coil/)
+* [KCEF](https://github.com/DatL4g/KCEF)
+* [Koin](https://insert-koin.io/)
+* [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+* [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization)
+* [Ktor](https://ktor.io/)
 * [KtXml](https://github.com/kobjects/ktxml)
-* [Zoomable](https://github.com/usuiat/Zoomable)
+* [Multiplatform Paging](https://github.com/cashapp/multiplatform-paging)
+* [Multiplatform Settings](https://github.com/russhwolf/multiplatform-settings)
+* [Orbit-MVI](https://orbit-mvi.org/)
+* [SqlDelight](https://cashapp.github.io/sqldelight/)
+* [UUID](https://github.com/benasher44/uuid)
 
+## 지원하는 플랫폼
+* Android
+* Desktop (JVM)
 
 ## 이미지
 | |Mobile|Tablet|

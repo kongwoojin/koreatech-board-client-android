@@ -24,21 +24,13 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("androidApplicationCompose") {
-            id = "com.kongjak.koreatechboard.plugin.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
         register("androidApplication") {
             id = "com.kongjak.koreatechboard.plugin.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
+            implementationClass = "ComposeApplicationConventionPlugin"
         }
         register("androidLibrary") {
             id = "com.kongjak.koreatechboard.plugin.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
-        }
-        register("androidHilt") {
-            id = "com.kongjak.koreatechboard.plugin.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+            implementationClass = "ComposeLibraryConventionPlugin"
         }
         register("firebase") {
             id = "com.kongjak.koreatechboard.plugin.firebase"

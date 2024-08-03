@@ -1,17 +1,50 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.koreatechboard.library)
-    alias(libs.plugins.koreatechboard.hilt)
-    alias(libs.plugins.koreatechboard.firebase)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.serialization)
+    id("app.cash.sqldelight") version "2.0.2"
+}
+
+kotlin {
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+
+    jvm("desktop")
+
+    sourceSets {
+        androidMain.dependencies {
+
+            implementation(libs.paging.androidx.compose)
+        }
+
+        commonMain.dependencies {
+            api(project(":domain"))
+
+            implementation(libs.coroutine.core)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.serialization)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.negotiation)
+            implementation(libs.ktor.kotlinx.serialization)
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.napier)
+            implementation(libs.paging.common)
+            implementation(libs.sqldelight.coroutines.extensions)
+
+            implementation(libs.uuid)
+        }
+    }
 }
 
 android {
-    defaultConfig {
-        targetSdk = 34
-
-        consumerProguardFiles("consumer-rules.pro")
-    }
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     buildTypes {
         getByName("release") {
@@ -22,7 +55,7 @@ android {
             )
         }
         getByName("debug") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -34,27 +67,20 @@ android {
 }
 
 dependencies {
+}
 
-    implementation(project(":domain"))
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName.set("com.kongjak.koreatechboard.data")
+        }
+    }
+}
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.datastore.preferences)
-    implementation(libs.androidx.paging.common)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.paging)
-    kapt(libs.androidx.room.compiler)
-
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-
-    implementation(libs.coroutine.core)
-    implementation(libs.coroutine.android)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.esspresso)
-    androidTestImplementation(libs.junit.test)
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated")
+        }
+    }
 }
