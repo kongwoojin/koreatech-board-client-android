@@ -27,8 +27,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-actual fun
-            (
+actual fun CheckNotificationPermission(
     onPermissionGranted: () -> Unit
 ) {
     val isPermissionGranted = isNotificationPermissionGranted()
