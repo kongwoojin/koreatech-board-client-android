@@ -10,7 +10,7 @@ fun ArticleResponse?.mapToArticle(code: Int): ResponseResult<Article> {
     if (this == null) {
         return ResponseResult.Success(
             Article(
-                statusCode = 404,
+                statusCode = code,
                 title = "",
                 writer = "",
                 content = "",

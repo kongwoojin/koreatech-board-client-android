@@ -10,7 +10,7 @@ fun BoardResponse?.mapToBoard(code: Int): ResponseResult<Board> {
         return ResponseResult.Success(
             BoardResponse(
                 lastPage = 1,
-                statusCode = 404,
+                statusCode = code,
                 boardData = emptyList()
             )
         )
