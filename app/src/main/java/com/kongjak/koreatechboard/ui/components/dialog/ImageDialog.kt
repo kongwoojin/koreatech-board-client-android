@@ -1,6 +1,7 @@
 package com.kongjak.koreatechboard.ui.components.dialog
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -27,6 +28,8 @@ fun ImageDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         Box(
+            modifier = Modifier
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             val zoomState = rememberZoomState()
