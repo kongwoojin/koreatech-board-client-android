@@ -9,10 +9,10 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.R
 import com.kongjak.koreatechboard.domain.usecase.database.InsertMultipleNewNoticesUseCase
 import com.kongjak.koreatechboard.ui.main.MainActivity
+import com.kongjak.koreatechboard.util.isDebug
 import com.kongjak.koreatechboard.util.routes.BoardItem
 import com.kongjak.koreatechboard.util.routes.Department
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,7 +99,7 @@ class FCMService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        if (BuildConfig.BUILD_TYPE == "debug") {
+        if (isDebug()) {
             Log.d("FCM", "Refreshed token: $token")
         }
     }

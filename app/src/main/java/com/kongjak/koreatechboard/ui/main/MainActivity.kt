@@ -53,6 +53,7 @@ import com.kongjak.koreatechboard.ui.components.KoreatechBoardAppBarAction
 import com.kongjak.koreatechboard.ui.permission.CheckNotificationPermission
 import com.kongjak.koreatechboard.ui.theme.KoreatechBoardTheme
 import com.kongjak.koreatechboard.util.KoreatechBoardAnalytics
+import com.kongjak.koreatechboard.util.isDebug
 import com.kongjak.koreatechboard.util.routes.MainRoute
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
@@ -73,7 +74,7 @@ class MainActivity : ComponentActivity() {
             key("build_type", BuildConfig.BUILD_TYPE)
         }
 
-        if (BuildConfig.DEBUG) {
+        if (isDebug()) {
             getFirebaseToken(this)
             crashlytics.setCrashlyticsCollectionEnabled(false)
         } else {

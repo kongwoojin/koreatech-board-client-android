@@ -3,6 +3,7 @@ package com.kongjak.koreatechboard.di
 import android.os.Build
 import com.kongjak.koreatechboard.BuildConfig
 import com.kongjak.koreatechboard.data.api.API
+import com.kongjak.koreatechboard.util.isRelease
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,10 +21,10 @@ object NetworkModule {
     private const val API_PRODUCTION = "https://api.koreatech.kongjak.com/v3/"
     private const val API_DEVELOPMENT = "https://dev.api.koreatech.kongjak.com/v3/"
 
-    private val apiUrl = if (BuildConfig.BUILD_TYPE == "release") {
+    private val apiUrl = if (isRelease()) {
         API_PRODUCTION
     } else {
-        API_DEVELOPMENT
+        API_PRODUCTION
     }
 
     @Singleton
@@ -39,7 +40,7 @@ object NetworkModule {
             chain.proceed(request)
         }
 
-        return if (BuildConfig.BUILD_TYPE == "release") {
+        return if (isRelease()) {
             OkHttpClient.Builder()
                 .addInterceptor(userAgentInterceptor)
                 .build()
