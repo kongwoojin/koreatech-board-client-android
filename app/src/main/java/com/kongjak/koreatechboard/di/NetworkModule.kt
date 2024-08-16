@@ -24,7 +24,7 @@ object NetworkModule {
     private val apiUrl = if (isRelease()) {
         API_PRODUCTION
     } else {
-        API_PRODUCTION
+        API_DEVELOPMENT
     }
 
     @Singleton
