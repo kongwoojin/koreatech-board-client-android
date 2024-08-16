@@ -1,5 +1,6 @@
 package com.kongjak.koreatechboard.util
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.SpanStyle
@@ -142,8 +143,13 @@ fun parseSpanStyle(css: String?, isDarkMode: Boolean): SpanStyle {
     if (css == null) return SpanStyle()
     if (css.isEmpty()) return SpanStyle()
     val cssMap = css.split(";").filter { it.isNotBlank() }.associate {
-        val (key, value) = it.split(":")
-        key.trim() to value.trim()
+        try {
+            val (key, value) = it.split(":")
+            key.trim() to value.trim()
+        } catch (e: Exception) {
+            Log.e("CssParser", "Error parsing css: $css")
+            "" to ""
+        }
     }
 
     val hasBackgroundColor = cssMap.containsKey("background-color")
